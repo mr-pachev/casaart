@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Начална страница</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body>
+<header>
+    <img src="/images/logo.png" alt="CASA ART Logo">
+</header>
+<main>
+    <h1>Добре дошли в приложението на CASA ART!</h1>
+    <p class="description">
+        Това е вътрешно приложение за служителите на CASA ART, което позволява регистрация, логин и лесно управление на данни. Моля, влезте в профила си или създайте нов, за да започнете.
+    </p>
+    <div class="buttons">
+        <a href="/register" class="register">Регистрация</a>
+        <a href="/login" class="login">Вход</a>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

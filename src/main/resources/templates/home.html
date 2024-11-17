@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Клиенти</title>
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--            background-color: #f9f9f9;-->
+<!--            color: #333;-->
+<!--        }-->
+
+<!--        header {-->
+<!--            background-color: #fff;-->
+<!--            padding: 20px 0;-->
+<!--            border-bottom: 2px solid #ddd;-->
+<!--            text-align: center;-->
+<!--        }-->
+
+<!--        header img {-->
+<!--            height: 80px;-->
+<!--        }-->
+
+<!--        .navbar {-->
+<!--            background-color: #FFA500; /* Оранжев */-->
+<!--            padding: 10px 20px;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--        }-->
+
+<!--        .navbar .welcome {-->
+<!--            font-size: 16px;-->
+<!--            color: white;-->
+<!--        }-->
+
+<!--        .navbar a {-->
+<!--            text-decoration: none;-->
+<!--            font-size: 16px;-->
+<!--            color: white;-->
+<!--            margin-left: 20px;-->
+<!--            transition: color 0.3s ease;-->
+<!--        }-->
+
+<!--        .navbar a:hover {-->
+<!--            color: #FFD700; /* По-светъл жълт нюанс */-->
+<!--        }-->
+
+<!--        main {-->
+<!--            padding: 20px;-->
+<!--        }-->
+
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--            margin-bottom: 30px;-->
+<!--        }-->
+
+<!--        .sort-section {-->
+<!--            margin-bottom: 20px;-->
+<!--            text-align: right;-->
+<!--        }-->
+
+<!--        .sort-section label {-->
+<!--            font-size: 16px;-->
+<!--            margin-right: 10px;-->
+<!--        }-->
+
+<!--        .sort-section select {-->
+<!--            font-size: 16px;-->
+<!--            padding: 5px;-->
+<!--        }-->
+
+<!--        table {-->
+<!--            width: 100%;-->
+<!--            border-collapse: collapse;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+
+<!--        table th, table td {-->
+<!--            border: 1px solid #ddd;-->
+<!--            padding: 10px;-->
+<!--            text-align: left;-->
+<!--        }-->
+
+<!--        table th {-->
+<!--            background-color: #1E90FF; /* Син */-->
+<!--            color: white;-->
+<!--        }-->
+
+<!--        table tr:nth-child(even) {-->
+<!--            background-color: #f2f2f2;-->
+<!--        }-->
+
+<!--        table tr:hover {-->
+<!--            background-color: #f1f1f1;-->
+<!--        }-->
+
+<!--        footer {-->
+<!--            margin-top: 30px;-->
+<!--            text-align: center;-->
+<!--            font-size: 14px;-->
+<!--            color: #777;-->
+<!--        }-->
+<!--    </style>-->
+</head>
+<body>
+<header>
+    <img src="/images/logo.png" alt="CASA ART Logo">
+</header>
+<div class="navbar">
+    <div class="welcome">Здравей, потребител.</div>
+    <nav>
+        <a href="/users">Потребители</a>
+    </nav>
+</div>
+<main>
+    <h1>Списък с клиенти</h1>
+    <div class="sort-section">
+        <label for="sort">Сортирай по:</label>
+        <select id="sort" onchange="sortClients()">
+            <option value="name">Име</option>
+            <option value="createDate">Дата на създаване</option>
+            <option value="sourceType">Тип източник</option>
+        </select>
+    </div>
+    <table id="clients-table">
+        <thead>
+        <tr>
+            <th>Име</th>
+            <th>Презиме</th>
+            <th>Фамилия</th>
+            <th>Фирма</th>
+            <th>Имейл</th>
+            <th>Телефон</th>
+            <th>Тип източник</th>
+            <th>Дата на създаване</th>
+            <th>Дата на промяна</th>
+            <th>Добавен от</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Примерни данни, заменете с динамично съдържание -->
+        <tr>
+            <td>Иван</td>
+            <td>Георгиев</td>
+            <td>Петров</td>
+            <td>CASA ART</td>
+            <td>ivan.petrov@example.com</td>
+            <td>0888123456</td>
+            <td>Референция</td>
+            <td>2024-11-01</td>
+            <td>2024-11-15</td>
+            <td>Админ</td>
+        </tr>
+        <tr>
+            <td>Мария</td>
+            <td>Иванова</td>
+            <td>Костова</td>
+            <td>Дизайн Студио</td>
+            <td>maria.kostova@example.com</td>
+            <td>0887654321</td>
+            <td>Онлайн</td>
+            <td>2024-10-20</td>
+            <td>2024-11-10</td>
+            <td>Потребител</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+
+<script>
+    function sortClients() {
+        const table = document.getElementById("clients-table").getElementsByTagName("tbody")[0];
+        const rows = Array.from(table.getElementsByTagName("tr"));
+        const sortCriteria = document.getElementById("sort").value;
+
+        rows.sort((a, b) => {
+            let valA, valB;
+
+            if (sortCriteria === "name") {
+                valA = a.cells[0].innerText.toLowerCase();
+                valB = b.cells[0].innerText.toLowerCase();
+            } else if (sortCriteria === "createDate") {
+                valA = new Date(a.cells[7].innerText);
+                valB = new Date(b.cells[7].innerText);
+            } else if (sortCriteria === "sourceType") {
+                valA = a.cells[6].innerText.toLowerCase();
+                valB = b.cells[6].innerText.toLowerCase();
+            }
+
+            if (valA < valB) return -1;
+            if (valA > valB) return 1;
+            return 0;
+        });
+
+        rows.forEach(row => table.appendChild(row));
+    }
+</script>
+</body>
+</html>

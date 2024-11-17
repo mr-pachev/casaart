@@ -27,6 +27,10 @@ public class Client extends BaseEntity{
     @Column(name = "modify_date")
     private LocalDate modifyDate;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
     public String getFirstName() {
         return firstName;
     }
@@ -97,5 +101,13 @@ public class Client extends BaseEntity{
 
     public void setModifyDate(LocalDate modifyDate) {
         this.modifyDate = modifyDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

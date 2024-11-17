@@ -1,0 +1,136 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    text-align: center;
+}
+
+header {
+    background-color: #fff;
+    padding: 20px 0;
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+}
+
+header img {
+    height: 80px;
+}
+
+main {
+    padding: 50px 20px;
+}
+
+.description {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.buttons a {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0 10px;
+    padding: 12px 20px;
+    border-radius: 5px;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.register {
+    background-color: #FFA500; /* Оранжев */
+}
+
+.register:hover {
+    background-color: #FF7F00;
+}
+
+.login {
+    background-color: #1E90FF; /* Син */
+}
+
+.login:hover {
+    background-color: #0074D9;
+}
+
+.navbar {
+    background-color: #FFA500; /* Оранжев */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .welcome {
+    font-size: 16px;
+    color: white;
+}
+
+.navbar a {
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #FFD700; /* По-светъл жълт нюанс */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sort-section {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.sort-section label {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.sort-section select {
+    font-size: 16px;
+    padding: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #1E90FF; /* Син */
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+footer {
+    margin-top: 50px; /* По-голямо разстояние от първия блок */
+    font-size: 14px;
+    color: #777;
+    text-align: center; /* Уеднаквено със стила на body */
+}

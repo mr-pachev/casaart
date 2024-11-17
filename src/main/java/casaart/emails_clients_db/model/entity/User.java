@@ -3,6 +3,8 @@ package casaart.emails_clients_db.model.entity;
 import casaart.emails_clients_db.model.enums.Role;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity{
@@ -18,6 +20,8 @@ public class User extends BaseEntity{
     private String located;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(targetEntity = Client.class, mappedBy = "user")
+    private List<Client> clients;
 
     public String getUsername() {
         return username;
@@ -65,5 +69,13 @@ public class User extends BaseEntity{
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
     }
 }
