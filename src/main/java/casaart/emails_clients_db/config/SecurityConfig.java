@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .logout(
                         logout -> {
                             logout.logoutUrl("/logout");
-                            logout.logoutSuccessUrl("/index");
+                            logout.logoutSuccessUrl("/");
                             logout.invalidateHttpSession(true);
                         }
                 )

@@ -15,15 +15,29 @@
     <h1>Вход в системата</h1>
     <p class="description">Моля, въведете вашите данни за достъп, за да влезете в системата.</p>
     <form class="login-form"
-          action="/login"
-          method="POST" >
+          th:action="@{/login}"
+          th:object="${loginUserDTO}"
+          th:method="POST" >
+        <div class="bg-danger text-center" th:if="${showErrorMessage}">
+            <p class="d-block">Грешно потребителско име или парола</p>
+        </div>
         <div class="form-group">
             <label for="username">Потребителско име:</label>
-            <input type="text" id="username" name="username" placeholder="Въведете потребителско име" required>
+            <input type="text"
+                   th:field="*{username}"
+                   id="username"
+                   name="username"
+                   placeholder="Въведете потребителско име"
+                   aria-describedby="usernameHelpInline">
         </div>
         <div class="form-group">
             <label for="password">Парола:</label>
-            <input type="password" id="password" name="password" placeholder="Въведете парола" required>
+            <input type="password"
+                   th:field="*{password}"
+                   id="password"
+                   name="password"
+                   placeholder="Въведете парола"
+                   aria-describedby="usernameHelpInline">
         </div>
         <div class="buttons">
             <button type="submit" class="login">Вход</button>

@@ -1,6 +1,8 @@
 package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddUserDTO;
+import casaart.emails_clients_db.model.dto.LoginUserDTO;
+import casaart.emails_clients_db.service.UserHelperService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
+    private final UserHelperService userHelperService;
+
+    public UserController(UserHelperService userHelperService) {
+        this.userHelperService = userHelperService;
+    }
+
     @ModelAttribute("addUserDTO")
     public AddUserDTO addUserDTO() {
         return new AddUserDTO();
@@ -29,42 +37,42 @@ public class UserController {
         return "registration";
     }
 
-    @PostMapping("/registration")
-    public String addUser(
-            @Valid AddUserDTO addUserDTO,
-            BindingResult bindingResult,
-            RedirectAttributes rAtt) {
-
-        if (bindingResult.hasErrors()) {
-            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
-
-            return "redirect:/registration";
-        }
-
-        if (userService.isExistUser(addUserDTO.getUsername()) ||
-                !employeeService.isExistEmployeeByIN(addUserDTO.getIdentificationNumber())) {
-            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
-            rAtt.addFlashAttribute("noAddedUser", true);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
-
-            return "redirect:/registration";
-        }
-
-        boolean confirmPassword = addUserDTO.getPassword().equals(addUserDTO.getConfirmPassword());
-
-        if (!confirmPassword) {
-            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
-            rAtt.addFlashAttribute("unconfirmed", true);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
-
-            return "redirect:/registration";
-        }
-
-        userService.addUser(addUserDTO);
-
-        return "redirect:/login";
-    }
+//    @PostMapping("/registration")
+//    public String addUser(
+//            @Valid AddUserDTO addUserDTO,
+//            BindingResult bindingResult,
+//            RedirectAttributes rAtt) {
+//
+//        if (bindingResult.hasErrors()) {
+//            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
+//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
+//
+//            return "redirect:/registration";
+//        }
+//
+//        if (userService.isExistUser(addUserDTO.getUsername()) ||
+//                !employeeService.isExistEmployeeByIN(addUserDTO.getIdentificationNumber())) {
+//            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
+//            rAtt.addFlashAttribute("noAddedUser", true);
+//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
+//
+//            return "redirect:/registration";
+//        }
+//
+//        boolean confirmPassword = addUserDTO.getPassword().equals(addUserDTO.getConfirmPassword());
+//
+//        if (!confirmPassword) {
+//            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
+//            rAtt.addFlashAttribute("unconfirmed", true);
+//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
+//
+//            return "redirect:/registration";
+//        }
+//
+//        userService.addUser(addUserDTO);
+//
+//        return "redirect:/login";
+//    }
 
     //login
     @GetMapping("/login")
