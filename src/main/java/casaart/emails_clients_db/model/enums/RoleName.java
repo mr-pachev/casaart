@@ -1,6 +1,6 @@
 package casaart.emails_clients_db.model.enums;
 
-public enum Role {
+public enum RoleName {
     ADMIN,
     USER
 }
