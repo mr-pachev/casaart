@@ -14,7 +14,7 @@ public class Client extends BaseEntity{
     private String middleName;
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "first_name")
+    @Column(name = "company_name")
     private String companyName;
     @Column(name = "email")
     private String email;
