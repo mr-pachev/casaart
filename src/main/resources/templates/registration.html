@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Регистрация</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body>
+<header>
+    <img src="/images/logo.png" alt="CASA ART Logo">
+</header>
+<main>
+    <h1>Регистрация</h1>
+    <div class="login-form">
+        <form th:action="@{/register}" method="post">
+            <div class="form-group">
+                <label for="username">Потребителско име</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Имейл</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Парола</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Потвърди парола</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Регистрирай се</button>
+        </form>
+    </div>
+    <p>Вече имате профил? <a th:href="@{/login}" class="login-link">Вход</a></p>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

@@ -25,12 +25,12 @@ public class UserHelperService {
     }
 
     public boolean hasRole(String role) {
-    return getAuthentication().getAuthorities().stream()
-            .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(ROLE_PREFIX + role));
+        return getAuthentication().getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(ROLE_PREFIX + role));
     }
 
     public UserDetails getUserDetails() {
-    return (UserDetails) getAuthentication().getPrincipal();
+        return (UserDetails) getAuthentication().getPrincipal();
     }
 
     public void updateCurrentUserUsername(String newUsername) {
@@ -60,11 +60,11 @@ public class UserHelperService {
     }
 
     public boolean isAuthenticated() {
-    //Spring security sets default user with Role ANONYMOUS when no user is authenticated.
-    return !hasRole("ANONYMOUS");
+        //Spring security sets default user with Role ANONYMOUS when no user is authenticated.
+        return !hasRole("ANONYMOUS");
     }
 
     public Authentication getAuthentication() {
-    return SecurityContextHolder.getContext().getAuthentication();
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }
