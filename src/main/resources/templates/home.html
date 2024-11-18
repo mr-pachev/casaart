@@ -112,7 +112,7 @@
 <header>
     <img src="/images/logo.png" alt="CASA ART Logo">
 </header>
-<div class="navbar">
+<div class="navbar" sec:authorize="isAuthenticated()">
     <div class="welcome">Здравей, потребител.</div>
     <nav>
         <a href="/users">Потребители</a>

@@ -25,49 +25,6 @@ public class UserController {
         return new LoginUserDTO();
     }
 
-    //create new user
-    @GetMapping("/registration")
-    public String viewAddUserForm(Model model){
-
-        return "registration";
-    }
-
-    @PostMapping("/registration")
-    public String addUser(
-            @Valid AddUserDTO addUserDTO,
-            BindingResult bindingResult,
-            RedirectAttributes rAtt) {
-
-        if (bindingResult.hasErrors()) {
-            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
-
-            return "redirect:/registration";
-        }
-
-//        if (userService.isExistUser(addUserDTO.getUsername()) ||
-//                !employeeService.isExistEmployeeByIN(addUserDTO.getIdentificationNumber())) {
-//            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
-//            rAtt.addFlashAttribute("noAddedUser", true);
-//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
-//
-//            return "redirect:/registration";
-//        }
-
-        boolean confirmPassword = addUserDTO.getPassword().equals(addUserDTO.getConfirmPassword());
-
-        if (!confirmPassword) {
-            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
-            rAtt.addFlashAttribute("unconfirmed", true);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
-
-            return "redirect:/registration";
-        }
-
-//        userService.addUser(addUserDTO);
-
-        return "redirect:/login";
-    }
 
     //login
     @GetMapping("/login")
