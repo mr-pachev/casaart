@@ -4,6 +4,7 @@ import casaart.emails_clients_db.model.dto.AddUserDTO;
 import casaart.emails_clients_db.model.dto.LoginUserDTO;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.service.UserHelperService;
+import casaart.emails_clients_db.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @ModelAttribute("addUserDTO")
     public AddUserDTO addUserDTO() {
@@ -46,14 +52,14 @@ public class UserController {
             return "redirect:/registration";
         }
 
-//        if (userService.isExistUser(addUserDTO.getUsername()) ||
-//                !employeeService.isExistEmployeeByIN(addUserDTO.getIdentificationNumber())) {
-//            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
-//            rAtt.addFlashAttribute("noAddedUser", true);
-//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
-//
-//            return "redirect:/registration";
-//        }
+        if (userService.isExistUser(addUserDTO.getUsername()) ||
+                !employeeService.isExistEmployeeByIN(addUserDTO.getIdentificationNumber())) {
+            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
+            rAtt.addFlashAttribute("noAddedUser", true);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
+
+            return "redirect:/registration";
+        }
 
         boolean confirmPassword = addUserDTO.getPassword().equals(addUserDTO.getConfirmPassword());
 
