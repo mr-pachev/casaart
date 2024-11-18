@@ -9,4 +9,6 @@ public interface UserService {
     List<AddUserDTO> getAllUsers();
     //checking is exist user by username
     boolean isExistUser(String username);
+    //add new user
+    void addUser(AddUserDTO addUserDTO);
 }

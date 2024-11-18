@@ -63,13 +63,13 @@ public class UserController {
 
         if (!confirmPassword) {
             rAtt.addFlashAttribute("addUserDTO", addUserDTO);
-            rAtt.addFlashAttribute("unconfirmed", true);
+//            rAtt.addFlashAttribute("unconfirmed", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
 
             return "redirect:/registration";
         }
 
-//        userService.addUser(addUserDTO);
+        userService.addUser(addUserDTO);
 
         return "redirect:/login";
     }
