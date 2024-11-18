@@ -3,7 +3,6 @@ package casaart.emails_clients_db.web;
 import casaart.emails_clients_db.model.dto.AddUserDTO;
 import casaart.emails_clients_db.model.dto.LoginUserDTO;
 import casaart.emails_clients_db.model.enums.SourceType;
-import casaart.emails_clients_db.service.UserHelperService;
 import casaart.emails_clients_db.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -52,8 +51,7 @@ public class UserController {
             return "redirect:/registration";
         }
 
-        if (userService.isExistUser(addUserDTO.getUsername()) ||
-                !employeeService.isExistEmployeeByIN(addUserDTO.getIdentificationNumber())) {
+        if (userService.isExistUser(addUserDTO.getUsername())) {
             rAtt.addFlashAttribute("addUserDTO", addUserDTO);
             rAtt.addFlashAttribute("noAddedUser", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
