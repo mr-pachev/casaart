@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class AddUserDTO {
+    private long userId;
     @NotBlank
     @Size(min = 3, max = 15)
     private String username;
@@ -25,6 +26,14 @@ public class AddUserDTO {
     @NotBlank
     @Size(min = 3, max = 15)
     private String located;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public String getUsername() {
         return username;

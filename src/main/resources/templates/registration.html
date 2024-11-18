@@ -36,6 +36,9 @@
             <div class="form-group">
                 <label for="confirmPassword">Потвърди парола</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" th:errorclass="is-invalid">
+                <p class="errors alert alert-danger" th:if="${unconfirmed}">
+                    Непотвърдена парола.
+                </p>
             </div>
             <div class="form-group">
                 <label for="firstName">Име</label>
