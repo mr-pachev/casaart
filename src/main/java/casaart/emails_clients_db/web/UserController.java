@@ -2,6 +2,7 @@ package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddUserDTO;
 import casaart.emails_clients_db.model.dto.LoginUserDTO;
+import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.service.UserHelperService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -25,10 +26,53 @@ public class UserController {
         return new LoginUserDTO();
     }
 
+    //create new user
+    @GetMapping("/registration")
+    public String viewAddUserForm(Model model) {
+        model.addAttribute("sourceType", SourceType.values());
+        return "registration";
+    }
+
+    @PostMapping("/registration")
+    public String addUser(
+            @Valid AddUserDTO addUserDTO,
+            BindingResult bindingResult,
+            RedirectAttributes rAtt) {
+
+        if (bindingResult.hasErrors()) {
+            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
+
+            return "redirect:/registration";
+        }
+
+//        if (userService.isExistUser(addUserDTO.getUsername()) ||
+//                !employeeService.isExistEmployeeByIN(addUserDTO.getIdentificationNumber())) {
+//            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
+//            rAtt.addFlashAttribute("noAddedUser", true);
+//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
+//
+//            return "redirect:/registration";
+//        }
+
+        boolean confirmPassword = addUserDTO.getPassword().equals(addUserDTO.getConfirmPassword());
+
+        if (!confirmPassword) {
+            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
+            rAtt.addFlashAttribute("unconfirmed", true);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
+
+            return "redirect:/registration";
+        }
+
+//        userService.addUser(addUserDTO);
+
+        return "redirect:/login";
+    }
 
     //login
     @GetMapping("/login")
-    public String viewLogin(){
+    public String viewLogin() {
 
         return "login";
     }

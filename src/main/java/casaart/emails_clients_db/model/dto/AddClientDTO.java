@@ -1,9 +1,5 @@
 package casaart.emails_clients_db.model.dto;
 
-import casaart.emails_clients_db.model.enums.SourceType;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
 
 public class AddClientDTO {

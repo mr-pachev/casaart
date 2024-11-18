@@ -9,9 +9,6 @@ public class AddUserDTO {
     @Size(min = 3, max = 15)
     private String username;
     @NotBlank
-    @Email
-    private String email;
-    @NotBlank
     @Size(min = 4, max = 12)
     private String password;
     @NotBlank
@@ -35,14 +32,6 @@ public class AddUserDTO {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
