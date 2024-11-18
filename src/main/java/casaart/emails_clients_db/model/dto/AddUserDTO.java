@@ -15,11 +15,11 @@ public class AddUserDTO {
     private String confirmPassword;
 
     @NotBlank
-    @Size(min = 3, max = 15)
+    @Size(min = 2, max = 15)
     private String firstName;
     @Size(min = 2, max = 15)
     private String middleName;
-    @Size(min = 3, max = 15)
+    @Size(min = 2, max = 15)
     @NotBlank
     private String lastName;
     @NotBlank
