@@ -62,7 +62,7 @@ main {
     background-color: #FFA500; /* Оранжев */
     padding: 10px 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Пространство между "Здравей" и навигацията */
     align-items: center;
 }
 
@@ -71,15 +71,25 @@ main {
     color: white;
 }
 
-.navbar a {
+.navbar .nav-links {
+    display: flex;
+    align-items: center; /* Центрира елементите вертикално */
+}
+
+.navbar .nav-links a,
+.navbar .nav-links .logout-button {
     text-decoration: none;
     font-size: 16px;
     color: white;
-    margin-left: 20px;
+    margin-left: 20px; /* Разстояние между линковете */
+    background: none;
+    border: none;
+    cursor: pointer;
     transition: color 0.3s ease;
 }
 
-.navbar a:hover {
+.navbar .nav-links a:hover,
+.navbar .nav-links .logout-button:hover {
     color: #FFD700; /* По-светъл жълт нюанс */
 }
 

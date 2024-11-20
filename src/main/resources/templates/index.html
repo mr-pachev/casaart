@@ -14,9 +14,12 @@
 </header>
 <div class="navbar" sec:authorize="isAuthenticated()">
     <div class="welcome">Здравей, <span th:text="${@userHelperService.getUser().getUsername()}"></span>!</div>
-    <nav>
-        <a href="/users">Потребители</a>
-        <a href="/users">Изход</a>
+    <nav class="nav-links">
+        <a th:href="@{/dashboard}">Табло</a> <!-- Нов линк -->
+        <a th:href="@{/users}">Потребители</a>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-button">Изход</button>
+        </form>
     </nav>
 </div>
 <main>

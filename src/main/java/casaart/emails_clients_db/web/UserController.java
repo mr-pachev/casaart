@@ -37,16 +37,14 @@ public class UserController {
     }
 
     //view all users
-//    @GetMapping("/users")
-//    public String getAllUsers(Model model){
-//        List<UserDTO> userDTOS = userService.getAllUsers();
-//
-//
-//        model.addAttribute("userDTOS", userDTOS);
-//        model.addAttribute("loginUsername", username);
-//
-//        return "users";
-//    }
+    @GetMapping("/users")
+    public String getAllUsers(Model model) {
+        List<AddUserDTO> addUserDTOS = userService.getAllUsers();
+
+        model.addAttribute("userDTOS", addUserDTOS);
+
+        return "users";
+    }
 
     //create new user
     @GetMapping("/registration")
