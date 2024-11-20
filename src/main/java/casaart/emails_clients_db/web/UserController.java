@@ -37,13 +37,13 @@ public class UserController {
     }
 
     //view all users
-    @GetMapping("/users")
+    @GetMapping("/clients")
     public String getAllUsers(Model model) {
         List<AddUserDTO> addUserDTOS = userService.getAllUsers();
 
-        model.addAttribute("userDTOS", addUserDTOS);
+        model.addAttribute("allUsers", addUserDTOS);
 
-        return "users";
+        return "clients";
     }
 
     //create new user

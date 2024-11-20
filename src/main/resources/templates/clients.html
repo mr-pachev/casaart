@@ -9,12 +9,18 @@
 </head>
 <body>
 <header>
-    <img src="/images/logo.png" alt="CASA ART Logo">
+    <a th:href="@{/}">
+        <img src="/images/logo.png" alt="CASA ART Logo">
+    </a>
 </header>
-<div class="navbar" sec:authorize="isAuthenticated()">
-    <div class="welcome">Здравей, <span th:text="${@userHelperService.userDetails.username}"></span>!</div>
-    <nav>
-        <a href="/users">Потребители</a>
+<div class="navbar" sec:authorize="isAuthenticated()" th:fragment="navigation">
+    <div class="welcome">Здравей, <span th:text="${@userHelperService.getUser().getUsername()}"></span>!</div>
+    <nav class="nav-links">
+        <a th:href="@{/dashboard}">Табло</a> <!-- Нов линк -->
+        <a th:href="@{/clients}">Клиенти</a>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-button">Изход</button>
+        </form>
     </nav>
 </div>
 <main>
@@ -44,17 +50,17 @@
         </thead>
         <tbody>
         <!-- Примерни данни, заменете с динамично съдържание -->
-        <tr>
-            <td>Иван</td>
-            <td>Георгиев</td>
-            <td>Петров</td>
-            <td>CASA ART</td>
-            <td>ivan.petrov@example.com</td>
-            <td>0888123456</td>
-            <td>Референция</td>
-            <td>2024-11-01</td>
-            <td>2024-11-15</td>
-            <td>Админ</td>
+        <tr th:each="user :${allUsers}">
+            <td th:text="${user.firstName}">Иван</td>
+            <td th:text="${user.middleName}">Георгиев</td>
+            <td th:text="${user.lastName}">Петров</td>
+            <td th:text="${user}">CASA ART</td>
+            <td th:text="${user.firstName}">ivan.petrov@example.com</td>
+            <td th:text="${user.firstName}">0888123456</td>
+            <td th:text="${user.firstName}">Референция</td>
+            <td th:text="${user.firstName}">2024-11-01</td>
+            <td th:text="${user.firstName}">2024-11-15</td>
+            <td th:text="${user.firstName}">Админ</td>
         </tr>
         <tr>
             <td>Мария</td>
