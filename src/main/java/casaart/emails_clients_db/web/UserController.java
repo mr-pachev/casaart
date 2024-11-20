@@ -3,6 +3,7 @@ package casaart.emails_clients_db.web;
 import casaart.emails_clients_db.model.dto.AddUserDTO;
 import casaart.emails_clients_db.model.dto.LoginUserDTO;
 import casaart.emails_clients_db.model.enums.SourceType;
+import casaart.emails_clients_db.service.UserHelperService;
 import casaart.emails_clients_db.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -13,12 +14,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 public class UserController {
     private final UserService userService;
+    private final UserHelperService userHelperService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserHelperService userHelperService) {
         this.userService = userService;
+        this.userHelperService = userHelperService;
     }
 
     @ModelAttribute("addUserDTO")
@@ -30,6 +35,18 @@ public class UserController {
     public LoginUserDTO loginUserDTO() {
         return new LoginUserDTO();
     }
+
+    //view all users
+//    @GetMapping("/users")
+//    public String getAllUsers(Model model){
+//        List<UserDTO> userDTOS = userService.getAllUsers();
+//
+//
+//        model.addAttribute("userDTOS", userDTOS);
+//        model.addAttribute("loginUsername", username);
+//
+//        return "users";
+//    }
 
     //create new user
     @GetMapping("/registration")
