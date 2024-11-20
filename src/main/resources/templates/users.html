@@ -6,114 +6,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CASA ART - Клиенти</title>
-<!--    <style>-->
-<!--        body {-->
-<!--            font-family: Arial, sans-serif;-->
-<!--            margin: 0;-->
-<!--            padding: 0;-->
-<!--            background-color: #f9f9f9;-->
-<!--            color: #333;-->
-<!--        }-->
-
-<!--        header {-->
-<!--            background-color: #fff;-->
-<!--            padding: 20px 0;-->
-<!--            border-bottom: 2px solid #ddd;-->
-<!--            text-align: center;-->
-<!--        }-->
-
-<!--        header img {-->
-<!--            height: 80px;-->
-<!--        }-->
-
-<!--        .navbar {-->
-<!--            background-color: #FFA500; /* Оранжев */-->
-<!--            padding: 10px 20px;-->
-<!--            display: flex;-->
-<!--            justify-content: space-between;-->
-<!--            align-items: center;-->
-<!--        }-->
-
-<!--        .navbar .welcome {-->
-<!--            font-size: 16px;-->
-<!--            color: white;-->
-<!--        }-->
-
-<!--        .navbar a {-->
-<!--            text-decoration: none;-->
-<!--            font-size: 16px;-->
-<!--            color: white;-->
-<!--            margin-left: 20px;-->
-<!--            transition: color 0.3s ease;-->
-<!--        }-->
-
-<!--        .navbar a:hover {-->
-<!--            color: #FFD700; /* По-светъл жълт нюанс */-->
-<!--        }-->
-
-<!--        main {-->
-<!--            padding: 20px;-->
-<!--        }-->
-
-<!--        h1 {-->
-<!--            text-align: center;-->
-<!--            margin-bottom: 30px;-->
-<!--        }-->
-
-<!--        .sort-section {-->
-<!--            margin-bottom: 20px;-->
-<!--            text-align: right;-->
-<!--        }-->
-
-<!--        .sort-section label {-->
-<!--            font-size: 16px;-->
-<!--            margin-right: 10px;-->
-<!--        }-->
-
-<!--        .sort-section select {-->
-<!--            font-size: 16px;-->
-<!--            padding: 5px;-->
-<!--        }-->
-
-<!--        table {-->
-<!--            width: 100%;-->
-<!--            border-collapse: collapse;-->
-<!--            margin-bottom: 20px;-->
-<!--        }-->
-
-<!--        table th, table td {-->
-<!--            border: 1px solid #ddd;-->
-<!--            padding: 10px;-->
-<!--            text-align: left;-->
-<!--        }-->
-
-<!--        table th {-->
-<!--            background-color: #1E90FF; /* Син */-->
-<!--            color: white;-->
-<!--        }-->
-
-<!--        table tr:nth-child(even) {-->
-<!--            background-color: #f2f2f2;-->
-<!--        }-->
-
-<!--        table tr:hover {-->
-<!--            background-color: #f1f1f1;-->
-<!--        }-->
-
-<!--        footer {-->
-<!--            margin-top: 30px;-->
-<!--            text-align: center;-->
-<!--            font-size: 14px;-->
-<!--            color: #777;-->
-<!--        }-->
-<!--    </style>-->
 </head>
 <body>
 <header>
     <img src="/images/logo.png" alt="CASA ART Logo">
 </header>
 <div class="navbar" sec:authorize="isAuthenticated()">
-    <div class="welcome">Здравей, потребител.</div>
+    <div class="welcome">Здравей, <span th:text="${@userHelperService.userDetails.username}"></span>!</div>
     <nav>
         <a href="/users">Потребители</a>
     </nav>

@@ -25,7 +25,7 @@
             на данни. Моля, влезте в профила си или създайте нов, за да започнете.
         </p>
 
-        <div class="buttons">
+        <div class="buttons" sec:authorize="!isAuthenticated()">
             <a th:href="@{/registration}" class="register">Регистрация</a>
             <a th:href="@{/login}" class="login">Вход</a>
         </div>
