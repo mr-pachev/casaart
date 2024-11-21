@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Нов клиент</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body>
+
+<header>
+    <a th:href="@{/}">
+        <img src="/images/logo.png" alt="CASA ART Logo">
+    </a>
+</header>
+<div class="navbar" sec:authorize="isAuthenticated()" th:fragment="navigation">
+    <div class="welcome">Здравей, <span th:text="${@userHelperService.getUser().getUsername()}"></span>!</div>
+    <nav class="nav-links">
+        <a th:href="@{/users}">Потребители</a>
+        <a th:href="@{/clients}">Клиенти</a>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-button">Изход</button>
+        </form>
+    </nav>
+</div>
+
+<main>
+    <h1>Регистрация</h1>
+    <div class="login-form">
+        <form th:action="@{/add-client}"
+              th:object="${ad}"
+              th:method="POST">
+            <div class="form-group">
+                <label for="username">Потребителско име</label>
+                <input type="text"
+                       id="username"
+                       name="username"
+                       th:field="*{username}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Потребителското име трябва да се състои от 3 до 15 букви.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="password">Парола</label>
+                <input type="password"
+                       id="password"
+                       name="password"
+                       th:field="*{password}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Паролата трябва да се състои от 4 до 12 символа.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Потвърди парола</label>
+                <input type="password"
+                       id="confirmPassword"
+                       name="confirmPassword"
+                       th:field="*{confirmPassword}"
+                       th:errorclass="is-invalid">
+                <!--                <p class="errors alert alert-danger">-->
+                <!--                    Паролата трябва да се състои от 4 до 12 символа.-->
+                <!--                </p>-->
+                <!--                <p class="errors alert alert-danger"-->
+                <!--                   th:if="${unconfirmed}">-->
+                <!--                    Непотвърдена парола.-->
+                <!--                </p>-->
+            </div>
+            <div class="form-group">
+                <label for="firstName">Име</label>
+                <input type="text"
+                       id="firstName"
+                       name="firstName"
+                       th:field="*{firstName}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Името трябва да се състои от 2 до 15 букви.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="middleName">Презиме</label>
+                <input type="text"
+                       id="middleName"
+                       name="middleName"
+                       th:field="*{middleName}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Презимето трябва да се състои от 2 до 15 букви.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Фамилия</label>
+                <input type="text"
+                       id="lastName"
+                       name="lastName"
+                       th:field="*{lastName}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Фамилята трябва да се състои от 2 до 15 букви.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="sourceType">Източник данни</label>
+                <select class="form-control"
+                        id="sourceType"
+                        name="sourceType"
+                        th:field="*{located}"
+                        th:errorclass="is-invalid">
+                    <option value="">-- Избери --</option>
+                    <option th:each="located: ${sourceType}"
+                            th:value="${located}"
+                            th:text="${located}">Източник данни</option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Избери източник.
+                </p>
+            </div>
+            <button type="submit" class="btn btn-primary">Регистрирай се</button>
+        </form>
+    </div>
+    <p>Вече имате профил? <a th:href="@{/login}" class="login-link">Вход</a></p>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

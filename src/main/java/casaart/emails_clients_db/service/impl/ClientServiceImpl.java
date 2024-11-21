@@ -1,6 +1,6 @@
 package casaart.emails_clients_db.service.impl;
 
-import casaart.emails_clients_db.model.dto.AddClientDTO;
+import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.service.ClientService;
@@ -21,23 +21,23 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<AddClientDTO> getAllClients() {
-        List<AddClientDTO> addClientDTOS = new ArrayList<>();
+    public List<ClientDTO> getAllClients() {
+        List<ClientDTO> addClientDTOS = new ArrayList<>();
         List<Client> clients = clientRepository.findAll();
 
         for (Client client : clients) {
-            AddClientDTO addClientDTO = mapToAddClientDTO(client);
+            ClientDTO clientDTO = mapToClientDTO(client);
 
-            addClientDTOS.add(addClientDTO);
+            addClientDTOS.add(clientDTO);
         }
 
 
         return addClientDTOS;
     }
 
-    AddClientDTO mapToAddClientDTO(Client client){
-        AddClientDTO addClientDTO = mapper.map(client, AddClientDTO.class);
+    ClientDTO mapToClientDTO(Client client){
+        ClientDTO clientDTO = mapper.map(client, ClientDTO.class);
 
-        return addClientDTO;
+        return clientDTO;
     }
 }

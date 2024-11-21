@@ -41,30 +41,17 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Примерни данни, заменете с динамично съдържание -->
-        <tr th:each="user :${allUsers}">
-            <td th:text="${user.firstName}">Иван</td>
-            <td th:text="${user.middleName}">Георгиев</td>
-            <td th:text="${user.lastName}">Петров</td>
-            <td th:text="${user}">CASA ART</td>
-            <td th:text="${user.firstName}">ivan.petrov@example.com</td>
-            <td th:text="${user.firstName}">0888123456</td>
-            <td th:text="${user.firstName}">Референция</td>
-            <td th:text="${user.firstName}">2024-11-01</td>
-            <td th:text="${user.firstName}">2024-11-15</td>
-            <td th:text="${user.firstName}">Админ</td>
-        </tr>
-        <tr>
-            <td>Мария</td>
-            <td>Иванова</td>
-            <td>Костова</td>
-            <td>Дизайн Студио</td>
-            <td>maria.kostova@example.com</td>
-            <td>0887654321</td>
-            <td>Онлайн</td>
-            <td>2024-10-20</td>
-            <td>2024-11-10</td>
-            <td>Потребител</td>
+        <tr th:each="client :${allClients}">
+            <td th:text="${client.firstName}">Иван</td>
+            <td th:text="${client.middleName}">Георгиев</td>
+            <td th:text="${client.lastName}">Петров</td>
+            <td th:text="${client.companyName}">CASA ART</td>
+            <td th:text="${client.email}">ivan.petrov@example.com</td>
+            <td th:text="${client.phoneNumber}">0888123456</td>
+            <td th:text="${client.sourceType}">Референция</td>
+            <td th:text="${client.creatDate}">2024-11-01</td>
+            <td th:text="${client.modifyDate}">2024-11-15</td>
+            <td th:text="${client.addedFrom}">Админ</td>
         </tr>
         </tbody>
     </table>
