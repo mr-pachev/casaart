@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="bg"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Потребители</title>
+</head>
+<body>
+<header>
+    <a th:href="@{/}">
+        <img src="/images/logo.png" alt="CASA ART Logo">
+    </a>
+</header>
+<div class="navbar" sec:authorize="isAuthenticated()" th:fragment="navigation">
+    <div class="welcome">Здравей, <span th:text="${@userHelperService.getUser().getUsername()}"></span>!</div>
+    <nav class="nav-links">
+        <a th:href="@{/users}">Потребители</a>
+        <a th:href="@{/clients}">Клиенти</a>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-button">Изход</button>
+        </form>
+    </nav>
+</div>
+<main>
+    <h1>Списък с клиенти</h1>
+    <div class="sort-section">
+        <label for="sort">Сортирай по:</label>
+        <select id="sort" onchange="sortClients()">
+            <option value="name">Име</option>
+            <option value="createDate">Дата на създаване</option>
+            <option value="sourceType">Тип източник</option>
+        </select>
+    </div>
+    <table id="clients-table">
+        <thead>
+        <tr>
+            <th>Име</th>
+            <th>Презиме</th>
+            <th>Фамилия</th>
+            <th>Фирма</th>
+            <th>Имейл</th>
+            <th>Телефон</th>
+            <th>Тип източник</th>
+            <th>Дата на създаване</th>
+            <th>Дата на промяна</th>
+            <th>Добавен от</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Примерни данни, заменете с динамично съдържание -->
+        <tr th:each="user :${allUsers}">
+            <td th:text="${user.firstName}">Иван</td>
+            <td th:text="${user.middleName}">Георгиев</td>
+            <td th:text="${user.lastName}">Петров</td>
+            <td th:text="${user}">CASA ART</td>
+            <td th:text="${user.firstName}">ivan.petrov@example.com</td>
+            <td th:text="${user.firstName}">0888123456</td>
+            <td th:text="${user.firstName}">Референция</td>
+            <td th:text="${user.firstName}">2024-11-01</td>
+            <td th:text="${user.firstName}">2024-11-15</td>
+            <td th:text="${user.firstName}">Админ</td>
+        </tr>
+        <tr>
+            <td>Мария</td>
+            <td>Иванова</td>
+            <td>Костова</td>
+            <td>Дизайн Студио</td>
+            <td>maria.kostova@example.com</td>
+            <td>0887654321</td>
+            <td>Онлайн</td>
+            <td>2024-10-20</td>
+            <td>2024-11-10</td>
+            <td>Потребител</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+
+<script>
+    function sortClients() {
+        const table = document.getElementById("clients-table").getElementsByTagName("tbody")[0];
+        const rows = Array.from(table.getElementsByTagName("tr"));
+        const sortCriteria = document.getElementById("sort").value;
+
+        rows.sort((a, b) => {
+            let valA, valB;
+
+            if (sortCriteria === "name") {
+                valA = a.cells[0].innerText.toLowerCase();
+                valB = b.cells[0].innerText.toLowerCase();
+            } else if (sortCriteria === "createDate") {
+                valA = new Date(a.cells[7].innerText);
+                valB = new Date(b.cells[7].innerText);
+            } else if (sortCriteria === "sourceType") {
+                valA = a.cells[6].innerText.toLowerCase();
+                valB = b.cells[6].innerText.toLowerCase();
+            }
+
+            if (valA < valB) return -1;
+            if (valA > valB) return 1;
+            return 0;
+        });
+
+        rows.forEach(row => table.appendChild(row));
+    }
+</script>
+</body>
+</html>
