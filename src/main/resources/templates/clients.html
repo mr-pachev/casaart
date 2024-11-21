@@ -25,14 +25,6 @@
 </div>
 <main>
     <h1>Списък с клиенти</h1>
-    <div class="sort-section">
-        <label for="sort">Сортирай по:</label>
-        <select id="sort" onchange="sortClients()">
-            <option value="name">Име</option>
-            <option value="createDate">Дата на създаване</option>
-            <option value="sourceType">Тип източник</option>
-        </select>
-    </div>
     <table id="clients-table">
         <thead>
         <tr>
@@ -78,34 +70,5 @@
     </table>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
-
-<script>
-    function sortClients() {
-        const table = document.getElementById("clients-table").getElementsByTagName("tbody")[0];
-        const rows = Array.from(table.getElementsByTagName("tr"));
-        const sortCriteria = document.getElementById("sort").value;
-
-        rows.sort((a, b) => {
-            let valA, valB;
-
-            if (sortCriteria === "name") {
-                valA = a.cells[0].innerText.toLowerCase();
-                valB = b.cells[0].innerText.toLowerCase();
-            } else if (sortCriteria === "createDate") {
-                valA = new Date(a.cells[7].innerText);
-                valB = new Date(b.cells[7].innerText);
-            } else if (sortCriteria === "sourceType") {
-                valA = a.cells[6].innerText.toLowerCase();
-                valB = b.cells[6].innerText.toLowerCase();
-            }
-
-            if (valA < valB) return -1;
-            if (valA > valB) return 1;
-            return 0;
-        });
-
-        rows.forEach(row => table.appendChild(row));
-    }
-</script>
 </body>
 </html>
