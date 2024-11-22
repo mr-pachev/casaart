@@ -51,18 +51,18 @@ public class ClientController {
         return "add-client";
     }
 
-//    @PostMapping("/add-client")
-//    public String addClient(
-//            @Valid AddClientDTO addClientDTO,
-//            BindingResult bindingResult,
-//            RedirectAttributes rAtt) {
-//
-//        if (bindingResult.hasErrors()) {
-//            rAtt.addFlashAttribute("addClientDTO", addClientDTO);
-//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
-//
-//            return "redirect:/add-client";
-//        }
+    @PostMapping("/add-client")
+    public String addClient(
+            @Valid AddClientDTO addClientDTO,
+            BindingResult bindingResult,
+            RedirectAttributes rAtt) {
+
+        if (bindingResult.hasErrors()) {
+            rAtt.addFlashAttribute("addClientDTO", addClientDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
+
+            return "redirect:/add-client";
+        }
 //
 //        if (userService.isExistUser(addClientDTO.getUsername())) {
 //            rAtt.addFlashAttribute("addClientDTO", addClientDTO);
@@ -72,8 +72,8 @@ public class ClientController {
 //            return "redirect:/add-client";
 //        }
 //
-//        userService.addUser(addUserDTO);
+        clientService.addClient(addClientDTO);
 //
-//        return "redirect:/clients";
-//    }
+        return "redirect:/clients";
+    }
 }

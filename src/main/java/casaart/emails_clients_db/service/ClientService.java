@@ -8,4 +8,6 @@ import java.util.List;
 public interface ClientService {
     //get all clients
     List<ClientDTO> getAllClients();
+    //add client
+   void addClient(AddClientDTO addClientDTO);
 }

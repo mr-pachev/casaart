@@ -59,11 +59,11 @@
                 </p>
             </div>
             <div class="form-group">
-                <label for="email">Фирма</label>
-                <input type="text"
-                       id="company"
-                       name="company"
-                       th:field="*{companyName}"
+                <label for="email">Емейл</label>
+                <input type="email"
+                       id="email"
+                       name="email"
+                       th:field="*{email}"
                        th:errorclass="is-invalid">
                 <p class="invalid-feedback errors alert alert-danger">
                     Името на фирмата трябва да се състои от 2 до 15 букви.
