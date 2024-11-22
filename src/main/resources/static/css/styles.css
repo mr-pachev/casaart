@@ -1,3 +1,4 @@
+/* Общи стилове */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -7,17 +8,23 @@ body {
     text-align: center;
 }
 
+header, main, footer, .login-form, .navbar {
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Хедър */
 header {
     background-color: #fff;
     padding: 20px 0;
     border-bottom: 2px solid #ddd;
-    text-align: center;
 }
 
 header img {
     height: 80px;
 }
 
+/* Основна секция */
 main {
     padding: 50px 20px;
 }
@@ -27,8 +34,10 @@ main {
     margin-bottom: 30px;
 }
 
+/* Бутони */
 .buttons {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .buttons a {
@@ -42,8 +51,16 @@ main {
     transition: background-color 0.3s ease;
 }
 
+.buttons a.register {
+    background-color: #28a745;
+}
+
+.buttons a.register:hover {
+    background-color: #218838;
+}
+
 .register {
-    background-color: #FFA500; /* Оранжев */
+    background-color: #FFA500;
 }
 
 .register:hover {
@@ -51,18 +68,26 @@ main {
 }
 
 .login {
-    background-color: #1E90FF; /* Син */
+    background-color: #1E90FF; /* Основен цвят на бутона */
+    color: white;             /* Цвят на текста */
+    padding: 12px 20px;       /* Отстояния */
+    font-size: 16px;          /* Размер на текста */
+    border-radius: 5px;       /* Заоблени ъгли */
+    border: none;             /* Без рамка */
+    cursor: pointer;          /* Показалец при посочване */
+    transition: background-color 0.3s ease; /* Анимация при hover */
 }
 
 .login:hover {
-    background-color: #0074D9;
+    background-color: #0074D9; /* Цвят при hover */
 }
 
+/* Навигация */
 .navbar {
-    background-color: #FFA500; /* Оранжев */
+    background-color: #FFA500;
     padding: 10px 20px;
     display: flex;
-    justify-content: space-between; /* Пространство между "Здравей" и навигацията */
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -73,41 +98,58 @@ main {
 
 .navbar .nav-links {
     display: flex;
-    align-items: center; /* Центрира елементите вертикално */
+    align-items: center;
 }
 
-.navbar .nav-links a,
-.navbar .nav-links .logout-button {
+.navbar .nav-links a, .navbar .nav-links .logout-button {
     text-decoration: none;
     font-size: 16px;
     color: white;
-    margin-left: 20px; /* Разстояние между линковете */
+    margin-left: 20px;
     background: none;
     border: none;
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
-.navbar .nav-links a:hover,
-.navbar .nav-links .logout-button:hover {
-    color: #FFD700; /* По-светъл жълт нюанс */
+.navbar .nav-links a:hover, .navbar .nav-links .logout-button:hover {
+    color: #FFD700;
 }
 
+/* Заглавие */
 h1 {
-    text-align: center;
     margin-bottom: 30px;
 }
 
-.sort-section {
+/* Таблица */
+table {
+    width: 100%;
+    border-collapse: collapse;
     margin-bottom: 20px;
-    text-align: right;
 }
 
-/* Допълнителен стил за login формата */
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #1E90FF;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Форма за вход */
 .login-form {
     max-width: 400px;
-    margin: 0 auto;
-    text-align: left;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -131,52 +173,19 @@ h1 {
     font-size: 14px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group input:focus {
-    outline: none;
-    border-color: #1E90FF; /* Син */
+    border-color: #1E90FF;
     box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
 }
 
-.sort-section label {
-    font-size: 16px;
-    margin-right: 10px;
-}
-
-.sort-section select {
-    font-size: 16px;
-    padding: 5px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
-table th {
-    background-color: #1E90FF; /* Син */
-    color: white;
-}
-
-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-table tr:hover {
-    background-color: #f1f1f1;
-}
-
+/* Футър */
 footer {
-    margin-top: 50px; /* По-голямо разстояние от първия блок */
+    margin-top: 50px;
     font-size: 14px;
     color: #777;
-    text-align: center; /* Уеднаквено със стила на body */
+    text-align: center;
 }

@@ -11,6 +11,9 @@
 <div th:replace="~{fragments/navigation}"></div>
 <main>
     <h1>Списък с клиенти</h1>
+    <div class="buttons">
+        <a th:href="@{/add-client}" class="register">Добави</a>
+    </div>
     <table id="clients-table">
         <thead>
         <tr>

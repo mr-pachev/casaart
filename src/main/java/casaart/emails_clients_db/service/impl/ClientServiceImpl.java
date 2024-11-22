@@ -35,8 +35,9 @@ public class ClientServiceImpl implements ClientService {
         return addClientDTOS;
     }
 
-    ClientDTO mapToClientDTO(Client client){
+    ClientDTO mapToClientDTO(Client client) {
         ClientDTO clientDTO = mapper.map(client, ClientDTO.class);
+        clientDTO.setAddedFrom(client.getUser().getUsername());
 
         return clientDTO;
     }
