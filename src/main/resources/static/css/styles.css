@@ -182,6 +182,78 @@ table tr:hover {
     box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
 }
 
+/* Бутони за действия */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.edit-button {
+    display: inline-block;
+    background-color: rgba(211, 129, 12, 0.9); /* Син фон */
+    color: white; /* Бял текст */
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    text-decoration: none; /* Без подчертаване */
+    border: none; /* Без рамка */
+    transition: background-color 0.3s ease; /* Преход само за фона */
+}
+
+.edit-button:hover {
+    background-color: rgba(173, 106, 8, 0.9); /* Промяна само на фона при hover */
+    color: white; /* Уверяваме се, че текстът остава бял */
+    text-decoration: none; /* Без подчертаване */
+}
+
+.delete-button {
+    display: inline-block;
+    background-color: #FF4136; /* Червен фон */
+    color: white; /* Бял текст */
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    text-decoration: none; /* Без подчертаване */
+    border: none; /* Без рамка */
+    transition: background-color 0.3s ease; /* Преход само за фона */
+}
+
+.delete-button:hover {
+    background-color: #D90429; /* Промяна само на фона при hover */
+    color: white; /* Уверяваме се, че текстът остава бял */
+    text-decoration: none; /* Без подчертаване */
+}
+/* Оптимизация на таблицата */
+#clients-table th, #clients-table td {
+    text-align: center;
+    padding: 8px;
+}
+
+#clients-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#clients-table th {
+    background-color: #1E90FF;
+    color: white;
+    padding: 10px;
+}
+
+#clients-table td {
+    border: 1px solid #ddd;
+}
+
+#clients-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#clients-table tr:hover {
+    background-color: #f1f1f1;
+}
+
 /* Футър */
 footer {
     margin-top: 50px;
