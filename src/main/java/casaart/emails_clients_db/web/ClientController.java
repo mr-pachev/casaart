@@ -29,6 +29,11 @@ public class ClientController {
         return new AddClientDTO();
     }
 
+    @ModelAttribute("clientDTO")
+    public ClientDTO clientDTO() {
+        return new ClientDTO();
+    }
+
     //view all clients
     @GetMapping("/clients")
     public String getAllClients(Model model) {
@@ -46,39 +51,29 @@ public class ClientController {
         return "add-client";
     }
 
-    @PostMapping("/add-client")
-    public String addUser(
-            @Valid AddUserDTO addUserDTO,
-            BindingResult bindingResult,
-            RedirectAttributes rAtt) {
-
-        if (bindingResult.hasErrors()) {
-            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
-
-            return "redirect:/registration";
-        }
-
-        if (userService.isExistUser(addUserDTO.getUsername())) {
-            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
-            rAtt.addFlashAttribute("noAddedUser", true);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
-
-            return "redirect:/add-client";
-        }
-
-        boolean confirmPassword = addUserDTO.getPassword().equals(addUserDTO.getConfirmPassword());
-
-        if (!confirmPassword) {
-            rAtt.addFlashAttribute("addUserDTO", addUserDTO);
-//            rAtt.addFlashAttribute("unconfirmed", true);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
-
-            return "redirect:/add-client";
-        }
-
-        userService.addUser(addUserDTO);
-
-        return "redirect:/clients";
-    }
+//    @PostMapping("/add-client")
+//    public String addClient(
+//            @Valid AddClientDTO addClientDTO,
+//            BindingResult bindingResult,
+//            RedirectAttributes rAtt) {
+//
+//        if (bindingResult.hasErrors()) {
+//            rAtt.addFlashAttribute("addClientDTO", addClientDTO);
+//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
+//
+//            return "redirect:/add-client";
+//        }
+//
+//        if (userService.isExistUser(addClientDTO.getUsername())) {
+//            rAtt.addFlashAttribute("addClientDTO", addClientDTO);
+//            rAtt.addFlashAttribute("noAddedClientr", true);
+//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
+//
+//            return "redirect:/add-client";
+//        }
+//
+//        userService.addUser(addUserDTO);
+//
+//        return "redirect:/clients";
+//    }
 }

@@ -30,45 +30,8 @@
     <h1>Регистрация</h1>
     <div class="login-form">
         <form th:action="@{/add-client}"
-              th:object="${ad}"
+              th:object="${addClientDTO}"
               th:method="POST">
-            <div class="form-group">
-                <label for="username">Потребителско име</label>
-                <input type="text"
-                       id="username"
-                       name="username"
-                       th:field="*{username}"
-                       th:errorclass="is-invalid">
-                <p class="invalid-feedback errors alert alert-danger">
-                    Потребителското име трябва да се състои от 3 до 15 букви.
-                </p>
-            </div>
-            <div class="form-group">
-                <label for="password">Парола</label>
-                <input type="password"
-                       id="password"
-                       name="password"
-                       th:field="*{password}"
-                       th:errorclass="is-invalid">
-                <p class="invalid-feedback errors alert alert-danger">
-                    Паролата трябва да се състои от 4 до 12 символа.
-                </p>
-            </div>
-            <div class="form-group">
-                <label for="confirmPassword">Потвърди парола</label>
-                <input type="password"
-                       id="confirmPassword"
-                       name="confirmPassword"
-                       th:field="*{confirmPassword}"
-                       th:errorclass="is-invalid">
-                <!--                <p class="errors alert alert-danger">-->
-                <!--                    Паролата трябва да се състои от 4 до 12 символа.-->
-                <!--                </p>-->
-                <!--                <p class="errors alert alert-danger"-->
-                <!--                   th:if="${unconfirmed}">-->
-                <!--                    Непотвърдена парола.-->
-                <!--                </p>-->
-            </div>
             <div class="form-group">
                 <label for="firstName">Име</label>
                 <input type="text"
@@ -103,11 +66,44 @@
                 </p>
             </div>
             <div class="form-group">
+                <label for="company">Фирма</label>
+                <input type="text"
+                       id="company"
+                       name="company"
+                       th:field="*{companyName}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Името на фирмата трябва да се състои от 2 до 15 букви.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="email">Фирма</label>
+                <input type="text"
+                       id="company"
+                       name="company"
+                       th:field="*{companyName}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Името на фирмата трябва да се състои от 2 до 15 букви.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Телефонен номер</label>
+                <input type="number"
+                       id="phoneNumber"
+                       name="phoneNumber"
+                       th:field="*{phoneNumber}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Мобилния номер трябва да се състои от 10 цифри.
+                </p>
+            </div>
+            <div class="form-group">
                 <label for="sourceType">Източник данни</label>
                 <select class="form-control"
                         id="sourceType"
                         name="sourceType"
-                        th:field="*{located}"
+                        th:field="*{sourceType}"
                         th:errorclass="is-invalid">
                     <option value="">-- Избери --</option>
                     <option th:each="located: ${sourceType}"
@@ -118,10 +114,9 @@
                     Избери източник.
                 </p>
             </div>
-            <button type="submit" class="btn btn-primary">Регистрирай се</button>
+            <button type="submit" class="btn btn-primary">Добави</button>
         </form>
     </div>
-    <p>Вече имате профил? <a th:href="@{/login}" class="login-link">Вход</a></p>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>
