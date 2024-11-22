@@ -8,21 +8,7 @@
     <title>CASA ART - Потребители</title>
 </head>
 <body>
-<header>
-    <a th:href="@{/}">
-        <img src="/images/logo.png" alt="CASA ART Logo">
-    </a>
-</header>
-<div class="navbar" sec:authorize="isAuthenticated()" th:fragment="navigation">
-    <div class="welcome">Здравей, <span th:text="${@userHelperService.getUser().getUsername()}"></span>!</div>
-    <nav class="nav-links">
-        <a th:href="@{/users}">Потребители</a>
-        <a th:href="@{/clients}">Клиенти</a>
-        <form th:action="@{/logout}" method="post" class="logout-form">
-            <button type="submit" class="logout-button">Изход</button>
-        </form>
-    </nav>
-</div>
+<div th:replace="~{fragments/navigation}"></div>
 <main>
     <h1>Списък с клиенти</h1>
     <div class="sort-section">

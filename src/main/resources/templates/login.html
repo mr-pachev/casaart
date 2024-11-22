@@ -4,15 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CASA ART - Вход</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css"/>
 </head>
 <body>
-<header>
-    <a th:href="@{/}">
-        <img src="/images/logo.png" alt="CASA ART Logo">
-    </a>
-</header>
+<div th:replace="~{fragments/navigation}"></div>
 <main>
     <h1>Вход в системата</h1>
     <p class="description">Моля, въведете вашите данни за достъп, за да влезете в системата.</p>

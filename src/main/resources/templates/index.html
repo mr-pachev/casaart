@@ -5,23 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CASA ART - Начална страница</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css"/>
 </head>
 <body>
-    <header>
-        <img src="/images/logo.png" alt="CASA ART Logo">
-    </header>
-    <div class="navbar" sec:authorize="isAuthenticated()">
-        <div class="welcome">Здравей, <span th:text="${@userHelperService.getUser().getUsername()}"></span>!</div>
-        <nav class="nav-links">
-            <a th:href="@{/users}">Потребители</a>
-            <a th:href="@{/clients}">Клиенти</a>
-            <form th:action="@{/logout}" method="post" class="logout-form">
-                <button type="submit" class="logout-button">Изход</button>
-            </form>
-        </nav>
-    </div>
+<div th:replace="~{fragments/navigation}"></div>
     <main>
         <h1>Добре дошли в приложението на CASA ART!</h1>
         <p class="description">
