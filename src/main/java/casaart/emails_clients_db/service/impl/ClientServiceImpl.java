@@ -45,14 +45,17 @@ public class ClientServiceImpl implements ClientService {
     public boolean isExistClient(String fullName) {
         List<String> nameParts = Arrays.asList(fullName.split(" "));
 
-        Client client = switch (nameParts.size()) {
-            case 1 -> clientRepository.findByFirstName(nameParts.get(0)).orElseThrow();
-            case 2 -> clientRepository.findByFirstNameAndLastName(nameParts.get(0), nameParts.get(1)).orElseThrow();
-            case 3 -> clientRepository.findByFirstNameAndMiddleNameAndLastName(nameParts.get(0), nameParts.get(1), nameParts.get(2)).orElseThrow();
-            default -> throw new IllegalStateException("Unexpected value: " + nameParts.size());
-        };
+        boolean client;
 
-        return true;
+        if(nameParts.size() == 1){
+            client = clientRepository.findByFirstName(nameParts.get(0)).isPresent();
+        }else if(nameParts.size() == 2){
+            client = clientRepository.findByFirstNameAndLastName(nameParts.get(0), nameParts.get(2)).isPresent();
+        }else {
+            client = clientRepository.findByFirstNameAndMiddleNameAndLastName(nameParts.get(0), nameParts.get(1), nameParts.get(2)).isPresent();
+        }
+
+        return client;
     }
 
     //add client

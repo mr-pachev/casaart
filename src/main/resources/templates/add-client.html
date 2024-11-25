@@ -9,7 +9,14 @@
 <body>
 <div th:replace="~{fragments/navigation}"></div>
 <main>
-    <h1>Регистрация</h1>
+
+    <div class="container-form">
+        <div class="bg-danger text-center" th:if="${noAddedClient}">
+            <p class="d-block">Non-existent identification number or the user already exists</p>
+        </div>
+        <div th:unless="${noAddedClient}">
+            <h1>Регистрация</h1>
+        </div>
     <div class="login-form">
         <form th:action="@{/add-client}"
               th:object="${addClientDTO}"
