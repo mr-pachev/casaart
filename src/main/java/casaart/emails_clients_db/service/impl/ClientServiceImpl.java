@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -38,6 +39,20 @@ public class ClientServiceImpl implements ClientService {
 
 
         return addClientDTOS;
+    }
+
+    @Override
+    public boolean isExistClient(String fullName) {
+        List<String> nameParts = Arrays.asList(fullName.split(" "));
+
+        Client client = switch (nameParts.size()) {
+            case 1 -> clientRepository.findByFirstName(nameParts.get(0)).orElseThrow();
+            case 2 -> clientRepository.findByFirstNameAndLastName(nameParts.get(0), nameParts.get(1)).orElseThrow();
+            case 3 -> clientRepository.findByFirstNameAndMiddleNameAndLastName(nameParts.get(0), nameParts.get(1), nameParts.get(2)).orElseThrow();
+            default -> throw new IllegalStateException("Unexpected value: " + nameParts.size());
+        };
+
+        return true;
     }
 
     //add client

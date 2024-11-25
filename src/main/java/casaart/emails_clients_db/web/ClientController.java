@@ -63,17 +63,21 @@ public class ClientController {
 
             return "redirect:/add-client";
         }
-//
-//        if (userService.isExistUser(addClientDTO.getUsername())) {
-//            rAtt.addFlashAttribute("addClientDTO", addClientDTO);
-//            rAtt.addFlashAttribute("noAddedClientr", true);
-//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
-//
-//            return "redirect:/add-client";
-//        }
-//
+
+        String fullName = addClientDTO.getFirstName() + " "
+                + addClientDTO.getMiddleName() + " "
+                + addClientDTO.getLastName();
+
+        if (clientService.isExistClient(fullName)) {
+            rAtt.addFlashAttribute("addClientDTO", addClientDTO);
+            rAtt.addFlashAttribute("noAddedClient", true);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
+
+            return "redirect:/add-client";
+        }
+
         clientService.addClient(addClientDTO);
-//
+
         return "redirect:/clients";
     }
 }

@@ -32,16 +32,16 @@
         </thead>
         <tbody>
         <tr th:each="client :${allClients}">
-            <td th:text="${client.firstName}">Иван</td>
-            <td th:text="${client.middleName}">Георгиев</td>
-            <td th:text="${client.lastName}">Петров</td>
-            <td th:text="${client.companyName}">CASA ART</td>
-            <td th:text="${client.email}">ivan.petrov@example.com</td>
-            <td th:text="${client.phoneNumber}">0888123456</td>
-            <td th:text="${client.sourceType}">Референция</td>
-            <td th:text="${client.creatDate}">2024-11-01</td>
-            <td th:text="${client.modifyDate}">2024-11-15</td>
-            <td th:text="${client.addedFrom}">Админ</td>
+            <td th:text="${client.firstName}">Име</td>
+            <td th:text="${client.middleName}">Презиме</td>
+            <td th:text="${client.lastName}">Фамилия</td>
+            <td th:text="${client.companyName}">Фирма</td>
+            <td th:text="${client.email}">Емейл</td>
+            <td th:text="${client.phoneNumber}">Телефонен номер</td>
+            <td th:text="${client.sourceType}">Местоположение</td>
+            <td th:text="${client.creatDate}">Дата създаване</td>
+            <td th:text="${client.modifyDate}">Дата промяна</td>
+            <td th:text="${client.addedFrom}">Служител никнейм</td>
             <td>
                 <div class="action-buttons">
                     <a th:href="@{/edit-client/{id}(id=${client.id})}" class="edit-button">Промяна</a>
