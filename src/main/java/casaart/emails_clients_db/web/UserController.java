@@ -50,6 +50,11 @@ public class UserController {
     @GetMapping("/registration")
     public String viewAddUserForm(Model model) {
         model.addAttribute("sourceType", SourceType.values());
+
+        if (!model.containsAttribute("unConfirmedPass")) {
+            model.addAttribute("unConfirmedPass", false);
+        }
+
         return "registration";
     }
 
@@ -78,7 +83,7 @@ public class UserController {
 
         if (!confirmPassword) {
             rAtt.addFlashAttribute("addUserDTO", addUserDTO);
-//            rAtt.addFlashAttribute("unconfirmed", true);
+            rAtt.addFlashAttribute("unConfirmedPass", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
 
             return "redirect:/registration";
