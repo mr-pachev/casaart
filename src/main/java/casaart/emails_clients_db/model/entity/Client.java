@@ -19,7 +19,7 @@ public class Client extends BaseEntity{
     @Column(name = "email")
     private String email;
     @Column(name = "phone_number")
-    private int phoneNumber;
+    private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private SourceType sourceType;
     @Column(name = "creat_date")
@@ -71,11 +71,11 @@ public class Client extends BaseEntity{
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

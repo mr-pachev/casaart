@@ -48,7 +48,11 @@ public class ClientController {
     @GetMapping("/add-client")
     public String viewAddClientForm(Model model) {
         model.addAttribute("sourceType", SourceType.values());
-        model.addAttribute("isExistEmail", false);
+
+        if (!model.containsAttribute("isExistEmail")) {
+            model.addAttribute("isExistEmail", false);
+        }
+
         return "add-client";
     }
 
@@ -56,7 +60,7 @@ public class ClientController {
     public String addClient(
             @Valid AddClientDTO addClientDTO,
             BindingResult bindingResult,
-            RedirectAttributes rAtt) {
+            RedirectAttributes rAtt, Model model) {
 
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("addClientDTO", addClientDTO);

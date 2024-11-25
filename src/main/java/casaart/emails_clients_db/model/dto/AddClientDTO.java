@@ -16,9 +16,9 @@ public class AddClientDTO {
     private String companyName;
     @NotBlank@Email
     private String email;
-    @NotNull
-    @Min(10)
-    private int phoneNumber;
+    @NotBlank
+    @Size(max = 9)
+    private String phoneNumber;
     @NotBlank
     private String sourceType;
 
@@ -62,11 +62,11 @@ public class AddClientDTO {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
