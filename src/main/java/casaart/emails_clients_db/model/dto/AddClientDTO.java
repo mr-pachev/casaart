@@ -6,8 +6,7 @@ public class AddClientDTO {
     @NotBlank
     @Size(min = 2, max = 15)
     private String firstName;
-    @NotBlank
-    @Size(min = 2, max = 15)
+    @Size(max = 15)
     private String middleName;
     @NotBlank
     @Size(min = 2, max = 15)

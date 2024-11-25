@@ -48,6 +48,7 @@ public class ClientController {
     @GetMapping("/add-client")
     public String viewAddClientForm(Model model) {
         model.addAttribute("sourceType", SourceType.values());
+        model.addAttribute("isExistEmail", false);
         return "add-client";
     }
 
@@ -64,13 +65,9 @@ public class ClientController {
             return "redirect:/add-client";
         }
 
-        String fullName = addClientDTO.getFirstName() + " "
-                + addClientDTO.getMiddleName() + " "
-                + addClientDTO.getLastName();
-
-        if (clientService.isExistClient(fullName)) {
+        if (clientService.isExistClientEmail(addClientDTO.getEmail())) {
             rAtt.addFlashAttribute("addClientDTO", addClientDTO);
-            rAtt.addFlashAttribute("noAddedClient", true);
+            rAtt.addFlashAttribute("isExistEmail", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
 
             return "redirect:/add-client";

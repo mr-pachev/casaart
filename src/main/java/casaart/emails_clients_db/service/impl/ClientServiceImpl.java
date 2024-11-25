@@ -42,20 +42,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean isExistClient(String fullName) {
-        List<String> nameParts = Arrays.asList(fullName.split(" "));
+    public boolean isExistClientEmail(String email) {
 
-        boolean client;
-
-        if(nameParts.size() == 1){
-            client = clientRepository.findByFirstName(nameParts.get(0)).isPresent();
-        }else if(nameParts.size() == 2){
-            client = clientRepository.findByFirstNameAndLastName(nameParts.get(0), nameParts.get(2)).isPresent();
-        }else {
-            client = clientRepository.findByFirstNameAndMiddleNameAndLastName(nameParts.get(0), nameParts.get(1), nameParts.get(2)).isPresent();
-        }
-
-        return client;
+        return clientRepository.findByEmail(email).isPresent();
     }
 
     //add client
