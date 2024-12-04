@@ -42,11 +42,13 @@
             <td th:text="${client.creatDate}">Дата създаване</td>
             <td th:text="${client.modifyDate}">Дата промяна</td>
             <td th:text="${client.addedFrom}">Служител никнейм</td>
-            <td>
-                <div class="action-buttons">
-                    <a th:href="@{/edit-client/{id}(id=${client.id})}" class="edit-button">Промяна</a>
-                    <a th:href="@{/delete-client/{id}(id=${client.id})}" class="delete-button">Премахване</a>
-                </div>
+            <td class="action-buttons" >
+                <form th:method="POST" th:action="@{/client-details.html/{id}(id=${client.id})}">
+                    <a th:href="@{/client-details/{id}(id=${client.id})}" class="edit-button">Промяна</a>
+                </form>
+                <form th:method="POST" th:action="@{/client-details.html/{id}(id=${client.id})}">
+                    <a th:href="@{/client-details/{id}(id=${client.id})}" class="delete-button">Премахване</a>
+                </form>
             </td>
         </tr>
         </tbody>

@@ -58,6 +58,22 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.save(client);
     }
 
+    //find client by id
+    @Override
+    public ClientDTO findClientById(long id) {
+        Client client = clientRepository.findById(id);
+
+        ClientDTO clientDTO = mapper.map(client, ClientDTO.class);
+        clientDTO.setAddedFrom(client.getSourceType().name());
+
+        return clientDTO;
+    }
+
+    @Override
+    public void deleteClient(long id) {
+        clientRepository.deleteById(id);
+    }
+    //delete client by id
     ClientDTO mapToClientDTO(Client client) {
         ClientDTO clientDTO = mapper.map(client, ClientDTO.class);
         clientDTO.setAddedFrom(client.getUser().getUsername());

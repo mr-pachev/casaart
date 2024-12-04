@@ -1,7 +1,6 @@
 package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddClientDTO;
-import casaart.emails_clients_db.model.dto.AddUserDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.service.ClientService;
@@ -9,10 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -91,34 +87,53 @@ public class ClientController {
 
     @GetMapping("/client-details/{id}")
     public String fillEditClientForm(@PathVariable("id") Long id, Model model) {
-        EmployeeDTO  employeeDTO = employeeService.getEmployeeByID(id);
-        model.addAttribute(employeeDTO);
+        ClientDTO  clientDTO = clientService.findClientById(id);
+        model.addAttribute(clientDTO);
+        model.addAttribute("sourceType", SourceType.values());
 
-        model.addAttribute("positions", positionService.getAllPositionNames());
-        model.addAttribute("departments", departmentService.getAllDepartments());
-        model.addAttribute("educations", educationService.getAllEducations());
-
-        return "employee-details";
+        return "client-details";
     }
 
     @PostMapping("/client-details")
-    public String edithEmployee(@Valid EmployeeDTO employeeDTO,
-                                BindingResult bindingResult,
-                                RedirectAttributes rAtt,
-                                Model model){
+    public String edithClient(@RequestParam("id") Long id,
+                              @Valid ClientDTO clientDTO,
+                              BindingResult bindingResult,
+                              RedirectAttributes rAtt,
+                              Model model){
+
+        clientDTO.setId(id);
+
 
         if(bindingResult.hasErrors()){
-            rAtt.addFlashAttribute("employeeDTO", employeeDTO);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.employeeDTO", bindingResult);
-
-            model.addAttribute("positions", positionService.getAllPositionNames());
-            model.addAttribute("departments", departmentService.getAllDepartments());
-            model.addAttribute("educations", educationService.getAllEducations());
+            rAtt.addFlashAttribute("clientDTO", clientDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
+            model.addAttribute("sourceType", SourceType.values());
 
             return "client-details";
         }
 
-        employeeService.editEmployee(employeeDTO);
+        boolean isChangedEmail = !clientDTO.getEmail().equals(clientService.findClientById(id).getEmail());
+
+        if(bindingResult.hasErrors() && isChangedEmail){
+            rAtt.addFlashAttribute("clientDTO", clientDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
+            model.addAttribute("sourceType", SourceType.values());
+            model.addAttribute("isExistEmail", true);
+
+            return "client-details";
+        }
+
+
+
+//        employeeService.editEmployee(employeeDTO);
+        return "redirect:/clients";
+    }
+    //delete client by id
+    @PostMapping("/delete-client/{id}")
+    public String removeUser(@PathVariable("id") Long id) {
+
+        clientService.deleteClient(id);
+
         return "redirect:/clients";
     }
 }

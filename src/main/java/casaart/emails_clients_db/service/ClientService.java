@@ -12,4 +12,8 @@ public interface ClientService {
     boolean isExistClientEmail(String email);
     //add client
    void addClient(AddClientDTO addClientDTO);
+   //find client by id
+    ClientDTO findClientById(long id);
+    //delete client by id
+    void deleteClient(long id);
 }
