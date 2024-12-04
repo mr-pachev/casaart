@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -79,6 +80,45 @@ public class ClientController {
 
         clientService.addClient(addClientDTO);
 
+        return "redirect:/clients";
+    }
+    //edit current client
+    @PostMapping("/client-details/{id}")
+    public String referenceToEdithClientForm(@PathVariable("id") Long id){
+
+        return "redirect:/client-details/" + id;
+    }
+
+    @GetMapping("/client-details/{id}")
+    public String fillEditClientForm(@PathVariable("id") Long id, Model model) {
+        EmployeeDTO  employeeDTO = employeeService.getEmployeeByID(id);
+        model.addAttribute(employeeDTO);
+
+        model.addAttribute("positions", positionService.getAllPositionNames());
+        model.addAttribute("departments", departmentService.getAllDepartments());
+        model.addAttribute("educations", educationService.getAllEducations());
+
+        return "employee-details";
+    }
+
+    @PostMapping("/client-details")
+    public String edithEmployee(@Valid EmployeeDTO employeeDTO,
+                                BindingResult bindingResult,
+                                RedirectAttributes rAtt,
+                                Model model){
+
+        if(bindingResult.hasErrors()){
+            rAtt.addFlashAttribute("employeeDTO", employeeDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.employeeDTO", bindingResult);
+
+            model.addAttribute("positions", positionService.getAllPositionNames());
+            model.addAttribute("departments", departmentService.getAllDepartments());
+            model.addAttribute("educations", educationService.getAllEducations());
+
+            return "client-details";
+        }
+
+        employeeService.editEmployee(employeeDTO);
         return "redirect:/clients";
     }
 }
