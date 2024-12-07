@@ -14,6 +14,8 @@ public interface ClientService {
    void addClient(AddClientDTO addClientDTO);
    //find client by id
     ClientDTO findClientById(long id);
+    //edit client
+    void editClient(ClientDTO clientDTO);
     //delete client by id
     void deleteClient(long id);
 }

@@ -3,6 +3,7 @@ package casaart.emails_clients_db.service.impl;
 import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.entity.Client;
+import casaart.emails_clients_db.model.entity.User;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.service.ClientService;
 import casaart.emails_clients_db.service.UserHelperService;
@@ -67,6 +68,20 @@ public class ClientServiceImpl implements ClientService {
         clientDTO.setAddedFrom(client.getSourceType().name());
 
         return clientDTO;
+    }
+    //edit client
+    @Override
+    public void editClient(ClientDTO clientDTO) {
+        Client client = clientRepository.findById(clientDTO.getId());
+        User currentUser = client.getUser();
+        LocalDate createdDate = client.getCreatDate();
+
+        client = mapper.map(clientDTO, Client.class);
+        client.setModifyDate(LocalDate.now());
+        client.setCreatDate(createdDate);
+        client.setUser(currentUser);
+
+        clientRepository.save(client);
     }
 
     @Override

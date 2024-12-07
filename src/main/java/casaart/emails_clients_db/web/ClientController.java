@@ -114,7 +114,7 @@ public class ClientController {
 
         boolean isChangedEmail = !clientDTO.getEmail().equals(clientService.findClientById(id).getEmail());
 
-        if(bindingResult.hasErrors() && isChangedEmail){
+        if(isChangedEmail && clientService.isExistClientEmail(clientDTO.getEmail())){
             rAtt.addFlashAttribute("clientDTO", clientDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
             model.addAttribute("sourceType", SourceType.values());
@@ -123,9 +123,7 @@ public class ClientController {
             return "client-details";
         }
 
-
-
-//        employeeService.editEmployee(employeeDTO);
+        clientService.editClient(clientDTO);
         return "redirect:/clients";
     }
     //delete client by id
