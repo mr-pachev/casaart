@@ -127,7 +127,7 @@ public class ClientController {
     }
     //delete client by id
     @PostMapping("/delete-client/{id}")
-    public String removeUser(@PathVariable("id") Long id) {
+    public String removeClient(@PathVariable("id") Long id) {
 
         clientService.deleteClient(id);
 

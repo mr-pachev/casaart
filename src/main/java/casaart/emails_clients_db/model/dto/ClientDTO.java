@@ -13,8 +13,7 @@ public class ClientDTO {
     @NotBlank
     @Size(min = 2, max = 15)
     private String lastName;
-    @NotBlank
-    @Size(min = 2, max = 15)
+    @Size(max = 15)
     private String companyName;
     @NotBlank@Email
     private String email;
