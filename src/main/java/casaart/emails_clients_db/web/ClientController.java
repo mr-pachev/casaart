@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -40,6 +41,16 @@ public class ClientController {
 
         return "clients";
     }
+
+    //view all clients by sourceType
+    @PostMapping("/sort-clients")
+    public String sortClients(@RequestParam("sourceType") String sourceType, Model model) {
+        List<ClientDTO> sortedClients = clientService.sortedClients(sourceType);
+        model.addAttribute("allClients", sortedClients);
+
+        return "clients"; // Връщаме същия шаблон с актуализиран списък
+    }
+
 
     //create new client
     @GetMapping("/add-client")

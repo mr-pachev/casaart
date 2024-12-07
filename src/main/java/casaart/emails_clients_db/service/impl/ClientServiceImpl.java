@@ -4,6 +4,7 @@ import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.model.entity.User;
+import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.service.ClientService;
 import casaart.emails_clients_db.service.UserHelperService;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -27,21 +27,26 @@ public class ClientServiceImpl implements ClientService {
         this.mapper = mapper;
     }
 
+    //get all clients
     @Override
     public List<ClientDTO> getAllClients() {
-        List<ClientDTO> addClientDTOS = new ArrayList<>();
         List<Client> clients = clientRepository.findAll();
 
-        for (Client client : clients) {
-            ClientDTO clientDTO = mapToClientDTO(client);
-
-            addClientDTOS.add(clientDTO);
-        }
-
-
-        return addClientDTOS;
+        return mapToClientDTOList(clients);
     }
 
+    //get sorted clients
+    @Override
+    public List<ClientDTO> sortedClients(String sourceTypeName) {
+        if(sourceTypeName.equals("ALL CLIENTS")){
+           return getAllClients();
+        }
+        List<Client> clientsBySourceType = clientRepository.findAllBySourceType(SourceType.valueOf(sourceTypeName));
+
+        return mapToClientDTOList(clientsBySourceType);
+    }
+
+    //checking is exist client email
     @Override
     public boolean isExistClientEmail(String email) {
 
@@ -87,16 +92,27 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.save(client);
     }
 
+    //delete client by id
     @Override
     public void deleteClient(long id) {
         clientRepository.deleteById(id);
     }
-
-    //delete client by id
     ClientDTO mapToClientDTO(Client client) {
         ClientDTO clientDTO = mapper.map(client, ClientDTO.class);
         clientDTO.setAddedFrom(client.getUser().getUsername());
 
         return clientDTO;
+    }
+
+    List<ClientDTO> mapToClientDTOList(List<Client> clientList){
+        List<ClientDTO> allClientDTOS = new ArrayList<>();
+
+        for (Client client : clientList) {
+            ClientDTO clientDTO = mapToClientDTO(client);
+
+            allClientDTOS.add(clientDTO);
+        }
+
+        return allClientDTOS;
     }
 }

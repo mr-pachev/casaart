@@ -8,6 +8,8 @@ import java.util.List;
 public interface ClientService {
     //get all clients
     List<ClientDTO> getAllClients();
+    //get sorted clients
+    List<ClientDTO> sortedClients(String sourceTypeName);
     //checking is exist client email
     boolean isExistClientEmail(String email);
     //add client
