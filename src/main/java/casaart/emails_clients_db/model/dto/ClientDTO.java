@@ -3,7 +3,6 @@ package casaart.emails_clients_db.model.dto;
 import jakarta.validation.constraints.*;
 
 public class ClientDTO {
-
     long id;
     @NotBlank
     @Size(min = 2, max = 15)

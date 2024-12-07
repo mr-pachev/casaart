@@ -37,13 +37,27 @@ public class ClientServiceImpl implements ClientService {
 
     //get sorted clients
     @Override
-    public List<ClientDTO> sortedClients(String sourceTypeName) {
-        if(sourceTypeName.equals("ALL CLIENTS")){
-           return getAllClients();
-        }
-        List<Client> clientsBySourceType = clientRepository.findAllBySourceType(SourceType.valueOf(sourceTypeName));
+    public List<ClientDTO> sortedClients(String sortRule) {
+        List<Client> sortedClientList = new ArrayList<>();
 
-        return mapToClientDTOList(clientsBySourceType);
+        switch (sortRule) {
+            case "creatDate":
+                sortedClientList = clientRepository.findAllByOrderByCreatDateDesc();
+                break;
+            case "modifyDate":
+                sortedClientList = clientRepository.findAllByOrderByModifyDateDesc();
+                break;
+            case "addedFrom":
+                sortedClientList = clientRepository.findAllByOrderByUserUsernameAsc();
+                break;
+            case "ALL CLIENTS":
+               return getAllClients();
+
+            default:
+                sortedClientList = clientRepository.findAllBySourceType(SourceType.valueOf(sortRule));
+        }
+
+        return mapToClientDTOList(sortedClientList);
     }
 
     //checking is exist client email
@@ -97,6 +111,7 @@ public class ClientServiceImpl implements ClientService {
     public void deleteClient(long id) {
         clientRepository.deleteById(id);
     }
+
     ClientDTO mapToClientDTO(Client client) {
         ClientDTO clientDTO = mapper.map(client, ClientDTO.class);
         clientDTO.setAddedFrom(client.getUser().getUsername());
@@ -104,7 +119,7 @@ public class ClientServiceImpl implements ClientService {
         return clientDTO;
     }
 
-    List<ClientDTO> mapToClientDTOList(List<Client> clientList){
+    List<ClientDTO> mapToClientDTOList(List<Client> clientList) {
         List<ClientDTO> allClientDTOS = new ArrayList<>();
 
         for (Client client : clientList) {

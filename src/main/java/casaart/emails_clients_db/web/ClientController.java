@@ -42,7 +42,7 @@ public class ClientController {
         return "clients";
     }
 
-    //view all clients by sourceType
+    //view all sorted clients
     @PostMapping("/sort-clients")
     public String sortClients(@RequestParam("sourceType") String sourceType, Model model) {
         List<ClientDTO> sortedClients = clientService.sortedClients(sourceType);

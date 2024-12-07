@@ -18,13 +18,16 @@
         <!-- Форма за сортиране по sourceType -->
         <form th:method="POST" th:action="@{/sort-clients}" style="display: inline;">
             <select name="sourceType" class="source-type-select">
-                <option value="">-- подреди по --</option>
+                <option value="ALL CLIENTS">-- подреди по --</option>
                 <option value="ALL CLIENTS">ALL CLIENTS</option>
+                <option value="creatDate">Дата на създаване</option>
+                <option value="modifyDate">Дата на промяна</option>
+                <option value="addedFrom">Добавен от</option>
                 <option value="REGISTRATION">REGISTRATION</option>
                 <option value="ORDER">ORDER</option>
                 <option value="HOTEL">HOTEL</option>
-                <option value="SHOW_ROOM">SHOW_ROOM</option>
-                <option value="ONLINE_SHOP">ONLINE_SHOP</option>
+                <option value="SHOW_ROOM">SHOW ROOM</option>
+                <option value="ONLINE_SHOP">ONLINE SHOP</option>
             </select>
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
