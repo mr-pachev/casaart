@@ -31,6 +31,8 @@ public class Client extends BaseEntity{
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    private String modifyFrom;
+
     public String getFirstName() {
         return firstName;
     }
@@ -109,5 +111,13 @@ public class Client extends BaseEntity{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getModifyFrom() {
+        return modifyFrom;
+    }
+
+    public void setModifyFrom(String modifyFrom) {
+        this.modifyFrom = modifyFrom;
     }
 }

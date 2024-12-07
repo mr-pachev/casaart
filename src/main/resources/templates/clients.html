@@ -27,6 +27,7 @@
             <th style="width: 10%;">Дата на създаване</th>
             <th style="width: 10%;">Дата на промяна</th>
             <th style="width: 10%;">Добавен от</th>
+            <th style="width: 10%;">Променен от</th>
             <th style="width: 10%;">Действия</th>
         </tr>
         </thead>
@@ -42,11 +43,12 @@
             <td th:text="${client.creatDate}">Дата създаване</td>
             <td th:text="${client.modifyDate}">Дата промяна</td>
             <td th:text="${client.addedFrom}">Служител никнейм</td>
+            <td th:text="${client.modifyFrom}">Служител никнейм</td>
             <td class="action-buttons" >
                 <form th:method="POST" th:action="@{/client-details/{id}(id=${client.id})}">
-                    <input class="edit-button" type="submit" th:value="Промяно"/>
+                    <input class="edit-button" type="submit" th:value="Промяна"/>
                 </form>
-                <form th:method="POST" th:action="@{/delete-client/{id}(id=${client.id})}">
+                <form th:method="POST" th:action="@{/delete-client/{id}(id=${client.id})}" sec:authorize="hasRole('Admin')">
                     <input class="delete-button" type="submit" th:value="Премахване"/>
                 </form>
             </td>

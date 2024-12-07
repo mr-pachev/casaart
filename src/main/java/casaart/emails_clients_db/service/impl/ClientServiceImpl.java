@@ -53,6 +53,7 @@ public class ClientServiceImpl implements ClientService {
     public void addClient(AddClientDTO addClientDTO) {
         Client client = mapper.map(addClientDTO, Client.class);
         client.setUser(userHelperService.getUser());
+        client.setModifyFrom(userHelperService.getUser().getUsername());
         client.setCreatDate(LocalDate.now());
         client.setModifyDate(LocalDate.now());
 
@@ -69,17 +70,19 @@ public class ClientServiceImpl implements ClientService {
 
         return clientDTO;
     }
+
     //edit client
     @Override
     public void editClient(ClientDTO clientDTO) {
         Client client = clientRepository.findById(clientDTO.getId());
-        User currentUser = client.getUser();
+        User user = client.getUser();
         LocalDate createdDate = client.getCreatDate();
 
         client = mapper.map(clientDTO, Client.class);
         client.setModifyDate(LocalDate.now());
         client.setCreatDate(createdDate);
-        client.setUser(currentUser);
+        client.setUser(user);
+        client.setModifyFrom(userHelperService.getUser().getUsername());
 
         clientRepository.save(client);
     }
@@ -88,6 +91,7 @@ public class ClientServiceImpl implements ClientService {
     public void deleteClient(long id) {
         clientRepository.deleteById(id);
     }
+
     //delete client by id
     ClientDTO mapToClientDTO(Client client) {
         ClientDTO clientDTO = mapper.map(client, ClientDTO.class);

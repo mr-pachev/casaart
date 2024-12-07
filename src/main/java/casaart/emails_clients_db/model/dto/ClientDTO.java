@@ -18,7 +18,7 @@ public class ClientDTO {
     @NotBlank@Email
     private String email;
     @NotBlank
-    @Size(max = 9)
+    @Size(min = 10, max = 10)
     private String phoneNumber;
     @NotBlank
     private String sourceType;
@@ -28,6 +28,7 @@ public class ClientDTO {
     private String modifyDate;
 
     private String addedFrom;
+    private String modifyFrom;
 
     public long getId() {
         return id;
@@ -115,5 +116,13 @@ public class ClientDTO {
 
     public void setAddedFrom(String addedFrom) {
         this.addedFrom = addedFrom;
+    }
+
+    public String getModifyFrom() {
+        return modifyFrom;
+    }
+
+    public void setModifyFrom(String modifyFrom) {
+        this.modifyFrom = modifyFrom;
     }
 }
