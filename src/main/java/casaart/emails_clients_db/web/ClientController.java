@@ -103,7 +103,6 @@ public class ClientController {
 
         clientDTO.setId(id);
 
-
         if(bindingResult.hasErrors()){
             rAtt.addFlashAttribute("clientDTO", clientDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
