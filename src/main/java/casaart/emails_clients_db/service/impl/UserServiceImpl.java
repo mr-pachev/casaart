@@ -1,6 +1,7 @@
 package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.AddUserDTO;
+import casaart.emails_clients_db.model.dto.UserDTO;
 import casaart.emails_clients_db.model.entity.User;
 import casaart.emails_clients_db.model.enums.RoleName;
 import casaart.emails_clients_db.repository.RoleRepository;
@@ -30,8 +31,8 @@ public class UserServiceImpl implements UserService {
     }
     //get all users
     @Override
-    public List<AddUserDTO> getAllUsers() {
-        List<AddUserDTO> users = new ArrayList<>();
+    public List<UserDTO> getAllUsers() {
+        List<UserDTO> users = new ArrayList<>();
 
         for (User user : userRepository.findAll()) {
             users.add(mapToDTO(user));
@@ -62,9 +63,9 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    AddUserDTO mapToDTO(User user){
-        AddUserDTO addUserDTO = mapper.map(user, AddUserDTO.class);
-//        addUserDTO.setRole(user.getRole().getRoleName().name());
-        return addUserDTO;
+    UserDTO mapToDTO(User user){
+        UserDTO userDTO = mapper.map(user, UserDTO.class);
+        userDTO.setRole(user.getRole().getRoleName().name());
+        return userDTO;
     }
 }

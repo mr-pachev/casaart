@@ -18,6 +18,7 @@
     <div class="welcome">Здравей, <span th:text="${@userHelperService.getUser().getUsername()}"></span>!</div>
     <nav class="nav-links">
         <a th:href="@{/dashboard}">Табло</a>
+        <a th:href="@{/users}">Потребители</a>
         <a th:href="@{/clients}">Клиенти</a>
         <form th:action="@{/logout}" method="post" class="logout-form">
             <button type="submit" class="logout-button">Изход</button>

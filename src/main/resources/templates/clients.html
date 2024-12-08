@@ -63,7 +63,7 @@
             <td th:text="${client.modifyDate}">Дата промяна</td>
             <td th:text="${client.addedFrom}">Служител никнейм</td>
             <td th:text="${client.modifyFrom}">Служител никнейм</td>
-            <td class="action-buttons" >
+            <td class="action-buttons">
                 <form th:method="POST" th:action="@{/client-details/{id}(id=${client.id})}">
                     <input class="edit-button" type="submit" th:value="Промяна"/>
                 </form>

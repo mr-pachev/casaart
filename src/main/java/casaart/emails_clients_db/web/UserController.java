@@ -2,6 +2,7 @@ package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddUserDTO;
 import casaart.emails_clients_db.model.dto.LoginUserDTO;
+import casaart.emails_clients_db.model.dto.UserDTO;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.service.UserHelperService;
 import casaart.emails_clients_db.service.UserService;
@@ -39,9 +40,9 @@ public class UserController {
     //view all users
     @GetMapping("/users")
     public String getAllUsers(Model model) {
-        List<AddUserDTO> addUserDTOS = userService.getAllUsers();
+        List<UserDTO> userDTOS = userService.getAllUsers();
 
-        model.addAttribute("allUsers", addUserDTOS);
+        model.addAttribute("allUsers", userDTOS);
 
         return "users";
     }

@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -51,7 +50,6 @@ public class ClientController {
         return "clients"; // Връщаме същия шаблон с актуализиран списък
     }
 
-
     //create new client
     @GetMapping("/add-client")
     public String viewAddClientForm(Model model) {
@@ -89,16 +87,17 @@ public class ClientController {
 
         return "redirect:/clients";
     }
+
     //edit current client
     @PostMapping("/client-details/{id}")
-    public String referenceToEdithClientForm(@PathVariable("id") Long id){
+    public String referenceToEdithClientForm(@PathVariable("id") Long id) {
 
         return "redirect:/client-details/" + id;
     }
 
     @GetMapping("/client-details/{id}")
     public String fillEditClientForm(@PathVariable("id") Long id, Model model) {
-        ClientDTO  clientDTO = clientService.findClientById(id);
+        ClientDTO clientDTO = clientService.findClientById(id);
         model.addAttribute(clientDTO);
         model.addAttribute("sourceType", SourceType.values());
 
@@ -110,11 +109,11 @@ public class ClientController {
                               @Valid ClientDTO clientDTO,
                               BindingResult bindingResult,
                               RedirectAttributes rAtt,
-                              Model model){
+                              Model model) {
 
         clientDTO.setId(id);
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("clientDTO", clientDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
             model.addAttribute("sourceType", SourceType.values());
@@ -124,7 +123,7 @@ public class ClientController {
 
         boolean isChangedEmail = !clientDTO.getEmail().equals(clientService.findClientById(id).getEmail());
 
-        if(isChangedEmail && clientService.isExistClientEmail(clientDTO.getEmail())){
+        if (isChangedEmail && clientService.isExistClientEmail(clientDTO.getEmail())) {
             rAtt.addFlashAttribute("clientDTO", clientDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
             model.addAttribute("sourceType", SourceType.values());
@@ -136,6 +135,7 @@ public class ClientController {
         clientService.editClient(clientDTO);
         return "redirect:/clients";
     }
+
     //delete client by id
     @PostMapping("/delete-client/{id}")
     public String removeClient(@PathVariable("id") Long id) {
