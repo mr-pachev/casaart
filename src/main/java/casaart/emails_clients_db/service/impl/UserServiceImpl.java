@@ -52,9 +52,9 @@ public class UserServiceImpl implements UserService {
     public UserDTO findUserById(long id) {
         User user = userRepository.findById(id);
         UserDTO userDTO = mapper.map(user, UserDTO.class);
+        userDTO.setRole(user.getRole().getRoleName().name());
 
-        System.out.println();
-        return null;
+        return userDTO;
     }
 
     //add new user

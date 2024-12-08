@@ -32,6 +32,11 @@ public class UserController {
         return new AddUserDTO();
     }
 
+    @ModelAttribute("userDTO")
+    public UserDTO userDTO() {
+        return new UserDTO();
+    }
+
     @ModelAttribute("loginUserDTO")
     public LoginUserDTO loginUserDTO() {
         return new LoginUserDTO();

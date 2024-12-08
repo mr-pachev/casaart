@@ -8,7 +8,6 @@ public class UserDTO {
     @NotBlank
     @Size(min = 3, max = 15)
     private String username;
-
     private String role;
     @NotBlank
     @Size(min = 2, max = 15)

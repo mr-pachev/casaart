@@ -26,8 +26,8 @@
                 </p>
             </div>
             <div class="form-group">
-                <label for="sourceType">Роля</label>
-                <select class="form-control"
+                <label for="role">Роля</label>
+                <select class="form-control"  th:placeholder="${userDTO.role}"
                         id="role"
                         name="role"
                         th:field="*{role}"
