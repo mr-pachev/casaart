@@ -1,8 +1,10 @@
 package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddUserDTO;
+import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.dto.LoginUserDTO;
 import casaart.emails_clients_db.model.dto.UserDTO;
+import casaart.emails_clients_db.model.enums.RoleName;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.service.UserHelperService;
 import casaart.emails_clients_db.service.UserService;
@@ -10,9 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -93,6 +93,57 @@ public class UserController {
         userService.addUser(addUserDTO);
 
         return "redirect:/login";
+    }
+
+    //edit user
+    @PostMapping("/user-details/{id}")
+    public String referenceToEdithUserForm(@PathVariable("id") Long id) {
+
+        return "redirect:/user-details/" + id;
+    }
+
+    @GetMapping("/user-details/{id}")
+    public String fillEditUserForm(@PathVariable("id") Long id, Model model) {
+        UserDTO userDTO = userService.findUserById(id);
+        model.addAttribute(userDTO);
+        model.addAttribute("sourceType", SourceType.values());
+        model.addAttribute("roles", RoleName.values());
+
+        return "user-details";
+    }
+
+    @PostMapping("/user-details")
+    public String editUser(@RequestParam("id") Long id,
+                              @Valid UserDTO userDTO,
+                              BindingResult bindingResult,
+                              RedirectAttributes rAtt,
+                              Model model) {
+
+        userDTO.setUserId(id);
+
+        if (bindingResult.hasErrors()) {
+            rAtt.addFlashAttribute("userDTO", userDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.userDTO", bindingResult);
+            model.addAttribute("sourceType", SourceType.values());
+            model.addAttribute("roles", RoleName.values());
+
+            return "user-details";
+        }
+
+//        boolean isChangedEmail = !clientDTO.getEmail().equals(clientService.findClientById(id).getEmail());
+//
+//        if (isChangedEmail && clientService.isExistClientEmail(clientDTO.getEmail())) {
+//            rAtt.addFlashAttribute("clientDTO", clientDTO);
+//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
+//            model.addAttribute("sourceType", SourceType.values());
+//              model.addAttribute("roles", RoleName.values());
+//            model.addAttribute("isExistEmail", true);
+//
+//            return "client-details";
+//        }
+//
+//        clientService.editClient(clientDTO);
+        return "redirect:/users";
     }
 
     //login

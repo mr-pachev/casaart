@@ -47,6 +47,16 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .anyMatch(userDTO -> userDTO.getUsername().equals(username));
     }
+    //find user by id
+    @Override
+    public UserDTO findUserById(long id) {
+        User user = userRepository.findById(id);
+        UserDTO userDTO = mapper.map(user, UserDTO.class);
+
+        System.out.println();
+        return null;
+    }
+
     //add new user
     @Override
     public void addUser(AddUserDTO addUserDTO) {

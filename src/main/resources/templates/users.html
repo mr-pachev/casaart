@@ -33,7 +33,7 @@
             <td th:text="${user.lastName}">Фамилия</td>
             <td th:text="${user.located}">Месторабота</td>
             <td class="action-buttons" sec:authorize="hasRole('Admin')">
-                <form th:method="POST" th:action="@{/client-details/{id}(id=${user.userId})}">
+                <form th:method="POST" th:action="@{/user-details/{id}(id=${user.userId})}">
                     <input class="edit-button" type="submit" th:value="Промяна"/>
                 </form>
                 <form th:method="POST" th:action="@{/delete-client/{id}(id=${user.userId})}" sec:authorize="hasRole('Admin')">
@@ -41,18 +41,6 @@
                 </form>
             </td>
         </tr>
-<!--        <tr>-->
-<!--            <td>Мария</td>-->
-<!--            <td>Иванова</td>-->
-<!--            <td>Костова</td>-->
-<!--            <td>Дизайн Студио</td>-->
-<!--            <td>maria.kostova@example.com</td>-->
-<!--            <td>0887654321</td>-->
-<!--            <td>Онлайн</td>-->
-<!--            <td>2024-10-20</td>-->
-<!--            <td>2024-11-10</td>-->
-<!--            <td>Потребител</td>-->
-<!--        </tr>-->
         </tbody>
     </table>
 </main>

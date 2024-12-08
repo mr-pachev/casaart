@@ -10,6 +10,8 @@ public interface UserService {
     List<UserDTO> getAllUsers();
     //checking is exist user by username
     boolean isExistUser(String username);
+    //find user by id
+    UserDTO findUserById(long id);
     //add new user
     void addUser(AddUserDTO addUserDTO);
 }
