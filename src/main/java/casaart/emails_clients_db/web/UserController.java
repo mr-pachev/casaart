@@ -117,13 +117,13 @@ public class UserController {
     }
 
     @PostMapping("/user-details")
-    public String editUser(@RequestParam("userId") Long id,
+    public String editUser(@RequestParam("id") Long id,
                               @Valid UserDTO userDTO,
                               BindingResult bindingResult,
                               RedirectAttributes rAtt,
                               Model model) {
 
-        userDTO.setUserId(id);
+        userDTO.setId(id);
 
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("userDTO", userDTO);

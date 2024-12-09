@@ -6,6 +6,7 @@ import casaart.emails_clients_db.model.entity.User;
 import casaart.emails_clients_db.model.enums.RoleName;
 import casaart.emails_clients_db.repository.RoleRepository;
 import casaart.emails_clients_db.repository.UserRepository;
+import casaart.emails_clients_db.service.UserHelperService;
 import casaart.emails_clients_db.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,17 +19,20 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final UserHelperService userHelperService;
 
     private final PasswordEncoder passwordEncoder;
 
     private final ModelMapper mapper;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, ModelMapper mapper) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserHelperService userHelperService, PasswordEncoder passwordEncoder, ModelMapper mapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.userHelperService = userHelperService;
         this.passwordEncoder = passwordEncoder;
         this.mapper = mapper;
     }
+
     //get all users
     @Override
     public List<UserDTO> getAllUsers() {
@@ -43,10 +47,11 @@ public class UserServiceImpl implements UserService {
     //checking is exist user by username
     @Override
     public boolean isExistUser(String username) {
-        return  getAllUsers()
+        return getAllUsers()
                 .stream()
                 .anyMatch(userDTO -> userDTO.getUsername().equals(username));
     }
+
     //find user by id
     @Override
     public UserDTO findUserById(long id) {
@@ -62,9 +67,9 @@ public class UserServiceImpl implements UserService {
     public void addUser(AddUserDTO addUserDTO) {
         User user = mapper.map(addUserDTO, User.class);
 
-        if(userRepository.count() == 0){
+        if (userRepository.count() == 0) {
             user.setRole(roleRepository.findByRoleName(RoleName.Admin));
-        }else {
+        } else {
             user.setRole(roleRepository.findByRoleName(RoleName.User));
         }
 
@@ -76,7 +81,7 @@ public class UserServiceImpl implements UserService {
     //edit user
     @Override
     public void editUser(UserDTO userDTO) {
-        User existingUser  = userRepository.findById(userDTO.getUserId());
+        User existingUser = userRepository.findById(userDTO.getId());
 
         User updatedUser = mapper.map(userDTO, User.class);
         updatedUser.setPassword(existingUser.getPassword());
@@ -86,7 +91,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(updatedUser);
     }
 
-    UserDTO mapToDTO(User user){
+    UserDTO mapToDTO(User user) {
         UserDTO userDTO = mapper.map(user, UserDTO.class);
         userDTO.setRole(user.getRole().getRoleName().name());
         return userDTO;

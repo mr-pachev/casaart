@@ -33,10 +33,10 @@
             <td th:text="${user.lastName}">Фамилия</td>
             <td th:text="${user.located}">Месторабота</td>
             <td class="action-buttons" sec:authorize="hasRole('Admin')">
-                <form th:method="POST" th:action="@{/user-details/{id}(id=${user.userId})}">
+                <form th:method="POST" th:action="@{/user-details/{id}(id=${user.id})}">
                     <input class="edit-button" type="submit" th:value="Промяна"/>
                 </form>
-                <form th:method="POST" th:action="@{/delete-client/{id}(id=${user.userId})}" sec:authorize="hasRole('Admin')">
+                <form th:method="POST" th:action="@{/delete-client/{id}(id=${user.id})}" sec:authorize="hasRole('Admin')">
                     <input class="delete-button" type="submit" th:value="Премахване"/>
                 </form>
             </td>
