@@ -1,7 +1,6 @@
 package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddUserDTO;
-import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.dto.LoginUserDTO;
 import casaart.emails_clients_db.model.dto.UserDTO;
 import casaart.emails_clients_db.model.enums.RoleName;
@@ -118,7 +117,7 @@ public class UserController {
     }
 
     @PostMapping("/user-details")
-    public String editUser(@RequestParam("id") Long id,
+    public String editUser(@RequestParam("userId") Long id,
                               @Valid UserDTO userDTO,
                               BindingResult bindingResult,
                               RedirectAttributes rAtt,
@@ -135,17 +134,17 @@ public class UserController {
             return "user-details";
         }
 
-//        boolean isChangedEmail = !clientDTO.getEmail().equals(clientService.findClientById(id).getEmail());
-//
-//        if (isChangedEmail && clientService.isExistClientEmail(clientDTO.getEmail())) {
-//            rAtt.addFlashAttribute("clientDTO", clientDTO);
-//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
-//            model.addAttribute("sourceType", SourceType.values());
-//              model.addAttribute("roles", RoleName.values());
-//            model.addAttribute("isExistEmail", true);
-//
-//            return "client-details";
-//        }
+        boolean isChangedUsername = !userDTO.getUsername().equals(userService.findUserById(id).getUsername());
+
+        if (isChangedUsername && userService.isExistUser(userDTO.getUsername())) {
+            rAtt.addFlashAttribute("userDTO", userDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.userDTO", bindingResult);
+            model.addAttribute("sourceType", SourceType.values());
+            model.addAttribute("roles", RoleName.values());
+            model.addAttribute("isExistUsername", true);
+
+            return "user-details";
+        }
 //
 //        clientService.editClient(clientDTO);
         return "redirect:/users";
