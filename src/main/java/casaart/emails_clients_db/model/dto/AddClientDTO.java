@@ -15,8 +15,7 @@ public class AddClientDTO {
     private String companyName;
     @NotBlank@Email
     private String email;
-    @NotBlank
-    @Size(min = 10, max = 10)
+    @Size(max = 10)
     private String phoneNumber;
     @NotBlank
     private String sourceType;
