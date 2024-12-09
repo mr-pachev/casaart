@@ -145,8 +145,9 @@ public class UserController {
 
             return "user-details";
         }
-//
-//        clientService.editClient(clientDTO);
+
+        userService.editUser(userDTO);
+
         return "redirect:/users";
     }
 

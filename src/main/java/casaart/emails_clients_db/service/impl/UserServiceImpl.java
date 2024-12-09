@@ -73,6 +73,19 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    //edit user
+    @Override
+    public void editUser(UserDTO userDTO) {
+        User existingUser  = userRepository.findById(userDTO.getUserId());
+
+        User updatedUser = mapper.map(userDTO, User.class);
+        updatedUser.setPassword(existingUser .getPassword());
+        updatedUser.setRole(existingUser .getRole());
+        updatedUser.setClients(existingUser .getClients());
+
+        userRepository.save(updatedUser);
+    }
+
     UserDTO mapToDTO(User user){
         UserDTO userDTO = mapper.map(user, UserDTO.class);
         userDTO.setRole(user.getRole().getRoleName().name());

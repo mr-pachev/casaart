@@ -14,4 +14,6 @@ public interface UserService {
     UserDTO findUserById(long id);
     //add new user
     void addUser(AddUserDTO addUserDTO);
+    //edit user
+    void editUser(UserDTO userDTO);
 }
