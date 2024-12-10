@@ -50,6 +50,9 @@ public class ClientServiceImpl implements ClientService {
             case "addedFrom":
                 sortedClientList = clientRepository.findAllByOrderByUserUsernameAsc();
                 break;
+            case "firstAndLastName":
+                sortedClientList = clientRepository.findAllByOrderByFirstNameAscLastNameAsc();
+                break;
             case "ALL CLIENTS":
                return getAllClients();
 

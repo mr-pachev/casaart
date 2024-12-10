@@ -5,12 +5,12 @@ import jakarta.validation.constraints.*;
 public class ClientDTO {
     long id;
     @NotBlank
-    @Size(min = 2, max = 15)
+    @Size(min = 2, max = 30)
     private String firstName;
-    @Size(max = 15)
+    @Size(max = 30)
     private String middleName;
     @NotBlank
-    @Size(min = 2, max = 15)
+    @Size(min = 2, max = 30)
     private String lastName;
     @Size(max = 15)
     private String companyName;

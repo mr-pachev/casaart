@@ -11,11 +11,11 @@ public class UserDTO {
     @NotBlank
     private String role;
     @NotBlank
-    @Size(min = 2, max = 15)
+    @Size(min = 2, max = 30)
     private String firstName;
-    @Size(min = 2, max = 15)
+    @Size(min = 2, max = 30)
     private String middleName;
-    @Size(min = 2, max = 15)
+    @Size(min = 2, max = 30)
     @NotBlank
     private String lastName;
     @NotBlank

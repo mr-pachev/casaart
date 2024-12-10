@@ -17,4 +17,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findAllByOrderByCreatDateDesc();
     List<Client> findAllByOrderByModifyDateDesc();
     List<Client> findAllByOrderByUserUsernameAsc();
+    List<Client> findAllByOrderByFirstNameAscLastNameAsc();
 }
