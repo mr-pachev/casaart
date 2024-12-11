@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -39,25 +40,37 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<ClientDTO> sortedClients(String sortRule) {
         List<Client> sortedClientList = new ArrayList<>();
+        sortRule = sortRule.trim();
+        String oneName = "^[А-Я][а-я]*$";
 
-        switch (sortRule) {
-            case "creatDate":
-                sortedClientList = clientRepository.findAllByOrderByCreatDateDesc();
-                break;
-            case "modifyDate":
-                sortedClientList = clientRepository.findAllByOrderByModifyDateDesc();
-                break;
-            case "addedFrom":
-                sortedClientList = clientRepository.findAllByOrderByUserUsernameAsc();
-                break;
-            case "firstAndLastName":
-                sortedClientList = clientRepository.findAllByOrderByFirstNameAscLastNameAsc();
-                break;
-            case "ALL CLIENTS":
-               return getAllClients();
+        if ("creatDate".equals(sortRule)) {
+            sortedClientList = clientRepository.findAllByOrderByCreatDateDesc();
+        } else if ("modifyDate".equals(sortRule)) {
+            sortedClientList = clientRepository.findAllByOrderByModifyDateDesc();
+        } else if ("addedFrom".equals(sortRule)) {
+            sortedClientList = clientRepository.findAllByOrderByUserUsernameAsc();
+        } else if ("firstAndLastName".equals(sortRule)) {
+            sortedClientList = clientRepository.findAllByOrderByFirstNameAscLastNameAsc();
+        } else if ("ALL CLIENTS".equals(sortRule)) {
+            return getAllClients();
+        } else if ("clientFullName".equals(sortRule)) {
+            return getAllClients();
+        } else if (sortRule.split("\\s+").length == 2) {
+            String firstName = sortRule.split("\\s+")[0];
+            String lastName = sortRule.split("\\s+")[1];
 
-            default:
-                sortedClientList = clientRepository.findAllBySourceType(SourceType.valueOf(sortRule));
+            sortedClientList = clientRepository.findByFirstNameAndLastName(firstName, lastName);
+        } else if (sortRule.split("\\+s").length == 3) {
+            String firstName = sortRule.split("\\s+")[0];
+            String middleName = sortRule.split("\\s+")[1];
+            String lastName = sortRule.split("\\s+")[2];
+
+            sortedClientList = clientRepository.findByFirstNameAndMiddleNameAndLastName(firstName, middleName, lastName);
+        }
+        else if (Pattern.matches(oneName, sortRule)) {
+            sortedClientList = clientRepository.findByFirstName(sortRule);
+        } else {
+            sortedClientList = clientRepository.findAllBySourceType(SourceType.valueOf(sortRule));
         }
 
         return mapToClientDTOList(sortedClientList);

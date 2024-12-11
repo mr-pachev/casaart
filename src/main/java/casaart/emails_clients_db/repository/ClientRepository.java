@@ -18,4 +18,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findAllByOrderByModifyDateDesc();
     List<Client> findAllByOrderByUserUsernameAsc();
     List<Client> findAllByOrderByFirstNameAscLastNameAsc();
+    List<Client> findByFirstName(String firstName);
+    List<Client> findByFirstNameAndLastName(String firstName, String lastName);
+    List<Client> findByFirstNameAndMiddleNameAndLastName(String firstName, String middleName, String lastName);
 }
