@@ -67,6 +67,9 @@
                            name="email"
                            th:field="*{email}"
                            th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Няма попълнен имейл.
+                    </p>
                     <p class="errors alert alert-danger" th:if="${isExistEmail}">
                         Съществува клиент с този имейл.
                     </p>
