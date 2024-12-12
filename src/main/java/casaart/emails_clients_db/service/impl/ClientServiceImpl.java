@@ -41,36 +41,42 @@ public class ClientServiceImpl implements ClientService {
     public List<ClientDTO> sortedClients(String sortRule) {
         List<Client> sortedClientList = new ArrayList<>();
         sortRule = sortRule.trim();
+        String[] words = sortRule.split("\\s+");
         String oneName = "^[А-Я][а-я]*$";
 
-        if ("creatDate".equals(sortRule)) {
+        if ("creatDate".equals(words[0])) {
             sortedClientList = clientRepository.findAllByOrderByCreatDateDesc();
-        } else if ("modifyDate".equals(sortRule)) {
+        } else if ("modifyDate".equals(words[0])) {
             sortedClientList = clientRepository.findAllByOrderByModifyDateDesc();
-        } else if ("addedFrom".equals(sortRule)) {
+        } else if ("addedFrom".equals(words[0])) {
             sortedClientList = clientRepository.findAllByOrderByUserUsernameAsc();
-        } else if ("firstAndLastName".equals(sortRule)) {
+        } else if ("firstAndLastName".equals(words[0])) {
             sortedClientList = clientRepository.findAllByOrderByFirstNameAscLastNameAsc();
-        } else if ("ALL CLIENTS".equals(sortRule)) {
+        } else if ("allClients".equals(words[0])) {
             return getAllClients();
-        } else if ("clientFullName".equals(sortRule)) {
+        } else if ("clientFullName".equals(words[0])) {
             return getAllClients();
-        } else if (sortRule.split("\\s+").length == 2) {
-            String firstName = sortRule.split("\\s+")[0];
-            String lastName = sortRule.split("\\s+")[1];
+        } else if (words.length == 2) {
+            String firstName = words[0];
+            String lastName = words[1];
 
             sortedClientList = clientRepository.findByFirstNameAndLastName(firstName, lastName);
-        } else if (sortRule.split("\\+s").length == 3) {
-            String firstName = sortRule.split("\\s+")[0];
-            String middleName = sortRule.split("\\s+")[1];
-            String lastName = sortRule.split("\\s+")[2];
+        } else if (words.length == 3) {
+            String firstName = words[0];
+            String middleName = words[1];
+            String lastName = words[2];
 
             sortedClientList = clientRepository.findByFirstNameAndMiddleNameAndLastName(firstName, middleName, lastName);
-        }
-        else if (Pattern.matches(oneName, sortRule)) {
-            sortedClientList = clientRepository.findByFirstName(sortRule);
+        } else if (Pattern.matches(oneName, words[0])) {
+            sortedClientList = clientRepository.findByFirstName(words[0]);
+        } else if (!words[0].equals("REGISTRATION") &&
+                !"ORDER".equals(words[0]) &&
+                !"HOTEL".equals(words[0]) &&
+                !"SHOW_ROOM".equals(words[0]) &&
+                !"ONLINE_SHOP".equals(words[0])) {
+            return getAllClients();
         } else {
-            sortedClientList = clientRepository.findAllBySourceType(SourceType.valueOf(sortRule));
+            sortedClientList = clientRepository.findAllBySourceType(SourceType.valueOf(words[0]));
         }
 
         return mapToClientDTOList(sortedClientList);
