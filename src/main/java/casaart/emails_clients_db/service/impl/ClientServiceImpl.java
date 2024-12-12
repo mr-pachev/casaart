@@ -69,11 +69,9 @@ public class ClientServiceImpl implements ClientService {
             sortedClientList = clientRepository.findByFirstNameAndMiddleNameAndLastName(firstName, middleName, lastName);
         } else if (Pattern.matches(oneName, words[0])) {
             sortedClientList = clientRepository.findByFirstName(words[0]);
-        } else if (!words[0].equals("REGISTRATION") &&
-                !"ORDER".equals(words[0]) &&
-                !"HOTEL".equals(words[0]) &&
-                !"SHOW_ROOM".equals(words[0]) &&
-                !"ONLINE_SHOP".equals(words[0])) {
+        } else if (!"HOTEL".equals(words[0]) &&
+                        !"SHOW_ROOM".equals(words[0]) &&
+                        !"ONLINE_SHOP".equals(words[0])) {
             return getAllClients();
         } else {
             sortedClientList = clientRepository.findAllBySourceType(SourceType.valueOf(words[0]));
