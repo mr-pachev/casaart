@@ -16,7 +16,8 @@ public class Product extends BaseEntity {
     private String imagePath;
     @Column(name = "products_codes")
     private String productCode;
-
+    @Column(name = "providers_products_codes")
+    private String providerProductCode;
     @ManyToOne
     Provider provider;
     @ManyToOne
@@ -72,6 +73,14 @@ public class Product extends BaseEntity {
 
     public void setProductCode(String productCode) {
         this.productCode = productCode;
+    }
+
+    public String getProviderProductCode() {
+        return providerProductCode;
+    }
+
+    public void setProviderProductCode(String providerProductCode) {
+        this.providerProductCode = providerProductCode;
     }
 
     public Provider getProvider() {
