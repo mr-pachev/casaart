@@ -12,6 +12,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Product extends BaseEntity {
     @Column
     private String name;
+    @Column(name = "providers_prices")
+    private Double providerPrice;
     @Column
     private String imagePath;
     @Column(name = "products_codes")
@@ -57,6 +59,14 @@ public class Product extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getProviderPrice() {
+        return providerPrice;
+    }
+
+    public void setProviderPrice(Double providerPrice) {
+        this.providerPrice = providerPrice;
     }
 
     public String getImagePath() {

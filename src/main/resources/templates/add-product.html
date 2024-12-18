@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавяне на продукт</title>
+</head>
+<body>
+<h1>Добавяне на продукт</h1>
+<form th:action="@{/products/add}" method="post" enctype="multipart/form-data">
+    <label for="name">Име:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="description">Описание:</label>
+    <textarea id="description" name="description"></textarea><br>
+
+    <label for="price">Цена:</label>
+    <input type="number" id="price" name="price" step="0.01" required><br>
+
+    <label for="image">Снимка:</label>
+    <input type="file" id="image" name="image" accept="image/*"><br>
+
+    <button type="submit">Запази</button>
+</form>
+</body>
+</html>
