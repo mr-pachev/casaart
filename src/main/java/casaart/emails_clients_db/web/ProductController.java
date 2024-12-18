@@ -24,6 +24,7 @@ public class ProductController {
     @Value("${upload.path}")
     private String uploadPath;
 
+    //Upload image
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product,
                              @RequestParam("image") MultipartFile image,
