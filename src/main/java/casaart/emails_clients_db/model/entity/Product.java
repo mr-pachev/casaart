@@ -14,6 +14,8 @@ public class Product extends BaseEntity {
     private String name;
     @Column(name = "providers_prices")
     private Double providerPrice;
+    @Column(name = "clients_prices")
+    private Double clientPrice;
     @Column
     private String imagePath;
     @Column(name = "products_codes")
@@ -67,6 +69,14 @@ public class Product extends BaseEntity {
 
     public void setProviderPrice(Double providerPrice) {
         this.providerPrice = providerPrice;
+    }
+
+    public Double getClientPrice() {
+        return clientPrice;
+    }
+
+    public void setClientPrice(Double clientPrice) {
+        this.clientPrice = clientPrice;
     }
 
     public String getImagePath() {
