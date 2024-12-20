@@ -13,96 +13,96 @@
     <div class="container-form">
         <h1>Регистрация</h1>
         <div class="login-form">
-            <form th:action="@{/add-client}"
-                  th:object="${addClientDTO}"
+            <form th:action="@{/add-category}"
+                  th:object="${addCategory}"
                   th:method="POST">
-                <div class="form-group">
-                    <label for="firstName">Име</label>
-                    <input type="text"
-                           id="firstName"
-                           name="firstName"
-                           th:field="*{firstName}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Името трябва да се състои от 2 до 15 букви.
-                    </p>
-                </div>
-                <div class="form-group">
-                    <label for="middleName">Презиме</label>
-                    <input type="text"
-                           id="middleName"
-                           name="middleName"
-                           th:field="*{middleName}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Презимето трябва да съдържа до 15 букви.
-                    </p>
-                </div>
-                <div class="form-group">
-                    <label for="lastName">Фамилия</label>
-                    <input type="text"
-                           id="lastName"
-                           name="lastName"
-                           th:field="*{lastName}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Фамилята трябва да се състои от 2 до 15 букви.
-                    </p>
-                </div>
-                <div class="form-group">
-                    <label for="company">Фирма</label>
-                    <input type="text"
-                           id="company"
-                           name="company"
-                           th:field="*{companyName}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Името на фирмата трябва да се състои от 2 до 15 букви.
-                    </p>
-                </div>
-                <div class="form-group">
-                    <label for="email">Емейл</label>
-                    <input type="email"
-                           id="email"
-                           name="email"
-                           th:field="*{email}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Няма попълнен имейл.
-                    </p>
-                    <p class="errors alert alert-danger" th:if="${isExistEmail}">
-                        Съществува клиент с този имейл.
-                    </p>
-                </div>
-                <div class="form-group">
-                    <label for="phoneNumber">Мобилен номер</label>
-                    <input type="text"
-                           id="phoneNumber"
-                           name="phoneNumber"
-                           class="form-control"
-                           th:field="*{phoneNumber}"
-                           th:errorclass="is-invalid"
-                           placeholder="088XXXXXXX">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Мобилния номер трябва да се състои от 10 цифри.
-                    </p>
-                </div>
-                <div class="form-group">
-                    <label for="sourceType">Източник данни</label>
-                    <select class="form-control"
-                            id="sourceType"
-                            name="sourceType"
-                            th:field="*{sourceType}"
-                            th:errorclass="is-invalid">
-                        <option value="">-- Избери --</option>
-                        <option th:each="located: ${sourceType}"
-                                th:value="${located}"
-                                th:text="${located}">Източник данни
-                        </option>
-                    </select>
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Избери източник.
-                    </p>
+<!--                <div class="form-group">-->
+<!--                    <label for="firstName">Име</label>-->
+<!--                    <input type="text"-->
+<!--                           id="firstName"-->
+<!--                           name="firstName"-->
+<!--                           th:field="*{firstName}"-->
+<!--                           th:errorclass="is-invalid">-->
+<!--                    <p class="invalid-feedback errors alert alert-danger">-->
+<!--                        Името трябва да се състои от 2 до 15 букви.-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="middleName">Презиме</label>-->
+<!--                    <input type="text"-->
+<!--                           id="middleName"-->
+<!--                           name="middleName"-->
+<!--                           th:field="*{middleName}"-->
+<!--                           th:errorclass="is-invalid">-->
+<!--                    <p class="invalid-feedback errors alert alert-danger">-->
+<!--                        Презимето трябва да съдържа до 15 букви.-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="lastName">Фамилия</label>-->
+<!--                    <input type="text"-->
+<!--                           id="lastName"-->
+<!--                           name="lastName"-->
+<!--                           th:field="*{lastName}"-->
+<!--                           th:errorclass="is-invalid">-->
+<!--                    <p class="invalid-feedback errors alert alert-danger">-->
+<!--                        Фамилята трябва да се състои от 2 до 15 букви.-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="company">Фирма</label>-->
+<!--                    <input type="text"-->
+<!--                           id="company"-->
+<!--                           name="company"-->
+<!--                           th:field="*{companyName}"-->
+<!--                           th:errorclass="is-invalid">-->
+<!--                    <p class="invalid-feedback errors alert alert-danger">-->
+<!--                        Името на фирмата трябва да се състои от 2 до 15 букви.-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="email">Емейл</label>-->
+<!--                    <input type="email"-->
+<!--                           id="email"-->
+<!--                           name="email"-->
+<!--                           th:field="*{email}"-->
+<!--                           th:errorclass="is-invalid">-->
+<!--                    <p class="invalid-feedback errors alert alert-danger">-->
+<!--                        Няма попълнен имейл.-->
+<!--                    </p>-->
+<!--                    <p class="errors alert alert-danger" th:if="${isExistEmail}">-->
+<!--                        Съществува клиент с този имейл.-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="phoneNumber">Мобилен номер</label>-->
+<!--                    <input type="text"-->
+<!--                           id="phoneNumber"-->
+<!--                           name="phoneNumber"-->
+<!--                           class="form-control"-->
+<!--                           th:field="*{phoneNumber}"-->
+<!--                           th:errorclass="is-invalid"-->
+<!--                           placeholder="088XXXXXXX">-->
+<!--                    <p class="invalid-feedback errors alert alert-danger">-->
+<!--                        Мобилния номер трябва да се състои от 10 цифри.-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="sourceType">Източник данни</label>-->
+<!--                    <select class="form-control"-->
+<!--                            id="sourceType"-->
+<!--                            name="sourceType"-->
+<!--                            th:field="*{sourceType}"-->
+<!--                            th:errorclass="is-invalid">-->
+<!--                        <option value="">&#45;&#45; Избери &#45;&#45;</option>-->
+<!--                        <option th:each="located: ${sourceType}"-->
+<!--                                th:value="${located}"-->
+<!--                                th:text="${located}">Източник данни-->
+<!--                        </option>-->
+<!--                    </select>-->
+<!--                    <p class="invalid-feedback errors alert alert-danger">-->
+<!--                        Избери източник.-->
+<!--                    </p>-->
                 </div>
                 <button type="submit" class="btn btn-success">Добави</button>
             </form>
