@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="bg"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Категории</title>
+</head>
+<body>
+<div th:replace="~{fragments/navigation}"></div>
+
+<main>
+    <h1>Списък с категории</h1>
+    <div class="buttons">
+        <a th:href="@{/add-category}" class="register">Добави</a>
+    </div>
+    <table id="category-table">
+        <thead>
+        <tr>
+            <th style="width: 10%;">Име</th>
+            <th style="width: 10%;">Код</th>
+            <th style="width: 10%;">Типове</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category :${allCategories}">
+            <td th:text="${category.name}">Име</td>
+            <td th:text="${category.code}">Код</td>
+            <td th:text="${category.types.size()}">Типове</td>
+            <td class="action-buttons">
+<!--                <form th:method="POST" th:action="@{/client-details/{id}(id=${client.id})}">-->
+<!--                    <input class="edit-button" type="submit" th:value="Промяна"/>-->
+<!--                </form>-->
+<!--                <form th:method="POST" th:action="@{/delete-client/{id}(id=${client.id})}" sec:authorize="hasRole('Admin')">-->
+<!--                    <input class="delete-button" type="submit" th:value="Премахване"/>-->
+<!--                </form>-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

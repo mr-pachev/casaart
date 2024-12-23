@@ -11,7 +11,7 @@ public class Category extends BaseEntity{
     String name;
     @Column
     private String code;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     List<Type>types;
 
     public String getName() {

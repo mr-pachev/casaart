@@ -17,7 +17,7 @@
 <div class="navbar" sec:authorize="isAuthenticated()" th:fragment="navigation">
     <div class="welcome">Здравей, <span th:text="${@userHelperService.getUser().getUsername()}"></span>!</div>
     <nav class="nav-links">
-        <a th:href="@{/add-category}">Добави категория</a>
+        <a th:href="@{/categories}">Категории</a>
         <a th:href="@{/users}">Потребители</a>
         <a th:href="@{/user-details/{id}(id=${@userHelperService.getUser().id})}">Профил</a>
         <a th:href="@{/clients}">Клиенти</a>

@@ -1,9 +1,7 @@
 package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddCategoryDTO;
-import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.CategoryDTO;
-import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -41,13 +39,12 @@ public class CategoryController {
 
         model.addAttribute("allCategories", categoryDTOS);
 
-        return "clients";
+        return "categories";
     }
 
     //create new category
     @GetMapping("/add-category")
     public String viewAddCategoryForm(Model model) {
-        model.addAttribute("sourceType", SourceType.values());
 
         if (!model.containsAttribute("isExistCategory")) {
             model.addAttribute("isExistCategory", false);
@@ -56,29 +53,28 @@ public class CategoryController {
         return "add-category";
     }
 
-//    @PostMapping("/add-client")
-//    public String addClient(
-//            @Valid AddClientDTO addClientDTO,
-//            BindingResult bindingResult,
-//            RedirectAttributes rAtt, Model model) {
-//
-//        if (bindingResult.hasErrors()) {
-//            rAtt.addFlashAttribute("addClientDTO", addClientDTO);
-//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
-//
-//            return "redirect:/add-client";
-//        }
-//
-//        if (clientService.isExistClientEmail(addClientDTO.getEmail())) {
-//            rAtt.addFlashAttribute("addClientDTO", addClientDTO);
-//            rAtt.addFlashAttribute("isExistEmail", true);
-//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
-//
-//            return "redirect:/add-client";
-//        }
-//
-//        clientService.addClient(addClientDTO);
-//
-//        return "redirect:/clients";
-//    }
+    @PostMapping("/add-category")
+    public String addCategory(
+            @Valid AddCategoryDTO addCategoryDTO,
+            BindingResult bindingResult,
+            RedirectAttributes rAtt, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            rAtt.addFlashAttribute("addCategoryDTO", addCategoryDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCategoryDTO", bindingResult);
+
+            return "redirect:/add-category";
+        }
+
+        if (categoryService.isExistCategory(addCategoryDTO.getName())) {
+            rAtt.addFlashAttribute("addCategoryDTO", addCategoryDTO);
+            rAtt.addFlashAttribute("isExistCategory", true);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCategoryDTO", bindingResult);
+
+            return "redirect:/add-category";
+        }
+
+        categoryService.addCategory(addCategoryDTO);
+        return "redirect:/categories";
+    }
 }
