@@ -27,15 +27,15 @@
         </thead>
         <tbody>
         <tr th:each="type :${allTypes}">
-            <td th:text="${category.name}">Име</td>
-            <td th:text="${category.code}">Код</td>
-            <td th:text="${category.code}">Категория</td>
-            <td th:text="${category.types.size()}">Продукти</td>
+            <td th:text="${type.name}">Име</td>
+            <td th:text="${type.code}">Код</td>
+            <td th:text="${type.category}">Категория</td>
+            <td th:text="${type.getProducts().size()}">Продукти</td>
             <td class="action-buttons">
-                <form th:method="POST" th:action="@{/client-details/{id}(id=${category.id})}">
+                <form th:method="POST" th:action="@{/client-details/{id}(id=${type.id})}">
                     <input class="edit-button" type="submit" th:value="Промяна"/>
                 </form>
-                <form th:method="POST" th:action="@{/delete-client/{id}(id=${category.id})}" sec:authorize="hasRole('Admin')">
+                <form th:method="POST" th:action="@{/delete-client/{id}(id=${type.id})}" sec:authorize="hasRole('Admin')">
                     <input class="delete-button" type="submit" th:value="Премахване"/>
                 </form>
             </td>
