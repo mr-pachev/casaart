@@ -8,7 +8,7 @@ public class AddTypeDTO {
     @Size(min = 2, max = 30)
     private String name;
     @NotBlank
-    @Size(min = 2, max = 4)
+    @Size(min = 2, max = 10)
     private String code;
     @NotBlank
     @Size(min = 2, max = 30)

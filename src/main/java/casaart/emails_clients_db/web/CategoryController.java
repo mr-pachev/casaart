@@ -50,6 +50,10 @@ public class CategoryController {
             model.addAttribute("isExistCategory", false);
         }
 
+        if (!model.containsAttribute("isExistCategoryCode")) {
+            model.addAttribute("isExistCategoryCode", false);
+        }
+
         return "add-category";
     }
 
@@ -69,6 +73,14 @@ public class CategoryController {
         if (categoryService.isExistCategory(addCategoryDTO.getName())) {
             rAtt.addFlashAttribute("addCategoryDTO", addCategoryDTO);
             rAtt.addFlashAttribute("isExistCategory", true);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCategoryDTO", bindingResult);
+
+            return "redirect:/add-category";
+        }
+
+        if (categoryService.isExistCategoryCode(addCategoryDTO.getCode())) {
+            rAtt.addFlashAttribute("addCategoryDTO", addCategoryDTO);
+            rAtt.addFlashAttribute("isExistCategoryCode", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCategoryDTO", bindingResult);
 
             return "redirect:/add-category";

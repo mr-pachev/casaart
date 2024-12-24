@@ -1,7 +1,6 @@
 package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.AddTypeDTO;
-import casaart.emails_clients_db.model.dto.CategoryDTO;
 import casaart.emails_clients_db.model.dto.TypeDTO;
 import casaart.emails_clients_db.model.entity.Category;
 import casaart.emails_clients_db.model.entity.Type;
@@ -47,13 +46,19 @@ public class TypeServiceImpl implements TypeService {
         return typeRepository.findByName(name).isPresent();
     }
 
+    //checking is exist type code
+    @Override
+    public boolean isExistTypeCode(String code) {
+        return typeRepository.findByCode(code).isPresent();
+    }
+
     //add type
     @Override
     public void addType(AddTypeDTO addTypeDTO) {
-    Type type = mapper.map(addTypeDTO, Type.class);
-    Category category = categoryRepository.findByName(addTypeDTO.getCategory()).get();
+        Type type = mapper.map(addTypeDTO, Type.class);
+        Category category = categoryRepository.findByName(addTypeDTO.getCategory()).get();
 
-    type.setCategory(category);
-    typeRepository.save(type);
+        type.setCategory(category);
+        typeRepository.save(type);
     }
 }

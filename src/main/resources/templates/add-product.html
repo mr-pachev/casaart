@@ -1,24 +1,70 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="bg" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Добавяне на продукт</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Нов продукт</title>
 </head>
 <body>
-<h1>Добавяне на продукт</h1>
-<form th:action="@{/products/add}" method="post" enctype="multipart/form-data">
-    <label for="name">Име:</label>
-    <input type="text" id="name" name="name" required><br>
+<div th:replace="~{fragments/navigation}"></div>
+<main>
 
-    <label for="description">Описание:</label>
-    <textarea id="description" name="description"></textarea><br>
-
-    <label for="price">Цена:</label>
-    <input type="number" id="price" name="price" step="0.01" required><br>
-
-    <label for="image">Снимка:</label>
-    <input type="file" id="image" name="image" accept="image/*"><br>
-
-    <button type="submit">Запази</button>
-</form>
+    <div class="container-form">
+        <h1>Нов продукт</h1>
+        <div class="login-form">
+            <form th:action="@{/add-product}"
+                  th:object="${addProductDTO}"
+                  th:method="POST">
+                <div class="form-group">
+                    <label for="name">Име</label>
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           th:field="*{name}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Името трябва да се състои от 2 до 30 букви.
+                    </p>
+                    <p class="errors alert alert-danger" th:if="${isExistProduct}">
+                        Съществува тип с това име.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="code">Код</label>
+                    <input type="text"
+                           id="code"
+                           name="code"
+                           th:field="*{code}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Кода трябва да се състои от 2 до 4 букви.
+                    </p>
+                    <p class="errors alert alert-danger" th:if="${isExistTypeCode}">
+                        Съществува тип с този код.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="categories">Категории</label>
+                    <select class="form-control"
+                            id="categories"
+                            name="categories"
+                            th:field="*{category}"
+                            th:errorclass="is-invalid">
+                        <option value="">-- Избери --</option>
+                        <option th:each="catogory: ${allCategories}"
+                                th:value="${catogory.name}"
+                                th:text="${catogory.name}">Категории
+                        </option>
+                    </select>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Избери категория.
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-success">Добави</button>
+            </form>
+        </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
 </body>
 </html>

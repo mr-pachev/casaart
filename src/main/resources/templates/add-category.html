@@ -40,6 +40,9 @@
                     <p class="invalid-feedback errors alert alert-danger">
                         Кода трябва да се състои от 2 до 4 букви.
                     </p>
+                    <p class="errors alert alert-danger" th:if="${isExistCategoryCode}">
+                        Съществува категория с този код.
+                    </p>
                 </div>
                 <button type="submit" class="btn btn-success">Добави</button>
             </form>

@@ -57,6 +57,10 @@ public class TypeController {
             model.addAttribute("isExistType", false);
         }
 
+        if (!model.containsAttribute("isExistTypeCode")) {
+            model.addAttribute("isExistTypeCode", false);
+        }
+
         return "add-type";
     }
 
@@ -76,6 +80,14 @@ public class TypeController {
         if (typeService.isExistType(addTypeDTO.getName())) {
             rAtt.addFlashAttribute("addTypeDTO", addTypeDTO);
             rAtt.addFlashAttribute("isExistType", true);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addTypeDTO", bindingResult);
+
+            return "redirect:/add-type";
+        }
+
+        if (typeService.isExistTypeCode(addTypeDTO.getCode())) {
+            rAtt.addFlashAttribute("addTypeDTO", addTypeDTO);
+            rAtt.addFlashAttribute("isExistTypeCode", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addTypeDTO", bindingResult);
 
             return "redirect:/add-type";

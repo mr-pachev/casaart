@@ -12,6 +12,8 @@ public interface TypeService {
     List<TypeDTO> getAllTypes();
     //checking is exist type
     boolean isExistType(String name);
+    //checking is exist type code
+    boolean isExistTypeCode(String code);
     //add type
     void addType(AddTypeDTO addTypeDTO);
 }

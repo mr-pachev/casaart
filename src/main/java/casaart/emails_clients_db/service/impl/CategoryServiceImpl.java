@@ -3,7 +3,6 @@ package casaart.emails_clients_db.service.impl;
 import casaart.emails_clients_db.model.dto.AddCategoryDTO;
 import casaart.emails_clients_db.model.dto.CategoryDTO;
 import casaart.emails_clients_db.model.entity.Category;
-import casaart.emails_clients_db.model.entity.Type;
 import casaart.emails_clients_db.repository.CategoryRepository;
 import casaart.emails_clients_db.service.CategoryService;
 import org.modelmapper.ModelMapper;
@@ -37,10 +36,15 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDTOS;
     }
 
-    //checking is exist category
+    //checking is exist category by name
     @Override
     public boolean isExistCategory(String name) {
         return categoryRepository.findByName(name).isPresent();
+    }
+    //checking is exist category by code
+    @Override
+    public boolean isExistCategoryCode(String code) {
+        return categoryRepository.findByCode(code).isPresent();
     }
 
     //add category
