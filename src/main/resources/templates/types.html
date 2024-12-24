@@ -5,30 +5,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASA ART - Категории</title>
+    <title>CASA ART - Типове</title>
 </head>
 <body>
 <div th:replace="~{fragments/navigation}"></div>
 
 <main>
-    <h1>Списък с категории</h1>
+    <h1>Списък с типове</h1>
     <div class="buttons">
-        <a th:href="@{/add-category}" class="register">Добави</a>
+        <a th:href="@{/add-type}" class="register">Добави</a>
     </div>
     <table id="category-table">
         <thead>
         <tr>
             <th style="width: 10%;">Име</th>
             <th style="width: 10%;">Код</th>
-            <th style="width: 10%;">Типове</th>
+            <th style="width: 10%;">Категория</th>
+            <th style="width: 10%;">Продукти</th>
             <th style="width: 10%;">Действия</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="category :${allCategories}">
+        <tr th:each="type :${allTypes}">
             <td th:text="${category.name}">Име</td>
             <td th:text="${category.code}">Код</td>
-            <td th:text="${category.types.size()}">Типове</td>
+            <td th:text="${category.code}">Категория</td>
+            <td th:text="${category.types.size()}">Продукти</td>
             <td class="action-buttons">
                 <form th:method="POST" th:action="@{/client-details/{id}(id=${category.id})}">
                     <input class="edit-button" type="submit" th:value="Промяна"/>

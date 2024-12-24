@@ -6,9 +6,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "types")
-public class Type extends BaseEntity{
+public class Type extends BaseEntity {
     @Column
-    String name;
+    private String name;
     @Column
     private String code; // EC, WC, HL
 

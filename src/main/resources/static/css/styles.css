@@ -1,4 +1,4 @@
-/* Общи стилове */
+/* Основни стилове */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -36,8 +36,7 @@ main {
 
 /* Бутони */
 .buttons {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
 .buttons a {
@@ -59,27 +58,12 @@ main {
     background-color: #218838;
 }
 
-.register {
-    background-color: #FFA500;
+.buttons a.login {
+    background-color: #1E90FF;
 }
 
-.register:hover {
-    background-color: #FF7F00;
-}
-
-.login {
-    background-color: #1E90FF; /* Основен цвят на бутона */
-    color: white;             /* Цвят на текста */
-    padding: 12px 20px;       /* Отстояния */
-    font-size: 16px;          /* Размер на текста */
-    border-radius: 5px;       /* Заоблени ъгли */
-    border: none;             /* Без рамка */
-    cursor: pointer;          /* Показалец при посочване */
-    transition: background-color 0.3s ease; /* Анимация при hover */
-}
-
-.login:hover {
-    background-color: #0074D9; /* Цвят при hover */
+.buttons a.login:hover {
+    background-color: #0074D9;
 }
 
 /* Навигация */
@@ -121,7 +105,7 @@ h1 {
     margin-bottom: 30px;
 }
 
-/* Таблица */
+/* Таблица - общи стилове */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -131,7 +115,7 @@ table {
 table th, table td {
     border: 1px solid #ddd;
     padding: 10px;
-    text-align: left;
+    text-align: center;
 }
 
 table th {
@@ -140,11 +124,21 @@ table th {
 }
 
 table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f9f9f9;
 }
 
 table tr:hover {
     background-color: #f1f1f1;
+}
+
+/* Оптимизация на таблиците */
+#clients-table, #category-table {
+    margin: 0 auto;
+}
+
+#clients-table th, #clients-table td,
+#category-table th, #category-table td {
+    padding: 12px;
 }
 
 /* Форма за вход */
@@ -189,43 +183,34 @@ table tr:hover {
     justify-content: center;
 }
 
-.edit-button {
+.edit-button, .delete-button {
     display: inline-block;
-    background-color: rgba(252, 93, 23, 0.9);
-    color: white; /* Бял текст */
     padding: 6px 12px;
     font-size: 14px;
     border-radius: 5px;
-    text-decoration: none; /* Без подчертаване */
-    border: none; /* Без рамка */
-    transition: background-color 0.3s ease; /* Преход само за фона */
+    text-decoration: none;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button {
+    background-color: rgba(252, 93, 23, 0.9);
 }
 
 .edit-button:hover {
-    background-color: rgba(173, 106, 8, 0.9); /* Промяна само на фона при hover */
-    color: white; /* Уверяваме се, че текстът остава бял */
-    text-decoration: none; /* Без подчертаване */
+    background-color: rgba(173, 106, 8, 0.9);
 }
 
 .delete-button {
-    display: inline-block;
-    background-color: #fc0707; /* Червен фон */
-    color: white; /* Бял текст */
-    padding: 6px 12px;
-    font-size: 14px;
-    border-radius: 5px;
-    text-decoration: none; /* Без подчертаване */
-    border: none; /* Без рамка */
-    transition: background-color 0.3s ease; /* Преход само за фона */
+    background-color: #fc0707;
 }
 
 .delete-button:hover {
-    background-color: #D90429; /* Промяна само на фона при hover */
-    color: white; /* Уверяваме се, че текстът остава бял */
-    text-decoration: none; /* Без подчертаване */
+    background-color: #D90429;
 }
 
-
+/* Селектори */
 .source-type-select {
     padding: 8px;
     font-size: 14px;
@@ -241,8 +226,8 @@ table tr:hover {
 }
 
 .sort-button {
-    background-color: #FFA500; /* Оранжев фон */
-    color: white; /* Бял текст */
+    background-color: #FFA500;
+    color: white;
     padding: 8px 16px;
     font-size: 14px;
     border-radius: 5px;
@@ -252,37 +237,7 @@ table tr:hover {
 }
 
 .sort-button:hover {
-    background-color: #FF7F00; /* По-тъмен оранжев цвят при hover */
-}
-
-/* Оптимизация на таблицата */
-#clients-table th, #clients-table td {
-    text-align: center;
-    padding: 8px;
-}
-
-#clients-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-#clients-table th {
-    background-color: #1E90FF;
-    color: white;
-    padding: 10px;
-}
-
-#clients-table td {
-    border: 1px solid #ddd;
-}
-
-#clients-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#clients-table tr:hover {
-    background-color: #f1f1f1;
+    background-color: #FF7F00;
 }
 
 /* Футър */

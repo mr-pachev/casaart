@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Нов тип</title>
+</head>
+<body>
+<div th:replace="~{fragments/navigation}"></div>
+<main>
+
+    <div class="container-form">
+        <h1>Нов тип</h1>
+        <div class="login-form">
+            <form th:action="@{/add-type}"
+                  th:object="${addCategoryDTO}"
+                  th:method="POST">
+                <div class="form-group">
+                    <label for="name">Име</label>
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           th:field="*{name}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Името трябва да се състои от 2 до 30 букви.
+                    </p>
+                    <p class="errors alert alert-danger" th:if="${isExistCategory}">
+                        Съществува тип с това име.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="code">Код</label>
+                    <input type="text"
+                           id="code"
+                           name="code"
+                           th:field="*{code}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Кода трябва да се състои от 2 до 4 букви.
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-success">Добави</button>
+            </form>
+        </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>
