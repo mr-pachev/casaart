@@ -14,7 +14,7 @@
         <h1>Нов тип</h1>
         <div class="login-form">
             <form th:action="@{/add-type}"
-                  th:object="${addCategoryDTO}"
+                  th:object="${addTypeDTO}"
                   th:method="POST">
                 <div class="form-group">
                     <label for="name">Име</label>
@@ -26,7 +26,7 @@
                     <p class="invalid-feedback errors alert alert-danger">
                         Името трябва да се състои от 2 до 30 букви.
                     </p>
-                    <p class="errors alert alert-danger" th:if="${isExistCategory}">
+                    <p class="errors alert alert-danger" th:if="${isExistType}">
                         Съществува тип с това име.
                     </p>
                 </div>
@@ -39,6 +39,23 @@
                            th:errorclass="is-invalid">
                     <p class="invalid-feedback errors alert alert-danger">
                         Кода трябва да се състои от 2 до 4 букви.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="categories">Категории</label>
+                    <select class="form-control"
+                            id="categories"
+                            name="categories"
+                            th:field="*{category}"
+                            th:errorclass="is-invalid">
+                        <option value="">-- Избери --</option>
+                        <option th:each="catogory: ${allCategories}"
+                                th:value="${catogory.name}"
+                                th:text="${catogory.name}">Категории
+                        </option>
+                    </select>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Избери категория.
                     </p>
                 </div>
                 <button type="submit" class="btn btn-success">Добави</button>

@@ -1,8 +1,5 @@
 package casaart.emails_clients_db.model.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
 import java.util.List;
 
 public class TypeDTO {

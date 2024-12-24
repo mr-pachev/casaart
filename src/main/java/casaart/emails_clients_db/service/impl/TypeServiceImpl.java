@@ -5,6 +5,7 @@ import casaart.emails_clients_db.model.dto.CategoryDTO;
 import casaart.emails_clients_db.model.dto.TypeDTO;
 import casaart.emails_clients_db.model.entity.Category;
 import casaart.emails_clients_db.model.entity.Type;
+import casaart.emails_clients_db.repository.CategoryRepository;
 import casaart.emails_clients_db.repository.TypeRepository;
 import casaart.emails_clients_db.service.TypeService;
 import org.modelmapper.ModelMapper;
@@ -16,10 +17,12 @@ import java.util.List;
 @Service
 public class TypeServiceImpl implements TypeService {
     private final TypeRepository typeRepository;
+    private final CategoryRepository categoryRepository;
     private final ModelMapper mapper;
 
-    public TypeServiceImpl(TypeRepository typeRepository, ModelMapper mapper) {
+    public TypeServiceImpl(TypeRepository typeRepository, CategoryRepository categoryRepository, ModelMapper mapper) {
         this.typeRepository = typeRepository;
+        this.categoryRepository = categoryRepository;
         this.mapper = mapper;
     }
 
@@ -31,6 +34,7 @@ public class TypeServiceImpl implements TypeService {
         for (Type type : types) {
             TypeDTO typeDTO = mapper.map(type, TypeDTO.class);
 
+            typeDTO.setCategory(type.getCategory().getName());
             typeDTOS.add(typeDTO);
         }
 
@@ -46,7 +50,10 @@ public class TypeServiceImpl implements TypeService {
     //add type
     @Override
     public void addType(AddTypeDTO addTypeDTO) {
+    Type type = mapper.map(addTypeDTO, Type.class);
+    Category category = categoryRepository.findByName(addTypeDTO.getCategory()).get();
 
-
+    type.setCategory(category);
+    typeRepository.save(type);
     }
 }
