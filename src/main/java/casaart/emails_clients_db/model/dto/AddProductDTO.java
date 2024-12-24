@@ -3,16 +3,17 @@ package casaart.emails_clients_db.model.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
 public class AddProductDTO {
     @NotBlank
-    @Size(min = 2, max = 30)
+    @Size(min = 2, max = 50)
     private String name;
     @NotNull
     private Double providerPrice;
     @NotNull
     private Double clientPrice;
-    @NotBlank
+    private MultipartFile image;
     private String imagePath;
     @NotBlank
     @Size(min = 2, max = 10)
@@ -20,7 +21,7 @@ public class AddProductDTO {
     @NotBlank
     @Size(min = 2, max = 10)
     private String providerProductCode;
-    @NotBlank
+//    @NotBlank
     private String provider;
     private String dimensions;
     @NotBlank
@@ -50,6 +51,14 @@ public class AddProductDTO {
 
     public void setClientPrice(Double clientPrice) {
         this.clientPrice = clientPrice;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 
     public String getImagePath() {

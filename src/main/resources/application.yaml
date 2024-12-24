@@ -1,10 +1,14 @@
 upload:
-  path: src/main/resources/static/uploads
-#spring section
+  path: C:/uploads
+
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   web:
     resources:
-      static-locations: classpath:/static/, file:src/main/resources/static/uploads/
+      static-locations: classpath:/static/, file:/C:/uploads/
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     properties:

@@ -22,7 +22,7 @@
             <th style="width: 10%;">Продуктов код Casa Art</th>
             <th style="width: 10%;">Цена доставчик</th>
             <th style="width: 10%;">Цена клиент</th>
-            <th style="width: 10%;">Добави картинка</th>
+            <th style="width: 10%;">Картинка</th>
             <th style="width: 10%;">Продуктов код доставчик</th>
             <th style="width: 10%;">Доставчик</th>
             <th style="width: 10%;">Размери</th>
@@ -37,7 +37,9 @@
             <td th:text="${product.productCode}">Продуктав код Casa Art</td>
             <td th:numbers="${product.providerPrice}">Цена доставчик</td>
             <td th:numbers="${product.clientPrice}">Цена клиент</td>
-            <td th:text="${product.imagePath}">Добави картинка</td>
+            <td>
+                <img th:src="@{${product.imagePath}}" alt="Image Preview" style="max-width: 200px;">
+            </td>
             <td th:text="${product.providerProductCode}">Продуктав код доставчик</td>
             <td th:text="${product.provider}">Доставчик</td>
             <td th:text="${product.dimensions}">Размери</td>

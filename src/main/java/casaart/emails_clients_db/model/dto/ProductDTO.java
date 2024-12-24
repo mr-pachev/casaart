@@ -1,5 +1,7 @@
 package casaart.emails_clients_db.model.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ProductDTO {
     long id;
     private String name;

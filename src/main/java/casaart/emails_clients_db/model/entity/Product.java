@@ -24,8 +24,7 @@ public class Product extends BaseEntity {
     private String providerProductCode;
     @ManyToOne
     Provider provider;
-    @ManyToOne
-    Dimensions dimensions;
+    private String dimensions;
 
     @ManyToOne
     private Category category;
@@ -111,11 +110,11 @@ public class Product extends BaseEntity {
         this.provider = provider;
     }
 
-    public Dimensions getDimensions() {
+    public String getDimensions() {
         return dimensions;
     }
 
-    public void setDimensions(Dimensions dimensions) {
+    public void setDimensions(String dimensions) {
         this.dimensions = dimensions;
     }
 

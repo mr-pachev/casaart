@@ -28,16 +28,14 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public List<TypeDTO> getAllTypes() {
         List<Type> types = typeRepository.findAll();
-        List<TypeDTO> typeDTOS = new ArrayList<>();
 
-        for (Type type : types) {
-            TypeDTO typeDTO = mapper.map(type, TypeDTO.class);
+        return typeListToTypeDTOList(types);
+    }
 
-            typeDTO.setCategory(type.getCategory().getName());
-            typeDTOS.add(typeDTO);
-        }
-
-        return typeDTOS;
+    //get all types by category
+    @Override
+    public List<TypeDTO> getAllTypesByCategory(String categoryNAme) {
+        return null;
     }
 
     //checking is exist type
@@ -61,4 +59,17 @@ public class TypeServiceImpl implements TypeService {
         type.setCategory(category);
         typeRepository.save(type);
     }
+
+    List<TypeDTO> typeListToTypeDTOList(List<Type> types) {
+        List<TypeDTO> typeDTOS = new ArrayList<>();
+
+        for (Type type : types) {
+            TypeDTO typeDTO = mapper.map(type, TypeDTO.class);
+
+            typeDTO.setCategory(type.getCategory().getName());
+            typeDTOS.add(typeDTO);
+        }
+        return typeDTOS;
+    }
+
 }

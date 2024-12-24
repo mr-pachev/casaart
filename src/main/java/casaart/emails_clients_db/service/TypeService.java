@@ -10,6 +10,8 @@ import java.util.List;
 public interface TypeService {
     //get all types
     List<TypeDTO> getAllTypes();
+    //get all types by category
+    List<TypeDTO> getAllTypesByCategory(String categoryNAme);
     //checking is exist type
     boolean isExistType(String name);
     //checking is exist type code

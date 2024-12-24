@@ -11,7 +11,7 @@ public interface ProductService {
     //get all products
     List<ProductDTO> getAllProducts();
     //get sorted products
-    List<ProductDTO> sortedClients(String sourceTypeName);
+    List<ProductDTO> sortedProducts(String sourceTypeName);
     //checking is exist product by name
     boolean isExistProductName(String name);
     //checking is exist product by code
