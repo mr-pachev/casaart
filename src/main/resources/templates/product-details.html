@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Промяна продукт</title>
+</head>
+<body>
+<div th:replace="~{fragments/navigation}"></div>
+<main>
+    <h1>Промяна продукт</h1>
+    <div class="login-form">
+        <form th:action="@{/product-details}"
+              th:object="${productDTO}"
+              th:method="POST"
+              enctype="multipart/form-data">
+
+            <!--Sends employee id with a POST request-->
+            <input type="hidden" th:field="*{id}"/>
+
+            <div class="form-group">
+                <label for="name">Име</label>
+                <input type="text"
+                       id="name"
+                       name="name"
+                       th:field="*{name}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Името трябва да се състои от 2 до 50 букви.
+                </p>
+                <p class="errors alert alert-danger" th:if="${isExistName}">
+                    Съществува продукт с това име.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="providerPrice">Цена доставчик</label>
+                <input type="number"
+                       id="providerPrice"
+                       name="providerPrice"
+                       th:field="*{providerPrice}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Въведи цена.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="clientPrice">Цена клиент</label>
+                <input type="number"
+                       id="clientPrice"
+                       name="clientPrice"
+                       th:field="*{clientPrice}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Въведи цена.
+                </p>
+            </div>
+            <div>
+                <label for="image">Изображение:</label>
+                <input type="file" id="image" name="image" accept="image/*">
+            </div>
+
+            <!-- Скрито поле за imagePath -->
+            <input type="hidden" name="imagePath" th:field="*{imagePath}"/>
+
+            <div th:if="${productDTO.imagePath != null}">
+                <p>Текущо изображение:</p>
+                <img th:src="@{${productDTO.imagePath}}" alt="Image Preview" style="max-width: 200px;">
+            </div>
+            <div class="form-group">
+                <label for="productCode">Код</label>
+                <input type="text"
+                       id="productCode"
+                       name="code"
+                       th:field="*{productCode}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Кода трябва да се състои от 2 до 10 букви.
+                </p>
+                <p class="errors alert alert-danger" th:if="${isExistCode}">
+                    Съществува продукт с този код.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="providerProductCode">Код доставчик</label>
+                <input type="text"
+                       id="providerProductCode"
+                       name="code"
+                       th:field="*{providerProductCode}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Кода трябва да се състои от 2 до 10 букви.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="provider">Доставчик</label>
+                <select class="form-control"
+                        id="provider"
+                        name="provider"
+                        th:field="*{provider}"
+                        th:errorclass="is-invalid">
+                    <option value="">-- Избери --</option>
+                    <option th:each="provider: ${allProviders}"
+                            th:value="${provider.name}"
+                            th:text="${provider.name}">Доставчик
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Избери доставчик.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="productCode">Размери</label>
+                <input type="text"
+                       id="dimensions"
+                       name="dimensions"
+                       th:field="*{dimensions}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Размера трябва да се състои от 2 до 30 букви на кирилица.
+                </p>
+                <p class="errors alert alert-danger" th:if="${isExistCode}">
+                    Съществува продукт с този код.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="categories">Категории</label>
+                <select class="form-control"
+                        id="categories"
+                        name="categories"
+                        th:field="*{category}"
+                        th:errorclass="is-invalid">
+                    <option value="">-- Избери --</option>
+                    <option th:each="catogory: ${allCategories}"
+                            th:value="${catogory.name}"
+                            th:text="${catogory.name}">Категории
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Избери категория.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="type">Тип</label>
+                <select class="form-control"
+                        id="type"
+                        name="type"
+                        th:field="*{type}"
+                        th:errorclass="is-invalid">
+                    <option value="">-- Избери --</option>
+                    <option th:each="type: ${allTypes}"
+                            th:value="${type.name}"
+                            th:text="${type.name}">Тип
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Избери тип.
+                </p>
+            </div>
+            <button type="submit" class="btn btn-success">Запази</button>
+        </form>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

@@ -1,9 +1,6 @@
 package casaart.emails_clients_db.service;
 
-import casaart.emails_clients_db.model.dto.AddClientDTO;
-import casaart.emails_clients_db.model.dto.AddProductDTO;
-import casaart.emails_clients_db.model.dto.ClientDTO;
-import casaart.emails_clients_db.model.dto.ProductDTO;
+import casaart.emails_clients_db.model.dto.*;
 
 import java.util.List;
 
@@ -18,4 +15,10 @@ public interface ProductService {
     boolean isExistProductCode(String code);
     //add product
     void addProduct(AddProductDTO addProductDTO);
+    //find product by id
+    ProductDTO findProductById(long id);
+    //edit product
+    void editProduct(ProductDTO productDTO);
+    //delete product
+    void deleteProduct(long id);
 }

@@ -7,6 +7,7 @@ public class ProductDTO {
     private String name;
     private Double providerPrice;
     private Double clientPrice;
+    private MultipartFile image;
     private String imagePath;
     private String productCode;
     private String providerProductCode;
@@ -45,6 +46,14 @@ public class ProductDTO {
 
     public void setClientPrice(Double clientPrice) {
         this.clientPrice = clientPrice;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 
     public String getImagePath() {
