@@ -38,7 +38,8 @@
             <td th:numbers="${product.providerPrice}">Цена доставчик</td>
             <td th:numbers="${product.clientPrice}">Цена клиент</td>
             <td>
-                <img th:src="@{${product.imagePath}}" alt="Product Image" />
+                <img th:src="@{${product.imagePath}}" alt="Image in Table"
+                     style="max-width: 100%; height: auto;"/>
             </td>
             <td th:text="${product.providerProductCode}">Продуктав код доставчик</td>
             <td th:text="${product.provider}">Доставчик</td>
