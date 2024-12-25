@@ -19,7 +19,6 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
-
     private final ProviderRepository providerRepository;
     private final CategoryRepository categoryRepository;
     private final TypeRepository typeRepository;
@@ -70,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
 
         product.setCategory(category);
         product.setType(type);
+        product.setProvider(providerRepository.findByName(addProductDTO.getProvider()).get());
 
         productRepository.save(product);
     }
@@ -112,6 +112,7 @@ public class ProductServiceImpl implements ProductService {
 
             productDTO.setCategory(product.getCategory().getName());
             productDTO.setType(product.getType().getName());
+            productDTO.setProvider(product.getProvider().getName());
             productDTOS.add(productDTO);
         }
         return productDTOS;

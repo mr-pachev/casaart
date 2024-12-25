@@ -23,7 +23,6 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "provider_id", referencedColumnName = "id")
     Provider provider;
     private String dimensions;
-
     @ManyToOne
     private Category category;
 

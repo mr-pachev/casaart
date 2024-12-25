@@ -21,7 +21,7 @@
 
             <div class="form-group">
                 <label for="name">Име</label>
-                <input type="text"
+                <input type="text" th:placeholder="${productDTO.name}"
                        id="name"
                        name="name"
                        th:field="*{name}"
@@ -35,7 +35,7 @@
             </div>
             <div class="form-group">
                 <label for="providerPrice">Цена доставчик</label>
-                <input type="number"
+                <input type="number" th:placeholder="${productDTO.providerPrice}"
                        id="providerPrice"
                        name="providerPrice"
                        th:field="*{providerPrice}"
@@ -46,7 +46,7 @@
             </div>
             <div class="form-group">
                 <label for="clientPrice">Цена клиент</label>
-                <input type="number"
+                <input type="number" th:placeholder="${productDTO.clientPrice}"
                        id="clientPrice"
                        name="clientPrice"
                        th:field="*{clientPrice}"
@@ -69,7 +69,7 @@
             </div>
             <div class="form-group">
                 <label for="productCode">Код</label>
-                <input type="text"
+                <input type="text" th:placeholder="${productDTO.productCode}"
                        id="productCode"
                        name="code"
                        th:field="*{productCode}"
@@ -83,7 +83,7 @@
             </div>
             <div class="form-group">
                 <label for="providerProductCode">Код доставчик</label>
-                <input type="text"
+                <input type="text" th:placeholder="${productDTO.providerProductCode}"
                        id="providerProductCode"
                        name="code"
                        th:field="*{providerProductCode}"
@@ -94,7 +94,7 @@
             </div>
             <div class="form-group">
                 <label for="provider">Доставчик</label>
-                <select class="form-control"
+                <select class="form-control" th:placeholder="${productDTO.provider}"
                         id="provider"
                         name="provider"
                         th:field="*{provider}"
@@ -111,7 +111,7 @@
             </div>
             <div class="form-group">
                 <label for="productCode">Размери</label>
-                <input type="text"
+                <input type="text" th:placeholder="${productDTO.dimensions}"
                        id="dimensions"
                        name="dimensions"
                        th:field="*{dimensions}"
@@ -119,13 +119,10 @@
                 <p class="invalid-feedback errors alert alert-danger">
                     Размера трябва да се състои от 2 до 30 букви на кирилица.
                 </p>
-                <p class="errors alert alert-danger" th:if="${isExistCode}">
-                    Съществува продукт с този код.
-                </p>
             </div>
             <div class="form-group">
                 <label for="categories">Категории</label>
-                <select class="form-control"
+                <select class="form-control" th:placeholder="${productDTO.category}"
                         id="categories"
                         name="categories"
                         th:field="*{category}"
@@ -142,7 +139,7 @@
             </div>
             <div class="form-group">
                 <label for="type">Тип</label>
-                <select class="form-control"
+                <select class="form-control" th:placeholder="${productDTO.type}"
                         id="type"
                         name="type"
                         th:field="*{type}"
