@@ -8,7 +8,7 @@ public class CategoryDTO {
     long id;
     private String name;
     private String code;
-    List<String> types;
+    private List<String> types;
 
     public long getId() {
         return id;

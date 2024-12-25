@@ -1,9 +1,6 @@
 package casaart.emails_clients_db.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -23,6 +20,7 @@ public class Product extends BaseEntity {
     @Column(name = "providers_products_codes")
     private String providerProductCode;
     @ManyToOne
+    @JoinColumn(name = "provider_id", referencedColumnName = "id")
     Provider provider;
     private String dimensions;
 

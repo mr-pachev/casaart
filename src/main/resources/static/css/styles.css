@@ -255,6 +255,7 @@ table tr:hover {
     background-color: #FF7F00; /* По-тъмен оранжев цвят при hover */
 }
 
+
 /* Оптимизация на таблицата клиенти */
 #clients-table th, #clients-table td {
     text-align: center;

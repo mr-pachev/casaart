@@ -1,20 +1,21 @@
-package casaart.emails_clients_db.model.entity;
-
-import jakarta.persistence.*;
+package casaart.emails_clients_db.model.dto;
 
 import java.util.List;
 
-@Entity
-@Table(name = "providers")
-public class Provider extends BaseEntity{
-    @Column
-    String name;
-    @Column
-    String description;
-    @Column
-    String contacts;
-    @OneToMany(mappedBy = "provider", fetch = FetchType.EAGER)
-    List<Product> products;
+public class ProviderDTO {
+    private long id;
+    private String name;
+    private String description;
+    private String contacts;
+    private List<String> products;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -40,11 +41,11 @@ public class Provider extends BaseEntity{
         this.contacts = contacts;
     }
 
-    public List<Product> getProducts() {
+    public List<String> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<String> products) {
         this.products = products;
     }
 }

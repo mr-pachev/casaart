@@ -21,7 +21,7 @@ public class AddProductDTO {
     @NotBlank
     @Size(min = 2, max = 10)
     private String providerProductCode;
-//    @NotBlank
+    @NotBlank
     private String provider;
     private String dimensions;
     @NotBlank

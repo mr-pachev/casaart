@@ -43,7 +43,7 @@
                     </p>
                 </div>
                 <div class="form-group">
-                    <label for="clientPrice">Цена доставчик</label>
+                    <label for="clientPrice">Цена клиент</label>
                     <input type="number"
                            id="clientPrice"
                            name="clientPrice"
@@ -94,8 +94,8 @@
                             th:errorclass="is-invalid">
                         <option value="">-- Избери --</option>
                         <option th:each="provider: ${allProviders}"
-                                th:value="${provider}"
-                                th:text="${provider}">Доставчик
+                                th:value="${provider.name}"
+                                th:text="${provider.name}">Доставчик
                         </option>
                     </select>
                     <p class="invalid-feedback errors alert alert-danger">

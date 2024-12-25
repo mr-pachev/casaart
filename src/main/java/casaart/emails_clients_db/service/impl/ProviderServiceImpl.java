@@ -1,5 +1,7 @@
 package casaart.emails_clients_db.service.impl;
 
+import casaart.emails_clients_db.model.dto.AddProviderDTO;
+import casaart.emails_clients_db.model.dto.ProviderDTO;
 import casaart.emails_clients_db.model.entity.Provider;
 import casaart.emails_clients_db.repository.ProviderRepository;
 import casaart.emails_clients_db.service.ProviderService;
@@ -21,14 +23,34 @@ public class ProviderServiceImpl implements ProviderService {
 
     //get all providers
     @Override
-    public List<String> allProviders() {
+    public List<ProviderDTO> allProviders() {
         List<Provider> providers = providerRepository.findAll();
-        List<String> providersName = new ArrayList<>();
+
+        return providerListToProviderDTOList(providers);
+    }
+
+    //checking is exist provider
+    @Override
+    public boolean isExistProvider(String name) {
+        return providerRepository.findByName(name).isPresent();
+    }
+
+    //add provider
+    @Override
+    public void addProvider(AddProviderDTO addProviderDTO) {
+        Provider provider = mapper.map(addProviderDTO, Provider.class);
+
+        providerRepository.save(provider);
+    }
+
+    List<ProviderDTO> providerListToProviderDTOList(List<Provider> providers) {
+        List<ProviderDTO> providerDTOS = new ArrayList<>();
 
         for (Provider provider : providers) {
-            providersName.add(provider.getName());
-        }
+            ProviderDTO providerDTO = mapper.map(provider, ProviderDTO.class);
 
-        return providersName;
+            providerDTOS.add(providerDTO);
+        }
+        return providerDTOS;
     }
 }
