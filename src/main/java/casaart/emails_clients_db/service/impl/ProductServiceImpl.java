@@ -71,15 +71,22 @@ public class ProductServiceImpl implements ProductService {
         product.setType(type);
         product.setProvider(providerRepository.findByName(addProductDTO.getProvider()).get());
 
+        // Запазване на продукта в базата данни
+        productRepository.save(product);
+
+        // Създаване и запазване на серийните номера
         for (int i = 0; i < addProductDTO.getPcs(); i++) {
             SerialNumber serialNumber = new SerialNumber();
             serialNumber.setSerialNumber(product.generateCode());
             serialNumber.setProduct(product);
 
-            product.getSerialNumbers().add(serialNumber); // Добавяне директно към списъка
+            serialNumberRepository.save(serialNumber); // Запазване в хранилището
+
+            product.getSerialNumbers().add(serialNumber); // Добавяне към списъка
         }
 
-        productRepository.save(product); // Запазване на продукта и серийните номера
+        // Актуализиране на продукта с новите серийни номера
+        productRepository.save(product);
     }
 
     //find product by id

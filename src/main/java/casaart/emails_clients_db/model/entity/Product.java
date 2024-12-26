@@ -30,7 +30,7 @@ public class Product extends BaseEntity {
     @ManyToOne
     private Type type;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<SerialNumber> serialNumbers = new ArrayList<>();
     private static final AtomicLong counter = new AtomicLong(1); // Уникален брояч
 
