@@ -1,5 +1,6 @@
 package casaart.emails_clients_db.model.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -15,6 +16,8 @@ public class AddProductDTO {
     private Double clientPrice;
     private MultipartFile image;
     private String imagePath;
+    @Min(1)
+    private int pcs;
     @NotBlank
     @Size(min = 2, max = 10)
     private String productCode;
@@ -67,6 +70,14 @@ public class AddProductDTO {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public int getPcs() {
+        return pcs;
+    }
+
+    public void setPcs(int pcs) {
+        this.pcs = pcs;
     }
 
     public String getProductCode() {

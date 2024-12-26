@@ -4,11 +4,9 @@ import casaart.emails_clients_db.model.dto.AddProductDTO;
 import casaart.emails_clients_db.model.dto.ProductDTO;
 import casaart.emails_clients_db.model.entity.Category;
 import casaart.emails_clients_db.model.entity.Product;
+import casaart.emails_clients_db.model.entity.SerialNumber;
 import casaart.emails_clients_db.model.entity.Type;
-import casaart.emails_clients_db.repository.CategoryRepository;
-import casaart.emails_clients_db.repository.ProductRepository;
-import casaart.emails_clients_db.repository.ProviderRepository;
-import casaart.emails_clients_db.repository.TypeRepository;
+import casaart.emails_clients_db.repository.*;
 import casaart.emails_clients_db.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -22,13 +20,15 @@ public class ProductServiceImpl implements ProductService {
     private final ProviderRepository providerRepository;
     private final CategoryRepository categoryRepository;
     private final TypeRepository typeRepository;
+    private final SerialNumberRepository serialNumberRepository;
     private final ModelMapper mapper;
 
-    public ProductServiceImpl(ProductRepository productRepository, ProviderRepository providerRepository, CategoryRepository categoryRepository, TypeRepository typeRepository, ModelMapper mapper) {
+    public ProductServiceImpl(ProductRepository productRepository, ProviderRepository providerRepository, CategoryRepository categoryRepository, TypeRepository typeRepository, SerialNumberRepository serialNumberRepository, ModelMapper mapper) {
         this.productRepository = productRepository;
         this.providerRepository = providerRepository;
         this.categoryRepository = categoryRepository;
         this.typeRepository = typeRepository;
+        this.serialNumberRepository = serialNumberRepository;
         this.mapper = mapper;
     }
 
@@ -71,7 +71,15 @@ public class ProductServiceImpl implements ProductService {
         product.setType(type);
         product.setProvider(providerRepository.findByName(addProductDTO.getProvider()).get());
 
-        productRepository.save(product);
+        for (int i = 0; i < addProductDTO.getPcs(); i++) {
+            SerialNumber serialNumber = new SerialNumber();
+            serialNumber.setSerialNumber(product.generateCode());
+            serialNumber.setProduct(product);
+
+            product.getSerialNumbers().add(serialNumber); // Добавяне директно към списъка
+        }
+
+        productRepository.save(product); // Запазване на продукта и серийните номера
     }
 
     //find product by id
@@ -109,10 +117,16 @@ public class ProductServiceImpl implements ProductService {
 
         for (Product product : products) {
             ProductDTO productDTO = mapper.map(product, ProductDTO.class);
+            List<String> sn = new ArrayList<>();
 
             productDTO.setCategory(product.getCategory().getName());
             productDTO.setType(product.getType().getName());
             productDTO.setProvider(product.getProvider().getName());
+
+            for (SerialNumber serialNumber : product.getSerialNumbers()) {
+                sn.add(serialNumber.getSerialNumber());
+            }
+            productDTO.setSn(sn);
             productDTOS.add(productDTO);
         }
         return productDTOS;

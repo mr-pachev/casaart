@@ -2,6 +2,8 @@ package casaart.emails_clients_db.model.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public class ProductDTO {
     long id;
     private String name;
@@ -15,6 +17,7 @@ public class ProductDTO {
     private String dimensions;
     private String category;
     private String type;
+    private List<String> sn;
 
     public long getId() {
         return id;
@@ -110,5 +113,13 @@ public class ProductDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public List<String> getSn() {
+        return sn;
+    }
+
+    public void setSn(List<String> sn) {
+        this.sn = sn;
     }
 }

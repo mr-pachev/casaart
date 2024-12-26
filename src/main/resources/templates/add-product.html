@@ -150,6 +150,17 @@
                         Избери тип.
                     </p>
                 </div>
+                <div class="form-group">
+                    <label for="pcs">Количество</label>
+                    <input type="number"
+                           id="pcs"
+                           name="pcs"
+                           th:field="*{pcs}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Попълни количество.
+                    </p>
+                </div>
                 <button type="submit" class="btn btn-success">Добави</button>
             </form>
         </div>

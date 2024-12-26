@@ -2,6 +2,8 @@ package casaart.emails_clients_db.model.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Entity
@@ -25,10 +27,11 @@ public class Product extends BaseEntity {
     private String dimensions;
     @ManyToOne
     private Category category;
-
     @ManyToOne
     private Type type;
 
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SerialNumber> serialNumbers = new ArrayList<>();
     private static final AtomicLong counter = new AtomicLong(1); // Уникален брояч
 
     private void generateProductCode() {
@@ -37,19 +40,19 @@ public class Product extends BaseEntity {
         }
     }
 
-    private String generateCode() {
+    public String generateCode() {
         String categoryCode = category.getCode(); // CE, DC, TX
         String typeCode = type.getCode();         // EC, HL, BC
-        String productNameCode = abbreviateProductName(this.name);
+        String productNameCode = productCode;
         Long uniqueNumber = counter.getAndIncrement();
         return String.format("%s-%s-%s-%04d", categoryCode, typeCode, productNameCode, uniqueNumber);
     }
 
-    private String abbreviateProductName(String productName) {
-        return productName.replaceAll("\\s+", "") // Премахва интервали
-                .toUpperCase()         // Капитализира
-                .substring(0, Math.min(6, productName.length())); // Ограничение до 6 символа
-    }
+//    private String abbreviateProductName(String productName) {
+//        return productName.replaceAll("\\s+", "") // Премахва интервали
+//                .toUpperCase()         // Капитализира
+//                .substring(0, Math.min(6, productCode.length())); // Ограничение до 6 символа
+//    }
 
     public String getName() {
         return name;
@@ -129,5 +132,13 @@ public class Product extends BaseEntity {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public List<SerialNumber> getSerialNumbers() {
+        return serialNumbers;
+    }
+
+    public void setSerialNumbers(List<SerialNumber> serialNumbers) {
+        this.serialNumbers = serialNumbers;
     }
 }
