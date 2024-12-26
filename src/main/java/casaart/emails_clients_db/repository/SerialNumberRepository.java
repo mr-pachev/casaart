@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface SerialNumberRepository extends JpaRepository<SerialNumber, Long> {
     List<SerialNumber> findAllByProductName(String name);
+    SerialNumber findById(long id);
 }

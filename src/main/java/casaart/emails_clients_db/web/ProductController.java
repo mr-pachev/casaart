@@ -242,7 +242,7 @@ public class ProductController {
     @PostMapping("/delete-sn/{id}/{prodId}")
     public String removeSerialNumber(@PathVariable("id") Long id, @PathVariable("prodId") Long prodId) {
 
-        productService.deleteSerialNumber(id);
+        productService.deleteSerialNumber(id, prodId);
 
         return "redirect:/product-details/" + prodId;
     }

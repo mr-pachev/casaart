@@ -16,7 +16,6 @@ public class AddProductDTO {
     private Double clientPrice;
     private MultipartFile image;
     private String imagePath;
-    @Min(1)
     private int pcs;
     @NotBlank
     @Size(min = 2, max = 10)

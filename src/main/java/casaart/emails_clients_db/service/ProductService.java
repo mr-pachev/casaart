@@ -22,5 +22,5 @@ public interface ProductService {
     //delete product
     void deleteProduct(long id);
     //delete serial number by id
-    void deleteSerialNumber(long id);
+    void deleteSerialNumber(long id, long prodId);
 }

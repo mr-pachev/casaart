@@ -75,7 +75,11 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
 
         // Създаване и запазване на серийните номера
-        generateAndSaveSerialNumbers(product, addProductDTO.getPcs());
+        int pcs = addProductDTO.getPcs();
+        if (pcs == 0) {
+            pcs = 1;
+        }
+        generateAndSaveSerialNumbers(product, pcs);
 
         // Актуализиране на продукта с новите серийни номера
         productRepository.save(product);
@@ -106,7 +110,7 @@ public class ProductServiceImpl implements ProductService {
         product.setType(typeRepository.findByName(productDTO.getType()).get());
         product.setProvider(providerRepository.findByName(productDTO.getProvider()).get());
 
-        if(productDTO.getPcs() > 0){
+        if (productDTO.getPcs() > 0) {
             generateAndSaveSerialNumbers(product, productDTO.getPcs());
         }
 
@@ -121,8 +125,18 @@ public class ProductServiceImpl implements ProductService {
 
     //delete serial number by id
     @Override
-    public void deleteSerialNumber(long id) {
-        serialNumberRepository.deleteById(id);
+    public void deleteSerialNumber(long id, long prodId) {
+        Product product = productRepository.findById(prodId).get();
+        SerialNumber serialNumber = serialNumberRepository.findById(id);
+
+        List<SerialNumber> serialNumbers = product.getSerialNumbers();
+        boolean removed = serialNumbers.removeIf(sn ->
+                sn.getSerialNumber().equals(serialNumber.getSerialNumber())
+        );
+
+        if (removed) {
+            productRepository.save(product);
+        }
     }
 
     List<ProductDTO> productListToProductDTOList(List<Product> products) {
