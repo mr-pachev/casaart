@@ -226,7 +226,7 @@ public class ProductController {
         }
 
         productService.editProduct(productDTO);
-        return "redirect:/product-details/" + id;
+        return "redirect:/products";
     }
 
     //delete product by id

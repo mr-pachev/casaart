@@ -87,6 +87,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(id).get();
         ProductDTO productDTO = mapper.map(product, ProductDTO.class);
 
+        productDTO.setProvider(product.getProvider().getName());
         productDTO.setCategory(product.getCategory().getName());
         productDTO.setType(product.getType().getName());
         productDTO.setSn(product.getSerialNumbers());

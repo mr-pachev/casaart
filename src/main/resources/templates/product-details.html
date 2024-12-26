@@ -156,7 +156,7 @@
             </div>
             <!-- Таблица със сериините номера -->
             <div class="form-group">
-                <label>Серийни номера (SN)</label>
+                <label>Серийни номера</label>
                 <table>
                     <thead>
                     <tr>
@@ -169,7 +169,7 @@
                         <td th:text="${currentSN.serialNumber}"></td>
                         <td>
                             <form th:method="POST" th:action="@{/delete-sn/{id}/{prodId}(id=${currentSN.id}, prodId=${productDTO.id})}" sec:authorize="hasRole('Admin')">
-                                <input class="delete-sn" type="submit" th:value="Премахване"/>
+                                <input class="delete-button" type="submit" th:value="Премахване"/>
                             </form>
                         </td>
                     </tr>
