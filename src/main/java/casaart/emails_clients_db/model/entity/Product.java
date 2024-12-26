@@ -32,8 +32,6 @@ public class Product extends BaseEntity {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<SerialNumber> serialNumbers = new ArrayList<>();
-    private static final AtomicLong counter = new AtomicLong(1); // Уникален брояч
-
     private void generateProductCode() {
         if (this.productCode == null) {
             this.productCode = generateCode();
@@ -42,10 +40,29 @@ public class Product extends BaseEntity {
 
     public String generateCode() {
         String categoryCode = category.getCode(); // CE, DC, TX
-        String typeCode = type.getCode();         // EC, HL, BC
+        String typeCode = type.getCode();        // EC, HL, BC
         String productNameCode = productCode;
-        Long uniqueNumber = counter.getAndIncrement();
-        return String.format("%s-%s-%s-%04d", categoryCode, typeCode, productNameCode, uniqueNumber);
+
+        //Вземете следващото число въз основа на serialNumbers size + 1
+        Long nextNumber;
+        if (serialNumbers == null || serialNumbers.isEmpty()) {
+            nextNumber = 1L;
+        } else {
+            //Намира най-големия сериен номер и го увеличава с 1
+            nextNumber = serialNumbers.stream()
+                    .map(sn -> {
+                        String code = sn.getSerialNumber();
+                        //Извлича цифровата част от края на серийния номер
+                        if (code != null && code.matches(".*-\\d+$")) {
+                            return Long.parseLong(code.substring(code.lastIndexOf("-") + 1));
+                        }
+                        return 0L;
+                    })
+                    .max(Long::compareTo)
+                    .orElse(0L) + 1;
+        }
+
+        return String.format("%s-%s-%s-%04d", categoryCode, typeCode, productNameCode, nextNumber);
     }
 
 //    private String abbreviateProductName(String productName) {

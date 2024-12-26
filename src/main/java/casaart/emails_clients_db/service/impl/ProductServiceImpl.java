@@ -75,15 +75,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
 
         // Създаване и запазване на серийните номера
-        for (int i = 0; i < addProductDTO.getPcs(); i++) {
-            SerialNumber serialNumber = new SerialNumber();
-            serialNumber.setSerialNumber(product.generateCode());
-            serialNumber.setProduct(product);
-
-            serialNumberRepository.save(serialNumber); // Запазване в хранилището
-
-            product.getSerialNumbers().add(serialNumber); // Добавяне към списъка
-        }
+        generateAndSaveSerialNumbers(product, addProductDTO.getPcs());
 
         // Актуализиране на продукта с новите серийни номера
         productRepository.save(product);
@@ -94,6 +86,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO findProductById(long id) {
         Product product = productRepository.findById(id).get();
         ProductDTO productDTO = mapper.map(product, ProductDTO.class);
+
         productDTO.setCategory(product.getCategory().getName());
         productDTO.setType(product.getType().getName());
         productDTO.setSn(product.getSerialNumbers());
@@ -107,9 +100,14 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(productDTO.getId()).get();
         product = mapper.map(productDTO, Product.class);
 
+        product.setSerialNumbers(productRepository.findById(productDTO.getId()).get().getSerialNumbers());
         product.setCategory(categoryRepository.findByName(productDTO.getCategory()).get());
         product.setType(typeRepository.findByName(productDTO.getType()).get());
         product.setProvider(providerRepository.findByName(productDTO.getProvider()).get());
+
+        if(productDTO.getPcs() > 0){
+            generateAndSaveSerialNumbers(product, productDTO.getPcs());
+        }
 
         productRepository.save(product);
     }
@@ -140,5 +138,21 @@ public class ProductServiceImpl implements ProductService {
             productDTOS.add(productDTO);
         }
         return productDTOS;
+    }
+
+    private void generateAndSaveSerialNumbers(Product product, int pcs) {
+
+        for (int i = 0; i < pcs; i++) {
+            // Създаване на нов сериен номер
+            SerialNumber serialNumber = new SerialNumber();
+            serialNumber.setSerialNumber(product.generateCode());
+            serialNumber.setProduct(product);
+
+            // Запазване в хранилището
+            serialNumberRepository.save(serialNumber);
+
+            // Добавяне към списъка със серийни номера на продукта
+            product.getSerialNumbers().add(serialNumber);
+        }
     }
 }

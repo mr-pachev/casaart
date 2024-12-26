@@ -143,6 +143,7 @@ public class ProductController {
     @GetMapping("/product-details/{id}")
     public String fillEditProductForm(@PathVariable("id") Long id, Model model) {
         ProductDTO productDTO = productService.findProductById(id);
+
         model.addAttribute(productDTO);
         model.addAttribute("allProviders", providerService.allProviders());
         model.addAttribute("allCategories", categoryService.getAllCategory());
