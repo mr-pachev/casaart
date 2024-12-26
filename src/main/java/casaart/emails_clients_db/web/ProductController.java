@@ -162,7 +162,6 @@ public class ProductController {
 
         productDTO.setId(id); // Уверяваме се, че ID е зададено.
 
-        // Ако има грешки при валидацията
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("productDTO", productDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.productDTO", bindingResult);
@@ -211,7 +210,6 @@ public class ProductController {
             productDTO.setImagePath(productService.findProductById(id).getImagePath());
         }
 
-        // Проверки за уникалност
         boolean isChangedProductName = !productDTO.getName().equals(productService.findProductById(id).getName());
         boolean isChangedProductCode = !productDTO.getProductCode().equals(productService.findProductById(id).getProductCode());
 
@@ -227,9 +225,8 @@ public class ProductController {
             return "redirect:/product-details/" + id;
         }
 
-        // Запазване на промените
         productService.editProduct(productDTO);
-        return "redirect:/products";
+        return "redirect:/product-details/" + id;
     }
 
     //delete product by id

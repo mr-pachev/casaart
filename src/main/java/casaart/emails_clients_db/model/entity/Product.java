@@ -30,7 +30,7 @@ public class Product extends BaseEntity {
     @ManyToOne
     private Type type;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SerialNumber> serialNumbers = new ArrayList<>();
     private void generateProductCode() {
         if (this.productCode == null) {
