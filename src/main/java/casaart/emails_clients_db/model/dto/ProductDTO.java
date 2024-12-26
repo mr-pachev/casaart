@@ -1,23 +1,41 @@
 package casaart.emails_clients_db.model.dto;
 
+import casaart.emails_clients_db.model.entity.SerialNumber;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public class ProductDTO {
     long id;
+    @NotBlank
+    @Size(min = 2, max = 50)
     private String name;
+    @NotNull
     private Double providerPrice;
+    @NotNull
     private Double clientPrice;
     private MultipartFile image;
     private String imagePath;
+    @Min(1)
+    private int pcs;
+    @NotBlank
+    @Size(min = 2, max = 10)
     private String productCode;
+    @NotBlank
+    @Size(min = 2, max = 10)
     private String providerProductCode;
+    @NotBlank
     private String provider;
     private String dimensions;
+    @NotBlank
     private String category;
+    @NotBlank
     private String type;
-    private List<String> sn;
+    private List<SerialNumber> sn;
 
     public long getId() {
         return id;
@@ -65,6 +83,14 @@ public class ProductDTO {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public int getPcs() {
+        return pcs;
+    }
+
+    public void setPcs(int pcs) {
+        this.pcs = pcs;
     }
 
     public String getProductCode() {
@@ -115,11 +141,11 @@ public class ProductDTO {
         this.type = type;
     }
 
-    public List<String> getSn() {
+    public List<SerialNumber> getSn() {
         return sn;
     }
 
-    public void setSn(List<String> sn) {
+    public void setSn(List<SerialNumber> sn) {
         this.sn = sn;
     }
 }

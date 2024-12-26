@@ -96,6 +96,7 @@ public class ProductServiceImpl implements ProductService {
         ProductDTO productDTO = mapper.map(product, ProductDTO.class);
         productDTO.setCategory(product.getCategory().getName());
         productDTO.setType(product.getType().getName());
+        productDTO.setSn(product.getSerialNumbers());
 
         return productDTO;
     }
@@ -119,21 +120,23 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(id);
     }
 
+    //delete serial number by id
+    @Override
+    public void deleteSerialNumber(long id) {
+        serialNumberRepository.deleteById(id);
+    }
+
     List<ProductDTO> productListToProductDTOList(List<Product> products) {
         List<ProductDTO> productDTOS = new ArrayList<>();
 
         for (Product product : products) {
             ProductDTO productDTO = mapper.map(product, ProductDTO.class);
-            List<String> sn = new ArrayList<>();
 
             productDTO.setCategory(product.getCategory().getName());
             productDTO.setType(product.getType().getName());
             productDTO.setProvider(product.getProvider().getName());
+            productDTO.setSn(product.getSerialNumbers());
 
-            for (SerialNumber serialNumber : product.getSerialNumbers()) {
-                sn.add(serialNumber.getSerialNumber());
-            }
-            productDTO.setSn(sn);
             productDTOS.add(productDTO);
         }
         return productDTOS;

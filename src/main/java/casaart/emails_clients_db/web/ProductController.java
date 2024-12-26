@@ -2,9 +2,6 @@ package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddProductDTO;
 import casaart.emails_clients_db.model.dto.ProductDTO;
-import casaart.emails_clients_db.model.dto.UserDTO;
-import casaart.emails_clients_db.model.enums.RoleName;
-import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.service.CategoryService;
 import casaart.emails_clients_db.service.ProductService;
 import casaart.emails_clients_db.service.ProviderService;
@@ -241,6 +238,15 @@ public class ProductController {
         productService.deleteProduct(id);
 
         return "redirect:/products";
+    }
+
+    //delete serial number by id
+    @PostMapping("/delete-sn/{id}/{prodId}")
+    public String removeSerialNumber(@PathVariable("id") Long id, @PathVariable("prodId") Long prodId) {
+
+        productService.deleteSerialNumber(id);
+
+        return "redirect:/product-details/" + prodId;
     }
 }
 

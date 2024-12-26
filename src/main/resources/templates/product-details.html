@@ -154,6 +154,34 @@
                     Избери тип.
                 </p>
             </div>
+            <!-- Таблица със сериините номера -->
+            <div class="form-group">
+                <label>Серийни номера (SN)</label>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Сериен номер</th>
+                        <th>Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody id="snTableBody">
+                    <tr th:each="currentSN : ${productDTO.sn}">
+                        <td th:text="${currentSN.serialNumber}"></td>
+                        <td>
+                            <form th:method="POST" th:action="@{/delete-sn/{id}/{prodId}(id=${currentSN.id}, prodId=${productDTO.id})}" sec:authorize="hasRole('Admin')">
+                                <input class="delete-sn" type="submit" th:value="Премахване"/>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Поле за въвеждане на бройки -->
+            <div class="form-group">
+                <label for="pcs">Бройки</label>
+                <input type="number" id="pcs" name="pcs" placeholder="Въведи бройка">
+            </div>
             <button type="submit" class="btn btn-success">Запази</button>
         </form>
     </div>

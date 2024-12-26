@@ -4,6 +4,7 @@ import casaart.emails_clients_db.model.dto.AddProviderDTO;
 import casaart.emails_clients_db.model.dto.ProviderDTO;
 import casaart.emails_clients_db.model.entity.Provider;
 import casaart.emails_clients_db.repository.ProviderRepository;
+import casaart.emails_clients_db.repository.SerialNumberRepository;
 import casaart.emails_clients_db.service.ProviderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
