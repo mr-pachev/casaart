@@ -46,11 +46,27 @@ public class CategoryServiceImpl implements CategoryService {
     public boolean isExistCategoryCode(String code) {
         return categoryRepository.findByCode(code).isPresent();
     }
+    //find category by id
+    @Override
+    public CategoryDTO findCategoryById(long id) {
+        Category category = categoryRepository.findById(id);
+        CategoryDTO categoryDTO = mapper.map(category, CategoryDTO.class);
+
+        return categoryDTO;
+    }
 
     //add category
     @Override
     public void addCategory(AddCategoryDTO addCategoryDTO) {
         Category category = mapper.map(addCategoryDTO, Category.class);
+
+        categoryRepository.save(category);
+    }
+    //edit category
+    @Override
+    public void editCategory(CategoryDTO categoryDTO) {
+        Category category = categoryRepository.findById(categoryDTO.getId());
+        category = mapper.map(categoryDTO, Category.class);
 
         categoryRepository.save(category);
     }

@@ -1,14 +1,19 @@
 package casaart.emails_clients_db.model.dto;
 
-import casaart.emails_clients_db.model.entity.Type;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
 public class CategoryDTO {
     long id;
+    @NotBlank
+    @Size(min = 2, max = 30)
     private String name;
+    @NotBlank
+    @Size(min = 2, max = 10)
     private String code;
-    private List<String> types;
+    private List<TypeDTO> types;
 
     public long getId() {
         return id;
@@ -34,11 +39,11 @@ public class CategoryDTO {
         this.code = code;
     }
 
-    public List<String> getTypes() {
+    public List<TypeDTO> getTypes() {
         return types;
     }
 
-    public void setTypes(List<String> types) {
+    public void setTypes(List<TypeDTO> types) {
         this.types = types;
     }
 }

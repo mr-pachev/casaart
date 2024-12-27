@@ -14,6 +14,10 @@ public interface CategoryService {
     boolean isExistCategory(String name);
     //checking is exist category by code
     boolean isExistCategoryCode(String code);
+    //find category by id
+    CategoryDTO findCategoryById(long id);
     //add category
     void addCategory(AddCategoryDTO addCategoryDTO);
+    //edit category
+    void editCategory(CategoryDTO categoryDTO);
 }

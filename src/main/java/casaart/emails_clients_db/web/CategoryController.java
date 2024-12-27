@@ -7,9 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -87,6 +85,60 @@ public class CategoryController {
         }
 
         categoryService.addCategory(addCategoryDTO);
+        return "redirect:/categories";
+    }
+
+    //edit current category
+    @PostMapping("/category-details/{id}")
+    public String referenceToEdithCategoryForm(@PathVariable("id") Long id) {
+
+        return "redirect:/category-details/" + id;
+    }
+
+    @GetMapping("/category-details/{id}")
+    public String fillEditCategoryForm(@PathVariable("id") Long id, Model model) {
+        CategoryDTO categoryDTO = categoryService.findCategoryById(id);
+        model.addAttribute(categoryDTO);
+
+        return "category-details";
+    }
+
+    @PostMapping("/category-details")
+    public String editCategory(@RequestParam("id") Long id,
+                              @Valid CategoryDTO categoryDTO,
+                              BindingResult bindingResult,
+                              RedirectAttributes rAtt,
+                              Model model) {
+
+        categoryDTO.setId(id);
+
+        if (bindingResult.hasErrors()) {
+            rAtt.addFlashAttribute("categoryDTO", categoryDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.categoryDTO", bindingResult);
+
+            return "category-details";
+        }
+
+        boolean isChangedCategoryName = !categoryDTO.getName().equals(categoryService.findCategoryById(id).getName());
+        boolean isChangedCategoryCode = !categoryDTO.getCode().equals(categoryService.findCategoryById(id).getCode());
+
+        if (isChangedCategoryName && categoryService.isExistCategoryCode(categoryDTO.getCode())) {
+            rAtt.addFlashAttribute("categoryDTO", categoryDTO);
+            rAtt.addFlashAttribute("isExistCategory", true);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.categoryDTO", bindingResult);
+
+            return "redirect:/category-details/" + id;
+        }
+
+        if (isChangedCategoryCode && categoryService.isExistCategoryCode(categoryDTO.getCode())) {
+            rAtt.addFlashAttribute("categoryDTO", categoryDTO);
+            rAtt.addFlashAttribute("isExistCategoryCode", true);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.categoryDTO", bindingResult);
+
+            return "redirect:/category-details/" + id;
+        }
+
+        categoryService.editCategory(categoryDTO);
         return "redirect:/categories";
     }
 }

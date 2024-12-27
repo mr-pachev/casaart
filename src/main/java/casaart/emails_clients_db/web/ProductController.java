@@ -135,7 +135,7 @@ public class ProductController {
 
     //edit product
     @PostMapping("/product-details/{id}")
-    public String referenceToEdithproductForm(@PathVariable("id") Long id) {
+    public String referenceToEditProductForm(@PathVariable("id") Long id) {
 
         return "redirect:/product-details/" + id;
     }
