@@ -3,7 +3,9 @@ package casaart.emails_clients_db.service.impl;
 import casaart.emails_clients_db.model.dto.AddCategoryDTO;
 import casaart.emails_clients_db.model.dto.CategoryDTO;
 import casaart.emails_clients_db.model.entity.Category;
+import casaart.emails_clients_db.model.entity.Product;
 import casaart.emails_clients_db.repository.CategoryRepository;
+import casaart.emails_clients_db.repository.ProductRepository;
 import casaart.emails_clients_db.service.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -14,10 +16,13 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+
+    private final ProductRepository productRepository;
     private final ModelMapper mapper;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, ModelMapper mapper) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, ProductRepository productRepository, ModelMapper mapper) {
         this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
         this.mapper = mapper;
     }
 
@@ -69,5 +74,13 @@ public class CategoryServiceImpl implements CategoryService {
         category = mapper.map(categoryDTO, Category.class);
 
         categoryRepository.save(category);
+
+        List<Product> products = productRepository.findAllByCategoryName(categoryDTO.getName());
+
+        for (Product product : products) {
+            product.updateSerialNumbersOnCategoryChange();
+
+            productRepository.save(product);
+        }
     }
 }

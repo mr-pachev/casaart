@@ -64,11 +64,63 @@ public class Product extends BaseEntity {
         return String.format("%s-%s-%s-%04d", categoryCode, typeCode, productNameCode, nextNumber);
     }
 
-//    private String abbreviateProductName(String productName) {
-//        return productName.replaceAll("\\s+", "") // Премахва интервали
-//                .toUpperCase()         // Капитализира
-//                .substring(0, Math.min(6, productCode.length())); // Ограничение до 6 символа
-//    }
+    public void updateSerialNumbersOnCategoryChange() {
+        if (serialNumbers == null || serialNumbers.isEmpty() || category == null) {
+            return; // Няма серийни номера или категория за актуализиране
+        }
+
+        String newCategoryCode = category.getCode();
+        if (newCategoryCode == null || newCategoryCode.isEmpty()) {
+            return; // Новият код на категорията е невалиден
+        }
+
+        String currentCategoryCode = serialNumbers.get(0).getSerialNumber().split("-")[0]; // Предполага се, че всички серийни номера имат един и същ код на категорията
+        if (currentCategoryCode.equals(newCategoryCode)) {
+            return; // Няма промяна в кода на категорията
+        }
+
+        // Актуализира серийните номера
+        for (SerialNumber serialNumber : serialNumbers) {
+            String oldSerialNumber = serialNumber.getSerialNumber();
+            if (oldSerialNumber != null && oldSerialNumber.startsWith(currentCategoryCode + "-")) {
+                // Изгражда новия сериен номер с новия код на категорията
+                String newSerialNumber = oldSerialNumber.replaceFirst(
+                        "^" + currentCategoryCode + "-",
+                        newCategoryCode + "-"
+                );
+                serialNumber.setSerialNumber(newSerialNumber);
+            }
+        }
+    }
+
+    public void updateSerialNumbersOnTypeChange() {
+        if (serialNumbers == null || serialNumbers.isEmpty() || type == null) {
+            return; // Няма серийни номера или тип за актуализиране
+        }
+
+        String newTypeCode = type.getCode();
+        if (newTypeCode == null || newTypeCode.isEmpty()) {
+            return; // Новият код на типа е невалиден
+        }
+
+        String currentTypeCode = serialNumbers.get(0).getSerialNumber().split("-")[1]; // Предполага се, че всички серийни номера имат един и същ код на типа
+        if (currentTypeCode.equals(newTypeCode)) {
+            return; // Няма промяна в кода на типа
+        }
+
+        // Актуализира серийните номера
+        for (SerialNumber serialNumber : serialNumbers) {
+            String oldSerialNumber = serialNumber.getSerialNumber();
+            if (oldSerialNumber != null && oldSerialNumber.split("-")[1].equals(currentTypeCode)) {
+                // Изгражда новия сериен номер с новия код на типа
+                String[] parts = oldSerialNumber.split("-");
+                parts[1] = newTypeCode;
+                String newSerialNumber = String.join("-", parts);
+                serialNumber.setSerialNumber(newSerialNumber);
+            }
+        }
+    }
+
 
     public String getName() {
         return name;
