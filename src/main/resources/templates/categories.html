@@ -21,6 +21,7 @@
             <th style="width: 10%;">Име</th>
             <th style="width: 10%;">Код</th>
             <th style="width: 10%;">Типове</th>
+<!--            <th style="width: 10%;">Продукти</th>-->
             <th style="width: 10%;">Действия</th>
         </tr>
         </thead>
@@ -29,6 +30,7 @@
             <td th:text="${category.name}">Име</td>
             <td th:text="${category.code}">Код</td>
             <td th:text="${category.types.size()}">Типове</td>
+<!--            <td th:text="${category.products.size()}">Продукти</td>-->
             <td class="action-buttons">
                 <form th:method="POST" th:action="@{/category-details/{id}(id=${category.id})}">
                     <input class="edit-button" type="submit" th:value="Промяна"/>

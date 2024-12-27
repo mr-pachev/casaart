@@ -65,7 +65,7 @@
                                 <form th:method="POST" th:action="@{/type-details/{id}(id=${type.id})}">
                                     <input class="edit-button" type="submit" th:value="Промяна"/>
                                 </form>
-                                <form th:method="POST" th:action="@{/delete-product/{id}(id=${type.id})}" sec:authorize="hasRole('Admin')">
+                                <form th:method="POST" th:action="@{/delete-category/{id}(id=${type.id})}" sec:authorize="hasRole('Admin')">
                                     <input class="delete-button" type="submit" th:value="Премахване"/>
                                 </form>
                             </td>

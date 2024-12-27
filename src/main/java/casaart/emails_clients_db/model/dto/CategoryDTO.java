@@ -15,6 +15,8 @@ public class CategoryDTO {
     private String code;
     private List<TypeDTO> types;
 
+    private List<ProductDTO> products;
+
     public long getId() {
         return id;
     }
@@ -45,5 +47,13 @@ public class CategoryDTO {
 
     public void setTypes(List<TypeDTO> types) {
         this.types = types;
+    }
+
+    public List<ProductDTO> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<ProductDTO> products) {
+        this.products = products;
     }
 }

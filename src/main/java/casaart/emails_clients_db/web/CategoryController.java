@@ -141,4 +141,13 @@ public class CategoryController {
         categoryService.editCategory(categoryDTO);
         return "redirect:/categories";
     }
+
+    //delete category by id
+    @PostMapping("/delete-category/{id}")
+    public String removeCategory(@PathVariable("id") Long id) {
+
+        categoryService.deleteCategory(id);
+
+        return "redirect:/categories";
+    }
 }
