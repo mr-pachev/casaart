@@ -48,35 +48,36 @@
                         Съществува категория с този код.
                     </p>
                 </div>
-                <!-- Таблица с типове -->
-                <div class="form-group">
-                    <label>Тип</label>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Тип</th>
-                            <th>Брой продукти</th>
-                            <th>Действие</th>
-                        </tr>
-                        </thead>
-                        <tbody id="types">
-                        <tr th:each="type : ${categoryDTO.getTypes()}">
-                            <td th:text="${type.name}"></td>
-                            <td th:text="${type.products.size()}"></td>
-                            <td class="action-buttons">
-                                <form th:method="POST" th:action="@{/type-details/{id}(id=${type.id})}">
-                                    <input class="edit-button" type="submit" th:value="Промяна"/>
-                                </form>
-                                <form th:method="POST" th:action="@{/delete-category/{id}(id=${type.id})}" sec:authorize="hasRole('Admin')">
-                                    <input class="delete-button" type="submit" th:value="Премахване"/>
-                                </form>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
                 <button type="submit" class="btn btn-success">Запази</button>
             </form>
+            <br>
+            <!-- Таблица с типове -->
+            <div class="form-group">
+                <label>Типове</label>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Тип</th>
+                        <th>Брой продукти</th>
+                        <th>Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody id="types">
+                    <tr th:each="type : ${categoryDTO.getTypes()}">
+                        <td th:text="${type.name}"></td>
+                        <td th:text="${type.products.size()}"></td>
+                        <td class="action-buttons">
+                            <form th:method="POST" th:action="@{/type-details/{id}(id=${type.id})}">
+                                <input class="edit-button" type="submit" th:value="Промяна"/>
+                            </form>
+                            <form th:method="POST" th:action="@{/delete-type/{id}(id=${type.id})}" sec:authorize="hasRole('Admin')">
+                                <input class="delete-button" type="submit" th:value="Премахване"/>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
