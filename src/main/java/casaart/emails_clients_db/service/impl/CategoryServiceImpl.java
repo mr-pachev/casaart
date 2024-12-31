@@ -5,6 +5,7 @@ import casaart.emails_clients_db.model.dto.CategoryDTO;
 import casaart.emails_clients_db.model.dto.ProductDTO;
 import casaart.emails_clients_db.model.entity.Category;
 import casaart.emails_clients_db.model.entity.Product;
+import casaart.emails_clients_db.model.entity.Type;
 import casaart.emails_clients_db.repository.CategoryRepository;
 import casaart.emails_clients_db.repository.ProductRepository;
 import casaart.emails_clients_db.service.CategoryService;
@@ -56,19 +57,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDTO findCategoryById(long id) {
         Category category = categoryRepository.findById(id);
-        CategoryDTO categoryDTO = mapper.map(category, CategoryDTO.class);
-//        List<ProductDTO> productDTOS = new ArrayList<>();
-//
-//        List<Product> products = productRepository.findAllByCategoryName(category.getName());
-//        for (Product product : products) {
-//            ProductDTO productDTO = mapper.map(product, ProductDTO.class);
-//            product.setSerialNumbers();
-//
-//            productDTOS.add(productDTO);
-//        }
-//        categoryDTO.setProducts(productDTOS);
 
-        return categoryDTO;
+        return mapper.map(category, CategoryDTO.class);
     }
 
     //add category
@@ -97,6 +87,7 @@ public class CategoryServiceImpl implements CategoryService {
     //delete category
     @Override
     public void deleteCategory(long id) {
+
         categoryRepository.deleteById(id);
     }
 }

@@ -55,12 +55,14 @@
                         <thead>
                         <tr>
                             <th>Тип</th>
+                            <th>Брой продукти</th>
                             <th>Действие</th>
                         </tr>
                         </thead>
                         <tbody id="types">
                         <tr th:each="type : ${categoryDTO.getTypes()}">
                             <td th:text="${type.name}"></td>
+                            <td th:text="${type.products.size()}"></td>
                             <td class="action-buttons">
                                 <form th:method="POST" th:action="@{/type-details/{id}(id=${type.id})}">
                                     <input class="edit-button" type="submit" th:value="Промяна"/>
