@@ -1,6 +1,5 @@
 package casaart.emails_clients_db.web;
 
-import casaart.emails_clients_db.model.dto.AddCategoryDTO;
 import casaart.emails_clients_db.model.dto.AddTypeDTO;
 import casaart.emails_clients_db.model.dto.CategoryDTO;
 import casaart.emails_clients_db.model.dto.TypeDTO;
@@ -11,9 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -94,6 +91,73 @@ public class TypeController {
         }
 
         typeService.addType(addTypeDTO);
+        return "redirect:/types";
+    }
+
+    //edit current type
+    @PostMapping("/type-details/{id}")
+    public String referenceToEdithTypeForm(@PathVariable("id") Long id) {
+
+        return "redirect:/type-details/" + id;
+    }
+
+    @GetMapping("/type-details/{id}")
+    public String fillEditTypeForm(@PathVariable("id") Long id, Model model) {
+        TypeDTO typeDTO = typeService.findTypeById(id);
+        model.addAttribute(typeDTO);
+        model.addAttribute("allCategories", categoryService.getAllCategory());
+
+        return "type-details";
+    }
+
+    @PostMapping("/type-details")
+    public String editType(@RequestParam("id") Long id,
+                               @Valid TypeDTO typeDTO,
+                               BindingResult bindingResult,
+                               RedirectAttributes rAtt,
+                               Model model) {
+
+        typeDTO.setId(id);
+
+        if (bindingResult.hasErrors()) {
+            rAtt.addFlashAttribute("typeDTO", typeDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.typeDTO", bindingResult);
+            model.addAttribute("allCategories", categoryService.getAllCategory());
+
+            return "type-details";
+        }
+
+        boolean isChangedTypeName = !typeDTO.getName().equals(typeService.findTypeById(id).getName());
+        boolean isChangedTypeCode = !typeDTO.getCode().equals(typeService.findTypeById(id).getCode());
+
+        if (isChangedTypeName && typeService.isExistType(typeDTO.getName())) {
+            rAtt.addFlashAttribute("typeDTO", typeDTO);
+            rAtt.addFlashAttribute("isExistType", true);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.typeDTO", bindingResult);
+            model.addAttribute("allCategories", categoryService.getAllCategory());
+
+            return "redirect:/type-details/" + id;
+        }
+
+        if (isChangedTypeCode && typeService.isExistTypeCode(typeDTO.getCode())) {
+            rAtt.addFlashAttribute("typeDTO", typeDTO);
+            rAtt.addFlashAttribute("isExistTypeCode", true);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.typeDTO", bindingResult);
+            model.addAttribute("allCategories", categoryService.getAllCategory());
+
+            return "redirect:/type-details/" + id;
+        }
+
+        typeService.editType(typeDTO);
+        return "redirect:/types";
+    }
+
+    //delete type by id
+    @PostMapping("/delete-type/{id}")
+    public String removeType(@PathVariable("id") Long id) {
+
+        typeService.deleteType(id);
+
         return "redirect:/types";
     }
 }

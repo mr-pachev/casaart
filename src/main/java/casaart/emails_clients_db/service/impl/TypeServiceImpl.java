@@ -1,8 +1,10 @@
 package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.AddTypeDTO;
+import casaart.emails_clients_db.model.dto.ProductDTO;
 import casaart.emails_clients_db.model.dto.TypeDTO;
 import casaart.emails_clients_db.model.entity.Category;
+import casaart.emails_clients_db.model.entity.Product;
 import casaart.emails_clients_db.model.entity.Type;
 import casaart.emails_clients_db.repository.CategoryRepository;
 import casaart.emails_clients_db.repository.TypeRepository;
@@ -38,6 +40,25 @@ public class TypeServiceImpl implements TypeService {
         return null;
     }
 
+    //get type by id
+    @Override
+    public TypeDTO findTypeById(long id) {
+        Type type = typeRepository.findById(id).get();
+        TypeDTO typeDTO = mapper.map(type, TypeDTO.class);
+        List<ProductDTO> productDTOS = new ArrayList<>();
+
+        typeDTO.setCategory(type.getCategory().getName());
+        for (Product product : type.getProducts()) {
+            ProductDTO productDTO = mapper.map(product, ProductDTO.class);
+            productDTO.setPcs(product.getSerialNumbers().size());
+
+            productDTOS.add(productDTO);
+        }
+        typeDTO.setProducts(productDTOS);
+
+        return typeDTO;
+    }
+
     //checking is exist type
     @Override
     public boolean isExistType(String name) {
@@ -58,6 +79,17 @@ public class TypeServiceImpl implements TypeService {
 
         type.setCategory(category);
         typeRepository.save(type);
+    }
+
+    //edit type
+    @Override
+    public void editType(TypeDTO typeDTO) {
+
+    }
+    //delete type
+    @Override
+    public void deleteType(long id) {
+        typeRepository.deleteById(id);
     }
 
     List<TypeDTO> typeListToTypeDTOList(List<Type> types) {
