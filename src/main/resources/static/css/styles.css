@@ -82,6 +82,54 @@ main {
     background-color: #0074D9; /* Цвят при hover */
 }
 
+/* Центриране на съдържанието в клетките */
+table td {
+    vertical-align: middle; /* Вертикално центриране */
+    text-align: center; /* Хоризонтално центриране */
+    padding: 10px; /* Добавяне на отстояние */
+    height: 100%; /* Запълване на наличната височина */
+}
+
+/* Бутони за действия */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Центриране на бутоните във вертикалната ос */
+    gap: 10px; /* Разстояние между бутоните */
+}
+
+.edit-button, .delete-button {
+    display: inline-block;
+    margin: 0;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    text-decoration: none; /* Без подчертаване */
+    border: none; /* Без рамка */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button {
+    background-color: rgba(252, 93, 23, 0.9);
+    color: white;
+}
+
+.edit-button:hover {
+    background-color: rgba(173, 106, 8, 0.9);
+    color: white;
+}
+
+.delete-button {
+    background-color: #fc0707;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #D90429;
+    color: white;
+}
+
 /* Навигация */
 .navbar {
     background-color: #FFA500;
@@ -131,7 +179,7 @@ table {
 table th, table td {
     border: 1px solid #ddd;
     padding: 10px;
-    text-align: left;
+    text-align: center;
 }
 
 table th {
@@ -180,135 +228,6 @@ table tr:hover {
 .form-group input:focus {
     border-color: #1E90FF;
     box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
-}
-
-/* Бутони за действия */
-.action-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-
-.edit-button {
-    display: inline-block;
-    background-color: rgba(252, 93, 23, 0.9);
-    color: white; /* Бял текст */
-    padding: 6px 12px;
-    font-size: 14px;
-    border-radius: 5px;
-    text-decoration: none; /* Без подчертаване */
-    border: none; /* Без рамка */
-    transition: background-color 0.3s ease; /* Преход само за фона */
-}
-
-.edit-button:hover {
-    background-color: rgba(173, 106, 8, 0.9); /* Промяна само на фона при hover */
-    color: white; /* Уверяваме се, че текстът остава бял */
-    text-decoration: none; /* Без подчертаване */
-}
-
-.delete-button {
-    display: inline-block;
-    background-color: #fc0707; /* Червен фон */
-    color: white; /* Бял текст */
-    padding: 6px 12px;
-    font-size: 14px;
-    border-radius: 5px;
-    text-decoration: none; /* Без подчертаване */
-    border: none; /* Без рамка */
-    transition: background-color 0.3s ease; /* Преход само за фона */
-}
-
-.delete-button:hover {
-    background-color: #D90429; /* Промяна само на фона при hover */
-    color: white; /* Уверяваме се, че текстът остава бял */
-    text-decoration: none; /* Без подчертаване */
-}
-
-
-.source-type-select {
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.source-type-select:focus {
-    border-color: #1E90FF;
-    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
-}
-
-.sort-button {
-    background-color: #FFA500; /* Оранжев фон */
-    color: white; /* Бял текст */
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.sort-button:hover {
-    background-color: #FF7F00; /* По-тъмен оранжев цвят при hover */
-}
-
-
-/* Оптимизация на таблицата клиенти */
-#clients-table th, #clients-table td {
-    text-align: center;
-    padding: 8px;
-}
-
-#clients-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-#clients-table th {
-    background-color: #1E90FF;
-    color: white;
-    padding: 10px;
-}
-
-#clients-table td {
-    border: 1px solid #ddd;
-}
-
-#clients-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#clients-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Центриране и оптимизация на таблицата категории */
-#category-table {
-    margin: 0 auto; /* Центриране на таблицата */
-    width: auto; /* Ширината да се адаптира спрямо съдържанието */
-    border-collapse: collapse; /* Премахване на разстоянията между клетките */
-}
-
-#category-table th, #category-table td {
-    text-align: center; /* Центриране на текста в клетките */
-    padding: 12px; /* Добавяне на отстояние вътре в клетките */
-}
-
-#category-table th {
-    background-color: #1E90FF;
-    color: white;
-}
-
-#category-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-#category-table tr:hover {
-    background-color: #f1f1f1;
 }
 
 /* Футър */

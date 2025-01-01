@@ -48,13 +48,15 @@
             <td th:text="${product.category}">Категория</td>
             <td th:text="${product.type}">Тип</td>
             <td th:text="${product.sn.size()}">Количество</td>
-            <td class="action-buttons">
+            <td>
+                <div class="action-buttons">
                 <form th:method="POST" th:action="@{/product-details/{id}(id=${product.id})}">
                     <input class="edit-button" type="submit" th:value="Промяна"/>
                 </form>
                 <form th:method="POST" th:action="@{/delete-product/{id}(id=${product.id})}" sec:authorize="hasRole('Admin')">
                     <input class="delete-button" type="submit" th:value="Премахване"/>
                 </form>
+                </div>
             </td>
         </tr>
         </tbody>
