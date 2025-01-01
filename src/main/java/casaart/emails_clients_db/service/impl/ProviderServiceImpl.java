@@ -44,6 +44,14 @@ public class ProviderServiceImpl implements ProviderService {
         providerRepository.save(provider);
     }
 
+    //edit provider
+    @Override
+    public void editProvider(ProviderDTO providerDTO) {
+        Provider provider = mapper.map(providerDTO, Provider.class);
+
+        System.out.println();
+    }
+
     List<ProviderDTO> providerListToProviderDTOList(List<Provider> providers) {
         List<ProviderDTO> providerDTOS = new ArrayList<>();
 

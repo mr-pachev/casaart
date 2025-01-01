@@ -1,11 +1,19 @@
 package casaart.emails_clients_db.model.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 
 public class ProviderDTO {
     private long id;
+    @NotBlank
+    @Size(min = 2, max = 30)
     private String name;
+    @NotBlank
+    @Size(min = 4, max = 255)
     private String description;
+    @NotBlank
     private String contacts;
     private List<String> products;
 
