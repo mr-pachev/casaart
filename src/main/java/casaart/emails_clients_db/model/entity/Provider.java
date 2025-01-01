@@ -13,7 +13,7 @@ public class Provider extends BaseEntity{
     String description;
     @Column
     String contacts;
-    @OneToMany(mappedBy = "provider", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "provider", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     List<Product> products;
 
     public String getName() {

@@ -13,7 +13,7 @@
     <div class="container-form">
         <h1>Промяна доставчик</h1>
         <div class="login-form">
-            <form th:action="@{provider-details}"
+            <form th:action="@{/provider-details}"
                   th:object="${providerDTO}"
                   th:method="POST">
 
@@ -22,7 +22,7 @@
 
                 <div class="form-group">
                     <label for="name">Име</label>
-                    <input type="text"
+                    <input type="text" th:placeholder="${providerDTO.name}"
                            id="name"
                            name="name"
                            th:field="*{name}"
@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Описание</label>
-                    <input type="description"
+                    <input type="text" th:placeholder="${providerDTO.description}"
                            id="description"
                            name="description"
                            th:field="*{description}"
@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-group">
                     <label for="contacts">Контакти</label>
-                    <input type="contacts"
+                    <input type="text" th:placeholder="${providerDTO.contacts}"
                            id="contacts"
                            name="contacts"
                            th:field="*{contacts}"
@@ -56,8 +56,9 @@
                         Попълни контакти.
                     </p>
                 </div>
-                <button type="submit" class="btn btn-success">Добави</button>
+                <button type="submit" class="btn btn-success">Запази</button>
             </form>
+
         </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>

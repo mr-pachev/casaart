@@ -30,10 +30,10 @@
             <td th:text="${provider.description}">Описание</td>
             <td th:text="${provider.getProducts().size()}">Продукти</td>
             <td class="action-buttons">
-                <form th:method="POST" th:action="@{/client-details/{id}(id=${provider.id})}">
+                <form th:method="POST" th:action="@{/provider-details/{id}(id=${provider.id})}">
                     <input class="edit-button" type="submit" th:value="Промяна"/>
                 </form>
-                <form th:method="POST" th:action="@{/delete-client/{id}(id=${provider.id})}" sec:authorize="hasRole('Admin')">
+                <form th:method="POST" th:action="@{/delete-provider/{id}(id=${provider.id})}" sec:authorize="hasRole('Admin')">
                     <input class="delete-button" type="submit" th:value="Премахване"/>
                 </form>
             </td>

@@ -30,6 +30,15 @@ public class ProviderServiceImpl implements ProviderService {
         return providerListToProviderDTOList(providers);
     }
 
+    //find provider by id
+    @Override
+    public ProviderDTO findProviderById(long id) {
+        Provider provider = providerRepository.findById(id).get();
+        ProviderDTO providerDTO = mapper.map(provider, ProviderDTO.class);
+
+        return providerDTO;
+    }
+
     //checking is exist provider
     @Override
     public boolean isExistProvider(String name) {
@@ -47,9 +56,18 @@ public class ProviderServiceImpl implements ProviderService {
     //edit provider
     @Override
     public void editProvider(ProviderDTO providerDTO) {
-        Provider provider = mapper.map(providerDTO, Provider.class);
+        Provider provider = providerRepository.findById(providerDTO.getId()).get();
+        provider.setName(providerDTO.getName());
+        provider.setDescription(providerDTO.getDescription());
+        provider.setContacts(providerDTO.getContacts());
 
-        System.out.println();
+       providerRepository.save(provider);
+    }
+
+    //delete provider
+    @Override
+    public void deleteProvider(long id) {
+        providerRepository.deleteById(id);
     }
 
     List<ProviderDTO> providerListToProviderDTOList(List<Provider> providers) {

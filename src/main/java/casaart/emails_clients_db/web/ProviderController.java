@@ -87,52 +87,39 @@ public class ProviderController {
 
     @GetMapping("/provider-details/{id}")
     public String fillEditProviderForm(@PathVariable("id") Long id, Model model) {
-        TypeDTO typeDTO = typeService.findTypeById(id);
-        model.addAttribute(typeDTO);
-        model.addAttribute("allCategories", categoryService.getAllCategory());
+        ProviderDTO providerDTO = providerService.findProviderById(id);
+        model.addAttribute(providerDTO);
 
         return "provider-details";
     }
 
     @PostMapping("/provider-details")
     public String editProvider(@RequestParam("id") Long id,
-                           @Valid TypeDTO typeDTO,
+                           @Valid ProviderDTO providerDTO,
                            BindingResult bindingResult,
                            RedirectAttributes rAtt,
                            Model model) {
 
-        typeDTO.setId(id);
+        providerDTO.setId(id);
 
         if (bindingResult.hasErrors()) {
-            rAtt.addFlashAttribute("typeDTO", typeDTO);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.typeDTO", bindingResult);
-            model.addAttribute("allCategories", categoryService.getAllCategory());
+            rAtt.addFlashAttribute("providerDTO", providerDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
 
             return "provider-details";
         }
 
-        boolean isChangedTypeName = !typeDTO.getName().equals(typeService.findTypeById(id).getName());
-        boolean isChangedTypeCode = !typeDTO.getCode().equals(typeService.findTypeById(id).getCode());
+        boolean isChangedProviderName = !providerDTO.getName().equals(providerService.findProviderById(id).getName());
 
-        if (isChangedTypeName && typeService.isExistType(typeDTO.getName())) {
-            rAtt.addFlashAttribute("typeDTO", typeDTO);
-            rAtt.addFlashAttribute("isExistType", true);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.typeDTO", bindingResult);
-            model.addAttribute("allCategories", categoryService.getAllCategory());
+        if (isChangedProviderName && providerService.isExistProvider(providerDTO.getName())) {
+            rAtt.addFlashAttribute("providerDTO", providerDTO);
+            rAtt.addFlashAttribute("isExistProvider", true);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
 
             return "redirect:/provider-details/" + id;
         }
 
-        if (isChangedTypeCode && typeService.isExistTypeCode(typeDTO.getCode())) {
-            rAtt.addFlashAttribute("typeDTO", typeDTO);
-            rAtt.addFlashAttribute("isExistTypeCode", true);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.typeDTO", bindingResult);
-            model.addAttribute("allCategories", categoryService.getAllCategory());
-
-            return "redirect:/provider-details/" + id;
-        }
-
-        typeService.editType(typeDTO);
+        providerService.editProvider(providerDTO);
         return "redirect:/providers";
     }
 
@@ -140,7 +127,7 @@ public class ProviderController {
     @PostMapping("/delete-provider/{id}")
     public String removeProvider(@PathVariable("id") Long id) {
 
-        typeService.deleteType(id);
+        providerService.deleteProvider(id);
 
         return "redirect:/providers";
     }
