@@ -15,7 +15,7 @@ public class ProviderDTO {
     private String description;
     @NotBlank
     private String contacts;
-    private List<String> products;
+    private List<ProductDTO> products;
 
     public long getId() {
         return id;
@@ -49,11 +49,11 @@ public class ProviderDTO {
         this.contacts = contacts;
     }
 
-    public List<String> getProducts() {
+    public List<ProductDTO> getProducts() {
         return products;
     }
 
-    public void setProducts(List<String> products) {
+    public void setProducts(List<ProductDTO> products) {
         this.products = products;
     }
 }
