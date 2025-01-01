@@ -31,13 +31,16 @@
             <td th:text="${type.code}">Код</td>
             <td th:text="${type.category}">Категория</td>
             <td th:text="${type.getProducts().size()}">Продукти</td>
-            <td class="action-buttons">
-                <form th:method="POST" th:action="@{/type-details/{id}(id=${type.id})}">
-                    <input class="edit-button" type="submit" th:value="Промяна"/>
-                </form>
-                <form th:method="POST" th:action="@{/delete-type/{id}(id=${type.id})}" sec:authorize="hasRole('Admin')">
-                    <input class="delete-button" type="submit" th:value="Премахване"/>
-                </form>
+            <td>
+                <div class="action-buttons">
+                    <form th:method="POST" th:action="@{/type-details/{id}(id=${type.id})}">
+                        <input class="edit-button" type="submit" th:value="Промяна"/>
+                    </form>
+                    <form th:method="POST" th:action="@{/delete-type/{id}(id=${type.id})}"
+                          sec:authorize="hasRole('Admin')">
+                        <input class="delete-button" type="submit" th:value="Премахване"/>
+                    </form>
+                </div>
             </td>
         </tr>
         </tbody>

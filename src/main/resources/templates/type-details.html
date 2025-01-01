@@ -81,12 +81,15 @@
                     <tr th:each="product : ${typeDTO.getProducts()}">
                         <td th:text="${product.name}"></td>
                         <td>
-                            <form th:method="POST" th:action="@{/product-details/{id}(id=${product.id})}">
-                                <input class="edit-button" type="submit" th:value="Промяна"/>
-                            </form>
-                            <form th:method="POST" th:action="@{/delete-product/{id}(id=${product.id})}" sec:authorize="hasRole('Admin')">
-                                <input class="delete-button" type="submit" th:value="Премахване"/>
-                            </form>
+                            <div class="action-buttons">
+                                <form th:method="POST" th:action="@{/product-details/{id}(id=${product.id})}">
+                                    <input class="edit-button" type="submit" th:value="Промяна"/>
+                                </form>
+                                <form th:method="POST" th:action="@{/delete-product/{id}(id=${product.id})}"
+                                      sec:authorize="hasRole('Admin')">
+                                    <input class="delete-button" type="submit" th:value="Премахване"/>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     </tbody>
