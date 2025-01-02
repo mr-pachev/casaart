@@ -2,10 +2,7 @@ package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.AddProductDTO;
 import casaart.emails_clients_db.model.dto.ProductDTO;
-import casaart.emails_clients_db.model.entity.Category;
-import casaart.emails_clients_db.model.entity.Product;
-import casaart.emails_clients_db.model.entity.SerialNumber;
-import casaart.emails_clients_db.model.entity.Type;
+import casaart.emails_clients_db.model.entity.*;
 import casaart.emails_clients_db.repository.*;
 import casaart.emails_clients_db.service.ProductService;
 import jakarta.transaction.Transactional;
@@ -121,6 +118,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(long id) {
         Product product = productRepository.findById(id).get();
+        
+        Provider provider = providerRepository.findByName(product.getProvider().getName()).get();
+
+        provider.getProducts().removeIf(p -> p.getId().equals(id));
+
+        // Запазване на доставчика (ако е необходимо)
+        providerRepository.save(provider);
+
+
         productRepository.deleteById(id);
     }
 
