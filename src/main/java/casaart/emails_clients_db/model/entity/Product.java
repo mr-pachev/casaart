@@ -31,9 +31,11 @@ public class Product extends BaseEntity {
     private String dimensions;
 
     @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
     @ManyToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
     private Type type;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
