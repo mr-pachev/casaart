@@ -1,7 +1,5 @@
 package casaart.emails_clients_db.model.entity;
-
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,27 +8,37 @@ import java.util.List;
 public class Product extends BaseEntity {
     @Column
     private String name;
+
     @Column(name = "providers_prices")
     private Double providerPrice;
+
     @Column(name = "clients_prices")
     private Double clientPrice;
+
     @Column
     private String imagePath;
+
     @Column(name = "products_codes")
     private String productCode;
+
     @Column(name = "providers_products_codes")
     private String providerProductCode;
+
     @ManyToOne
     @JoinColumn(name = "provider_id", referencedColumnName = "id")
     Provider provider;
+
     private String dimensions;
+
     @ManyToOne
     private Category category;
+
     @ManyToOne
     private Type type;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SerialNumber> serialNumbers = new ArrayList<>();
+
     private void generateProductCode() {
         if (this.productCode == null) {
             this.productCode = generateCode();

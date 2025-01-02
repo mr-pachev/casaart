@@ -8,6 +8,7 @@ import casaart.emails_clients_db.model.entity.SerialNumber;
 import casaart.emails_clients_db.model.entity.Type;
 import casaart.emails_clients_db.repository.*;
 import casaart.emails_clients_db.service.ProductService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -76,10 +77,9 @@ public class ProductServiceImpl implements ProductService {
 
         // Създаване и запазване на серийните номера
         int pcs = addProductDTO.getPcs();
-        if (pcs == 0) {
-            pcs = 1;
+        if (pcs > 0) {
+            generateAndSaveSerialNumbers(product, pcs);
         }
-        generateAndSaveSerialNumbers(product, pcs);
 
         // Актуализиране на продукта с новите серийни номера
         productRepository.save(product);

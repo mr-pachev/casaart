@@ -13,26 +13,38 @@ public class ProductDTO {
     @NotBlank
     @Size(min = 2, max = 50)
     private String name;
+
     @NotNull
     private Double providerPrice;
+
     @NotNull
     private Double clientPrice;
+
     private MultipartFile image;
+
     private String imagePath;
+
     private int pcs;
+
     @NotBlank
     @Size(min = 2, max = 10)
     private String productCode;
+
     @NotBlank
     @Size(min = 2, max = 10)
     private String providerProductCode;
+
     @NotBlank
     private String provider;
+
     private String dimensions;
+
     @NotBlank
     private String category;
+
     @NotBlank
     private String type;
+
     private List<SerialNumber> sn;
 
     public long getId() {
