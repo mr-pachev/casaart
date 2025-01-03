@@ -60,6 +60,19 @@ public class ProductController {
         return "products";
     }
 
+    //find by sn
+    @PostMapping("/find-by-sn")
+    public String sortProducts(@RequestParam("sn") String sn, Model model) {
+        ProductDTO productDTO = productService.findBySn(sn);
+
+        model.addAttribute(productDTO);
+        model.addAttribute("allProviders", providerService.allProviders());
+        model.addAttribute("allCategories", categoryService.getAllCategory());
+        model.addAttribute("allTypes", typeService.getAllTypes());
+
+        return "product-details";
+    }
+
     //create new product
     @GetMapping("/add-product")
     public String viewAddProductForm(Model model) {

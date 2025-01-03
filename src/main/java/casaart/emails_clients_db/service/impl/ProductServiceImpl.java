@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -42,7 +43,17 @@ public class ProductServiceImpl implements ProductService {
     //get sorted products
     @Override
     public List<ProductDTO> sortedProducts(String sourceTypeName) {
+
+
         return null;
+    }
+
+    //find by sn
+    @Override
+    public ProductDTO findBySn(String sn) {
+        Product product = findProductBySerialNumber(sn).orElseThrow();
+
+        return productMapToProductDTO(product);
     }
 
     //checking is exist product by name
@@ -86,14 +97,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO findProductById(long id) {
         Product product = productRepository.findById(id).get();
-        ProductDTO productDTO = mapper.map(product, ProductDTO.class);
 
-        productDTO.setProvider(product.getProvider().getName());
-        productDTO.setCategory(product.getCategory().getName());
-        productDTO.setType(product.getType().getName());
-        productDTO.setSn(product.getSerialNumbers());
-
-        return productDTO;
+        return productMapToProductDTO(product);
     }
 
     //edit product
@@ -176,5 +181,20 @@ public class ProductServiceImpl implements ProductService {
             // Добавяне към списъка със серийни номера на продукта
             product.getSerialNumbers().add(serialNumber);
         }
+    }
+
+    ProductDTO productMapToProductDTO(Product product){
+        ProductDTO productDTO = mapper.map(product, ProductDTO.class);
+
+        productDTO.setProvider(product.getProvider().getName());
+        productDTO.setCategory(product.getCategory().getName());
+        productDTO.setType(product.getType().getName());
+        productDTO.setSn(product.getSerialNumbers());
+        return productDTO;
+    }
+
+    public Optional<Product> findProductBySerialNumber(String serialNumber) {
+        return serialNumberRepository.findBySerialNumber(serialNumber)
+                .map(SerialNumber::getProduct);
     }
 }

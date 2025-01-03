@@ -9,6 +9,13 @@
 </head>
 <body>
 <div th:replace="~{fragments/navigation}"></div>
+<div style="text-align: right; margin: 10px 20px;">
+    <form th:method="POST" th:action="@{/find-by-sn}" style="display: inline;">
+        <input type="text" name="sn" placeholder="Търси по сериен номер" class="sn"
+               style="width: 300px;">
+        <button type="submit" class="sort-button">Търси</button>
+    </form>
+</div>
 
 <main>
     <h1>Списък с продукти</h1>
