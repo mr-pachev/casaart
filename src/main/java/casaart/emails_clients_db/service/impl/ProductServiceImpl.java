@@ -1,10 +1,8 @@
 package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.AddProductDTO;
-import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.dto.ProductDTO;
 import casaart.emails_clients_db.model.entity.*;
-import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.*;
 import casaart.emails_clients_db.service.ProductService;
 import org.modelmapper.ModelMapper;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 @Service
 public class ProductServiceImpl implements ProductService {

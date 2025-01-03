@@ -39,6 +39,8 @@
                        id="providerPrice"
                        name="providerPrice"
                        th:field="*{providerPrice}"
+                       step="any"
+                       min="0"
                        th:errorclass="is-invalid">
                 <p class="invalid-feedback errors alert alert-danger">
                     Въведи цена.
@@ -179,7 +181,9 @@
                 <tr th:each="currentSN : ${productDTO.sn}">
                     <td th:text="${currentSN.serialNumber}"></td>
                     <td>
-                        <form th:method="POST" th:action="@{/delete-sn/{id}/{prodId}(id=${currentSN.id}, prodId=${productDTO.id})}" sec:authorize="hasRole('Admin')">
+                        <form th:method="POST"
+                              th:action="@{/delete-sn/{id}/{prodId}(id=${currentSN.id}, prodId=${productDTO.id})}"
+                              sec:authorize="hasRole('Admin')">
                             <input class="delete-button" type="submit" th:value="Премахване"/>
                         </form>
                     </td>
