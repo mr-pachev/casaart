@@ -60,6 +60,15 @@ public class ProductController {
         return "products";
     }
 
+    //view all sorted products
+    @PostMapping("/sort-products")
+    public String sortClients(@RequestParam("sourceType") String sourceType, Model model) {
+        List<ProductDTO> sortedProducts = productService.sortedProducts(sourceType);
+        model.addAttribute("allProducts", sortedProducts);
+
+        return "products"; // Връщаме същия шаблон с актуализиран списък
+    }
+
     //find by sn
     @PostMapping("/find-by-sn")
     public String sortProducts(@RequestParam("sn") String sn, Model model) {

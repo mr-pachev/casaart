@@ -1,17 +1,19 @@
 package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.AddProductDTO;
+import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.dto.ProductDTO;
 import casaart.emails_clients_db.model.entity.*;
+import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.*;
 import casaart.emails_clients_db.service.ProductService;
-import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -43,9 +45,29 @@ public class ProductServiceImpl implements ProductService {
     //get sorted products
     @Override
     public List<ProductDTO> sortedProducts(String sourceTypeName) {
+        List<Product> sortedProductList = new ArrayList<>();
 
+        if ("name".equals(sourceTypeName)) {
+            sortedProductList = productRepository.findAllByOrderByNameAsc();
+        } else if ("type".equals(sourceTypeName)) {
+            sortedProductList = productRepository.findAllByOrderByTypeAsc();
+        } else if ("category".equals(sourceTypeName)) {
+            sortedProductList = productRepository.findAllByOrderByCategoryAsc();
+        } else if ("provider".equals(sourceTypeName)) {
+            sortedProductList = productRepository.findAllOrderedByProvider();
+        } else if ("pcs".equals(sourceTypeName)) {
+            sortedProductList = productRepository.findAllOrderedBySerialNumbersCount();
+        } else if ("clientPrice".equals(sourceTypeName)) {
+            sortedProductList = productRepository.findAllOrderedByClientPriceDesc();
+        } else if ("createDate".equals(sourceTypeName)) {
+            sortedProductList = productRepository.findAllByOrderByCreatedAtDesc();
+        } else if ("modifyDate".equals(sourceTypeName)) {
+            sortedProductList = productRepository.findAllByOrderByUpdatedAtDesc();
+        } else {
+            sortedProductList = productRepository.findAll();
+        }
 
-        return null;
+        return mapToProductDTOList(sortedProductList);
     }
 
     //find by sn
@@ -196,5 +218,17 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Product> findProductBySerialNumber(String serialNumber) {
         return serialNumberRepository.findBySerialNumber(serialNumber)
                 .map(SerialNumber::getProduct);
+    }
+
+    List<ProductDTO> mapToProductDTOList(List<Product> productList) {
+        List<ProductDTO> allProductDTOS = new ArrayList<>();
+
+        for (Product product : productList) {
+            ProductDTO productDTO = productMapToProductDTO(product);
+
+            allProductDTOS.add(productDTO);
+        }
+
+        return allProductDTOS;
     }
 }
