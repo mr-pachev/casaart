@@ -67,12 +67,25 @@ public class ProductServiceImpl implements ProductService {
         return mapToProductDTOList(sortedProductList);
     }
 
-    //find by sn
+    //find by productIdentifier
     @Override
-    public ProductDTO findBySn(String sn) {
-        Product product = findProductBySerialNumber(sn).orElseThrow();
+    public ProductDTO findByproductIdentifier(String productIdentifier) {
+        Product product = null;
+        if (productIdentifier.length() < 10) {
+            if (productRepository.findByProviderProductCode(productIdentifier).isPresent()){
+                product = productRepository.findByProviderProductCode(productIdentifier).get();
+            }
+        } else if (productIdentifier.matches(".*\\d.*")) {
+            if(findProductBySerialNumber(productIdentifier).isPresent()){
+                product = findProductBySerialNumber(productIdentifier).get();
+            }
+        } else {
+            if(productRepository.findByName(productIdentifier).isPresent()){
+                product = productRepository.findByName(productIdentifier).get();
+            }
+        }
 
-        return productMapToProductDTO(product);
+        return (product == null) ? new ProductDTO() : productMapToProductDTO(product);
     }
 
     //checking is exist product by name
@@ -179,6 +192,7 @@ public class ProductServiceImpl implements ProductService {
             productDTO.setCategory(product.getCategory().getName());
             productDTO.setType(product.getType().getName());
             productDTO.setProvider(product.getProvider().getName());
+            productDTO.setPcs(product.getSerialNumbers().size());
             productDTO.setSn(product.getSerialNumbers());
 
             productDTOS.add(productDTO);

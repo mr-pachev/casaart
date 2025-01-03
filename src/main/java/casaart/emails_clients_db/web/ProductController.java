@@ -69,11 +69,19 @@ public class ProductController {
         return "products"; // Връщаме същия шаблон с актуализиран списък
     }
 
-    //find by sn
-    @PostMapping("/find-by-sn")
-    public String sortProducts(@RequestParam("sn") String sn, Model model) {
-        ProductDTO productDTO = productService.findBySn(sn);
+    //find by productIdentifier
+    @PostMapping("/find-by-product-identifier")
+    public String sortProducts(@RequestParam("productIdentifier") String productIdentifier, Model model) {
 
+        if (productIdentifier == null || productIdentifier.trim().isEmpty()) {
+            return "redirect:/products";
+        }
+
+        ProductDTO productDTO = productService.findByproductIdentifier(productIdentifier);
+
+        if (productDTO == null || productDTO.getName() == null) {
+            return "redirect:/products";
+        }
         model.addAttribute(productDTO);
         model.addAttribute("allProviders", providerService.allProviders());
         model.addAttribute("allCategories", categoryService.getAllCategory());
