@@ -73,12 +73,14 @@ public class ProductController {
     @PostMapping("/find-by-product-identifier")
     public String sortProducts(@RequestParam("productIdentifier") String productIdentifier, Model model) {
 
+        // Проверка за празно поле на търсене
         if (productIdentifier == null || productIdentifier.trim().isEmpty()) {
             return "redirect:/products";
         }
 
         ProductDTO productDTO = productService.findByproductIdentifier(productIdentifier);
 
+        // Проверка за намерен продукт
         if (productDTO == null || productDTO.getName() == null) {
             return "redirect:/products";
         }

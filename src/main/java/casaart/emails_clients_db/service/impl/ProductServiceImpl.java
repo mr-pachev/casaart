@@ -8,6 +8,7 @@ import casaart.emails_clients_db.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -145,6 +146,7 @@ public class ProductServiceImpl implements ProductService {
         product.setProvider(providerRepository.findByName(productDTO.getProvider()).get());
 
         if (productDTO.getPcs() > 0) {
+            product.setUpdatedAt(LocalDate.now());
             generateAndSaveSerialNumbers(product, productDTO.getPcs());
         }
 
@@ -159,10 +161,7 @@ public class ProductServiceImpl implements ProductService {
         Provider provider = providerRepository.findByName(product.getProvider().getName()).get();
 
         provider.getProducts().removeIf(p -> p.getId().equals(id));
-
-        // Запазване на доставчика (ако е необходимо)
         providerRepository.save(provider);
-
 
         productRepository.deleteById(id);
     }
@@ -179,6 +178,7 @@ public class ProductServiceImpl implements ProductService {
         );
 
         if (removed) {
+            product.setUpdatedAt(LocalDate.now());
             productRepository.save(product);
         }
     }
