@@ -186,6 +186,26 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public void sellingProducts(List<String> sn) {
+        System.out.println();
+
+        for (String serialNumber : sn) {
+            Product product = findProductBySerialNumber(serialNumber).get();
+
+            List<SerialNumber> serialNumbers = product.getSerialNumbers();
+            boolean removed = serialNumbers.removeIf(sN ->
+                    sN.getSerialNumber().equals(serialNumber));
+
+            if (removed) {
+                product.setUpdatedAt(LocalDate.now());
+                productRepository.save(product);
+            }
+
+        }
+
+    }
+
     List<ProductDTO> productListToProductDTOList(List<Product> products) {
         List<ProductDTO> productDTOS = new ArrayList<>();
 

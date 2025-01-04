@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Продажба</title>
+</head>
+
+<body>
+<div th:replace="~{fragments/navigation}"></div>
+<main>
+    <div class="container-form">
+        <h1>Продажба</h1>
+        <form th:action="@{/sell}" method="post">
+            <label for="serialInput">Сериен номер:</label>
+            <input type="text" id="serialInput" name="serialInput" />
+            <button type="submit" name="action" value="add">Добави</button>
+
+            <ul>
+                <li th:each="serial : ${serialNumbers}" th:text="${serial}">
+                    <!-- Скрити полета за предаване на добавените сериини номера -->
+                    <input type="hidden" name="serialNumbers" th:value="${serial}" />
+                </li>
+            </ul>
+
+            <button type="submit" name="action" value="sell">Продай</button>
+        </form>
+    </div>
+</main>
+</body>
+</div>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

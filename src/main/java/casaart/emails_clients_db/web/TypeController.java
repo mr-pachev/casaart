@@ -1,9 +1,7 @@
 package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddTypeDTO;
-import casaart.emails_clients_db.model.dto.CategoryDTO;
 import casaart.emails_clients_db.model.dto.TypeDTO;
-import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.service.CategoryService;
 import casaart.emails_clients_db.service.TypeService;
 import jakarta.validation.Valid;
