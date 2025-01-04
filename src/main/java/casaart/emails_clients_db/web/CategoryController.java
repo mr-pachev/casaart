@@ -59,7 +59,7 @@ public class CategoryController {
     public String addCategory(
             @Valid AddCategoryDTO addCategoryDTO,
             BindingResult bindingResult,
-            RedirectAttributes rAtt, Model model) {
+            RedirectAttributes rAtt) {
 
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("addCategoryDTO", addCategoryDTO);
@@ -107,8 +107,7 @@ public class CategoryController {
     public String editCategory(@RequestParam("id") Long id,
                               @Valid CategoryDTO categoryDTO,
                               BindingResult bindingResult,
-                              RedirectAttributes rAtt,
-                              Model model) {
+                              RedirectAttributes rAtt) {
 
         categoryDTO.setId(id);
 

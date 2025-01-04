@@ -65,7 +65,7 @@ public class TypeController {
     public String addType(
             @Valid AddTypeDTO addTypeDTO,
             BindingResult bindingResult,
-            RedirectAttributes rAtt, Model model) {
+            RedirectAttributes rAtt) {
 
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("addTypeDTO", addTypeDTO);

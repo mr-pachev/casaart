@@ -2,10 +2,8 @@ package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.AddCategoryDTO;
 import casaart.emails_clients_db.model.dto.CategoryDTO;
-import casaart.emails_clients_db.model.dto.ProductDTO;
 import casaart.emails_clients_db.model.entity.Category;
 import casaart.emails_clients_db.model.entity.Product;
-import casaart.emails_clients_db.model.entity.Type;
 import casaart.emails_clients_db.repository.CategoryRepository;
 import casaart.emails_clients_db.repository.ProductRepository;
 import casaart.emails_clients_db.service.CategoryService;
@@ -72,7 +70,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void editCategory(CategoryDTO categoryDTO) {
         Category category = categoryRepository.findById(categoryDTO.getId());
-        category = mapper.map(categoryDTO, Category.class);
+        category.setName(categoryDTO.getName());
+        category.setCode(categoryDTO.getCode());
 
         categoryRepository.save(category);
 

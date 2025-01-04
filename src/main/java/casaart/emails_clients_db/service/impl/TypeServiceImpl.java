@@ -7,6 +7,7 @@ import casaart.emails_clients_db.model.entity.Category;
 import casaart.emails_clients_db.model.entity.Product;
 import casaart.emails_clients_db.model.entity.Type;
 import casaart.emails_clients_db.repository.CategoryRepository;
+import casaart.emails_clients_db.repository.ProductRepository;
 import casaart.emails_clients_db.repository.TypeRepository;
 import casaart.emails_clients_db.service.TypeService;
 import org.modelmapper.ModelMapper;
@@ -19,11 +20,13 @@ import java.util.List;
 public class TypeServiceImpl implements TypeService {
     private final TypeRepository typeRepository;
     private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
     private final ModelMapper mapper;
 
-    public TypeServiceImpl(TypeRepository typeRepository, CategoryRepository categoryRepository, ModelMapper mapper) {
+    public TypeServiceImpl(TypeRepository typeRepository, CategoryRepository categoryRepository, ProductRepository productRepository, ModelMapper mapper) {
         this.typeRepository = typeRepository;
         this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
         this.mapper = mapper;
     }
 
@@ -84,8 +87,22 @@ public class TypeServiceImpl implements TypeService {
     //edit type
     @Override
     public void editType(TypeDTO typeDTO) {
+        Type type = typeRepository.findById(typeDTO.getId()).get();
+        type.setName(typeDTO.getName());
+        type.setCode(typeDTO.getCode());
+        type.setCategory(categoryRepository.findByName(typeDTO.getCategory()).get());
 
+        typeRepository.save(type);
+
+        List<Product> products = productRepository.findAllByTypeName(typeDTO.getName());
+
+        for (Product product : products) {
+            product.updateSerialNumbersOnTypeChange();
+
+            productRepository.save(product);
+        }
     }
+
     //delete type
     @Override
     public void deleteType(long id) {
