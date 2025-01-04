@@ -186,11 +186,15 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    //selling products
     @Override
     public void sellingProducts(List<String> sn) {
-        System.out.println();
 
         for (String serialNumber : sn) {
+            boolean isNotExist = findProductBySerialNumber(serialNumber).isEmpty();
+            if(isNotExist){
+                continue;
+            }
             Product product = findProductBySerialNumber(serialNumber).get();
 
             List<SerialNumber> serialNumbers = product.getSerialNumbers();
