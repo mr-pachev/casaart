@@ -109,6 +109,7 @@ public class UserController {
     @GetMapping("/user-details/{id}")
     public String fillEditUserForm(@PathVariable("id") Long id, Model model) {
         UserDTO userDTO = userService.findUserById(id);
+
         model.addAttribute(userDTO);
         model.addAttribute("sourceType", SourceType.values());
         model.addAttribute("roles", RoleName.values());
@@ -142,6 +143,30 @@ public class UserController {
             model.addAttribute("sourceType", SourceType.values());
             model.addAttribute("roles", RoleName.values());
             model.addAttribute("isExistUsername", true);
+
+            return "user-details";
+        }
+
+        boolean isChangePass = !userDTO.getPassword().isEmpty() || !userDTO.getConfirmPassword().isEmpty();
+        boolean confirmPassword = userDTO.getPassword().equals(userDTO.getConfirmPassword());
+
+        if (!confirmPassword && isChangePass) {
+            rAtt.addFlashAttribute("userDTO", userDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
+            model.addAttribute("sourceType", SourceType.values());
+            model.addAttribute("roles", RoleName.values());
+            model.addAttribute("unConfirmedPass", true);
+
+            return "user-details";
+        }
+
+        // проверка за прекалено къса или дълга парола
+        if (isChangePass && (userDTO.getPassword().length() < 4 || userDTO.getPassword().length() > 12)) {
+            rAtt.addFlashAttribute("userDTO", userDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addUserDTO", bindingResult);
+            model.addAttribute("sourceType", SourceType.values());
+            model.addAttribute("roles", RoleName.values());
+            model.addAttribute("shortLength", true);
 
             return "user-details";
         }

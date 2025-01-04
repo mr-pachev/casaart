@@ -8,19 +8,28 @@ public class UserDTO {
     @NotBlank
     @Size(min = 3, max = 15)
     private String username;
+
     @NotBlank
     private String role;
+
     @NotBlank
     @Size(min = 2, max = 30)
     private String firstName;
+
     @Size(min = 2, max = 30)
     private String middleName;
+
     @Size(min = 2, max = 30)
     @NotBlank
     private String lastName;
+
     @NotBlank
     @Size(min = 3, max = 15)
     private String located;
+
+    private String password;
+
+    private String confirmPassword;
 
     public long getId() {
         return id;
@@ -76,5 +85,21 @@ public class UserDTO {
 
     public void setLocated(String located) {
         this.located = located;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

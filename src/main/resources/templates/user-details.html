@@ -105,6 +105,29 @@
                     Избери източник.
                 </p>
             </div>
+            <div class="form-group">
+                <label for="password">Нова парола</label>
+                <input type="password"
+                       id="password"
+                       name="password"
+                       th:field="*{password}"
+                       th:errorclass="is-invalid">
+                <p class="errors alert alert-danger" th:if="${shortLength}">
+                    Паролата трябва да се състои от 4 до 12 символа.
+                </p>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Потвърди парола</label>
+                <input type="password"
+                       id="confirmPassword"
+                       name="confirmPassword"
+                       th:field="*{confirmPassword}"
+                       th:errorclass="is-invalid">
+                <p class="errors alert alert-danger"
+                   th:if="${unConfirmedPass}">
+                    Непотвърдена парола.
+                </p>
+            </div>
             <button type="submit" class="btn btn-success">Запази</button>
         </form>
     </div>

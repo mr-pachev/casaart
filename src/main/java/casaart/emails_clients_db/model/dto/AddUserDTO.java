@@ -8,20 +8,25 @@ public class AddUserDTO {
     @NotBlank
     @Size(min = 3, max = 15)
     private String username;
+
     @NotBlank
     @Size(min = 4, max = 12)
     private String password;
+
     @NotBlank
     private String confirmPassword;
 
     @NotBlank
     @Size(min = 2, max = 15)
     private String firstName;
+
     @Size(min = 2, max = 15)
     private String middleName;
+
     @Size(min = 2, max = 15)
     @NotBlank
     private String lastName;
+
     @NotBlank
     @Size(min = 3, max = 15)
     private String located;

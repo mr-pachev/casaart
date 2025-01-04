@@ -84,7 +84,13 @@ public class UserServiceImpl implements UserService {
         User existingUser = userRepository.findById(userDTO.getId());
 
         User updatedUser = mapper.map(userDTO, User.class);
-        updatedUser.setPassword(existingUser.getPassword());
+
+        // проверка дали има попълнено поле с парола
+        if(userDTO.getPassword().isEmpty() || userDTO.getConfirmPassword().isEmpty()){
+            updatedUser.setPassword(existingUser.getPassword());
+        }else {
+            updatedUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        }
         updatedUser.setRole(roleRepository.findByRoleName(RoleName.valueOf(userDTO.getRole())));
         updatedUser.setClients(existingUser.getClients());
 
