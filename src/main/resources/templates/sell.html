@@ -5,31 +5,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CASA ART - Продажба</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .form-group input {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .form-group .add-button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .form-group .add-button:hover {
+            background-color: #218838;
+        }
+        .sell-button {
+            background-color: #1E90FF;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .sell-button:hover {
+            background-color: #0074D9;
+        }
+        .serial-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .remove-button {
+            background-color: #fc0707;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .remove-button:hover {
+            background-color: #D90429;
+        }
+    </style>
 </head>
 
 <body>
-<div th:replace="~{fragments/navigation}"></div>
+<div th:replace="~{fragments/navigation}" class="navbar"></div>
 <main>
     <div class="container-form">
         <h1>Продажба</h1>
-        <form th:action="@{/sell}" method="post">
-            <label for="serialInput">Сериен номер:</label>
-            <input type="text" id="serialInput" name="serialInput" />
-            <button type="submit" name="action" value="add">Добави</button>
+        <form th:action="@{/sell}" method="post" class="login-form">
+            <div class="form-group">
+                <label for="serialInput">Сериен номер:</label>
+                <input type="text" id="serialInput" name="serialInput" />
+                <button type="submit" name="action" value="add" class="add-button">Добави</button>
+            </div>
 
             <ul>
-                <li th:each="serial : ${serialNumbers}" th:text="${serial}">
-                    <!-- Скрити полета за предаване на добавените сериини номера -->
+                <li th:each="serial, iter : ${serialNumbers}" class="serial-item">
+                    <span th:text="${serial}"></span>
                     <input type="hidden" name="serialNumbers" th:value="${serial}" />
+                    <button type="submit" name="action" value="remove" class="remove-button"
+                            th:formaction="@{/sell(remove=${iter.index})}">Премахни</button>
                 </li>
             </ul>
-
-            <button type="submit" name="action" value="sell">Продай</button>
+            <div class="action-buttons">
+                <button type="submit" name="action" value="sell" class="sell-button">Продай</button>
+            </div>
         </form>
     </div>
 </main>
-</body>
-</div>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>
 </html>

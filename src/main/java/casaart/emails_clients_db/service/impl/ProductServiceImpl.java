@@ -192,6 +192,7 @@ public class ProductServiceImpl implements ProductService {
 
         for (String serialNumber : sn) {
             boolean isNotExist = findProductBySerialNumber(serialNumber).isEmpty();
+
             if(isNotExist){
                 continue;
             }

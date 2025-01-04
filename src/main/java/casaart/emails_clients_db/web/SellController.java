@@ -20,25 +20,55 @@ public class SellController {
     }
 
     @GetMapping("/sell")
-    public String showSellPage() {
-        return "sell"; // Зарежда страницата с формата
+    public String showSellPage(Model model) {
+        // Инициализиране на списъка със серийни номера, ако все още не е наличен
+        if (!model.containsAttribute("serialNumbers")) {
+            model.addAttribute("serialNumbers", new ArrayList<String>());
+        }
+        return "sell";
     }
 
     @PostMapping("/sell")
-    public String handleAction(@RequestParam String action,
-                               @RequestParam(required = false) String serialInput,
-                               @RequestParam(required = false) List<String> serialNumbers,
-                               Model model) {
+    public String handleSellActions(
+            @RequestParam(name = "action", required = false) String action,
+            @RequestParam(name = "serialInput", required = false) String serialInput,
+            @RequestParam(name = "serialNumbers", required = false) List<String> serialNumbers,
+            @RequestParam(name = "remove", required = false) Integer removeIndex,
+            Model model) {
 
-        if ("add".equals(action) && serialInput != null && !serialInput.trim().isEmpty()) {
-            this.serialNumbers.add(serialInput.trim());
-        } else if ("sell".equals(action)) {
-            // Обработка на списъка с добавени сериен номера
-            productService.sellingProducts(this.serialNumbers);
-            this.serialNumbers.clear(); // Изчистване на списъка след продажбата
+        // Ако списъкът със серийни номера е null, инициализирай го
+        if (serialNumbers == null) {
+            serialNumbers = new ArrayList<>();
         }
 
-        model.addAttribute("serialNumbers", this.serialNumbers);
-        return "sell"; // Връщаме същата страница
+        switch (action) {
+            case "add":
+                if (serialInput != null && !serialInput.isBlank()) {
+                    serialNumbers.add(serialInput);
+                }
+                break;
+            case "remove":
+                if (removeIndex != null && removeIndex >= 0 && removeIndex < serialNumbers.size()) {
+                    serialNumbers.remove(removeIndex.intValue());
+                }
+                break;
+            case "sell":
+                // Логика за обработка на продажба
+                performSell(serialNumbers);
+                serialNumbers.clear(); // Изчисти списъка след успешна продажба
+                break;
+            default:
+                // Непозната операция
+                break;
+        }
+
+        // Обнови модела със списъка
+        model.addAttribute("serialNumbers", serialNumbers);
+        return "sell";
+    }
+
+    private void performSell(List<String> serialNumbers) {
+        // Логика за продажба, например запис в база данни или друга обработка
+        productService.sellingProducts(serialNumbers);
     }
 }
