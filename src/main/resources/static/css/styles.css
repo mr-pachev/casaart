@@ -130,6 +130,41 @@ table td {
     color: white;
 }
 
+.container-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Височината да заема целия прозорец */
+}
+
+.serial-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Разстояние между серийния номер и бутона */
+    margin-bottom: 10px; /* Малко разстояние между редовете */
+}
+
+.serial-item span {
+    font-size: 16px;
+}
+
+.remove-button {
+    padding: 6px 12px;
+    font-size: 14px;
+    background-color: #fc0707;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-button:hover {
+    background-color: #D90429;
+}
+
 /* Навигация */
 .navbar {
     background-color: #FFA500;

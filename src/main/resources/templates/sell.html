@@ -72,7 +72,6 @@
                 <input type="text" id="serialInput" name="serialInput" />
                 <button type="submit" name="action" value="add" class="add-button">Добави</button>
             </div>
-
             <ul>
                 <li th:each="serial, iter : ${serialNumbers}" class="serial-item">
                     <span th:text="${serial}"></span>
