@@ -6,59 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CASA ART - Продажба</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .form-group {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .form-group input {
-            flex: 1;
-            margin-right: 10px;
-        }
-        .form-group .add-button {
-            background-color: #28a745;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .form-group .add-button:hover {
-            background-color: #218838;
-        }
-        .sell-button {
-            background-color: #1E90FF;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .sell-button:hover {
-            background-color: #0074D9;
-        }
-        .serial-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .remove-button {
-            background-color: #fc0707;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .remove-button:hover {
-            background-color: #D90429;
-        }
-    </style>
 </head>
 
 <body>
@@ -67,7 +14,7 @@
     <div class="container-form">
         <h1>Продажба</h1>
         <form th:action="@{/sell}" method="post" class="login-form">
-            <div class="form-group">
+            <div class="form-group sale-form-group">
                 <label for="serialInput">Сериен номер:</label>
                 <input type="text" id="serialInput" name="serialInput" />
                 <button type="submit" name="action" value="add" class="add-button">Добави</button>

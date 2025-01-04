@@ -138,6 +138,45 @@ table td {
     height: 100vh; /* Височината да заема целия прозорец */
 }
 
+.sale-form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sale-form-group input {
+    flex: 1;
+    margin-right: 0;
+}
+
+.form-group .add-button {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-group .add-button:hover {
+    background-color: #218838;
+}
+
+.sell-button {
+    background-color: #1E90FF;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sell-button:hover {
+    background-color: #0074D9;
+}
+
 .serial-item {
     display: flex;
     align-items: center;
@@ -151,10 +190,9 @@ table td {
 }
 
 .remove-button {
-    padding: 6px 12px;
-    font-size: 14px;
     background-color: #fc0707;
     color: white;
+    padding: 5px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
