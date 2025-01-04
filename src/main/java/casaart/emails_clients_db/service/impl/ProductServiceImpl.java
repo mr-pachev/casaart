@@ -191,11 +191,6 @@ public class ProductServiceImpl implements ProductService {
     public void sellingProducts(List<String> sn) {
 
         for (String serialNumber : sn) {
-            boolean isNotExist = findProductBySerialNumber(serialNumber).isEmpty();
-
-            if(isNotExist){
-                continue;
-            }
             Product product = findProductBySerialNumber(serialNumber).get();
 
             List<SerialNumber> serialNumbers = product.getSerialNumbers();

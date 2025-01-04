@@ -16,9 +16,12 @@
         <form th:action="@{/sell}" method="post" class="login-form">
             <div class="form-group sale-form-group">
                 <label for="serialInput">Сериен номер:</label>
-                <input type="text" id="serialInput" name="serialInput" />
+                <input type="text" id="serialInput" name="serialInput">
                 <button type="submit" name="action" value="add" class="add-button">Добави</button>
             </div>
+            <p class="errors alert alert-danger" th:if="${isNotExist}">
+                Несъществуващ сериен номер.
+            </p>
             <ul>
                 <li th:each="serial, iter : ${serialNumbers}" class="serial-item">
                     <span th:text="${serial}"></span>
@@ -30,6 +33,9 @@
             <div class="action-buttons">
                 <button type="submit" name="action" value="sell" class="sell-button">Продай</button>
             </div>
+            <p class="errors alert alert-danger" th:if="${isEmpty}">
+                Въведи сериен номер.
+            </p>
         </form>
     </div>
 </main>

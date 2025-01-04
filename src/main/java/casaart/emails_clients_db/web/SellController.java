@@ -1,6 +1,7 @@
 package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.service.ProductService;
+import casaart.emails_clients_db.service.SerialNumberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +16,11 @@ public class SellController {
     private final List<String> serialNumbers = new ArrayList<>();
     private final ProductService productService;
 
-    public SellController(ProductService productService) {
+    private final SerialNumberService serialNumberService;
+
+    public SellController(ProductService productService, SerialNumberService serialNumberService) {
         this.productService = productService;
+        this.serialNumberService = serialNumberService;
     }
 
     @GetMapping("/sell")
@@ -43,6 +47,12 @@ public class SellController {
 
         switch (action) {
             case "add":
+                boolean isNotExist = !serialNumberService.isExistSn(serialInput);
+                if (isNotExist){
+                    model.addAttribute("isNotExist", true);
+                    break;
+                }
+
                 if (serialInput != null && !serialInput.isBlank()) {
                     serialNumbers.add(serialInput);
                 }
@@ -53,6 +63,10 @@ public class SellController {
                 }
                 break;
             case "sell":
+                if (serialInput.isEmpty()){
+                    model.addAttribute("isEmpty", true);
+                    break;
+                }
                 // Логика за обработка на продажба
                 performSell(serialNumbers);
                 serialNumbers.clear(); // Изчисти списъка след успешна продажба
@@ -68,7 +82,6 @@ public class SellController {
     }
 
     private void performSell(List<String> serialNumbers) {
-        // Логика за продажба, например запис в база данни или друга обработка
         productService.sellingProducts(serialNumbers);
     }
 }
