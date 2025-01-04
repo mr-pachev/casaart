@@ -145,6 +145,9 @@ public class ProductServiceImpl implements ProductService {
         product.setType(typeRepository.findByName(productDTO.getType()).get());
         product.setProvider(providerRepository.findByName(productDTO.getProvider()).get());
 
+        //промяна на серийните номера според productCode
+        product.updateSerialNumbersOnProductCodeChange();
+
         if (productDTO.getPcs() > 0) {
             product.setUpdatedAt(LocalDate.now());
             generateAndSaveSerialNumbers(product, productDTO.getPcs());

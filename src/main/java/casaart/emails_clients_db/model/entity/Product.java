@@ -71,6 +71,24 @@ public class Product extends BaseEntity {
         return String.format("%s-%s-%s-%04d", categoryCode, typeCode, productNameCode, nextNumber);
     }
 
+    public void updateSerialNumbersOnProductCodeChange() {
+        if (serialNumbers == null || serialNumbers.isEmpty() || productCode == null || productCode.isEmpty()) {
+            return; // Няма серийни номера или нов код на продукта за актуализиране
+        }
+
+        for (SerialNumber serialNumber : serialNumbers) {
+            String oldSerialNumber = serialNumber.getSerialNumber();
+            if (oldSerialNumber != null && oldSerialNumber.split("-").length >= 3) {
+                // Изгражда новия сериен номер с новия код на продукта
+                String[] parts = oldSerialNumber.split("-");
+                parts[2] = productCode;
+                String newSerialNumber = String.join("-", parts);
+                serialNumber.setSerialNumber(newSerialNumber);
+            }
+        }
+    }
+
+
     public void updateSerialNumbersOnCategoryChange() {
         if (serialNumbers == null || serialNumbers.isEmpty() || category == null) {
             return; // Няма серийни номера или категория за актуализиране
