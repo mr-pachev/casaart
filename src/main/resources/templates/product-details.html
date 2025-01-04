@@ -182,8 +182,7 @@
                     <td th:text="${currentSN.serialNumber}"></td>
                     <td>
                         <form th:method="POST"
-                              th:action="@{/delete-sn/{id}/{prodId}(id=${currentSN.id}, prodId=${productDTO.id})}"
-                              sec:authorize="hasRole('Admin')">
+                              th:action="@{/delete-sn/{id}/{prodId}(id=${currentSN.id}, prodId=${productDTO.id})}">
                             <input class="delete-button" type="submit" th:value="Премахване"/>
                         </form>
                     </td>
