@@ -94,7 +94,8 @@
                     <option value="">-- Избери --</option>
                     <option th:each="located: ${sourceType}"
                             th:value="${located}"
-                            th:text="${located}">Източник данни</option>
+                            th:text="${located}">Източник данни
+                    </option>
                 </select>
                 <p class="invalid-feedback errors alert alert-danger">
                     Избери източник.

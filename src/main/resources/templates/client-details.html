@@ -80,16 +80,16 @@
                 </div>
                 <div class="form-group">
                     <label for="phoneNumber">Мобилен номер</label>
-                        <input type="text" th:placeholder="${clientDTO.phoneNumber}"
-                               id="phoneNumber"
-                               name="phoneNumber"
-                               class="form-control"
-                               th:field="*{phoneNumber}"
-                               th:errorclass="is-invalid"
-                               placeholder="088XXXXXXX">
-                        <p class="invalid-feedback errors alert alert-danger">
-                            Мобилния номер трябва да се състои от 10 цифри.
-                        </p>
+                    <input type="text" th:placeholder="${clientDTO.phoneNumber}"
+                           id="phoneNumber"
+                           name="phoneNumber"
+                           class="form-control"
+                           th:field="*{phoneNumber}"
+                           th:errorclass="is-invalid"
+                           placeholder="088XXXXXXX">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Мобилния номер трябва да се състои от 10 цифри.
+                    </p>
                 </div>
                 <div class="form-group">
                     <label for="sourceType">Източник данни</label>
@@ -111,6 +111,7 @@
                 <button type="submit" class="btn btn-success">Запази</button>
             </form>
         </div>
+    </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>

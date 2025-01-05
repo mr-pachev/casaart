@@ -5,21 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CASA ART - Начална страница</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div th:replace="~{fragments/navigation}"></div>
-    <main>
-        <h1>Добре дошли в приложението на Casa Art!</h1>
-        <p class="description">
-            Това е вътрешно приложение за служителите на Casa Art. Позволява управление
-            на данни. Моля, влезте в профила си или създайте нов, за да започнете.
-        </p>
+<main>
+    <h1>Добре дошли в приложението на Casa Art!</h1>
+    <p class="description">
+        Това е вътрешно приложение за служителите на Casa Art. Позволява управление
+        на данни. Моля, влезте в профила си или създайте нов, за да започнете.
+    </p>
 
-        <div class="buttons" sec:authorize="!isAuthenticated()">
-            <a th:href="@{/registration}" class="register">Регистрация</a>
-            <a th:href="@{/login}" class="login">Вход</a>
-        </div>
-    </main>
-    <footer th:replace="~{fragments/footer}"></footer>
+    <div class="buttons" sec:authorize="!isAuthenticated()">
+        <a th:href="@{/registration}" class="register">Регистрация</a>
+        <a th:href="@{/login}" class="login">Вход</a>
+    </div>
+
+    <!-- Добавен бутон "Продажба" -->
+    <div class="buttons" sec:authorize="isAuthenticated()">
+        <a th:href="@{/sell}" class="sell-button">Продажба</a>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
 </body>
 </html>

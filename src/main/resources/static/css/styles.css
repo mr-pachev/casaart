@@ -1,16 +1,17 @@
 /* Общи стилове */
-body {
-    font-family: Arial, sans-serif;
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
     background-color: #f9f9f9;
-    color: #333;
-    text-align: center;
 }
 
 header, main, footer, .login-form, .navbar {
     margin: 0 auto;
     text-align: center;
+    width: 100%;
 }
 
 /* Хедър */
@@ -26,6 +27,7 @@ header img {
 
 /* Основна секция */
 main {
+    flex: 1; /* Разширява се, за да заеме цялото налично пространство между header и footer */
     padding: 50px 20px;
 }
 
@@ -68,34 +70,34 @@ main {
 }
 
 .login {
-    background-color: #1E90FF; /* Основен цвят на бутона */
-    color: white;             /* Цвят на текста */
-    padding: 12px 20px;       /* Отстояния */
-    font-size: 16px;          /* Размер на текста */
-    border-radius: 5px;       /* Заоблени ъгли */
-    border: none;             /* Без рамка */
-    cursor: pointer;          /* Показалец при посочване */
-    transition: background-color 0.3s ease; /* Анимация при hover */
+    background-color: #1E90FF;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .login:hover {
-    background-color: #0074D9; /* Цвят при hover */
+    background-color: #0074D9;
 }
 
 /* Центриране на съдържанието в клетките */
 table td {
-    vertical-align: middle; /* Вертикално центриране */
-    text-align: center; /* Хоризонтално центриране */
-    padding: 10px; /* Добавяне на отстояние */
-    height: 100%; /* Запълване на наличната височина */
+    vertical-align: middle;
+    text-align: center;
+    padding: 10px;
+    height: 100%;
 }
 
 /* Бутони за действия */
 .action-buttons {
     display: flex;
     justify-content: center;
-    align-items: center; /* Центриране на бутоните във вертикалната ос */
-    gap: 10px; /* Разстояние между бутоните */
+    align-items: center;
+    gap: 10px;
 }
 
 .edit-button, .delete-button {
@@ -104,8 +106,8 @@ table td {
     padding: 6px 12px;
     font-size: 14px;
     border-radius: 5px;
-    text-decoration: none; /* Без подчертаване */
-    border: none; /* Без рамка */
+    text-decoration: none;
+    border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -131,11 +133,11 @@ table td {
 }
 
 .container-form {
+    flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Височината да заема целия прозорец */
+    padding: 20px;
 }
 
 .sale-form-group {
@@ -181,8 +183,8 @@ table td {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Разстояние между серийния номер и бутона */
-    margin-bottom: 10px; /* Малко разстояние между редовете */
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 .serial-item span {
@@ -213,7 +215,7 @@ table td {
 }
 
 .navbar .welcome {
-    font-size: 16px;
+    font-size: 18px;
     color: white;
 }
 
@@ -224,7 +226,7 @@ table td {
 
 .navbar .nav-links a, .navbar .nav-links .logout-button {
     text-decoration: none;
-    font-size: 16px;
+    font-size: 18px;
     color: white;
     margin-left: 20px;
     background: none;
@@ -271,6 +273,8 @@ table tr:hover {
 /* Форма за вход */
 .login-form {
     max-width: 400px;
+    width: 100%;
+    margin: 0 auto;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -305,8 +309,8 @@ table tr:hover {
 
 /* Футър */
 footer {
-    margin-top: 50px;
-    font-size: 14px;
-    color: #777;
-    text-align: center;
+    margin-top: auto;
+    padding: 20px 0;
+    background-color: #f1f1f1;
+    width: 100%;
 }
