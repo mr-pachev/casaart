@@ -191,17 +191,18 @@ public class ProductServiceImpl implements ProductService {
     public void sellingProducts(List<String> sn) {
 
         for (String serialNumber : sn) {
-            Product product = findProductBySerialNumber(serialNumber).get();
+            String serialNumberUpperCase = serialNumber.toUpperCase();
+
+            Product product = findProductBySerialNumber(serialNumberUpperCase).get();
 
             List<SerialNumber> serialNumbers = product.getSerialNumbers();
             boolean removed = serialNumbers.removeIf(sN ->
-                    sN.getSerialNumber().equals(serialNumber));
+                    sN.getSerialNumber().equals(serialNumberUpperCase));
 
             if (removed) {
                 product.setUpdatedAt(LocalDate.now());
                 productRepository.save(product);
             }
-
         }
 
     }
