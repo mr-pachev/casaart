@@ -21,6 +21,9 @@
             <p class="errors alert alert-danger" th:if="${isNotExist}">
                 Несъществуващ сериен номер.
             </p>
+            <p class="errors alert alert-danger" th:if="${isExistInList}">
+                Вече е въведен този сериен номер.
+            </p>
             <ul>
                 <li th:each="serial, iter : ${serialNumbers}" class="serial-item">
                     <span th:text="${serial}"></span>
@@ -37,6 +40,9 @@
             </p>
             <p class="success alert alert-success" th:if="${isSelled}">
                 Извършена е продажба!
+            </p>
+            <p class="errors alert alert-danger" th:if="${isInsertedList}">
+                Вече е въведен този сериен номер.
             </p>
         </form>
     </div>

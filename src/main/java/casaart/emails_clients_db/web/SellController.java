@@ -53,6 +53,12 @@ public class SellController {
                     break;
                 }
 
+                // Проверка дали номера вече е въведен за продажба
+                if (serialNumbers.contains(serialInput)){
+                    model.addAttribute("isExistInList", true);
+                    break;
+                }
+
                 if (serialInput != null && !serialInput.isBlank()) {
                     serialNumbers.add(serialInput);
                 }
@@ -75,6 +81,14 @@ public class SellController {
                 // Ако е въведен несъществуващ номер и в списъка има въведени номера
                 if (!serialNumbers.isEmpty() && isNotExist) {
                     model.addAttribute("isNotExist", true);
+                    break;
+                }
+
+                boolean isExistInList = serialNumbers.contains(serialInput);
+
+                // Проверка дали номера вече е въведен за продажба
+                if (!serialNumbers.isEmpty() && isExistInList){
+                    model.addAttribute("isInsertedList", true);
                     break;
                 }
 
