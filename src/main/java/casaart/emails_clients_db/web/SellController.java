@@ -63,17 +63,34 @@ public class SellController {
                 }
                 break;
             case "sell":
-                isNotExist = !serialNumberService.isExistSn(serialInput);
-                // Проверка дали има въведен номер и вече добавени в полето или дали съществува този номер
-                if ((serialInput.isEmpty() && serialNumbers.isEmpty()) || isNotExist){
+                // Проверка за несъществуващ номер в полето за въвеждане
+                isNotExist = serialInput != null && !serialInput.isEmpty() && !serialNumberService.isExistSn(serialInput);
+
+                // Проверка дали няма въведен номер и списъкът е празен
+                if ((serialInput == null || serialInput.isEmpty()) && serialNumbers.isEmpty()) {
                     model.addAttribute("isEmpty", true);
                     break;
                 }
-                // Логика за обработка на продажба
-                performSell(serialNumbers);
-                serialNumbers.clear(); // Изчисти списъка след успешна продажба
-                model.addAttribute("isSelled", true);
-                break;
+
+                // Ако е въведен несъществуващ номер и в списъка има въведени номера
+                if (!serialNumbers.isEmpty() && isNotExist) {
+                    model.addAttribute("isNotExist", true);
+                    break;
+                }
+
+                // Ако няма въведен номер, но списъкът съдържа елементи, премини към продажбата
+                if (serialNumbers != null && !serialNumbers.isEmpty() && (serialInput == null || serialInput.isEmpty())) {
+                    performSell(serialNumbers);
+                    serialNumbers.clear(); // Изчистваме списъка след успешна продажба
+                    model.addAttribute("isSelled", true); // Добавяме съобщение за успешна продажба
+                    break;
+                }
+
+                // Ако е въведен само несъществуващ номер, без значение от състоянието на списъка
+                if (isNotExist) {
+                    model.addAttribute("isNotExist", true);
+                    break;
+                }
             default:
                 // Непозната операция
                 break;
