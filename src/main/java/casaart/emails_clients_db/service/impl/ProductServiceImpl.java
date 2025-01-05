@@ -73,15 +73,15 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO findByproductIdentifier(String productIdentifier) {
         Product product = null;
         if (productIdentifier.length() < 10) {
-            if (productRepository.findByProviderProductCode(productIdentifier).isPresent()){
+            if (productRepository.findByProviderProductCode(productIdentifier).isPresent()) {
                 product = productRepository.findByProviderProductCode(productIdentifier).get();
             }
         } else if (productIdentifier.matches(".*\\d.*")) {
-            if(findProductBySerialNumber(productIdentifier).isPresent()){
+            if (findProductBySerialNumber(productIdentifier).isPresent()) {
                 product = findProductBySerialNumber(productIdentifier).get();
             }
         } else {
-            if(productRepository.findByName(productIdentifier).isPresent()){
+            if (productRepository.findByName(productIdentifier).isPresent()) {
                 product = productRepository.findByName(productIdentifier).get();
             }
         }
@@ -160,7 +160,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(long id) {
         Product product = productRepository.findById(id).get();
-        
+
         Provider provider = providerRepository.findByName(product.getProvider().getName()).get();
 
         provider.getProducts().removeIf(p -> p.getId().equals(id));
@@ -239,7 +239,7 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    ProductDTO productMapToProductDTO(Product product){
+    ProductDTO productMapToProductDTO(Product product) {
         ProductDTO productDTO = mapper.map(product, ProductDTO.class);
 
         productDTO.setProvider(product.getProvider().getName());
