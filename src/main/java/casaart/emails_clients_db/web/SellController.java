@@ -63,13 +63,16 @@ public class SellController {
                 }
                 break;
             case "sell":
-                if (serialInput.isEmpty()){
+                isNotExist = !serialNumberService.isExistSn(serialInput);
+                // Проверка дали има въведен номер и вече добавени в полето или дали съществува този номер
+                if ((serialInput.isEmpty() && serialNumbers.isEmpty()) || isNotExist){
                     model.addAttribute("isEmpty", true);
                     break;
                 }
                 // Логика за обработка на продажба
                 performSell(serialNumbers);
                 serialNumbers.clear(); // Изчисти списъка след успешна продажба
+                model.addAttribute("isSelled", true);
                 break;
             default:
                 // Непозната операция

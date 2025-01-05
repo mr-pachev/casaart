@@ -7,7 +7,6 @@
     <title>CASA ART - Продажба</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 <div th:replace="~{fragments/navigation}" class="navbar"></div>
 <main>
@@ -35,6 +34,9 @@
             </div>
             <p class="errors alert alert-danger" th:if="${isEmpty}">
                 Въведи сериен номер.
+            </p>
+            <p class="errors alert alert-danger" th:if="${isSelled}">
+                Артикулите са продадени!
             </p>
         </form>
     </div>
