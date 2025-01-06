@@ -34,6 +34,7 @@ main {
 .description {
     font-size: 18px;
     margin-bottom: 30px;
+    color: #391e13;
 }
 
 /* Бутони */
@@ -54,23 +55,23 @@ main {
 }
 
 .buttons a.register {
-    background-color: #28a745;
+    background-color: #22a14a;
 }
 
 .buttons a.register:hover {
-    background-color: #218838;
+    background-color: #1e8d3e;
 }
 
 .register {
-    background-color: #FFA500;
+    background-color: #f16e23;
 }
 
 .register:hover {
-    background-color: #FF7F00;
+    background-color: #d9601f;
 }
 
 .login {
-    background-color: #1E90FF;
+    background-color: #17a7e0;
     color: white;
     padding: 12px 20px;
     font-size: 18px;
@@ -81,7 +82,7 @@ main {
 }
 
 .login:hover {
-    background-color: #0074D9;
+    background-color: #148bbf;
 }
 
 /* Центриране на съдържанието в клетките */
@@ -113,12 +114,12 @@ table td {
 }
 
 .edit-button {
-    background-color: rgba(252, 93, 23, 0.9);
+    background-color: #f16e23;
     color: white;
 }
 
 .edit-button:hover {
-    background-color: rgba(173, 106, 8, 0.9);
+    background-color: #d9601f;
     color: white;
 }
 
@@ -128,7 +129,7 @@ table td {
 }
 
 .delete-button:hover {
-    background-color: #D90429;
+    background-color: #d90429;
     color: white;
 }
 
@@ -152,7 +153,7 @@ table td {
 }
 
 .form-group .add-button {
-    background-color: #28a745;
+    background-color: #22a14a;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -162,11 +163,11 @@ table td {
 }
 
 .form-group .add-button:hover {
-    background-color: #218838;
+    background-color: #1e8d3e;
 }
 
 .sell-button {
-    background-color: #1E90FF;
+    background-color: #17a7e0;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -176,7 +177,7 @@ table td {
 }
 
 .sell-button:hover {
-    background-color: #0074D9;
+    background-color: #148bbf;
 }
 
 .serial-item {
@@ -189,6 +190,7 @@ table td {
 
 .serial-item span {
     font-size: 16px;
+    color: #391e13;
 }
 
 .remove-button {
@@ -202,12 +204,12 @@ table td {
 }
 
 .remove-button:hover {
-    background-color: #D90429;
+    background-color: #d90429;
 }
 
 /* Навигация */
 .navbar {
-    background-color: #FFA500;
+    background-color: #f16e23;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
@@ -236,12 +238,13 @@ table td {
 }
 
 .navbar .nav-links a:hover, .navbar .nav-links .logout-button:hover {
-    color: #FFD700;
+    color: #f1ea3b;
 }
 
 /* Заглавие */
 h1 {
     margin-bottom: 30px;
+    color: #391e13;
 }
 
 /* Таблица */
@@ -255,10 +258,11 @@ table th, table td {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: center;
+    color: #391e13;
 }
 
 table th {
-    background-color: #1E90FF;
+    background-color: #17a7e0;
     color: white;
 }
 
@@ -289,7 +293,7 @@ table tr:hover {
     display: block;
     font-size: 18px;
     margin-bottom: 8px;
-    color: #333;
+    color: #391e13;
 }
 
 .form-group input {
@@ -303,8 +307,8 @@ table tr:hover {
 }
 
 .form-group input:focus {
-    border-color: #1E90FF;
-    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+    border-color: #17a7e0;
+    box-shadow: 0 0 5px rgba(23, 167, 224, 0.5);
 }
 
 /* Футър */
