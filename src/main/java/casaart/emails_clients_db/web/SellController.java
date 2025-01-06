@@ -13,9 +13,7 @@ import java.util.List;
 
 @Controller
 public class SellController {
-    private final List<String> serialNumbers = new ArrayList<>();
     private final ProductService productService;
-
     private final SerialNumberService serialNumberService;
 
     public SellController(ProductService productService, SerialNumberService serialNumberService) {
