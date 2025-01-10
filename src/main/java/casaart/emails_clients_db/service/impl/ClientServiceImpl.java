@@ -70,7 +70,7 @@ public class ClientServiceImpl implements ClientService {
         } else if (Pattern.matches(oneName, words[0])) {
             sortedClientList = clientRepository.findByFirstName(words[0]);
         } else if (!"HOTEL".equals(words[0]) &&
-                        !"SHOW_ROOM".equals(words[0]) &&
+                        !"SHOWROOM".equals(words[0]) &&
                         !"ONLINE_SHOP".equals(words[0])) {
             return getAllClients();
         } else {

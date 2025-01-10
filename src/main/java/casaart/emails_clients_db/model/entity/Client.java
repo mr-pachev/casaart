@@ -10,20 +10,28 @@ import java.time.LocalDate;
 public class Client extends BaseEntity{
     @Column(name = "first_name")
     private String firstName;
+
     @Column(name = "middle_name")
     private String middleName;
+
     @Column(name = "last_name")
     private String lastName;
+
     @Column(name = "company_name")
     private String companyName;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "phone_number")
     private String phoneNumber;
+
     @Enumerated(EnumType.STRING)
     private SourceType sourceType;
+
     @Column(name = "creat_date")
     private LocalDate creatDate;
+
     @Column(name = "modify_date")
     private LocalDate modifyDate;
 
