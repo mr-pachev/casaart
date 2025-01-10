@@ -45,9 +45,9 @@ public class ClientServiceImpl implements ClientService {
         String oneName = "^[А-Я][а-я]*$";
 
         if ("creatDate".equals(words[0])) {
-            sortedClientList = clientRepository.findAllByOrderByCreatDateDesc();
+            sortedClientList = clientRepository.findAllByOrderByCreatedAtDesc();
         } else if ("modifyDate".equals(words[0])) {
-            sortedClientList = clientRepository.findAllByOrderByModifyDateDesc();
+            sortedClientList = clientRepository.findAllByOrderByUpdatedAtDesc();
         } else if ("addedFrom".equals(words[0])) {
             sortedClientList = clientRepository.findAllByOrderByUserUsernameAsc();
         } else if ("firstAndLastName".equals(words[0])) {
@@ -93,8 +93,8 @@ public class ClientServiceImpl implements ClientService {
         Client client = mapper.map(addClientDTO, Client.class);
         client.setUser(userHelperService.getUser());
         client.setModifyFrom(userHelperService.getUser().getUsername());
-        client.setCreatDate(LocalDate.now());
-        client.setModifyDate(LocalDate.now());
+//        client.setCreatDate(LocalDate.now());
+//        client.setModifyDate(LocalDate.now());
 
         clientRepository.save(client);
     }
@@ -115,11 +115,8 @@ public class ClientServiceImpl implements ClientService {
     public void editClient(ClientDTO clientDTO) {
         Client client = clientRepository.findById(clientDTO.getId());
         User user = client.getUser();
-        LocalDate createdDate = client.getCreatDate();
 
         client = mapper.map(clientDTO, Client.class);
-        client.setModifyDate(LocalDate.now());
-        client.setCreatDate(createdDate);
         client.setUser(user);
         client.setModifyFrom(userHelperService.getUser().getUsername());
 

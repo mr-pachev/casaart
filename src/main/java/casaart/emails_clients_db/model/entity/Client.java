@@ -29,12 +29,6 @@ public class Client extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private SourceType sourceType;
 
-    @Column(name = "creat_date")
-    private LocalDate creatDate;
-
-    @Column(name = "modify_date")
-    private LocalDate modifyDate;
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -95,22 +89,6 @@ public class Client extends BaseEntity{
 
     public void setSourceType(SourceType sourceType) {
         this.sourceType = sourceType;
-    }
-
-    public LocalDate getCreatDate() {
-        return creatDate;
-    }
-
-    public void setCreatDate(LocalDate creatDate) {
-        this.creatDate = creatDate;
-    }
-
-    public LocalDate getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(LocalDate modifyDate) {
-        this.modifyDate = modifyDate;
     }
 
     public User getUser() {
