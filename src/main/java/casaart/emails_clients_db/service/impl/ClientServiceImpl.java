@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -140,7 +141,7 @@ public class ClientServiceImpl implements ClientService {
         for (Client client : clientList) {
             ClientDTO clientDTO = mapToClientDTO(client);
 
-            String createUp = mapper.map(client.createdAt, LocalDate.class).toString();
+            String createUp = mapper.map(client.createdAt, LocalDateTime.class).toString();
             clientDTO.setCreatDate(createUp);
 
             //ако по клиента няма провени
@@ -148,7 +149,7 @@ public class ClientServiceImpl implements ClientService {
             if(client.getUpdatedAt() == null){
                 updatedAt = createUp;
             }else {
-                updatedAt = mapper.map(client.updatedAt, LocalDate.class).toString();
+                updatedAt = mapper.map(client.updatedAt, LocalDateTime.class).toString();
             }
             clientDTO.setModifyDate(updatedAt);
 

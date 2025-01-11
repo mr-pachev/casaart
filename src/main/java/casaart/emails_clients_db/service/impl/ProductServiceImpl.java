@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -149,7 +150,7 @@ public class ProductServiceImpl implements ProductService {
         product.updateSerialNumbersOnProductCodeChange();
 
         if (productDTO.getPcs() > 0) {
-            product.setUpdatedAt(LocalDate.now());
+            product.setUpdatedAt(LocalDateTime.now());
             generateAndSaveSerialNumbers(product, productDTO.getPcs());
         }
 
@@ -181,7 +182,7 @@ public class ProductServiceImpl implements ProductService {
         );
 
         if (removed) {
-            product.setUpdatedAt(LocalDate.now());
+            product.setUpdatedAt(LocalDateTime.now());
             productRepository.save(product);
         }
     }
@@ -200,7 +201,7 @@ public class ProductServiceImpl implements ProductService {
                     sN.getSerialNumber().equals(serialNumberUpperCase));
 
             if (removed) {
-                product.setUpdatedAt(LocalDate.now());
+                product.setUpdatedAt(LocalDateTime.now());
                 productRepository.save(product);
             }
         }
