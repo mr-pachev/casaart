@@ -96,10 +96,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByName(name).isPresent();
     }
 
-    //checking is exist product by code
+    //checking is exist product by code and type name
     @Override
-    public boolean isExistProductCode(String code) {
-        return productRepository.findByProductCode(code).isPresent();
+    public boolean isExistProductCodeWithType(String typeName, String code) {
+        return productRepository.findByTypeNameAndProductCode(typeName, code).isPresent();
     }
 
     //add product

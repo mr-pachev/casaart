@@ -152,7 +152,7 @@ public class ProductController {
             return "redirect:/add-product";
         }
 
-        if (productService.isExistProductCode(addProductDTO.getProductCode())) {
+        if (productService.isExistProductCodeWithType(addProductDTO.getType(), addProductDTO.getProductCode())) {
             rAtt.addFlashAttribute("addProductDTO", addProductDTO);
             rAtt.addFlashAttribute("isExistCode", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addProductDTO", bindingResult);
@@ -251,7 +251,7 @@ public class ProductController {
             return "redirect:/product-details/" + id;
         }
 
-        if (isChangedProductCode && productService.isExistProductCode(productDTO.getProductCode())) {
+        if (isChangedProductCode && productService.isExistProductCodeWithType(productDTO.getType(), productDTO.getProductCode())) {
             rAtt.addFlashAttribute("productDTO", productDTO);
             rAtt.addFlashAttribute("isExistCode", true);
             return "redirect:/product-details/" + id;
