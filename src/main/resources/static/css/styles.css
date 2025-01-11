@@ -250,7 +250,7 @@ h1 {
 /* Таблица */
 table {
     display: inline-block;
-    width: 80%;
+    width: auto;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
@@ -277,8 +277,8 @@ table tr:hover {
 
 /* Форма за вход */
 .login-form {
-    max-width: 400px;
-    width: 100%;
+    display: inline-block;
+    width: 20%;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
@@ -312,9 +312,19 @@ table tr:hover {
     box-shadow: 0 0 5px rgba(23, 167, 224, 0.5);
 }
 
+.add-form {
+    display: inline-block;
+    width: 25%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+ }
+
 .details-form {
     display: inline-block;
-    width: 35%;
+    width: 30%;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
