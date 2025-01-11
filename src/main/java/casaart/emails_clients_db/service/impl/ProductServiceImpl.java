@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     //get all products
     @Override
     public List<ProductDTO> getAllProducts() {
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findAllByOrderByCreatedAtDesc();
 
         return productListToProductDTOList(products);
     }
@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
         } else if ("modifyDate".equals(sourceTypeName)) {
             sortedProductList = productRepository.findAllByOrderByUpdatedAtDesc();
         } else {
-            sortedProductList = productRepository.findAll();
+            sortedProductList = productRepository.findAllByOrderByCreatedAtDesc();
         }
 
         return mapToProductDTOList(sortedProductList);
