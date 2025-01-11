@@ -168,28 +168,26 @@
         </form>
 
         <!-- Таблица със сериините номера -->
-        <div class="form-group">
-            <label>Серийни номера</label>
-            <table>
-                <thead>
-                <tr>
-                    <th>Сериен номер</th>
-                    <th>Действие</th>
-                </tr>
-                </thead>
-                <tbody id="snTableBody">
-                <tr th:each="currentSN : ${productDTO.sn}">
-                    <td th:text="${currentSN.serialNumber}"></td>
-                    <td>
-                        <form th:method="POST"
-                              th:action="@{/delete-sn/{id}/{prodId}(id=${currentSN.id}, prodId=${productDTO.id})}">
-                            <input class="delete-button" type="submit" th:value="Премахване"/>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <label>Серийни номера</label>
+        <table>
+            <thead>
+            <tr>
+                <th>Сериен номер</th>
+                <th>Действие</th>
+            </tr>
+            </thead>
+            <tbody id="snTableBody">
+            <tr th:each="currentSN : ${productDTO.sn}">
+                <td th:text="${currentSN.serialNumber}"></td>
+                <td>
+                    <form th:method="POST"
+                          th:action="@{/delete-sn/{id}/{prodId}(id=${currentSN.id}, prodId=${productDTO.id})}">
+                        <input class="delete-button" type="submit" th:value="Премахване"/>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
