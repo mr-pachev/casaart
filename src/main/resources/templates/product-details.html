@@ -188,8 +188,68 @@
             </tr>
             </tbody>
         </table>
+        <!-- Бутон за принтиране -->
+        <button type="button" class="btn btn-primary" onclick="printSerialNumbers()">Принтирай сериините номера</button>
     </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
+
+<script>
+    function printSerialNumbers() {
+        // Събиране на серийните номера
+        const rows = document.querySelectorAll('#snTableBody tr');
+        let content = '<h1>Серийни номера</h1>';
+        content += '<table border="1" style="width: 100%; border-collapse: collapse;">';
+        content += '<thead><tr><th>Сериен номер</th></tr></thead>';
+        content += '<tbody>';
+
+        rows.forEach(row => {
+            const serialNumber = row.querySelector('td').innerText;
+            content += `<tr><td>${serialNumber}</td></tr>`;
+        });
+
+        content += '</tbody></table>';
+
+        // Отваряне на нов прозорец за печат
+        const printWindow = window.open('', '_blank', 'width=800,height=600');
+        printWindow.document.open();
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Принтиране на сериините номера</title>
+                <style>
+                    body {
+                        font-family: Arial,
+                        sans-serif;
+                        margin: 20px;
+                    }
+                    h1 {
+                        text-align: center;
+                    }
+                    table {
+                        display: inline-block;
+                        width: 20%;
+                        margin: 0 auto;
+                        border-collapse: collapse;
+                    }
+                    th, td {
+                        padding: 10px;
+                        text-align: left;
+                        border: 1px solid black;
+                    }
+                </style>
+            </head>
+            <body>
+                ${content}
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+        printWindow.close();
+    }
+</script>
 </body>
 </html>
