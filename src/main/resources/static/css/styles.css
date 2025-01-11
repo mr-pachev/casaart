@@ -249,7 +249,8 @@ h1 {
 
 /* Таблица */
 table {
-    width: 100%;
+    display: inline-block;
+    width: 80%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
@@ -309,6 +310,16 @@ table tr:hover {
 .form-group input:focus {
     border-color: #17a7e0;
     box-shadow: 0 0 5px rgba(23, 167, 224, 0.5);
+}
+
+.details-form {
+    display: inline-block;
+    width: 35%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Футър */

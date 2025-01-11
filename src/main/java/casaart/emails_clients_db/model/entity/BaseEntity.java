@@ -11,9 +11,9 @@ public class BaseEntity {
     private Long id;
 
     @Column(updatable = false)
-    private LocalDate createdAt;
+    public LocalDate createdAt;
 
-    private LocalDate updatedAt;
+    public LocalDate updatedAt;
 
     @PrePersist
     protected void onCreate() {
