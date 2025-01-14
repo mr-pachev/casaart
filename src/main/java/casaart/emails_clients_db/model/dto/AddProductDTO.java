@@ -18,10 +18,10 @@ public class AddProductDTO {
     private String imagePath;
     private int pcs;
     @NotBlank
-    @Size(min = 2, max = 10)
+    @Size(min = 2, max = 15)
     private String productCode;
     @NotBlank
-    @Size(min = 2, max = 10)
+    @Size(min = 2, max = 15)
     private String providerProductCode;
     @NotBlank
     private String provider;
