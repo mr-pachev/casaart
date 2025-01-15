@@ -11,7 +11,6 @@ import casaart.emails_clients_db.service.UserHelperService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class ClientServiceImpl implements ClientService {
     //get all clients
     @Override
     public List<ClientDTO> getAllClients() {
-        List<Client> clients = clientRepository.findAll();
+        List<Client> clients = clientRepository.findAllByOrderByCreatedAtDesc();
 
         return mapToClientDTOList(clients);
     }
