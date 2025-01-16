@@ -11,7 +11,7 @@ import java.util.List;
 public class ProductDTO {
     long id;
     @NotBlank
-    @Size(min = 2, max = 50)
+    @Size(min = 2, max = 255)
     private String name;
 
     @NotNull

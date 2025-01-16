@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class AddProductDTO {
     @NotBlank
-    @Size(min = 2, max = 50)
+    @Size(min = 2, max = 255)
     private String name;
     @NotNull
     private Double providerPrice;

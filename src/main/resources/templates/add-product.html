@@ -25,7 +25,7 @@
                            th:field="*{name}"
                            th:errorclass="is-invalid">
                     <p class="invalid-feedback errors alert alert-danger">
-                        Името трябва да се състои от 2 до 50 букви.
+                        Името трябва да се състои минимум от 2 букви.
                     </p>
                     <p class="errors alert alert-danger" th:if="${isExistName}">
                         Съществува продукт с това име.
