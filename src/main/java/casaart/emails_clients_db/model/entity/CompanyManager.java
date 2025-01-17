@@ -3,8 +3,8 @@ package casaart.emails_clients_db.model.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "contacts_persons")
-public class ContactPerson extends BaseEntity{
+@Table(name = "companies_managers")
+public class CompanyManager extends BaseEntity{
     @Column(name = "first_name")
     private String firstName;
 
@@ -20,8 +20,7 @@ public class ContactPerson extends BaseEntity{
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "contactPerson", referencedColumnName = "id")
+    @OneToOne(mappedBy = "companyManager", cascade = CascadeType.ALL)
     private Company company;
 
     public String getFirstName() {
