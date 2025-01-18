@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Нов партньор</title>
+</head>
+<body>
+<div th:replace="~{fragments/navigation}"></div>
+<main>
+    <div class="container-form">
+        <h1>Нов партньор</h1>
+        <div class="add-form">
+            <form th:action="@{/add-company}"
+                  th:object="${addCompanyDTO}"
+                  th:method="POST">
+                <div class="form-group">
+                    <label for="name">Име</label>
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           th:field="*{name}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Името трябва да се състои от 2 до 50 букви.
+                    </p>
+                    <p class="errors alert alert-danger" th:if="${isExistCompany}">
+                        Съществува партньор с това име.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="industry">Вид дейност</label>
+                    <input type="industry"
+                           id="industry"
+                           name="industry"
+                           th:field="*{industry}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Въведи тип дейност.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="address">Адрес</label>
+                    <input type="address"
+                           id="address"
+                           name="address"
+                           th:field="*{address}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Въведете адрес.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Телефон</label>
+                    <input type="phoneNumber"
+                           id="phoneNumber"
+                           name="phoneNumber"
+                           th:field="*{phoneNumber}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Въведи телефонен номер.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="email">Имейл адрес</label>
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           th:field="*{email}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Въведи имейл адрес.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="locationType">Обхват на дейност</label>
+                    <select class="form-control"
+                            id="locationType"
+                            name="locationType"
+                            th:field="*{locationType}"
+                            th:errorclass="is-invalid">
+                        <option value="">-- Избери --</option>
+                        <option th:each="located: ${allLocations}"
+                                th:value="${located}"
+                                th:text="${located}">Регион
+                        </option>
+                    </select>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Избери регион.
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-success">Добави</button>
+            </form>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

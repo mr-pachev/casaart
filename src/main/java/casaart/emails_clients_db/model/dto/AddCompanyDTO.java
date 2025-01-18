@@ -10,7 +10,7 @@ import java.util.List;
 public class AddCompanyDTO {
 
     @NotBlank
-    @Size(min = 2, max = 30)
+    @Size(min = 2, max = 50)
     private String name;
 
     @NotBlank
@@ -27,13 +27,9 @@ public class AddCompanyDTO {
     @NotBlank
     private String locationType;
 
-    private List<String> contactPerson = new ArrayList<>();
-
     @NotBlank
-    @Size(min = 5)
-    private String companyManager;
-
-    private List<String> industries = new ArrayList<>();
+    @Size(min = 2)
+    private String industry;
 
     public String getName() {
         return name;
@@ -75,27 +71,11 @@ public class AddCompanyDTO {
         this.locationType = locationType;
     }
 
-    public List<String> getContactPerson() {
-        return contactPerson;
+    public String getIndustry() {
+        return industry;
     }
 
-    public void setContactPerson(List<String> contactPerson) {
-        this.contactPerson = contactPerson;
-    }
-
-    public String getCompanyManager() {
-        return companyManager;
-    }
-
-    public void setCompanyManager(String companyManager) {
-        this.companyManager = companyManager;
-    }
-
-    public List<String> getIndustries() {
-        return industries;
-    }
-
-    public void setIndustries(List<String> industries) {
-        this.industries = industries;
+    public void setIndustry(String industry) {
+        this.industry = industry;
     }
 }

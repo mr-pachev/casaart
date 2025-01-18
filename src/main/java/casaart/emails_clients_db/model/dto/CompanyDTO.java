@@ -13,7 +13,7 @@ public class CompanyDTO {
     long id;
 
     @NotBlank
-    @Size(min = 2, max = 30)
+    @Size(min = 2, max = 50)
     private String name;
 
     @NotBlank
