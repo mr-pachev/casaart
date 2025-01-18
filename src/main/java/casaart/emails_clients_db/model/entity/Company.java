@@ -39,7 +39,7 @@ public class Company extends BaseEntity{
     @Column(name = "second_call")
     private LocalDate secondCall;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
     private List<ContactPerson> contactPerson = new ArrayList<>();
 
     @OneToOne

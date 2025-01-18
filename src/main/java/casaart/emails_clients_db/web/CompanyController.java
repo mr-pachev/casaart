@@ -2,6 +2,7 @@ package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
+import casaart.emails_clients_db.model.dto.ProviderDTO;
 import casaart.emails_clients_db.model.entity.Industry;
 import casaart.emails_clients_db.model.enums.LocationType;
 import casaart.emails_clients_db.repository.IndustryRepository;
@@ -36,6 +37,16 @@ public class CompanyController {
     @ModelAttribute("companyDTO")
     public CompanyDTO companyDTO() {
         return new CompanyDTO();
+    }
+
+    //view all companies
+    @GetMapping("/companies")
+    public String getAllCompanies(Model model) {
+        List<CompanyDTO> companyDTOS = companyService.getAllCompanies();
+
+        model.addAttribute("allCompanies", companyDTOS);
+
+        return "companies";
     }
 
     //create new company

@@ -1,6 +1,7 @@
 package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
+import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.entity.Company;
 import casaart.emails_clients_db.model.entity.Industry;
 import casaart.emails_clients_db.repository.CompanyRepository;
@@ -9,6 +10,7 @@ import casaart.emails_clients_db.service.CompanyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,6 +23,22 @@ public class CompanyServiceImpl implements CompanyService {
         this.companyRepository = companyRepository;
         this.industryRepository = industryRepository;
         this.mapper = mapper;
+    }
+
+    //get all companies
+    @Override
+    public List<CompanyDTO> getAllCompanies() {
+        List<Company> allCompanies = companyRepository.findAllByOrderByCreatedAtDesc();
+        List<CompanyDTO> companyDTOS = new ArrayList<>();
+
+        for (Company company : allCompanies) {
+            CompanyDTO companyDTO = mapper.map(company, CompanyDTO.class);
+
+            System.out.println();
+        }
+
+
+        return companyDTOS;
     }
 
     //checking is exist company

@@ -1,6 +1,5 @@
 package casaart.emails_clients_db.model.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -38,13 +37,13 @@ public class CompanyDTO {
 
     private List<String> industries = new ArrayList<>();
 
-    private LocalDate firstCall;
+    private String firstCall;
 
-    private LocalDate sentEmail;
+    private String sentEmail;
 
-    private LocalDate letterSent;
+    private String letterSent;
 
-    private LocalDate secondCall;
+    private String secondCall;
 
     public long getId() {
         return id;
@@ -118,35 +117,35 @@ public class CompanyDTO {
         this.industries = industries;
     }
 
-    public LocalDate getFirstCall() {
+    public String getFirstCall() {
         return firstCall;
     }
 
-    public void setFirstCall(LocalDate firstCall) {
+    public void setFirstCall(String firstCall) {
         this.firstCall = firstCall;
     }
 
-    public LocalDate getSentEmail() {
+    public String getSentEmail() {
         return sentEmail;
     }
 
-    public void setSentEmail(LocalDate sentEmail) {
+    public void setSentEmail(String sentEmail) {
         this.sentEmail = sentEmail;
     }
 
-    public LocalDate getLetterSent() {
+    public String getLetterSent() {
         return letterSent;
     }
 
-    public void setLetterSent(LocalDate letterSent) {
+    public void setLetterSent(String letterSent) {
         this.letterSent = letterSent;
     }
 
-    public LocalDate getSecondCall() {
+    public String getSecondCall() {
         return secondCall;
     }
 
-    public void setSecondCall(LocalDate secondCall) {
+    public void setSecondCall(String secondCall) {
         this.secondCall = secondCall;
     }
 }

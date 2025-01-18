@@ -26,10 +26,10 @@ spring:
     init:
       mode: never
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/emails_clients_db?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
     password: 1234
-    url: jdbc:mysql://localhost:3306/emails_clients_db?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
 #loggin section
 logging:
   level:
