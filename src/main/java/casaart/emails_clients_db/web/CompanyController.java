@@ -1,10 +1,10 @@
 package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
-import casaart.emails_clients_db.model.dto.AddProviderDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
-import casaart.emails_clients_db.model.dto.ProviderDTO;
+import casaart.emails_clients_db.model.entity.Industry;
 import casaart.emails_clients_db.model.enums.LocationType;
+import casaart.emails_clients_db.repository.IndustryRepository;
 import casaart.emails_clients_db.service.CompanyService;
 import casaart.emails_clients_db.service.IndustryService;
 import jakarta.validation.Valid;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class CompanyController {

@@ -1,0 +1,10 @@
+INSERT INTO industries (name) VALUES ('КУХНЯ');
+INSERT INTO industries (name) VALUES ('БАР');
+INSERT INTO industries (name) VALUES ('АРТИСТИ');
+INSERT INTO industries (name) VALUES ('КОЗМЕТИКА');
+INSERT INTO industries (name) VALUES ('ФОТОГРАФИ');
+INSERT INTO industries (name) VALUES ('ТРАНСПОРТ');
+INSERT INTO industries (name) VALUES ('ХАМАЛИ');
+INSERT INTO industries (name) VALUES ('IT');
+INSERT INTO industries (name) VALUES ('ТЕХНИКА');
+INSERT INTO industries (name) VALUES ('ДЕНТАЛНА ГРИЖА');

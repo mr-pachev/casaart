@@ -10,12 +10,6 @@ public class IndustryDTO {
     @Size(min = 2, max = 30)
     private String name;
 
-    @NotBlank
-    @Size(min = 4, max = 255)
-    private String description;
-
-    private String company;
-
     public long getId() {
         return id;
     }
@@ -30,21 +24,5 @@ public class IndustryDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
     }
 }

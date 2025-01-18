@@ -45,7 +45,12 @@ public class Company extends BaseEntity{
     @OneToOne
     private CompanyManager companyManager;
 
-    @OneToMany(mappedBy = "company")
+    @ManyToMany
+    @JoinTable(
+            name = "company_industry",
+            joinColumns = @JoinColumn(name = "company_id"),
+            inverseJoinColumns = @JoinColumn(name = "industry_id")
+    )
     private List<Industry> industries = new ArrayList<>();
 
     public String getName() {

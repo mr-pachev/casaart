@@ -22,14 +22,8 @@ public class IndustryServiceImpl implements IndustryService {
 
     //get all industries
     @Override
-    public List<IndustryDTO> getAllIndustries() {
-        List<IndustryDTO> industryDTOS = new ArrayList<>();
-        for (Industry industry : industryRepository.findAll()) {
-            IndustryDTO industryDTO = mapper.map(industry, IndustryDTO.class);
+    public List<Industry> getAllIndustries() {
 
-            industryDTOS.add(industryDTO);
-        }
-
-        return industryDTOS;
+        return industryRepository.findAll();
     }
 }

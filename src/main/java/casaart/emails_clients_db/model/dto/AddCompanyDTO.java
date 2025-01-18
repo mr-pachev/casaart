@@ -1,7 +1,9 @@
 package casaart.emails_clients_db.model.dto;
 
+import casaart.emails_clients_db.model.entity.Industry;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
@@ -27,9 +29,8 @@ public class AddCompanyDTO {
     @NotBlank
     private String locationType;
 
-    @NotBlank
-    @Size(min = 2)
-    private String industry;
+    @NotEmpty
+    private List<Long> industries;
 
     public String getName() {
         return name;
@@ -71,11 +72,11 @@ public class AddCompanyDTO {
         this.locationType = locationType;
     }
 
-    public String getIndustry() {
-        return industry;
+    public List<Long> getIndustries() {
+        return industries;
     }
 
-    public void setIndustry(String industry) {
-        this.industry = industry;
+    public void setIndustries(List<Long> industries) {
+        this.industries = industries;
     }
 }

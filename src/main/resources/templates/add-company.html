@@ -30,14 +30,20 @@
                     </p>
                 </div>
                 <div class="form-group">
-                    <label for="industry">Вид дейност</label>
-                    <input type="industry"
-                           id="industry"
-                           name="industry"
-                           th:field="*{industry}"
-                           th:errorclass="is-invalid">
+                    <label for="industries">Вид дейност</label>
+                    <select class="form-control"
+                            id="industries"
+                            name="industries"
+                            th:field="*{industries}"
+                            th:errorclass="is-invalid"
+                            multiple> <!-- Позволява избор на няколко стойности -->
+                        <option th:each="industry : ${allIndustries}"
+                                th:value="${industry.id}"
+                                th:text="${industry.name}">
+                        </option>
+                    </select>
                     <p class="invalid-feedback errors alert alert-danger">
-                        Въведи тип дейност.
+                        Избери поне една дейност.
                     </p>
                 </div>
                 <div class="form-group">
