@@ -1,52 +1,58 @@
-package casaart.emails_clients_db.model.entity;
+package casaart.emails_clients_db.model.dto;
 
-import casaart.emails_clients_db.model.enums.LocationType;
-import casaart.emails_clients_db.model.enums.RoleName;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "companies")
-public class Company extends BaseEntity{
+public class CompanyDTO {
+    long id;
 
-    @Column(name = "name")
+    @NotBlank
+    @Size(min = 2, max = 30)
     private String name;
 
-    @Column(name = "address")
+    @NotBlank
+    @Size(min = 5)
     private String address;
 
-    @Column(name = "phone_number")
+    @NotBlank
     private String phoneNumber;
 
-    @Column(name = "email")
+    @NotBlank
+    @Email
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    private LocationType locationType;
+    @NotBlank
+    private String locationType;
 
-    @Column(name = "first_call")
+    private List<String> contactPerson = new ArrayList<>();
+
+    @NotBlank
+    @Size(min = 5)
+    private String companyManager;
+
+    private List<String> industries = new ArrayList<>();
+
     private LocalDate firstCall;
 
-    @Column(name = "sent_email")
     private LocalDate sentEmail;
 
-    @Column(name = "letter_sent")
     private LocalDate letterSent;
 
-    @Column(name = "second_call")
     private LocalDate secondCall;
 
-    @OneToMany(mappedBy = "company")
-    private List<ContactPerson> contactPerson = new ArrayList<>();
+    public long getId() {
+        return id;
+    }
 
-    @OneToOne
-    private CompanyManager companyManager;
-
-    @OneToMany(mappedBy = "company")
-    private List<Industry> industries = new ArrayList<>();
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -80,12 +86,36 @@ public class Company extends BaseEntity{
         this.email = email;
     }
 
-    public LocationType getLocationType() {
+    public String getLocationType() {
         return locationType;
     }
 
-    public void setLocationType(LocationType locationType) {
+    public void setLocationType(String locationType) {
         this.locationType = locationType;
+    }
+
+    public List<String> getContactPerson() {
+        return contactPerson;
+    }
+
+    public void setContactPerson(List<String> contactPerson) {
+        this.contactPerson = contactPerson;
+    }
+
+    public String getCompanyManager() {
+        return companyManager;
+    }
+
+    public void setCompanyManager(String companyManager) {
+        this.companyManager = companyManager;
+    }
+
+    public List<String> getIndustries() {
+        return industries;
+    }
+
+    public void setIndustries(List<String> industries) {
+        this.industries = industries;
     }
 
     public LocalDate getFirstCall() {
@@ -118,29 +148,5 @@ public class Company extends BaseEntity{
 
     public void setSecondCall(LocalDate secondCall) {
         this.secondCall = secondCall;
-    }
-
-    public List<ContactPerson> getContactPerson() {
-        return contactPerson;
-    }
-
-    public void setContactPerson(List<ContactPerson> contactPerson) {
-        this.contactPerson = contactPerson;
-    }
-
-    public CompanyManager getCompanyManager() {
-        return companyManager;
-    }
-
-    public void setCompanyManager(CompanyManager companyManager) {
-        this.companyManager = companyManager;
-    }
-
-    public List<Industry> getIndustries() {
-        return industries;
-    }
-
-    public void setIndustries(List<Industry> industries) {
-        this.industries = industries;
     }
 }

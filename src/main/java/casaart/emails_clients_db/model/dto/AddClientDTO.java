@@ -3,20 +3,28 @@ package casaart.emails_clients_db.model.dto;
 import jakarta.validation.constraints.*;
 
 public class AddClientDTO {
+
     @NotBlank
     @Size(min = 2, max = 30)
     private String firstName;
+
     @Size(max = 30)
     private String middleName;
+
     @NotBlank
     @Size(min = 2, max = 30)
     private String lastName;
+
     @Size(max = 15)
     private String companyName;
-    @NotBlank@Email
+
+    @NotBlank
+    @Email
     private String email;
+
     @Size(max = 10)
     private String phoneNumber;
+
     @NotBlank
     private String sourceType;
 

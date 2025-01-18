@@ -25,7 +25,7 @@ public class Product extends BaseEntity {
     private String providerProductCode;
 
     @ManyToOne
-    Provider provider;
+    private Provider provider;
 
     private String dimensions;
 

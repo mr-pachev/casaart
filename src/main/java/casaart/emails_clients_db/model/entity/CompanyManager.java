@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "companies_managers")
 public class CompanyManager extends BaseEntity{
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -20,7 +21,7 @@ public class CompanyManager extends BaseEntity{
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "companyManager", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "companyManager")
     private Company company;
 
     public String getFirstName() {

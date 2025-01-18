@@ -7,10 +7,12 @@ import java.util.List;
 @Entity
 @Table(name = "types")
 public class Type extends BaseEntity {
+
     @Column
     private String name;
+
     @Column
-    private String code; // EC, WC, HL
+    private String code;
 
     @ManyToOne
     private Category category;
