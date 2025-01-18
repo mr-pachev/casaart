@@ -4,7 +4,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class AddContactPersonDTO {
+public class PersonDTO {
+    long id;
+
     @NotBlank
     @Size(min = 2, max = 30)
     private String firstName;
@@ -25,6 +27,14 @@ public class AddContactPersonDTO {
 
     @NotBlank
     private String company;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
