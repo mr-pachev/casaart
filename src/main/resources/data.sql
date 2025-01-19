@@ -4,6 +4,7 @@ INSERT INTO industries (name) VALUES ('АРТИСТИ');
 INSERT INTO industries (name) VALUES ('КОЗМЕТИКА');
 INSERT INTO industries (name) VALUES ('ФОТОГРАФИ');
 INSERT INTO industries (name) VALUES ('ТРАНСПОРТ');
+INSERT INTO industries (name) VALUES ('ИНТЕРНЕТ');
 INSERT INTO industries (name) VALUES ('ХАМАЛИ');
 INSERT INTO industries (name) VALUES ('IT');
 INSERT INTO industries (name) VALUES ('ТЕХНИКА');

@@ -4,7 +4,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +28,13 @@ public class CompanyDTO {
     @NotBlank
     private String locationType;
 
-    private List<String> contactPerson = new ArrayList<>();
+    private List<PersonDTO> contactPerson = new ArrayList<>();
 
     @NotBlank
     @Size(min = 5)
-    private String companyManager;
+    private PersonDTO companyManager;
 
-    private List<String> industries = new ArrayList<>();
+    private List<IndustryDTO> industries = new ArrayList<>();
 
     private String firstCall;
 
@@ -93,27 +92,27 @@ public class CompanyDTO {
         this.locationType = locationType;
     }
 
-    public List<String> getContactPerson() {
+    public List<PersonDTO> getContactPerson() {
         return contactPerson;
     }
 
-    public void setContactPerson(List<String> contactPerson) {
+    public void setContactPerson(List<PersonDTO> contactPerson) {
         this.contactPerson = contactPerson;
     }
 
-    public String getCompanyManager() {
+    public PersonDTO getCompanyManager() {
         return companyManager;
     }
 
-    public void setCompanyManager(String companyManager) {
+    public void setCompanyManager(PersonDTO companyManager) {
         this.companyManager = companyManager;
     }
 
-    public List<String> getIndustries() {
+    public List<IndustryDTO> getIndustries() {
         return industries;
     }
 
-    public void setIndustries(List<String> industries) {
+    public void setIndustries(List<IndustryDTO> industries) {
         this.industries = industries;
     }
 

@@ -10,6 +10,8 @@ public class IndustryDTO {
     @Size(min = 2, max = 30)
     private String name;
 
+    private String company;
+
     public long getId() {
         return id;
     }
@@ -24,5 +26,13 @@ public class IndustryDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 }

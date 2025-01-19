@@ -13,7 +13,7 @@
 <main>
     <h1>Списък с партньори</h1>
     <div class="buttons">
-        <a th:href="@{/add-copmany}" class="register">Добави</a>
+        <a th:href="@{/add-company}" class="register">Добави</a>
     </div>
     <table id="category-table">
         <thead>
@@ -42,7 +42,7 @@
             <td th:text="${company.companyManager}">Управител</td>
             <td>
                 <ul>
-                    <li th:each="industry : ${company.industries}" th:text="${industry}"></li>
+                    <li th:each="industry : ${company.industries}" th:text="${industry.name}"></li>
                 </ul>
             </td>
             <td th:text="${company.firstCall}">Дата на първо обаждане</td>

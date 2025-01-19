@@ -1,7 +1,6 @@
 package casaart.emails_clients_db.model.entity;
 
 import casaart.emails_clients_db.model.enums.LocationType;
-import casaart.emails_clients_db.model.enums.RoleName;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -40,18 +39,13 @@ public class Company extends BaseEntity{
     private LocalDate secondCall;
 
     @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
-    private List<ContactPerson> contactPerson = new ArrayList<>();
+    private List<ContactPerson> contactPerson;
 
     @OneToOne
     private CompanyManager companyManager;
 
-    @ManyToMany
-    @JoinTable(
-            name = "company_industry",
-            joinColumns = @JoinColumn(name = "company_id"),
-            inverseJoinColumns = @JoinColumn(name = "industry_id")
-    )
-    private List<Industry> industries = new ArrayList<>();
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Industry> industries;
 
     public String getName() {
         return name;
