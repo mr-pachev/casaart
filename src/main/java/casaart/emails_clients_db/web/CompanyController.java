@@ -2,10 +2,7 @@ package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
-import casaart.emails_clients_db.model.dto.ProviderDTO;
-import casaart.emails_clients_db.model.entity.Industry;
 import casaart.emails_clients_db.model.enums.LocationType;
-import casaart.emails_clients_db.repository.IndustryRepository;
 import casaart.emails_clients_db.service.CompanyService;
 import casaart.emails_clients_db.service.IndustryService;
 import jakarta.validation.Valid;
@@ -14,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -84,6 +82,15 @@ public class CompanyController {
         }
 
         companyService.addCompany(addCompanyDTO);
+        return "redirect:/companies";
+    }
+
+    //delete company by id
+    @PostMapping("/delete-company/{id}")
+    public String removeCompany(@PathVariable("id") Long id) {
+
+        companyService.removeCompany(id);
+
         return "redirect:/companies";
     }
 }

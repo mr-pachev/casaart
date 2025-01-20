@@ -20,11 +20,16 @@
         <tr>
             <th style="width: 10%;">Име</th>
             <th style="width: 10%;">Адрес</th>
+            <th style="width: 10%;">Емейл адрес</th>
             <th style="width: 10%;">Телефонен номер</th>
             <th style="width: 10%;">Локация</th>
             <th style="width: 10%;">Лице за контакт</th>
             <th style="width: 10%;">Управител</th>
             <th style="width: 10%;">Бранш</th>
+            <th style="width: 10%;">Дата на първо обаждане</th>
+            <th style="width: 10%;">Дата на изпратен имейл</th>
+            <th style="width: 10%;">Дата на изпратено писмо</th>
+            <th style="width: 10%;">Дата на второ обаждане</th>
             <th style="width: 10%;">Действия</th>
         </tr>
         </thead>
@@ -32,17 +37,18 @@
         <tr th:each="company :${allCompanies}">
             <td th:text="${company.name}">Име</td>
             <td th:text="${company.address}">Адрес</td>
+            <td th:text="${company.email}">Имейл адрес</td>
             <td th:text="${company.phoneNumber}">Телефонен номер</td>
             <td th:text="${company.locationType}">Локация</td>
             <td>
                 <ul>
-                    <li th:each="contact : ${company.contactPerson}" th:text="${contact}"></li>
+                    <li th:each="contact : ${company.contactPerson}" th:text="${contact}">Лице за контакт</li>
                 </ul>
             </td>
             <td th:text="${company.companyManager}">Управител</td>
             <td>
                 <ul>
-                    <li th:each="industry : ${company.industries}" th:text="${industry.name}"></li>
+                    <li th:each="industry : ${company.industries}" th:text="${industry.name}">Бранш</li>
                 </ul>
             </td>
             <td th:text="${company.firstCall}">Дата на първо обаждане</td>
@@ -50,16 +56,15 @@
             <td th:text="${company.letterSent}">Дата на изпратено писмо</td>
             <td th:text="${company.secondCall}">Дата на второ обаждане</td>
             <td>
-            <td>
-<!--                <div class="action-buttons">-->
+                <div class="action-buttons">
 <!--                    <form th:method="POST" th:action="@{/company-details/{id}(id=${company.id})}">-->
 <!--                        <input class="edit-button" type="submit" th:value="Промяна"/>-->
 <!--                    </form>-->
-<!--                    <form th:method="POST" th:action="@{/delete-company/{id}(id=${company.id})}"-->
-<!--                          sec:authorize="hasRole('Admin')">-->
-<!--                        <input class="delete-button" type="submit" th:value="Премахване"/>-->
-<!--                    </form>-->
-<!--                </div>-->
+                    <form th:method="POST" th:action="@{/delete-company/{id}(id=${company.id})}"
+                          sec:authorize="hasRole('Admin')">
+                        <input class="delete-button" type="submit" th:value="Премахване"/>
+                    </form>
+                </div>
             </td>
         </tr>
         </tbody>

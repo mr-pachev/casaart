@@ -76,6 +76,12 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(company);
     }
 
+    //delete company by id
+    @Override
+    public void removeCompany(long id) {
+        companyRepository.deleteById(id);
+    }
+
     //mapCompanyToCompanyDTO
     CompanyDTO mapCompanyToCompanyDTO(Company company){
         CompanyDTO companyDTO = new CompanyDTO();
@@ -83,7 +89,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setName(company.getName());
         companyDTO.setAddress(company.getAddress());
         companyDTO.setPhoneNumber(company.getPhoneNumber());
-        companyDTO.setEmail(companyDTO.getEmail());
+        companyDTO.setEmail(company.getEmail());
         companyDTO.setLocationType(company.getLocationType().name());
 
         List<PersonDTO> personDTOS = new ArrayList<>();
