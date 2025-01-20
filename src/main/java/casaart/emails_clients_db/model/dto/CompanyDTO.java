@@ -21,7 +21,7 @@ public class CompanyDTO {
     @NotBlank
     private String phoneNumber;
 
-    @NotBlank
+
     @Email
     private String email;
 

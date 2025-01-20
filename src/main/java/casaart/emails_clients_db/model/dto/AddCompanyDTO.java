@@ -22,7 +22,7 @@ public class AddCompanyDTO {
     @NotBlank
     private String phoneNumber;
 
-    @NotBlank
+
     @Email
     private String email;
 
