@@ -40,7 +40,6 @@ public class CompanyServiceImpl implements CompanyService {
             companyDTOS.add(companyDTO);
         }
 
-
         return companyDTOS;
     }
 
@@ -54,7 +53,6 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     @Transactional
     public void addCompany(AddCompanyDTO addCompanyDTO) {
-        // Създаване на обект Company от DTO
         Company company = mapper.map(addCompanyDTO, Company.class);
 
         // Намиране на индустриите по ID
@@ -69,19 +67,26 @@ public class CompanyServiceImpl implements CompanyService {
             company.getIndustries().add(industry);
         }
 
-        // Може да актуализирате Company отново, ако се налага
         companyRepository.save(company);
     }
 
     //delete company by id
     @Override
+    @Transactional
     public void removeCompany(long id) {
+        Company company = companyRepository.findById(id).get();
+        // Изчистване на асоциациите с Industry
+        for (Industry industry : company.getIndustries()) {
+            industry.getCompanies().remove(company);
+        }
+        company.getIndustries().clear();
 
-        companyRepository.deleteById(id);
+        // Изтриване на компанията
+        companyRepository.delete(company);
     }
 
     //mapCompanyToCompanyDTO
-    CompanyDTO mapCompanyToCompanyDTO(Company company){
+    CompanyDTO mapCompanyToCompanyDTO(Company company) {
         CompanyDTO companyDTO = new CompanyDTO();
         companyDTO.setId(company.getId());
         companyDTO.setName(company.getName());

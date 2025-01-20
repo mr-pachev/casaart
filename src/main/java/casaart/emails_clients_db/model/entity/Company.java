@@ -43,7 +43,7 @@ public class Company extends BaseEntity{
     @OneToOne
     private CompanyManager companyManager;
 
-    @ManyToMany(fetch = FetchType.EAGER) // Fetch настройката може да бъде Lazy според нуждата
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "company_industry",
             joinColumns = @JoinColumn(name = "company_id"),

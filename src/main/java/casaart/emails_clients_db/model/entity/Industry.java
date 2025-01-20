@@ -11,7 +11,7 @@ public class Industry extends BaseEntity{
     @Column
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "industries")
     private List<Company>  companies;
 
     public String getName() {
