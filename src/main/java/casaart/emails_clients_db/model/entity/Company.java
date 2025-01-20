@@ -4,7 +4,6 @@ import casaart.emails_clients_db.model.enums.LocationType;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -44,8 +43,23 @@ public class Company extends BaseEntity{
     @OneToOne
     private CompanyManager companyManager;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER) // Fetch настройката може да бъде Lazy според нуждата
+    @JoinTable(
+            name = "company_industry",
+            joinColumns = @JoinColumn(name = "company_id"),
+            inverseJoinColumns = @JoinColumn(name = "industry_id")
+    )
     private List<Industry> industries;
+
+    public void addIndustry(Industry industry) {
+        this.industries.add(industry);
+        industry.getCompanies().add(this); // Актуализира връзката от другата страна
+    }
+
+    public void removeIndustry(Industry industry) {
+        this.industries.remove(industry);
+        industry.getCompanies().remove(this); // Премахва връзката от другата страна
+    }
 
     public String getName() {
         return name;
@@ -143,3 +157,4 @@ public class Company extends BaseEntity{
         this.industries = industries;
     }
 }
+

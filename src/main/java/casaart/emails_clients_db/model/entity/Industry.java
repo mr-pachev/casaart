@@ -2,6 +2,8 @@ package casaart.emails_clients_db.model.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "industries")
 public class Industry extends BaseEntity{
@@ -9,9 +11,8 @@ public class Industry extends BaseEntity{
     @Column
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id", referencedColumnName = "id")
-    private Company company;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Company>  companies;
 
     public String getName() {
         return name;
@@ -21,11 +22,11 @@ public class Industry extends BaseEntity{
         this.name = name;
     }
 
-    public Company getCompany() {
-        return company;
+    public List<Company> getCompanies() {
+        return companies;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setCompanies(List<Company> companies) {
+        this.companies = companies;
     }
 }

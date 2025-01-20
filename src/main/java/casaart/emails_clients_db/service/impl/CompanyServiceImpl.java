@@ -57,20 +57,17 @@ public class CompanyServiceImpl implements CompanyService {
         // Създаване на обект Company от DTO
         Company company = mapper.map(addCompanyDTO, Company.class);
 
-        // Запазване на Company, за да се генерира ID
-        company = companyRepository.save(company);
-
         // Намиране на индустриите по ID
         List<Industry> industries = industryRepository.findAllById(addCompanyDTO.getIndustries());
 
         // Настройка на връзката между Industry и Company
         for (Industry industry : industries) {
-            industry.setCompany(company); // Свързване с компанията
-            industryRepository.save(industry); // Запазване на Industry
-        }
 
-        // Свързване на индустриите към Company (ако е нужно за приложението)
-        company.setIndustries(industries);
+            industry.getCompanies().add(company); // Свързване с компанията
+
+            // Добавете индустрията към списъка с индустрии на компанията
+            company.getIndustries().add(industry);
+        }
 
         // Може да актуализирате Company отново, ако се налага
         companyRepository.save(company);
@@ -79,6 +76,7 @@ public class CompanyServiceImpl implements CompanyService {
     //delete company by id
     @Override
     public void removeCompany(long id) {
+
         companyRepository.deleteById(id);
     }
 
