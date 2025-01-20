@@ -2,7 +2,6 @@ package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddProviderDTO;
 import casaart.emails_clients_db.model.dto.ProviderDTO;
-import casaart.emails_clients_db.model.dto.TypeDTO;
 import casaart.emails_clients_db.service.ProviderService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;

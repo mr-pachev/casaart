@@ -2,6 +2,8 @@ package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
+import casaart.emails_clients_db.model.dto.PersonDTO;
+import casaart.emails_clients_db.model.dto.ProviderDTO;
 import casaart.emails_clients_db.model.enums.LocationType;
 import casaart.emails_clients_db.service.CompanyService;
 import casaart.emails_clients_db.service.IndustryService;
@@ -35,6 +37,11 @@ public class CompanyController {
     @ModelAttribute("companyDTO")
     public CompanyDTO companyDTO() {
         return new CompanyDTO();
+    }
+
+    @ModelAttribute("personDTO")
+    public PersonDTO personDTO() {
+        return new PersonDTO();
     }
 
     //view all companies
@@ -81,8 +88,18 @@ public class CompanyController {
             return "redirect:/add-company";
         }
 
-        companyService.addCompany(addCompanyDTO);
-        return "redirect:/companies";
+        long companyId = companyService.addCompany(addCompanyDTO);
+        return "redirect:/add-contact-person/" + companyId;
+    }
+
+    @GetMapping("/add-contact-person/{id}")
+    public String fillAddContactPersonForm(@PathVariable("id") Long id, Model model) {
+        CompanyDTO companyDTO = companyService.findCompanyById(id);
+        model.addAttribute(companyDTO);
+        model.addAttribute("allLocations", companyDTO.getLocationType());
+        model.addAttribute("currentIndustry", companyDTO.getIndustries());
+
+        return "add-contact-person";
     }
 
     //delete company by id

@@ -14,8 +14,11 @@ public interface CompanyService {
     //checking is exist company
     boolean isExistCompany(String name);
 
+    //find company by id
+    CompanyDTO findCompanyById(long id);
+
     //add company
-    void addCompany(AddCompanyDTO addCompanyDTO);
+    long addCompany(AddCompanyDTO addCompanyDTO);
 
     //delete company by id
     void removeCompany(long id);

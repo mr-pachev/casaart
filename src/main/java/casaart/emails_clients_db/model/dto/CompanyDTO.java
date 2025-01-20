@@ -35,6 +35,7 @@ public class CompanyDTO {
 
     private List<IndustryDTO> industries = new ArrayList<>();
 
+
     private String firstCall;
 
     private String sentEmail;

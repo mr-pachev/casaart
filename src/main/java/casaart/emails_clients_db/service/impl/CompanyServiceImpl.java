@@ -49,10 +49,18 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.findByName(name).isPresent();
     }
 
+    //find company by id
+    @Override
+    public CompanyDTO findCompanyById(long id) {
+        Company company = companyRepository.findById(id).get();
+
+        return mapCompanyToCompanyDTO(company);
+    }
+
     //add company
     @Override
     @Transactional
-    public void addCompany(AddCompanyDTO addCompanyDTO) {
+    public long addCompany(AddCompanyDTO addCompanyDTO) {
         Company company = mapper.map(addCompanyDTO, Company.class);
 
         // Намиране на индустриите по ID
@@ -68,6 +76,7 @@ public class CompanyServiceImpl implements CompanyService {
         }
 
         companyRepository.save(company);
+        return companyRepository.findByName(company.getName()).get().getId();
     }
 
     //delete company by id
@@ -75,13 +84,13 @@ public class CompanyServiceImpl implements CompanyService {
     @Transactional
     public void removeCompany(long id) {
         Company company = companyRepository.findById(id).get();
+
         // Изчистване на асоциациите с Industry
         for (Industry industry : company.getIndustries()) {
             industry.getCompanies().remove(company);
         }
         company.getIndustries().clear();
 
-        // Изтриване на компанията
         companyRepository.delete(company);
     }
 

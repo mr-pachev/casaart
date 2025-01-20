@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Нов партньор</title>
+</head>
+<body>
+<div th:replace="~{fragments/navigation}"></div>
+<main>
+    <div class="container-form">
+        <h1>Нов партньор</h1>
+        <div class="add-form">
+            <form th:object="${companyDTO}">
+
+                <!--Sends category id with a POST request-->
+                <input type="hidden" th:field="*{id}"/>
+
+                <div class="form-group">
+                    <label for="name">Име</label>
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           th:placeholder="${companyDTO.name}">
+                </div>
+                <div class="form-group">
+                    <label for="industries">Вид дейност</label>
+                    <select class="form-control"
+                            id="industries"
+                            name="industries"
+                            th:placeholder="${companyDTO.industries}"
+                            multiple>
+                        <option th:each="industry : ${currentIndustry}"
+                                th:text="${industry.name}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="address">Адрес</label>
+                    <input type="text"
+                           id="address"
+                           name="address"
+                           th:placeholder="${companyDTO.address}">
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Телефон</label>
+                    <input type="text"
+                           id="phoneNumber"
+                           name="phoneNumber"
+                           th:placeholder="${companyDTO.phoneNumber}">
+                </div>
+                <div class="form-group">
+                    <label for="email">Имейл адрес</label>
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           th:placeholder="${companyDTO.email}">
+                </div>
+                <div class="form-group">
+                    <label for="locationType">Обхват на дейност</label>
+                    <input type="text"
+                           id="locationType"
+                           name="locationType"
+                           th:placeholder="${companyDTO.locationType}">
+                </div>
+            </form>
+            <form th:action="@{/add-contact-person}"
+                  th:object="${personDTO}"
+                  th:method="POST">
+                <div class="form-group">
+                    <h3>Управител</h3>
+                    <br>
+                    <label for="firstName">Име</label>
+                    <input type="text"
+                           id="firstName"
+                           name="firstName"
+                           th:field="*{firstName}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Името трябва да се състои от 2 до 15 букви.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="middleName">Презиме</label>
+                    <input type="text"
+                           id="middleName"
+                           name="middleName"
+                           th:field="*{middleName}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Презимето трябва да съдържа до 15 букви.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Фамилия</label>
+                    <input type="text"
+                           id="lastName"
+                           name="lastName"
+                           th:field="*{lastName}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Фамилята трябва да се състои от 2 до 15 букви.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="email">Емейл</label>
+                    <input type="email"
+                           id="emailPerson"
+                           name="email"
+                           th:field="*{email}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Няма попълнен имейл.
+                    </p>
+                    <p class="errors alert alert-danger" th:if="${isExistEmail}">
+                        Съществува клиент с този имейл.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Телефонен номер</label>
+                    <input type="text"
+                           id="phoneNumberPerson"
+                           name="phoneNumber"
+                           class="form-control"
+                           th:field="*{phoneNumber}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Мобилния номер трябва да се състои максимално от 10 цифри.
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-success">Добави</button>
+            </form>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>
