@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Нов партньор</title>
+</head>
+<body>
+<div th:replace="~{fragments/navigation}"></div>
+<main>
+    <h1>Партньор</h1>
+    <form th:action="@{/add-person}"
+          th:object="${companyDTO}"
+          th:method="POST">
+
+        <!--Sends client id with a POST request-->
+        <input type="hidden" th:field="*{id}"/>
+
+        <table id="category-table">
+            <thead>
+            <tr>
+                <th style="width: 10%;">Име</th>
+                <th style="width: 10%;">Адрес</th>
+                <th style="width: 10%;">Емейл адрес</th>
+                <th style="width: 10%;">Телефонен номер</th>
+                <th style="width: 10%;">Локация</th>
+                <th style="width: 10%;">Лице за контакт</th>
+                <th style="width: 10%;">Управител</th>
+                <th style="width: 10%;">Бранш</th>
+                <th style="width: 10%;">Дата на първо обаждане</th>
+                <th style="width: 10%;">Дата на изпратен имейл</th>
+                <th style="width: 10%;">Дата на изпратено писмо</th>
+                <th style="width: 10%;">Дата на второ обаждане</th>
+                <th style="width: 10%;">Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${companyDTO.name}">Име</td>
+                <td th:text="${companyDTO.address}">Адрес</td>
+                <td th:text="${companyDTO.email}">Имейл адрес</td>
+                <td th:text="${companyDTO.phoneNumber}">Телефонен номер</td>
+                <td th:text="${companyDTO.locationType}">Локация</td>
+                <td>
+                    <ul>
+                        <li th:each="contact : ${companyDTO.contactPerson}" th:text="${contact}">Лице за контакт</li>
+                    </ul>
+                </td>
+                <td th:text="${companyDTO.companyManager}">Управител</td>
+                <td>
+                    <ul>
+                        <li th:each="industry : ${companyDTO.industries}" th:text="${industry.name}">Бранш</li>
+                    </ul>
+                </td>
+                <td th:text="${companyDTO.firstCall}">Дата на първо обаждане</td>
+                <td th:text="${companyDTO.sentEmail}">Дата на изпратен имейл</td>
+                <td th:text="${companyDTO.letterSent}">Дата на изпратено писмо</td>
+                <td th:text="${companyDTO.secondCall}">Дата на второ обаждане</td>
+                <td>
+                    <div class="action-buttons">
+                        <!--                                <form th:method="POST" th:action="@{/company-details/{id}(id=${company.id})}">-->
+                        <!--                                    <input class="edit-button" type="submit" th:value="Промяна"/>-->
+                        <!--                                </form>                   -->
+                        <form th:method="POST" th:action="@{/delete-company/{id}(id=${companyDTO.id})}"
+                              sec:authorize="hasRole('Admin')">
+                            <input class="delete-button" type="submit" th:value="Премахване"/>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <div class="buttons">
+        <!-- Форма за добавяне на управител -->
+        <form th:method="POST" th:action="@{/add-company-manager/{id}(id=${companyDTO.id})}" style="display: inline;">
+            <button type="submit" class="register">Добави управител</button>
+        </form>
+        <!-- Форма за добавяне на контактно лице -->
+        <form th:method="POST" th:action="@{/add-contact-person/{id}(id=${companyDTO.id})}" style="display: inline;">
+            <button type="submit" class="login">Добави контактно лице</button>
+        </form>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

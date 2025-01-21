@@ -64,6 +64,13 @@ main {
 
 .register {
     background-color: #f16e23;
+    color: white;
+        padding: 8px 18px;
+        font-size: 15px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
 }
 
 .register:hover {

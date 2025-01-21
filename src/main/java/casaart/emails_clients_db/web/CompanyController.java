@@ -89,17 +89,50 @@ public class CompanyController {
         }
 
         long companyId = companyService.addCompany(addCompanyDTO);
-        return "redirect:/add-contact-person/" + companyId;
+        return "redirect:/add-person/" + companyId;
     }
 
-    @GetMapping("/add-contact-person/{id}")
+    @GetMapping("/add-person/{id}")
     public String fillAddContactPersonForm(@PathVariable("id") Long id, Model model) {
         CompanyDTO companyDTO = companyService.findCompanyById(id);
         model.addAttribute(companyDTO);
         model.addAttribute("allLocations", companyDTO.getLocationType());
         model.addAttribute("currentIndustry", companyDTO.getIndustries());
 
-        return "add-contact-person";
+        return "add-person";
+    }
+
+    //add company manager
+    @PostMapping("/add-company-manager/{id}")
+    public String referenceToAddCompanyManagerForm(@PathVariable("id") Long id) {
+
+        return "redirect:/add-company-manager/" + id;
+    }
+
+    @GetMapping("/add-company-manager/{id}")
+    public String showAddCompanyManagerForm(@PathVariable("id") Long id, Model model) {
+        CompanyDTO companyDTO = companyService.findCompanyById(id);
+        model.addAttribute(companyDTO);
+
+        return "add-company-manager"; // Шаблонът за формата
+    }
+
+    @PostMapping("/add-company-manager")
+    public String addCompanyManager(@ModelAttribute PersonDTO personDTO) {
+        // Логика за добавяне на управител
+        return "redirect:/add-person"; // Пренасочване към желаната страница
+    }
+
+    @GetMapping("/add-contact-person")
+    public String showAddContactPersonForm(Model model) {
+//        model.addAttribute("contactPersonDTO", new ContactPersonDTO());
+        return "add-contact-person"; // Шаблонът за формата
+    }
+
+    @PostMapping("/add-contact-person")
+    public String addContactPerson(@ModelAttribute PersonDTO contactPersonDTO) {
+        // Логика за добавяне на контактно лице
+        return "redirect:/some-page"; // Пренасочване към желаната страница
     }
 
     //delete company by id
