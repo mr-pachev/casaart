@@ -3,7 +3,6 @@ package casaart.emails_clients_db.web;
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
-import casaart.emails_clients_db.model.dto.ProviderDTO;
 import casaart.emails_clients_db.model.enums.LocationType;
 import casaart.emails_clients_db.service.CompanyService;
 import casaart.emails_clients_db.service.IndustryService;
@@ -112,16 +111,24 @@ public class CompanyController {
     @GetMapping("/add-company-manager/{id}")
     public String showAddCompanyManagerForm(@PathVariable("id") Long id, Model model) {
         CompanyDTO companyDTO = companyService.findCompanyById(id);
-        model.addAttribute(companyDTO);
+        model.addAttribute("companyDTO", companyDTO);
 
         return "add-company-manager"; // Шаблонът за формата
     }
 
-    @PostMapping("/add-company-manager")
-    public String addCompanyManager(@ModelAttribute PersonDTO personDTO) {
-        // Логика за добавяне на управител
-        return "redirect:/add-person"; // Пренасочване към желаната страница
-    }
+//    @PostMapping("/add-company-manager/{id}")
+//    public String addCompanyManager(@RequestParam("id") Long id,
+//                                    @Valid PersonDTO personDTO,
+//                                    BindingResult bindingResult,
+//                                    RedirectAttributes rAtt,
+//                                    Model model) {
+//        // Логика за добавяне на управител
+//
+//
+//
+//
+//        return "redirect:/add-person/" + id; // Пренасочване към желаната страница
+//    }
 
     @GetMapping("/add-contact-person")
     public String showAddContactPersonForm(Model model) {
