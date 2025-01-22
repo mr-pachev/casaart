@@ -10,10 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -73,6 +70,8 @@ public class CompanyController {
             RedirectAttributes rAtt, Model model) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("allLocations", LocationType.values());
+            model.addAttribute("allIndustries", industryService.getAllIndustries());
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCompanyDTO", bindingResult);
 
@@ -102,7 +101,7 @@ public class CompanyController {
     }
 
     //add company manager
-    @PostMapping("/add-company-manager/{id}")
+    @PostMapping("/add-company-manager-with-com-id/{id}")
     public String referenceToAddCompanyManagerForm(@PathVariable("id") Long id) {
 
         return "redirect:/add-company-manager/" + id;
@@ -116,19 +115,26 @@ public class CompanyController {
         return "add-company-manager"; // Шаблонът за формата
     }
 
-//    @PostMapping("/add-company-manager/{id}")
-//    public String addCompanyManager(@RequestParam("id") Long id,
-//                                    @Valid PersonDTO personDTO,
-//                                    BindingResult bindingResult,
-//                                    RedirectAttributes rAtt,
-//                                    Model model) {
-//        // Логика за добавяне на управител
-//
-//
-//
-//
-//        return "redirect:/add-person/" + id; // Пренасочване към желаната страница
-//    }
+    @PostMapping("/add-company-manager")
+    public String addCompanyManager(@RequestParam("id") Long id,
+                                    @Valid PersonDTO personDTO,
+                                    BindingResult bindingResult,
+                                    RedirectAttributes rAtt,
+                                    Model model) {
+        CompanyDTO companyDTO = companyService.findCompanyById(id);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("companyDTO", companyDTO);
+            rAtt.addFlashAttribute("personDTO", personDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
+
+            return "add-company-manager";
+        }
+
+
+
+        return "redirect:/company";
+    }
 
     @GetMapping("/add-contact-person")
     public String showAddContactPersonForm(Model model) {

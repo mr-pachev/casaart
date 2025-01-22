@@ -124,6 +124,7 @@ public class ProductController {
             return "redirect:/add-product";
         }
 
+        //TODO проверка дали съществува картинка с този път
         // Записване на файла
         try {
             Path uploadDir = Paths.get(uploadPath);

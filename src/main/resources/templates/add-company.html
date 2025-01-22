@@ -16,7 +16,7 @@
                   th:object="${addCompanyDTO}"
                   th:method="POST">
                 <div class="form-group">
-                    <label for="name">Име</label>
+                    <label th:for="name">Име</label>
                     <input type="text"
                            id="name"
                            name="name"
@@ -30,7 +30,7 @@
                     </p>
                 </div>
                 <div class="form-group">
-                    <label for="industries">Вид дейност</label>
+                    <label th:for="industries">Вид дейност</label>
                     <select class="form-control"
                             id="industries"
                             name="industries"
@@ -47,7 +47,7 @@
                     </p>
                 </div>
                 <div class="form-group">
-                    <label for="address">Адрес</label>
+                    <label th:for="address">Адрес</label>
                     <input type="address"
                            id="address"
                            name="address"
@@ -58,7 +58,7 @@
                     </p>
                 </div>
                 <div class="form-group">
-                    <label for="phoneNumber">Телефон</label>
+                    <label th:for="phoneNumber">Телефон</label>
                     <input type="phoneNumber"
                            id="phoneNumber"
                            name="phoneNumber"
@@ -69,7 +69,7 @@
                     </p>
                 </div>
                 <div class="form-group">
-                    <label for="email">Имейл адрес</label>
+                    <label th:for="email">Имейл адрес</label>
                     <input type="email"
                            id="email"
                            name="email"
@@ -80,7 +80,7 @@
                     </p>
                 </div>
                 <div class="form-group">
-                    <label for="locationType">Обхват на дейност</label>
+                    <label th:for="locationType">Обхват на дейност</label>
                     <select class="form-control"
                             id="locationType"
                             name="locationType"
