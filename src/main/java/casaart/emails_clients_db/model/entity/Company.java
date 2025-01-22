@@ -38,10 +38,10 @@ public class Company extends BaseEntity{
     private LocalDate secondCall;
 
     @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
-    private List<ContactPerson> contactPerson;
+    private List<Person> contactPerson;
 
     @OneToOne
-    private CompanyManager companyManager;
+    private Person companyManager;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
@@ -133,19 +133,19 @@ public class Company extends BaseEntity{
         this.secondCall = secondCall;
     }
 
-    public List<ContactPerson> getContactPerson() {
+    public List<Person> getContactPerson() {
         return contactPerson;
     }
 
-    public void setContactPerson(List<ContactPerson> contactPerson) {
+    public void setContactPerson(List<Person> contactPerson) {
         this.contactPerson = contactPerson;
     }
 
-    public CompanyManager getCompanyManager() {
+    public Person getCompanyManager() {
         return companyManager;
     }
 
-    public void setCompanyManager(CompanyManager companyManager) {
+    public void setCompanyManager(Person companyManager) {
         this.companyManager = companyManager;
     }
 

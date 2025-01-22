@@ -121,6 +121,7 @@ public class CompanyController {
                                     BindingResult bindingResult,
                                     RedirectAttributes rAtt,
                                     Model model) {
+
         CompanyDTO companyDTO = companyService.findCompanyById(id);
 
         if (bindingResult.hasErrors()) {
@@ -131,7 +132,7 @@ public class CompanyController {
             return "add-company-manager";
         }
 
-
+        companyService.addCompanyManger(personDTO, id);
 
         return "redirect:/company";
     }

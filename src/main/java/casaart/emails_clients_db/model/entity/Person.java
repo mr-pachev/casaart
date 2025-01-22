@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "contacts_persons")
-public class ContactPerson extends BaseEntity{
+public class Person extends BaseEntity{
 
     @Column(name = "first_name")
     private String firstName;

@@ -5,7 +5,7 @@ import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.IndustryDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Company;
-import casaart.emails_clients_db.model.entity.ContactPerson;
+import casaart.emails_clients_db.model.entity.Person;
 import casaart.emails_clients_db.model.entity.Industry;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.IndustryRepository;
@@ -79,6 +79,17 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.findByName(company.getName()).get().getId();
     }
 
+    //add company manager
+    @Override
+    public void addCompanyManger(PersonDTO personDTO, long id) {
+        Company company = companyRepository.findById(id).get();
+
+        Person person = mapper.map(personDTO, Person.class);
+        company.setCompanyManager(person);
+
+        companyRepository.save(company);
+    }
+
     //delete company by id
     @Override
     @Transactional
@@ -105,7 +116,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setLocationType(company.getLocationType().name());
 
         List<PersonDTO> personDTOS = new ArrayList<>();
-        for (ContactPerson contactPerson : company.getContactPerson()) {
+        for (Person contactPerson : company.getContactPerson()) {
             PersonDTO personDTO = mapper.map(contactPerson, PersonDTO.class);
 
             personDTOS.add(personDTO);
