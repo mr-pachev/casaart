@@ -9,6 +9,7 @@ import casaart.emails_clients_db.model.entity.Person;
 import casaart.emails_clients_db.model.entity.Industry;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.IndustryRepository;
+import casaart.emails_clients_db.repository.PersonRepository;
 import casaart.emails_clients_db.service.CompanyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,13 @@ import java.util.List;
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final IndustryRepository industryRepository;
+    private final PersonRepository personRepository;
     private final ModelMapper mapper;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository, IndustryRepository industryRepository, ModelMapper mapper) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, IndustryRepository industryRepository, PersonRepository personRepository, ModelMapper mapper) {
         this.companyRepository = companyRepository;
         this.industryRepository = industryRepository;
+        this.personRepository = personRepository;
         this.mapper = mapper;
     }
 
@@ -85,6 +88,8 @@ public class CompanyServiceImpl implements CompanyService {
         Company company = companyRepository.findById(id).get();
 
         Person person = mapper.map(personDTO, Person.class);
+        personRepository.save(person);
+
         company.setCompanyManager(person);
 
         companyRepository.save(company);
