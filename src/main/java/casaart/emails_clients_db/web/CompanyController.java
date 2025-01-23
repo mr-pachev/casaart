@@ -3,9 +3,9 @@ package casaart.emails_clients_db.web;
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
+import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
 import casaart.emails_clients_db.service.CompanyService;
-import casaart.emails_clients_db.service.IndustryService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +18,9 @@ import java.util.List;
 @Controller
 public class CompanyController {
     private final CompanyService companyService;
-    private final IndustryService industryService;
 
-    public CompanyController(CompanyService companyService, IndustryService industryService) {
+    public CompanyController(CompanyService companyService) {
         this.companyService = companyService;
-        this.industryService = industryService;
     }
 
     @ModelAttribute("addCompanyDTO")
@@ -54,7 +52,7 @@ public class CompanyController {
     @GetMapping("/add-company")
     public String viewAddCompanyForm(Model model) {
         model.addAttribute("allLocations", LocationType.values());
-        model.addAttribute("allIndustries", industryService.getAllIndustries());
+        model.addAttribute("allIndustries", IndustryType.values());
 
         if (!model.containsAttribute("isExistCompany")) {
             model.addAttribute("isExistCompany", false);
@@ -71,7 +69,7 @@ public class CompanyController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("allLocations", LocationType.values());
-            model.addAttribute("allIndustries", industryService.getAllIndustries());
+            model.addAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCompanyDTO", bindingResult);
 

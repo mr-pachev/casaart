@@ -33,8 +33,7 @@ public class CompanyDTO {
     @Size(min = 5)
     private PersonDTO companyManager;
 
-    private List<IndustryDTO> industries = new ArrayList<>();
-
+    private List<String> industries;
 
     private String firstCall;
 
@@ -108,11 +107,11 @@ public class CompanyDTO {
         this.companyManager = companyManager;
     }
 
-    public List<IndustryDTO> getIndustries() {
+    public List<String> getIndustries() {
         return industries;
     }
 
-    public void setIndustries(List<IndustryDTO> industries) {
+    public void setIndustries(List<String> industries) {
         this.industries = industries;
     }
 

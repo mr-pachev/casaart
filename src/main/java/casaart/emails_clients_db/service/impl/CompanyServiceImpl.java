@@ -2,18 +2,15 @@ package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
-import casaart.emails_clients_db.model.dto.IndustryDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Company;
 import casaart.emails_clients_db.model.entity.Person;
-import casaart.emails_clients_db.model.entity.Industry;
+import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.repository.CompanyRepository;
-import casaart.emails_clients_db.repository.IndustryRepository;
 import casaart.emails_clients_db.repository.PersonRepository;
 import casaart.emails_clients_db.service.CompanyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,18 +18,17 @@ import java.util.List;
 @Service
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
-    private final IndustryRepository industryRepository;
     private final PersonRepository personRepository;
     private final ModelMapper mapper;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository, IndustryRepository industryRepository, PersonRepository personRepository, ModelMapper mapper) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, PersonRepository personRepository, ModelMapper mapper) {
         this.companyRepository = companyRepository;
-        this.industryRepository = industryRepository;
         this.personRepository = personRepository;
         this.mapper = mapper;
     }
 
-    //get all companies
+
+    // get all companies
     @Override
     public List<CompanyDTO> getAllCompanies() {
         List<Company> allCompanies = companyRepository.findAllByOrderByCreatedAtDesc();
@@ -46,43 +42,53 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDTOS;
     }
 
-    //checking is exist company
+    // checking if company exists
     @Override
     public boolean isExistCompany(String name) {
-        return companyRepository.findByName(name).isPresent();
+        log("Checking if company exists with name: " + name);
+        boolean exists;
+        try {
+            exists = companyRepository.findByName(name).isPresent();
+        } catch (Exception e) {
+            logError("Error while checking company existence: " + e.getMessage());
+            throw e;
+        }
+        log("Company existence check completed: " + exists);
+        return exists;
     }
 
-    //find company by id
+    // find company by id
     @Override
     public CompanyDTO findCompanyById(long id) {
-        Company company = companyRepository.findById(id).get();
-
+        log("Fetching company by ID: " + id);
+        Company company;
+        try {
+            company = companyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Company not found with ID: " + id));
+        } catch (Exception e) {
+            logError("Error while fetching company by ID: " + e.getMessage());
+            throw e;
+        }
+        log("Successfully fetched company with ID: " + id);
         return mapCompanyToCompanyDTO(company);
     }
 
-    //add company
+    // add company
     @Override
-    @Transactional
     public long addCompany(AddCompanyDTO addCompanyDTO) {
+
         Company company = mapper.map(addCompanyDTO, Company.class);
+        List<IndustryType> industryTypes = new ArrayList<>();
 
-        // Намиране на индустриите по ID
-        List<Industry> industries = industryRepository.findAllById(addCompanyDTO.getIndustries());
-
-        // Настройка на връзката между Industry и Company
-        for (Industry industry : industries) {
-
-            industry.getCompanies().add(company); // Свързване с компанията
-
-            // Добавете индустрията към списъка с индустрии на компанията
-            company.getIndustries().add(industry);
+        for (String industry : addCompanyDTO.getIndustries()) {
+            industryTypes.add(IndustryType.fromCyrillicName(industry));
         }
 
+        company.setIndustryTypes(industryTypes);
         companyRepository.save(company);
-        return companyRepository.findByName(company.getName()).get().getId();
+        return company.getId();
     }
 
-    //add company manager
+    // add company manager
     @Override
     public void addCompanyManger(PersonDTO personDTO, long id) {
         Company company = companyRepository.findById(id).get();
@@ -95,22 +101,31 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(company);
     }
 
-    //delete company by id
+    // delete company by id
     @Override
-    @Transactional
     public void removeCompany(long id) {
-        Company company = companyRepository.findById(id).get();
+        log("Deleting company with ID: " + id);
+        Company company;
 
-        // Изчистване на асоциациите с Industry
-        for (Industry industry : company.getIndustries()) {
-            industry.getCompanies().remove(company);
+        try {
+            company = companyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Company not found with ID: " + id));
+        } catch (Exception e) {
+            logError("Error while fetching company for deletion: " + e.getMessage());
+            throw e;
         }
-        company.getIndustries().clear();
 
-        companyRepository.delete(company);
+        try {
+//            company.getIndustries().clear();
+            companyRepository.delete(company);
+        } catch (Exception e) {
+            logError("Error while deleting company: " + e.getMessage());
+            throw e;
+        }
+
+        log("Successfully deleted company with ID: " + id);
     }
 
-    //mapCompanyToCompanyDTO
+    // mapCompanyToCompanyDTO
     CompanyDTO mapCompanyToCompanyDTO(Company company) {
         CompanyDTO companyDTO = new CompanyDTO();
         companyDTO.setId(company.getId());
@@ -121,23 +136,35 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setLocationType(company.getLocationType().name());
 
         List<PersonDTO> personDTOS = new ArrayList<>();
-        for (Person contactPerson : company.getContactPerson()) {
-            PersonDTO personDTO = mapper.map(contactPerson, PersonDTO.class);
-
-            personDTOS.add(personDTO);
-        }
         companyDTO.setContactPerson(personDTOS);
 
-        List<IndustryDTO> industryDTOS = new ArrayList<>();
-        for (Industry industry : company.getIndustries()) {
-            IndustryDTO industryDTO = new IndustryDTO();
-            industryDTO.setId(industry.getId());
-            industryDTO.setName(industry.getName());
-
-            industryDTOS.add(industryDTO);
-        }
-        companyDTO.setIndustries(industryDTOS);
+//        List<IndustryDTO> industryDTOS = new ArrayList<>();
+//        for (Industry industry : company.getIndustries()) {
+//            IndustryDTO industryDTO = new IndustryDTO();
+//            industryDTO.setId(industry.getId());
+//            industryDTO.setName(industry.getName());
+//
+//            industryDTOS.add(industryDTO);
+//        }
+//        companyDTO.setIndustries(industryDTOS);
 
         return companyDTO;
+    }
+
+    // Helper method for logging
+    private void log(String message) {
+        System.out.println("[INFO] " + message);
+    }
+
+    // Helper method for error logging
+    private void logError(String message) {
+        System.err.println("[ERROR] " + message);
+    }
+
+    // Helper method for validation
+    private void validateAddCompany(AddCompanyDTO addCompanyDTO) {
+        if (addCompanyDTO.getName() == null || addCompanyDTO.getName().isEmpty()) {
+            throw new IllegalArgumentException("Company name cannot be null or empty");
+        }
     }
 }

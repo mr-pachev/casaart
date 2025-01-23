@@ -1,5 +1,6 @@
 package casaart.emails_clients_db.model.entity;
 
+import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
 import jakarta.persistence.*;
 
@@ -38,28 +39,13 @@ public class Company extends BaseEntity{
     private LocalDate secondCall;
 
     @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
-    private List<Person> contactPerson;
+    private List<Person> contactPersons;
 
     @OneToOne
     private Person companyManager;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "company_industry",
-            joinColumns = @JoinColumn(name = "company_id"),
-            inverseJoinColumns = @JoinColumn(name = "industry_id")
-    )
-    private List<Industry> industries;
-
-    public void addIndustry(Industry industry) {
-        this.industries.add(industry);
-        industry.getCompanies().add(this); // Актуализира връзката от другата страна
-    }
-
-    public void removeIndustry(Industry industry) {
-        this.industries.remove(industry);
-        industry.getCompanies().remove(this); // Премахва връзката от другата страна
-    }
+    @Enumerated(EnumType.STRING)
+    private List<IndustryType> industryTypes;
 
     public String getName() {
         return name;
@@ -133,12 +119,12 @@ public class Company extends BaseEntity{
         this.secondCall = secondCall;
     }
 
-    public List<Person> getContactPerson() {
-        return contactPerson;
+    public List<Person> getContactPersons() {
+        return contactPersons;
     }
 
-    public void setContactPerson(List<Person> contactPerson) {
-        this.contactPerson = contactPerson;
+    public void setContactPersons(List<Person> contactPersons) {
+        this.contactPersons = contactPersons;
     }
 
     public Person getCompanyManager() {
@@ -149,12 +135,12 @@ public class Company extends BaseEntity{
         this.companyManager = companyManager;
     }
 
-    public List<Industry> getIndustries() {
-        return industries;
+    public List<IndustryType> getIndustryTypes() {
+        return industryTypes;
     }
 
-    public void setIndustries(List<Industry> industries) {
-        this.industries = industries;
+    public void setIndustryTypes(List<IndustryType> industryTypes) {
+        this.industryTypes = industryTypes;
     }
 }
 
