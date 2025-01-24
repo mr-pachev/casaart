@@ -18,7 +18,6 @@ public class PersonDTO {
     @Size(min = 2, max = 30)
     private String lastName;
 
-    @NotBlank
     @Email
     private String email;
 
@@ -26,6 +25,21 @@ public class PersonDTO {
     private String phoneNumber;
 
     private String company;
+
+    public String getFullName(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getFirstName());
+        sb.append(" ");
+
+        if (!this.getMiddleName().isEmpty()){
+            sb.append(this.getMiddleName());
+            sb.append(" ");
+        }
+
+        sb.append(this.getLastName());
+
+        return sb.toString();
+    }
 
     public long getId() {
         return id;

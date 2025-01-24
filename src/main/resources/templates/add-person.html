@@ -47,11 +47,15 @@
                         <li th:each="contact : ${companyDTO.contactPerson}" th:text="${contact}">Лице за контакт</li>
                     </ul>
                 </td>
-                <td th:text="${companyDTO.companyManager}">Управител</td>
+                <td th:if="${companyDTO.companyManager != null}"
+                    th:text="${companyDTO.companyManager.getFullName}">Управител
+                </td>
+                <td th:if="${companyDTO.companyManager == null}"></td>
                 <td>
                     <ul>
                         <li th:each="industry : ${companyDTO.industries}"
-                            th:text="${industry.getDisplayName()}">Бранш</li>
+                            th:text="${industry}">Бранш
+                        </li>
                     </ul>
                 </td>
                 <td th:text="${companyDTO.firstCall}">Дата на първо обаждане</td>
@@ -63,7 +67,8 @@
                         <!--                                <form th:method="POST" th:action="@{/company-details/{id}(id=${company.id})}">-->
                         <!--                                    <input class="edit-button" type="submit" th:value="Промяна"/>-->
                         <!--                                </form>                   -->
-                        <form th:method="POST" th:action="@{/delete-company/{id}(id=${companyDTO.id})}"
+                        <form th:action="@{/delete-company/{id}(id=${companyDTO.id})}"
+                              th:method="POST"
                               sec:authorize="hasRole('Admin')">
                             <input class="delete-button" type="submit" th:value="Премахване"/>
                         </form>
@@ -75,9 +80,14 @@
     </form>
     <div class="buttons">
         <!-- Форма за добавяне на управител -->
-        <form th:method="POST" th:action="@{/add-company-manager-with-com-id/{id}(id=${companyDTO.id})}" style="display: inline;">
+        <form th:method="POST"
+              th:if="${companyDTO.companyManager == null}"
+              th:action="@{/add-company-manager-with-com-id/{id}(id=${companyDTO.id})}"
+              style="display: inline;">
+
             <!--Sends category id with a POST request-->
             <input type="hidden" th:field="*{id}"/>
+
             <button type="submit" class="register">Добави управител</button>
         </form>
         <!-- Форма за добавяне на контактно лице -->

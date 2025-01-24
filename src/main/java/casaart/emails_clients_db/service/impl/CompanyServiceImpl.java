@@ -60,15 +60,8 @@ public class CompanyServiceImpl implements CompanyService {
     // find company by id
     @Override
     public CompanyDTO findCompanyById(long id) {
-        log("Fetching company by ID: " + id);
-        Company company;
-        try {
-            company = companyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Company not found with ID: " + id));
-        } catch (Exception e) {
-            logError("Error while fetching company by ID: " + e.getMessage());
-            throw e;
-        }
-        log("Successfully fetched company with ID: " + id);
+        Company company = companyRepository.findById(id).get();
+
         return mapCompanyToCompanyDTO(company);
     }
 
@@ -93,11 +86,11 @@ public class CompanyServiceImpl implements CompanyService {
     public void addCompanyManger(PersonDTO personDTO, long id) {
         Company company = companyRepository.findById(id).get();
 
-        Person person = mapper.map(personDTO, Person.class);
-        personRepository.save(person);
+//        Person person = mapper.map(personDTO, Person.class);
 
-        company.setCompanyManager(person);
-
+//        personRepository.save(person);
+//
+//        company.setCompanyManager(person);
         companyRepository.save(company);
     }
 
@@ -128,6 +121,7 @@ public class CompanyServiceImpl implements CompanyService {
     // mapCompanyToCompanyDTO
     CompanyDTO mapCompanyToCompanyDTO(Company company) {
         CompanyDTO companyDTO = new CompanyDTO();
+
         companyDTO.setId(company.getId());
         companyDTO.setName(company.getName());
         companyDTO.setAddress(company.getAddress());
@@ -135,8 +129,13 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setEmail(company.getEmail());
         companyDTO.setLocationType(company.getLocationType().name());
 
-        List<PersonDTO> personDTOS = new ArrayList<>();
-        companyDTO.setContactPerson(personDTOS);
+//        List<PersonDTO> personDTOS = new ArrayList<>();
+//        companyDTO.setContactPerson(personDTOS);
+
+        if(company.getCompanyManager() != null){
+            PersonDTO companyManager = mapper.map(company.getCompanyManager(), PersonDTO.class);
+            companyDTO.setCompanyManager(companyManager);
+        }
 
         List<String> industryList = new ArrayList<>();
         for (IndustryType industry : company.getIndustryTypes()) {

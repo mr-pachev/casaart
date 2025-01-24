@@ -45,7 +45,9 @@
                     <li th:each="contact : ${company.contactPerson}" th:text="${contact}">Лице за контакт</li>
                 </ul>
             </td>
-            <td th:text="${company.companyManager}">Управител</td>
+            <td th:if="${company.companyManager != null}"
+                th:text="${company.companyManager.getFullName}">Управител</td>
+            <td th:if="${company.companyManager == null}"></td>
             <td>
                 <ul>
                     <li th:each="industry : ${company.industries}"

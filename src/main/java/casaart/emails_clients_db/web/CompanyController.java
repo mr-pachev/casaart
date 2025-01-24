@@ -110,7 +110,7 @@ public class CompanyController {
         CompanyDTO companyDTO = companyService.findCompanyById(id);
         model.addAttribute("companyDTO", companyDTO);
 
-        return "add-company-manager"; // Шаблонът за формата
+        return "add-company-manager";
     }
 
     @PostMapping("/add-company-manager")
@@ -132,7 +132,7 @@ public class CompanyController {
 
         companyService.addCompanyManger(personDTO, id);
 
-        return "redirect:/company";
+        return "redirect:/companies";
     }
 
     @GetMapping("/add-contact-person")

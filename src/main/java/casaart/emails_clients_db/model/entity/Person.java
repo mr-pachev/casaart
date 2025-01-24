@@ -3,7 +3,7 @@ package casaart.emails_clients_db.model.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "contacts_persons")
+@Table(name = "persons")
 public class Person extends BaseEntity{
 
     @Column(name = "first_name")

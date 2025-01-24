@@ -42,6 +42,7 @@ public class Company extends BaseEntity{
     private List<Person> contactPersons;
 
     @OneToOne
+    @JoinColumn(name = "company_manager_id")
     private Person companyManager;
 
     @Enumerated(EnumType.STRING)
@@ -133,6 +134,11 @@ public class Company extends BaseEntity{
 
     public void setCompanyManager(Person companyManager) {
         this.companyManager = companyManager;
+
+        // Уверете се, че companyManager не е добавен в contactPersons
+        if (this.contactPersons != null) {
+            this.contactPersons.remove(companyManager);
+        }
     }
 
     public List<IndustryType> getIndustryTypes() {
