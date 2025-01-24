@@ -48,7 +48,8 @@
             <td th:text="${company.companyManager}">Управител</td>
             <td>
                 <ul>
-                    <li th:each="industry : ${company.industries}" th:text="${industry.getDisplayName}">Бранш</li>
+                    <li th:each="industry : ${company.industries}"
+                        th:text="${industry}">Бранш</li>
                 </ul>
             </td>
             <td th:text="${company.firstCall}">Дата на първо обаждане</td>

@@ -138,15 +138,11 @@ public class CompanyServiceImpl implements CompanyService {
         List<PersonDTO> personDTOS = new ArrayList<>();
         companyDTO.setContactPerson(personDTOS);
 
-//        List<IndustryDTO> industryDTOS = new ArrayList<>();
-//        for (Industry industry : company.getIndustries()) {
-//            IndustryDTO industryDTO = new IndustryDTO();
-//            industryDTO.setId(industry.getId());
-//            industryDTO.setName(industry.getName());
-//
-//            industryDTOS.add(industryDTO);
-//        }
-//        companyDTO.setIndustries(industryDTOS);
+        List<String> industryList = new ArrayList<>();
+        for (IndustryType industry : company.getIndustryTypes()) {
+            industryList.add(industry.getDisplayName());
+        }
+        companyDTO.setIndustries(industryList);
 
         return companyDTO;
     }
