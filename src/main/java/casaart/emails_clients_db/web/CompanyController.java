@@ -91,6 +91,7 @@ public class CompanyController {
     @GetMapping("/add-person/{id}")
     public String fillAddContactPersonForm(@PathVariable("id") Long id, Model model) {
         CompanyDTO companyDTO = companyService.findCompanyById(id);
+
         model.addAttribute(companyDTO);
         model.addAttribute("allLocations", companyDTO.getLocationType());
         model.addAttribute("currentIndustry", companyDTO.getIndustries());
