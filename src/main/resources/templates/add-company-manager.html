@@ -80,8 +80,8 @@
                 <div class="form-group">
                     <label th:for="company">Фирма</label>
                     <input type="text" th:placeholder="${companyDTO.name}"
-                           id="company"
-                           name="company"
+                           th:id="company"
+                           th:name="company"
                            th:field="*{company}">
                 </div>
                 <button type="submit" class="btn btn-success">Добави</button>

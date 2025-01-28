@@ -4,6 +4,7 @@ import casaart.emails_clients_db.model.dto.AddCompanyDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Company;
+import casaart.emails_clients_db.model.entity.Person;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.PersonRepository;
@@ -85,36 +86,40 @@ public class CompanyServiceImpl implements CompanyService {
     public void addCompanyManger(PersonDTO personDTO, long id) {
         Company company = companyRepository.findById(id).get();
 
-//        Person person = mapper.map(personDTO, Person.class);
+        Person person = mapper.map(personDTO, Person.class);
 
-//        personRepository.save(person);
-//
-//        company.setCompanyManager(person);
+        personRepository.save(person);
+
+        company.setCompanyManager(person);
         companyRepository.save(company);
     }
 
     // delete company by id
     @Override
     public void removeCompany(long id) {
-        log("Deleting company with ID: " + id);
-        Company company;
+        // Намери компанията
+        Company company = companyRepository.findById(id).get();
 
-        try {
-            company = companyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Company not found with ID: " + id));
-        } catch (Exception e) {
-            logError("Error while fetching company for deletion: " + e.getMessage());
-            throw e;
+        // Ръчно премахване на свързани контактни лица
+        if (company.getContactPersons() != null && !company.getContactPersons().isEmpty()) {
+            for (Person person : company.getContactPersons()) {
+                person.setCompany(null); // Изчистване на връзката към компанията
+                personRepository.delete(person); // Изтриване на обекта Person
+            }
         }
 
-        try {
-//            company.getIndustries().clear();
-            companyRepository.delete(company);
-        } catch (Exception e) {
-            logError("Error while deleting company: " + e.getMessage());
-            throw e;
+        // Изчистване на мениджъра на компанията
+        if (company.getCompanyManager() != null) {
+            company.setCompanyManager(null); // Изчистване на връзката
         }
 
-        log("Successfully deleted company with ID: " + id);
+        // Изчистване на вградените колекции (ако е необходимо)
+        if (company.getIndustryTypes() != null) {
+            company.getIndustryTypes().clear();
+        }
+
+        // Накрая изтриване на самата компания
+        companyRepository.delete(company);
     }
 
     // mapCompanyToCompanyDTO
