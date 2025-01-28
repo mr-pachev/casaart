@@ -19,6 +19,7 @@
 
                 <!--Sends category id with a POST request-->
                 <input type="hidden" th:field="${companyDTO.id}"/>
+                <input type="hidden" th:field="${companyDTO.name}"/>
 
                 <div class="form-group">
                     <label for="firstName">Име</label>
@@ -80,9 +81,9 @@
                 <div class="form-group">
                     <label th:for="company">Фирма</label>
                     <input type="text" th:placeholder="${companyDTO.name}"
-                           th:id="company"
-                           th:name="company"
-                           th:field="*{company}">
+                           id="company"
+                           name="company"
+                           readonly>
                 </div>
                 <button type="submit" class="btn btn-success">Добави</button>
             </form>

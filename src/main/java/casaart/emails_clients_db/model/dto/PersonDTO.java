@@ -24,7 +24,6 @@ public class PersonDTO {
     @Size(max = 10)
     private String phoneNumber;
 
-    @NotBlank
     private String company;
 
     public String getFullName(){
