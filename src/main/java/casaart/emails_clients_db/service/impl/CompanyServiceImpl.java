@@ -89,8 +89,9 @@ public class CompanyServiceImpl implements CompanyService {
         Person person = mapper.map(personDTO, Person.class);
         person.setCompany(company);
         personRepository.save(person);
+        Person person1 = personRepository.findByFirstNameAndLastName(person.getFirstName(), person.getLastName());
 
-        company.setCompanyManager(person);
+        company.setCompanyManager(person1);
         companyRepository.save(company);
     }
 
