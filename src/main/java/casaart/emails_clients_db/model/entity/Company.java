@@ -45,6 +45,8 @@ public class Company extends BaseEntity{
     @JoinColumn(name = "company_manager_id")
     private Person companyManager;
 
+    @ElementCollection(targetClass = IndustryType.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "company_industries", joinColumns = @JoinColumn(name = "company_id"))
     @Enumerated(EnumType.STRING)
     private List<IndustryType> industryTypes;
 

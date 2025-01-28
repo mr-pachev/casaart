@@ -4,7 +4,6 @@ import casaart.emails_clients_db.model.dto.AddCompanyDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Company;
-import casaart.emails_clients_db.model.entity.Person;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.PersonRepository;
