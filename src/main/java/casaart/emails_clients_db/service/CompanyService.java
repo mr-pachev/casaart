@@ -23,6 +23,9 @@ public interface CompanyService {
     //add company manager
     void addCompanyManger(PersonDTO personDTO, long id);
 
+    //add contact person
+    void addContactPerson(PersonDTO personDTO, long id);
+
     //delete company by id
     void removeCompany(long id);
 }

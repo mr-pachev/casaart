@@ -67,8 +67,7 @@
                         <!--                                <form th:method="POST" th:action="@{/company-details/{id}(id=${company.id})}">-->
                         <!--                                    <input class="edit-button" type="submit" th:value="Промяна"/>-->
                         <!--                                </form>                   -->
-                        <form th:action="@{/delete-company/{id}(id=${companyDTO.id})}"
-                              th:method="POST"
+                        <form th:method="POST" th:action="@{/delete-company/{id}(id=${companyDTO.id})}"
                               sec:authorize="hasRole('Admin')">
                             <input class="delete-button" type="submit" th:value="Премахване"/>
                         </form>
@@ -91,7 +90,13 @@
             <button type="submit" class="register">Добави управител</button>
         </form>
         <!-- Форма за добавяне на контактно лице -->
-        <form th:method="POST" th:action="@{/add-contact-person/{id}(id=${companyDTO.id})}" style="display: inline;">
+        <form th:method="POST"
+              th:action="@{/add-contact-person-with-com-id/{id}(id=${companyDTO.id})}"
+              style="display: inline;">
+
+            <!--Sends category id with a POST request-->
+            <input type="hidden" th:field="*{id}"/>
+
             <button type="submit" class="login">Добави контактно лице</button>
         </form>
     </div>

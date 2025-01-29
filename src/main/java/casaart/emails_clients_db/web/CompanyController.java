@@ -6,6 +6,7 @@ import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
 import casaart.emails_clients_db.service.CompanyService;
+import casaart.emails_clients_db.service.PersonService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +19,11 @@ import java.util.List;
 @Controller
 public class CompanyController {
     private final CompanyService companyService;
+    private final PersonService personService;
 
-    public CompanyController(CompanyService companyService) {
+    public CompanyController(CompanyService companyService, PersonService personService) {
         this.companyService = companyService;
+        this.personService = personService;
     }
 
     @ModelAttribute("addCompanyDTO")
@@ -134,19 +137,45 @@ public class CompanyController {
         personDTO.setCompany(companyDTO.getName());
         companyService.addCompanyManger(personDTO, id);
 
-        return "redirect:/companies";
+        return "redirect:/add-person/" + id;
     }
 
-    @GetMapping("/add-contact-person")
-    public String showAddContactPersonForm(Model model) {
-//        model.addAttribute("contactPersonDTO", new ContactPersonDTO());
-        return "add-contact-person"; // Шаблонът за формата
+    //add contact person
+    @PostMapping("/add-contact-person-with-com-id/{id}")
+    public String referenceToAddContactPersonForm(@PathVariable("id") Long id) {
+
+        return "redirect:/add-contact-person/" + id;
+    }
+
+    @GetMapping("/add-contact-person/{id}")
+    public String showAddContactPersonForm(@PathVariable("id") Long id, Model model) {
+        CompanyDTO companyDTO = companyService.findCompanyById(id);
+        model.addAttribute("companyDTO", companyDTO);
+
+        return "add-contact-person";
     }
 
     @PostMapping("/add-contact-person")
-    public String addContactPerson(@ModelAttribute PersonDTO contactPersonDTO) {
-        // Логика за добавяне на контактно лице
-        return "redirect:/some-page"; // Пренасочване към желаната страница
+    public String addContactPerson(@RequestParam("id") Long id,
+                                    @Valid PersonDTO personDTO,
+                                    BindingResult bindingResult,
+                                    RedirectAttributes rAtt,
+                                    Model model) {
+
+        CompanyDTO companyDTO = companyService.findCompanyById(id);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("companyDTO", companyDTO);
+            rAtt.addFlashAttribute("personDTO", personDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
+
+            return "add-contact-person";
+        }
+
+        personDTO.setCompany(companyDTO.getName());
+        companyService.addContactPerson(personDTO, id);
+
+        return "redirect:/add-person/" + id;
     }
 
     //delete company by id

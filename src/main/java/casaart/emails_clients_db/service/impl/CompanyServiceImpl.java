@@ -9,6 +9,7 @@ import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.PersonRepository;
 import casaart.emails_clients_db.service.CompanyService;
+import casaart.emails_clients_db.service.PersonService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +21,13 @@ import java.util.List;
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final PersonRepository personRepository;
+    private final PersonService personService;
     private final ModelMapper mapper;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository, PersonRepository personRepository, ModelMapper mapper) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, PersonRepository personRepository, PersonService personService, ModelMapper mapper) {
         this.companyRepository = companyRepository;
         this.personRepository = personRepository;
+        this.personService = personService;
         this.mapper = mapper;
     }
 
@@ -46,16 +49,7 @@ public class CompanyServiceImpl implements CompanyService {
     // checking if company exists
     @Override
     public boolean isExistCompany(String name) {
-        log("Checking if company exists with name: " + name);
-        boolean exists;
-        try {
-            exists = companyRepository.findByName(name).isPresent();
-        } catch (Exception e) {
-            logError("Error while checking company existence: " + e.getMessage());
-            throw e;
-        }
-        log("Company existence check completed: " + exists);
-        return exists;
+        return companyRepository.findByName(name).isPresent();
     }
 
     // find company by id
@@ -102,9 +96,35 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(company);
     }
 
+    //add contact person
+    @Override
+    public void addContactPerson(PersonDTO personDTO, long id) {
+        Company company = companyRepository.findById(id).get();
+
+        // Мапване на PersonDTO към Person
+        Person person = mapper.map(personDTO, Person.class);
+        person.setCompany(company);
+
+        // Запазване на Person в базата данни
+        Person savedPerson = personRepository.save(person);
+        if (savedPerson == null || savedPerson.getId() == null) {
+            throw new RuntimeException("Failed to save Person entity");
+        }
+        //TODO
+        List<Person> contactPersons = company.getContactPersons();
+        for (Person contactPerson : contactPersons) {
+            if(!contactPerson.getFullName().equals(personDTO.getFullName())){
+                contactPersons.add(contactPerson);
+            }
+        }
+
+        company.setContactPersons(contactPersons);
+        companyRepository.save(company);
+    }
+
     // delete company by id
     @Override
-    @Transactional
+//    @Transactional
     public void removeCompany(long id) {
         Company company = companyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Company not found with id: " + id));
@@ -126,7 +146,6 @@ public class CompanyServiceImpl implements CompanyService {
             personRepository.delete(manager); // Изтриване на мениджъра
         }
 
-        // Накрая изтриване на самата компания
         companyRepository.delete(company);
     }
 
@@ -156,22 +175,5 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setIndustries(industryList);
 
         return companyDTO;
-    }
-
-    // Helper method for logging
-    private void log(String message) {
-        System.out.println("[INFO] " + message);
-    }
-
-    // Helper method for error logging
-    private void logError(String message) {
-        System.err.println("[ERROR] " + message);
-    }
-
-    // Helper method for validation
-    private void validateAddCompany(AddCompanyDTO addCompanyDTO) {
-        if (addCompanyDTO.getName() == null || addCompanyDTO.getName().isEmpty()) {
-            throw new IllegalArgumentException("Company name cannot be null or empty");
-        }
     }
 }

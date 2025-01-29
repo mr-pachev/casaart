@@ -24,6 +24,20 @@ public class Person extends BaseEntity{
     @ManyToOne
     private Company company;
 
+    public String getFullName(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getFirstName());
+        sb.append(" ");
+
+        if (!this.getMiddleName().isEmpty()){
+            sb.append(this.getMiddleName());
+            sb.append(" ");
+        }
+
+        sb.append(this.getLastName());
+
+        return sb.toString();
+    }
     public String getFirstName() {
         return firstName;
     }
