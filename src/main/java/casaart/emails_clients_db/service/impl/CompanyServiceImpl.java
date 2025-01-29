@@ -86,12 +86,18 @@ public class CompanyServiceImpl implements CompanyService {
     public void addCompanyManger(PersonDTO personDTO, long id) {
         Company company = companyRepository.findById(id).get();
 
+        // Мапване на PersonDTO към Person
         Person person = mapper.map(personDTO, Person.class);
         person.setCompany(company);
-        personRepository.save(person);
-        Person person1 = personRepository.findByFirstNameAndLastName(person.getFirstName(), person.getLastName());
 
-        company.setCompanyManager(person1);
+        // Запазване на Person в базата данни
+        Person savedPerson = personRepository.save(person);
+        if (savedPerson == null || savedPerson.getId() == null) {
+            throw new RuntimeException("Failed to save Person entity");
+        }
+
+        // Задаване на мениджъра на компанията и запазване на промените
+        company.setCompanyManager(savedPerson);
         companyRepository.save(company);
     }
 
