@@ -11,6 +11,7 @@ import casaart.emails_clients_db.repository.PersonRepository;
 import casaart.emails_clients_db.service.CompanyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,26 +104,26 @@ public class CompanyServiceImpl implements CompanyService {
 
     // delete company by id
     @Override
+    @Transactional
     public void removeCompany(long id) {
-        // Намери компанията
-        Company company = companyRepository.findById(id).get();
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Company not found with id: " + id));
 
         // Ръчно премахване на свързани контактни лица
         if (company.getContactPersons() != null && !company.getContactPersons().isEmpty()) {
             for (Person person : company.getContactPersons()) {
                 person.setCompany(null); // Изчистване на връзката към компанията
+                personRepository.save(person); // Синхронизиране на промяната
                 personRepository.delete(person); // Изтриване на обекта Person
             }
         }
 
-        // Изчистване на мениджъра на компанията
+        // Ръчно изтриване на мениджъра на компанията
         if (company.getCompanyManager() != null) {
+            Person manager = company.getCompanyManager();
             company.setCompanyManager(null); // Изчистване на връзката
-        }
-
-        // Изчистване на вградените колекции (ако е необходимо)
-        if (company.getIndustryTypes() != null) {
-            company.getIndustryTypes().clear();
+            companyRepository.save(company); // Синхронизиране на промяната
+            personRepository.delete(manager); // Изтриване на мениджъра
         }
 
         // Накрая изтриване на самата компания
