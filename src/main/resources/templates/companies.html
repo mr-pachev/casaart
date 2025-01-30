@@ -61,9 +61,9 @@
             <td th:text="${company.secondCall}">Дата на второ обаждане</td>
             <td>
                 <div class="action-buttons">
-<!--                    <form th:method="POST" th:action="@{/company-details/{id}(id=${company.id})}">-->
-<!--                        <input class="edit-button" type="submit" th:value="Промяна"/>-->
-<!--                    </form>-->
+                    <form th:method="GET" th:action="@{/add-person/{id}(id=${company.id})}">
+                        <input class="edit-button" type="submit" th:value="Промяна"/>
+                    </form>
                     <form th:method="POST" th:action="@{/delete-company/{id}(id=${company.id})}"
                           sec:authorize="hasRole('Admin')">
                         <input class="delete-button" type="submit" th:value="Премахване"/>
