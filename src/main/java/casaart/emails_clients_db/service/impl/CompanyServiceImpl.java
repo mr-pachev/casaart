@@ -98,33 +98,32 @@ public class CompanyServiceImpl implements CompanyService {
 
     //add contact person
     @Override
-    public void addContactPerson(PersonDTO personDTO, long id) {
-        Company company = companyRepository.findById(id).get();
+    public void addContactPerson(PersonDTO personDTO, long companyId) {
+        // Намиране на компанията по ID с обработка на грешки
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new RuntimeException("Company not found with id: " + companyId));
 
         // Мапване на PersonDTO към Person
         Person person = mapper.map(personDTO, Person.class);
         person.setCompany(company);
 
-        // Запазване на Person в базата данни
+        // Запазване на Person в базата данни с обработка на грешки
         Person savedPerson = personRepository.save(person);
-        if (savedPerson == null || savedPerson.getId() == null) {
+        if (savedPerson.getId() == null) {
             throw new RuntimeException("Failed to save Person entity");
         }
 
+        // Добавяне на контактното лице към компанията, ако вече не съществува
         List<Person> contactPersons = company.getContactPersons();
 
-        if(contactPersons.isEmpty()){
-            contactPersons.add(savedPerson);
-        }else {
-            for (Person contactPerson : contactPersons) {
-                if(!contactPerson.getFullName().equals(personDTO.getFullName())){
-                    contactPersons.add(contactPerson);
-                }
-            }
-        }
+        boolean isPersonAlreadyContact = contactPersons.stream()
+                .anyMatch(contactPerson -> contactPerson.getFullName().equals(personDTO.getFullName()));
 
-        company.setContactPersons(contactPersons);
-        companyRepository.save(company);
+        if (!isPersonAlreadyContact) {
+            contactPersons.add(savedPerson);
+            company.setContactPersons(contactPersons);
+            companyRepository.save(company);
+        }
     }
 
     // delete company by id
