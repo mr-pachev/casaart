@@ -105,24 +105,18 @@ public class CompanyServiceImpl implements CompanyService {
                 .orElseThrow(() -> new RuntimeException("Company not found with id: " + companyId));
 
         // Мапване на PersonDTO към Person
-        Person person = mapper.map(personDTO, Person.class);
-        person.setCompany(company);
+        Person contactPerson = mapper.map(personDTO, Person.class);
+        contactPerson.setCompany(company);
 
-        // Запазване на Person в базата данни с обработка на грешки
-        Person savedPerson = personRepository.save(person);
-        if (savedPerson.getId() == null) {
-            throw new RuntimeException("Failed to save Person entity");
-        }
-
-        // Добавяне на контактното лице към компанията, ако вече не съществува
         List<Person> contactPersons = company.getContactPersons();
 
         boolean isPersonAlreadyContact = contactPersons.stream()
-                .anyMatch(contactPerson -> contactPerson.getFullName().equals(personDTO.getFullName()));
+                .anyMatch(person -> contactPerson.getFullName().equals(personDTO.getFullName()));
 
         if (!isPersonAlreadyContact) {
-            contactPersons.add(savedPerson);
+            contactPersons.add(contactPerson);
             company.setContactPersons(contactPersons);
+
             companyRepository.save(company);
         }
     }
