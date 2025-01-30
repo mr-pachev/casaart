@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -157,6 +158,7 @@ public class CompanyServiceImpl implements CompanyService {
     CompanyDTO mapCompanyToCompanyDTO(Company company) {
         CompanyDTO companyDTO = new CompanyDTO();
 
+        // Мапване на основните полета
         companyDTO.setId(company.getId());
         companyDTO.setName(company.getName());
         companyDTO.setAddress(company.getAddress());
@@ -164,27 +166,23 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setEmail(company.getEmail());
         companyDTO.setLocationType(company.getLocationType().name());
 
-        List<PersonDTO> personDTOS = new ArrayList<>();
-        if(!company.getContactPersons().isEmpty()){
-            for (Person contactPerson : company.getContactPersons()) {
-                PersonDTO personDTO = mapper.map(contactPerson, PersonDTO.class);
+        // Мапване на контактните лица
+        List<PersonDTO> contactPersons = company.getContactPersons().stream()
+                .map(contactPerson -> mapper.map(contactPerson, PersonDTO.class))
+                .collect(Collectors.toList());
+        companyDTO.setContactPerson(contactPersons);
 
-                personDTOS.add(personDTO);
-            }
-        }
-
-        companyDTO.setContactPerson(personDTOS);
-
-        if(company.getCompanyManager() != null){
+        // Мапване на мениджъра на компанията
+        if (company.getCompanyManager() != null) {
             PersonDTO companyManager = mapper.map(company.getCompanyManager(), PersonDTO.class);
             companyDTO.setCompanyManager(companyManager);
         }
 
-        List<String> industryList = new ArrayList<>();
-        for (IndustryType industry : company.getIndustryTypes()) {
-            industryList.add(industry.getDisplayName());
-        }
-        companyDTO.setIndustries(industryList);
+        // Мапване на индустриите
+        List<String> industries = company.getIndustryTypes().stream()
+                .map(IndustryType::getDisplayName)
+                .collect(Collectors.toList());
+        companyDTO.setIndustries(industries);
 
         return companyDTO;
     }
