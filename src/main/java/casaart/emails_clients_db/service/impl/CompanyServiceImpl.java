@@ -110,11 +110,16 @@ public class CompanyServiceImpl implements CompanyService {
         if (savedPerson == null || savedPerson.getId() == null) {
             throw new RuntimeException("Failed to save Person entity");
         }
-        //TODO
+
         List<Person> contactPersons = company.getContactPersons();
-        for (Person contactPerson : contactPersons) {
-            if(!contactPerson.getFullName().equals(personDTO.getFullName())){
-                contactPersons.add(contactPerson);
+
+        if(contactPersons.isEmpty()){
+            contactPersons.add(savedPerson);
+        }else {
+            for (Person contactPerson : contactPersons) {
+                if(!contactPerson.getFullName().equals(personDTO.getFullName())){
+                    contactPersons.add(contactPerson);
+                }
             }
         }
 
@@ -160,8 +165,16 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setEmail(company.getEmail());
         companyDTO.setLocationType(company.getLocationType().name());
 
-//        List<PersonDTO> personDTOS = new ArrayList<>();
-//        companyDTO.setContactPerson(personDTOS);
+        List<PersonDTO> personDTOS = new ArrayList<>();
+        if(!company.getContactPersons().isEmpty()){
+            for (Person contactPerson : company.getContactPersons()) {
+                PersonDTO personDTO = mapper.map(contactPerson, PersonDTO.class);
+
+                personDTOS.add(personDTO);
+            }
+        }
+
+        companyDTO.setContactPerson(personDTOS);
 
         if(company.getCompanyManager() != null){
             PersonDTO companyManager = mapper.map(company.getCompanyManager(), PersonDTO.class);

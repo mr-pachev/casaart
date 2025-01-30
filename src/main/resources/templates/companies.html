@@ -42,7 +42,8 @@
             <td th:text="${company.locationType}">Локация</td>
             <td>
                 <ul>
-                    <li th:each="contact : ${company.contactPerson}" th:text="${contact}">Лице за контакт</li>
+                    <li th:each="contact : ${company.contactPerson}"
+                        th:text="${contact.getFullName()}">Лице за контакт</li>
                 </ul>
             </td>
             <td th:if="${company.companyManager != null}"
