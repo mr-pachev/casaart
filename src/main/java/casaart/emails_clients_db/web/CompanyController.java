@@ -135,7 +135,7 @@ public class CompanyController {
         }
 
         personDTO.setCompany(companyDTO.getName());
-        companyService.addCompanyManger(personDTO, id);
+        companyService.addCompanyManager(personDTO, id);
 
         return "redirect:/add-person/" + id;
     }

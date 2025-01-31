@@ -79,51 +79,77 @@ public class CompanyServiceImpl implements CompanyService {
 
     // add company manager
     @Override
-    public void addCompanyManger(PersonDTO personDTO, long id) {
-        Company company = companyRepository.findById(id).get();
+    public void addCompanyManager(PersonDTO personDTO, long companyId) {
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new RuntimeException("Company not found with id: " + companyId));
 
-        // Мапване на PersonDTO към Person
-        Person person = mapper.map(personDTO, Person.class);
-        person.setCompany(company);
-
-        // Запазване на Person в базата данни
-        Person savedPerson = personRepository.save(person);
-        if (savedPerson == null || savedPerson.getId() == null) {
-            throw new RuntimeException("Failed to save Person entity");
+        // Проверка дали компанията вече има управител
+        if (company.getCompanyManager() != null) {
+            throw new RuntimeException("Company already has a manager.");
         }
 
-        // Задаване на мениджъра на компанията и запазване на промените
-        company.setCompanyManager(savedPerson);
+        // Мапване на PersonDTO към Person
+        Person manager = mapper.map(personDTO, Person.class);
+        manager.setCompany(company); // Задаване на компанията за управителя
+
+        // Проверка дали управителят вече съществува в списъка с контактни лица
+        boolean isManagerInContactList = company.getContactPersons().stream()
+                .anyMatch(person -> person.getEmail().equals(personDTO.getEmail()) ||
+                        person.getPhoneNumber().equals(personDTO.getPhoneNumber()));
+
+        if (isManagerInContactList) {
+            // Премахване на управителя от списъка с контактни лица
+            company.getContactPersons().removeIf(person -> person.getEmail().equals(personDTO.getEmail()) ||
+                    person.getPhoneNumber().equals(personDTO.getPhoneNumber()));
+        }
+
+        // Запазване на управителя в базата данни
+        Person savedManager = personRepository.save(manager);
+        if (savedManager == null || savedManager.getId() == null) {
+            throw new RuntimeException("Failed to save manager entity");
+        }
+
+        // Задаване на управителя на компанията и запазване на промените
+        company.setCompanyManager(savedManager);
         companyRepository.save(company);
     }
 
     //add contact person
     @Override
     public void addContactPerson(PersonDTO personDTO, long companyId) {
-        // Намиране на компанията по ID с обработка на грешки
         Company company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new RuntimeException("Company not found with id: " + companyId));
 
         // Мапване на PersonDTO към Person
         Person contactPerson = mapper.map(personDTO, Person.class);
-        contactPerson.setCompany(company);
+        contactPerson.setCompany(company); // Задаване на компанията за контактното лице
 
-        List<Person> contactPersons = company.getContactPersons();
-
-        boolean isPersonAlreadyContact = contactPersons.stream()
-                .anyMatch(person -> contactPerson.getFullName().equals(personDTO.getFullName()));
-
-        if (!isPersonAlreadyContact) {
-            contactPersons.add(contactPerson);
-            company.setContactPersons(contactPersons);
-
-            companyRepository.save(company);
+        // Проверка дали лицето е управител на компанията
+        if (company.getCompanyManager() != null &&
+                (company.getCompanyManager().getEmail().equals(personDTO.getEmail()) ||
+                        company.getCompanyManager().getPhoneNumber().equals(personDTO.getPhoneNumber()))) {
+            throw new RuntimeException("The manager cannot be added as a contact person.");
         }
+
+        // Проверка дали лицето вече съществува в списъка с контактни лица
+        boolean isPersonAlreadyContact = company.getContactPersons().stream()
+                .anyMatch(person -> person.getEmail().equals(personDTO.getEmail()) ||
+                        person.getPhoneNumber().equals(personDTO.getPhoneNumber()));
+
+        if (isPersonAlreadyContact) {
+            throw new RuntimeException("Person already exists in the contact list.");
+        }
+
+        // Добавяне на лицето към списъка с контактни лица на компанията
+        company.getContactPersons().add(contactPerson);
+
+        // Запазване на компанията (което ще запази и лицето, благодарение на cascade)
+        companyRepository.save(company);
     }
 
     // delete company by id
-    @Override
 //    @Transactional
+    @Override
     public void removeCompany(long id) {
         Company company = companyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Company not found with id: " + id));

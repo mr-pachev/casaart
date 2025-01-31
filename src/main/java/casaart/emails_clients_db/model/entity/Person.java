@@ -22,6 +22,7 @@ public class Person extends BaseEntity{
     private String phoneNumber;
 
     @ManyToOne
+    @JoinColumn(name = "company_id")
     private Company company;
 
     public String getFullName(){

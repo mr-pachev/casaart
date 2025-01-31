@@ -5,6 +5,7 @@ import casaart.emails_clients_db.model.enums.LocationType;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -38,10 +39,10 @@ public class Company extends BaseEntity{
     @Column(name = "second_call")
     private LocalDate secondCall;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
-    private List<Person> contactPersons;
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Person> contactPersons = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_manager_id")
     private Person companyManager;
 
@@ -49,6 +50,21 @@ public class Company extends BaseEntity{
     @CollectionTable(name = "company_industries", joinColumns = @JoinColumn(name = "company_id"))
     @Enumerated(EnumType.STRING)
     private List<IndustryType> industryTypes;
+
+    // Метод за добавяне на контактно лице
+    public void addContactPerson(Person person) {
+        if (person.equals(this.companyManager)) {
+            throw new IllegalArgumentException("Управителят не може да бъде добавен като контактно лице.");
+        }
+        contactPersons.add(person);
+        person.setCompany(this);
+    }
+
+    // Метод за премахване на контактно лице
+    public void removeContactPerson(Person person) {
+        contactPersons.remove(person);
+        person.setCompany(null);
+    }
 
     public String getName() {
         return name;
