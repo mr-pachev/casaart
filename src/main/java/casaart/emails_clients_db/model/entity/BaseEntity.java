@@ -2,7 +2,6 @@ package casaart.emails_clients_db.model.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @MappedSuperclass

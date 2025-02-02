@@ -39,8 +39,8 @@ public class Company extends BaseEntity{
     @Column(name = "second_call")
     private LocalDate secondCall;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
-    private List<CompanyManager> contactCompanyManagers = new ArrayList<>();
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<ContactPerson> contactPersons = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_manager_id")
@@ -123,25 +123,20 @@ public class Company extends BaseEntity{
         this.secondCall = secondCall;
     }
 
-    public List<CompanyManager> getContactPersons() {
-        return contactCompanyManagers;
+    public List<ContactPerson> getContactPersons() {
+        return contactPersons;
     }
 
-    public void setContactPersons(List<CompanyManager> contactCompanyManagers) {
-        this.contactCompanyManagers = contactCompanyManagers;
-    }
-
-    public CompanyManager getCompanyManager() {
-        return companyManager;
+    public void setContactPersons(List<ContactPerson> contactPersons) {
+        this.contactPersons = contactPersons;
     }
 
     public void setCompanyManager(CompanyManager companyManager) {
         this.companyManager = companyManager;
+    }
 
-        // Уверете се, че companyManager не е добавен в contactPersons
-        if (this.contactCompanyManagers != null) {
-            this.contactCompanyManagers.remove(companyManager);
-        }
+    public CompanyManager getCompanyManager() {
+        return companyManager;
     }
 
     public List<IndustryType> getIndustryTypes() {

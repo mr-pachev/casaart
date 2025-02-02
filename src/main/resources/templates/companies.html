@@ -42,12 +42,12 @@
             <td th:text="${company.locationType}">Локация</td>
             <td>
                 <ul>
-                    <li th:each="contact : ${company.contactCompanyManager}"
+                    <li th:each="contact : ${company.getContactPerson()}"
                         th:text="${contact.getFullName()}">Лице за контакт</li>
                 </ul>
             </td>
             <td th:if="${company.companyManager != null}"
-                th:text="${company.companyManager.getFullName}">Управител</td>
+                th:text="${company.companyManager.getFullName()}">Управител</td>
             <td th:if="${company.companyManager == null}"></td>
             <td>
                 <ul>
@@ -61,7 +61,7 @@
             <td th:text="${company.secondCall}">Дата на второ обаждане</td>
             <td>
                 <div class="action-buttons">
-                    <form th:method="GET" th:action="@{/add-companyManager/{id}(id=${company.id})}">
+                    <form th:method="GET" th:action="@{/add-person/{id}(id=${company.id})}">
                         <input class="edit-button" type="submit" th:value="Промяна"/>
                     </form>
                     <form th:method="POST" th:action="@{/delete-company/{id}(id=${company.id})}"

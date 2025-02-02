@@ -26,18 +26,15 @@ public class PersonDTO {
 
     private String company;
 
-    public String getFullName(){
+    public String getFullName() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.getFirstName());
-        sb.append(" ");
+        sb.append(this.getFirstName()).append(" ");
 
-        if (!this.getMiddleName().isEmpty()){
-            sb.append(this.getMiddleName());
-            sb.append(" ");
+        if (this.getMiddleName() != null && !this.getMiddleName().isEmpty()) {
+            sb.append(this.getMiddleName()).append(" ");
         }
 
         sb.append(this.getLastName());
-
         return sb.toString();
     }
 

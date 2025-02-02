@@ -5,11 +5,12 @@ import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Company;
 import casaart.emails_clients_db.model.entity.CompanyManager;
+import casaart.emails_clients_db.model.entity.ContactPerson;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.CompanyManagerRepository;
+import casaart.emails_clients_db.repository.ContactPersonRepository;
 import casaart.emails_clients_db.service.CompanyService;
-import casaart.emails_clients_db.service.PersonService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +22,13 @@ import java.util.stream.Collectors;
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final CompanyManagerRepository companyManagerRepository;
-    private final PersonService personService;
+    private final ContactPersonRepository contactPersonRepository;
     private final ModelMapper mapper;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository, CompanyManagerRepository companyManagerRepository, PersonService personService, ModelMapper mapper) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, CompanyManagerRepository companyManagerRepository, ContactPersonRepository contactPersonRepository, ModelMapper mapper) {
         this.companyRepository = companyRepository;
         this.companyManagerRepository = companyManagerRepository;
-        this.personService = personService;
+        this.contactPersonRepository = contactPersonRepository;
         this.mapper = mapper;
     }
 
@@ -102,14 +103,21 @@ public class CompanyServiceImpl implements CompanyService {
     public void addContactPerson(PersonDTO personDTO, long companyId) {
         Company company = companyRepository.findById(companyId).get();
 
-        CompanyManager contactCompanyManager = mapper.map(personDTO, CompanyManager.class);
+        ContactPerson contactPerson = new ContactPerson();
 
-        contactCompanyManager.setCompany(company);
-        companyManagerRepository.save(contactCompanyManager);
+        contactPerson.setFirstName(personDTO.getFirstName());
+        contactPerson.setLastName(personDTO.getLastName());
+        contactPerson.setEmail(personDTO.getEmail());
+        contactPerson.setPhoneNumber(personDTO.getPhoneNumber());
 
-        company.getContactPersons().add(contactCompanyManager);
+        // Уверяваме се, че ID-то е null, за да се създаде нов запис
+        contactPerson.setId(null);
 
-        companyRepository.save(company);
+        // Свързваме с компанията
+        contactPerson.setCompany(company);
+
+        // Записваме
+        contactPersonRepository.save(contactPerson);
     }
 
     // delete company by id
@@ -121,11 +129,11 @@ public class CompanyServiceImpl implements CompanyService {
 
         // Ръчно премахване на свързани контактни лица
         if (company.getContactPersons() != null && !company.getContactPersons().isEmpty()) {
-            for (CompanyManager companyManager : company.getContactPersons()) {
-                companyManager.setCompany(null); // Изчистване на връзката към компанията
-                companyManagerRepository.save(companyManager); // Синхронизиране на промяната
-                companyManagerRepository.delete(companyManager); // Изтриване на обекта Person
-            }
+//            for (CompanyManager companyManager : company.getContactPersons()) {
+//                companyManager.setCompany(null); // Изчистване на връзката към компанията
+//                companyManagerRepository.save(companyManager); // Синхронизиране на промяната
+//                companyManagerRepository.delete(companyManager); // Изтриване на обекта Person
+//            }
         }
 
         // Ръчно изтриване на мениджъра на компанията
@@ -153,8 +161,9 @@ public class CompanyServiceImpl implements CompanyService {
 
         // Мапване на контактните лица
         List<PersonDTO> contactPersons = company.getContactPersons().stream()
-                .map(contactCompanyManager -> mapper.map(contactCompanyManager, PersonDTO.class))
+                .map(contactPerson -> mapper.map(contactPerson, PersonDTO.class))
                 .collect(Collectors.toList());
+
         companyDTO.setContactPerson(contactPersons);
 
         // Мапване на мениджъра на компанията
@@ -167,6 +176,7 @@ public class CompanyServiceImpl implements CompanyService {
         List<String> industries = company.getIndustryTypes().stream()
                 .map(IndustryType::getDisplayName)
                 .collect(Collectors.toList());
+
         companyDTO.setIndustries(industries);
 
         return companyDTO;

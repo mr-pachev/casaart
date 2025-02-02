@@ -6,7 +6,6 @@ import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
 import casaart.emails_clients_db.service.CompanyService;
-import casaart.emails_clients_db.service.PersonService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +18,9 @@ import java.util.List;
 @Controller
 public class CompanyController {
     private final CompanyService companyService;
-    private final PersonService personService;
 
-    public CompanyController(CompanyService companyService, PersonService personService) {
+    public CompanyController(CompanyService companyService) {
         this.companyService = companyService;
-        this.personService = personService;
     }
 
     @ModelAttribute("addCompanyDTO")

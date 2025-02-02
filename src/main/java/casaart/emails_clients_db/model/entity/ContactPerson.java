@@ -3,7 +3,7 @@ package casaart.emails_clients_db.model.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "persons")
+@Table(name = "contacts_persons")
 public class ContactPerson extends BaseEntity{
     @Column(name = "first_name")
     private String firstName;
@@ -24,18 +24,15 @@ public class ContactPerson extends BaseEntity{
     @JoinColumn(name = "company_id")
     private Company company;
 
-    public String getFullName(){
+    public String getFullName() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.getFirstName());
-        sb.append(" ");
+        sb.append(this.getFirstName()).append(" ");
 
-        if (!this.getMiddleName().isEmpty()){
-            sb.append(this.getMiddleName());
-            sb.append(" ");
+        if (this.getMiddleName() != null && !this.getMiddleName().isEmpty()) {
+            sb.append(this.getMiddleName()).append(" ");
         }
 
         sb.append(this.getLastName());
-
         return sb.toString();
     }
 
