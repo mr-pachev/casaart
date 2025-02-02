@@ -39,32 +39,17 @@ public class Company extends BaseEntity{
     @Column(name = "second_call")
     private LocalDate secondCall;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Person> contactPersons = new ArrayList<>();
+    @OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
+    private List<CompanyManager> contactCompanyManagers = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_manager_id")
-    private Person companyManager;
+    private CompanyManager companyManager;
 
     @ElementCollection(targetClass = IndustryType.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "company_industries", joinColumns = @JoinColumn(name = "company_id"))
     @Enumerated(EnumType.STRING)
     private List<IndustryType> industryTypes;
-
-    // Метод за добавяне на контактно лице
-    public void addContactPerson(Person person) {
-        if (person.equals(this.companyManager)) {
-            throw new IllegalArgumentException("Управителят не може да бъде добавен като контактно лице.");
-        }
-        contactPersons.add(person);
-        person.setCompany(this);
-    }
-
-    // Метод за премахване на контактно лице
-    public void removeContactPerson(Person person) {
-        contactPersons.remove(person);
-        person.setCompany(null);
-    }
 
     public String getName() {
         return name;
@@ -138,24 +123,24 @@ public class Company extends BaseEntity{
         this.secondCall = secondCall;
     }
 
-    public List<Person> getContactPersons() {
-        return contactPersons;
+    public List<CompanyManager> getContactPersons() {
+        return contactCompanyManagers;
     }
 
-    public void setContactPersons(List<Person> contactPersons) {
-        this.contactPersons = contactPersons;
+    public void setContactPersons(List<CompanyManager> contactCompanyManagers) {
+        this.contactCompanyManagers = contactCompanyManagers;
     }
 
-    public Person getCompanyManager() {
+    public CompanyManager getCompanyManager() {
         return companyManager;
     }
 
-    public void setCompanyManager(Person companyManager) {
+    public void setCompanyManager(CompanyManager companyManager) {
         this.companyManager = companyManager;
 
         // Уверете се, че companyManager не е добавен в contactPersons
-        if (this.contactPersons != null) {
-            this.contactPersons.remove(companyManager);
+        if (this.contactCompanyManagers != null) {
+            this.contactCompanyManagers.remove(companyManager);
         }
     }
 

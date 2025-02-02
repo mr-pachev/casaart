@@ -2,6 +2,8 @@ upload:
   path: C:/uploads
 
 spring:
+  aop:
+    proxy-target-class: true
   servlet:
     multipart:
       max-file-size: 10MB

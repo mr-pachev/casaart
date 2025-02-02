@@ -4,15 +4,14 @@ import casaart.emails_clients_db.model.dto.AddCompanyDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Company;
-import casaart.emails_clients_db.model.entity.Person;
+import casaart.emails_clients_db.model.entity.CompanyManager;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.repository.CompanyRepository;
-import casaart.emails_clients_db.repository.PersonRepository;
+import casaart.emails_clients_db.repository.CompanyManagerRepository;
 import casaart.emails_clients_db.service.CompanyService;
 import casaart.emails_clients_db.service.PersonService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +20,13 @@ import java.util.stream.Collectors;
 @Service
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
-    private final PersonRepository personRepository;
+    private final CompanyManagerRepository companyManagerRepository;
     private final PersonService personService;
     private final ModelMapper mapper;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository, PersonRepository personRepository, PersonService personService, ModelMapper mapper) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, CompanyManagerRepository companyManagerRepository, PersonService personService, ModelMapper mapper) {
         this.companyRepository = companyRepository;
-        this.personRepository = personRepository;
+        this.companyManagerRepository = companyManagerRepository;
         this.personService = personService;
         this.mapper = mapper;
     }
@@ -80,36 +79,20 @@ public class CompanyServiceImpl implements CompanyService {
     // add company manager
     @Override
     public void addCompanyManager(PersonDTO personDTO, long companyId) {
-        Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new RuntimeException("Company not found with id: " + companyId));
+        Company company = companyRepository.findById(companyId).get();
 
-        // Проверка дали компанията вече има управител
-        if (company.getCompanyManager() != null) {
-            throw new RuntimeException("Company already has a manager.");
-        }
+        CompanyManager manager = mapper.map(personDTO, CompanyManager.class);
+        manager.setCompany(company);
 
-        // Мапване на PersonDTO към Person
-        Person manager = mapper.map(personDTO, Person.class);
-        manager.setCompany(company); // Задаване на компанията за управителя
-
-        // Проверка дали управителят вече съществува в списъка с контактни лица
         boolean isManagerInContactList = company.getContactPersons().stream()
-                .anyMatch(person -> person.getEmail().equals(personDTO.getEmail()) ||
-                        person.getPhoneNumber().equals(personDTO.getPhoneNumber()));
+                .anyMatch(person -> person.getFullName().equals(personDTO.getFullName()));
 
         if (isManagerInContactList) {
-            // Премахване на управителя от списъка с контактни лица
-            company.getContactPersons().removeIf(person -> person.getEmail().equals(personDTO.getEmail()) ||
-                    person.getPhoneNumber().equals(personDTO.getPhoneNumber()));
+            company.getContactPersons().removeIf(person -> person.getFullName().equals(personDTO.getFullName()));
         }
 
-        // Запазване на управителя в базата данни
-        Person savedManager = personRepository.save(manager);
-        if (savedManager == null || savedManager.getId() == null) {
-            throw new RuntimeException("Failed to save manager entity");
-        }
+        CompanyManager savedManager = companyManagerRepository.save(manager);
 
-        // Задаване на управителя на компанията и запазване на промените
         company.setCompanyManager(savedManager);
         companyRepository.save(company);
     }
@@ -117,33 +100,15 @@ public class CompanyServiceImpl implements CompanyService {
     //add contact person
     @Override
     public void addContactPerson(PersonDTO personDTO, long companyId) {
-        Company company = companyRepository.findById(companyId)
-                .orElseThrow(() -> new RuntimeException("Company not found with id: " + companyId));
+        Company company = companyRepository.findById(companyId).get();
 
-        // Мапване на PersonDTO към Person
-        Person contactPerson = mapper.map(personDTO, Person.class);
-        contactPerson.setCompany(company); // Задаване на компанията за контактното лице
+        CompanyManager contactCompanyManager = mapper.map(personDTO, CompanyManager.class);
 
-        // Проверка дали лицето е управител на компанията
-        if (company.getCompanyManager() != null &&
-                (company.getCompanyManager().getEmail().equals(personDTO.getEmail()) ||
-                        company.getCompanyManager().getPhoneNumber().equals(personDTO.getPhoneNumber()))) {
-            throw new RuntimeException("The manager cannot be added as a contact person.");
-        }
+        contactCompanyManager.setCompany(company);
+        companyManagerRepository.save(contactCompanyManager);
 
-        // Проверка дали лицето вече съществува в списъка с контактни лица
-        boolean isPersonAlreadyContact = company.getContactPersons().stream()
-                .anyMatch(person -> person.getEmail().equals(personDTO.getEmail()) ||
-                        person.getPhoneNumber().equals(personDTO.getPhoneNumber()));
+        company.getContactPersons().add(contactCompanyManager);
 
-        if (isPersonAlreadyContact) {
-            throw new RuntimeException("Person already exists in the contact list.");
-        }
-
-        // Добавяне на лицето към списъка с контактни лица на компанията
-        company.getContactPersons().add(contactPerson);
-
-        // Запазване на компанията (което ще запази и лицето, благодарение на cascade)
         companyRepository.save(company);
     }
 
@@ -156,19 +121,19 @@ public class CompanyServiceImpl implements CompanyService {
 
         // Ръчно премахване на свързани контактни лица
         if (company.getContactPersons() != null && !company.getContactPersons().isEmpty()) {
-            for (Person person : company.getContactPersons()) {
-                person.setCompany(null); // Изчистване на връзката към компанията
-                personRepository.save(person); // Синхронизиране на промяната
-                personRepository.delete(person); // Изтриване на обекта Person
+            for (CompanyManager companyManager : company.getContactPersons()) {
+                companyManager.setCompany(null); // Изчистване на връзката към компанията
+                companyManagerRepository.save(companyManager); // Синхронизиране на промяната
+                companyManagerRepository.delete(companyManager); // Изтриване на обекта Person
             }
         }
 
         // Ръчно изтриване на мениджъра на компанията
         if (company.getCompanyManager() != null) {
-            Person manager = company.getCompanyManager();
+            CompanyManager manager = company.getCompanyManager();
             company.setCompanyManager(null); // Изчистване на връзката
             companyRepository.save(company); // Синхронизиране на промяната
-            personRepository.delete(manager); // Изтриване на мениджъра
+            companyManagerRepository.delete(manager); // Изтриване на мениджъра
         }
 
         companyRepository.delete(company);
@@ -188,7 +153,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         // Мапване на контактните лица
         List<PersonDTO> contactPersons = company.getContactPersons().stream()
-                .map(contactPerson -> mapper.map(contactPerson, PersonDTO.class))
+                .map(contactCompanyManager -> mapper.map(contactCompanyManager, PersonDTO.class))
                 .collect(Collectors.toList());
         companyDTO.setContactPerson(contactPersons);
 

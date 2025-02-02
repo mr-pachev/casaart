@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "persons")
-public class Person extends BaseEntity{
-
+public class ContactPerson extends BaseEntity{
     @Column(name = "first_name")
     private String firstName;
 
@@ -39,6 +38,7 @@ public class Person extends BaseEntity{
 
         return sb.toString();
     }
+
     public String getFirstName() {
         return firstName;
     }

@@ -10,7 +10,7 @@
 <div th:replace="~{fragments/navigation}"></div>
 <main>
     <h1>Партньор</h1>
-    <form th:action="@{/add-person}"
+    <form th:action="@{/add-companyManager}"
           th:object="${companyDTO}"
           th:method="POST">
 
@@ -44,7 +44,7 @@
                 <td th:text="${companyDTO.locationType}">Локация</td>
                 <td>
                     <ul>
-                        <li th:each="contact : ${companyDTO.contactPerson}"
+                        <li th:each="contact : ${companyDTO.contactCompanyManager}"
                             th:text="${contact.getFullName()}">Лице за контакт</li>
                     </ul>
                 </td>
@@ -92,7 +92,7 @@
         </form>
         <!-- Форма за добавяне на контактно лице -->
         <form th:method="POST"
-              th:action="@{/add-contact-person-with-com-id/{id}(id=${companyDTO.id})}"
+              th:action="@{/add-contact-companyManager-with-com-id/{id}(id=${companyDTO.id})}"
               style="display: inline;">
 
             <!--Sends category id with a POST request-->
