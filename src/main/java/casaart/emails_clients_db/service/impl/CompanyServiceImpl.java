@@ -103,20 +103,9 @@ public class CompanyServiceImpl implements CompanyService {
     public void addContactPerson(PersonDTO personDTO, long companyId) {
         Company company = companyRepository.findById(companyId).get();
 
-        ContactPerson contactPerson = new ContactPerson();
-
-        contactPerson.setFirstName(personDTO.getFirstName());
-        contactPerson.setLastName(personDTO.getLastName());
-        contactPerson.setEmail(personDTO.getEmail());
-        contactPerson.setPhoneNumber(personDTO.getPhoneNumber());
-
-        // Уверяваме се, че ID-то е null, за да се създаде нов запис
-        contactPerson.setId(null);
-
-        // Свързваме с компанията
+        ContactPerson contactPerson = personDTOMapToContactPerson(personDTO);
         contactPerson.setCompany(company);
 
-        // Записваме
         contactPersonRepository.save(contactPerson);
     }
 
@@ -124,8 +113,7 @@ public class CompanyServiceImpl implements CompanyService {
 //    @Transactional
     @Override
     public void removeCompany(long id) {
-        Company company = companyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Company not found with id: " + id));
+        Company company = companyRepository.findById(id).get();
 
         // Ръчно премахване на свързани контактни лица
         if (company.getContactPersons() != null && !company.getContactPersons().isEmpty()) {
@@ -147,7 +135,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.delete(company);
     }
 
-    // mapCompanyToCompanyDTO
+    // Company map to CompanyDTO
     CompanyDTO mapCompanyToCompanyDTO(Company company) {
         CompanyDTO companyDTO = new CompanyDTO();
 
@@ -180,5 +168,20 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setIndustries(industries);
 
         return companyDTO;
+    }
+
+    //PersonDTO map to ContactPerson
+    ContactPerson personDTOMapToContactPerson(PersonDTO personDTO){
+        ContactPerson contactPerson = new ContactPerson();
+
+        contactPerson.setFirstName(personDTO.getFirstName());
+        contactPerson.setLastName(personDTO.getLastName());
+        contactPerson.setEmail(personDTO.getEmail());
+        contactPerson.setPhoneNumber(personDTO.getPhoneNumber());
+
+        // Уверяваме се, че ID-то е null, за да се създаде нов запис
+        contactPerson.setId(null);
+
+        return contactPerson;
     }
 }
