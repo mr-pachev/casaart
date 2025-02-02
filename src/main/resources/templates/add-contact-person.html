@@ -17,6 +17,10 @@
                   th:object="${personDTO}"
                   th:method="POST">
 
+                <div class="bg-danger text-center" th:if="${isExist}">
+                    <p class="d-block">Вече съществува лице за контакт с това име и телефон</p>
+                </div>
+
                 <!--Sends category id with a POST request-->
                 <input type="hidden" th:field="${companyDTO.id}"/>
                 <input type="hidden" th:field="${companyDTO.name}"/>

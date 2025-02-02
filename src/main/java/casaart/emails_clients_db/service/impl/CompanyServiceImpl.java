@@ -7,8 +7,8 @@ import casaart.emails_clients_db.model.entity.Company;
 import casaart.emails_clients_db.model.entity.CompanyManager;
 import casaart.emails_clients_db.model.entity.ContactPerson;
 import casaart.emails_clients_db.model.enums.IndustryType;
-import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.CompanyManagerRepository;
+import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.ContactPersonRepository;
 import casaart.emails_clients_db.service.CompanyService;
 import org.modelmapper.ModelMapper;
@@ -92,9 +92,12 @@ public class CompanyServiceImpl implements CompanyService {
             company.getContactPersons().removeIf(person -> person.getFullName().equals(personDTO.getFullName()));
         }
 
-        CompanyManager savedManager = companyManagerRepository.save(manager);
+        contactPersonRepository.delete(personDTOMapToContactPerson(personDTO));
 
-        company.setCompanyManager(savedManager);
+        companyManagerRepository.save(manager);
+
+        company.setCompanyManager(manager);
+
         companyRepository.save(company);
     }
 
@@ -110,18 +113,17 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     // delete company by id
-//    @Transactional
     @Override
     public void removeCompany(long id) {
         Company company = companyRepository.findById(id).get();
 
         // Ръчно премахване на свързани контактни лица
         if (company.getContactPersons() != null && !company.getContactPersons().isEmpty()) {
-//            for (CompanyManager companyManager : company.getContactPersons()) {
-//                companyManager.setCompany(null); // Изчистване на връзката към компанията
-//                companyManagerRepository.save(companyManager); // Синхронизиране на промяната
-//                companyManagerRepository.delete(companyManager); // Изтриване на обекта Person
-//            }
+            for (ContactPerson contactPerson : company.getContactPersons()) {
+                contactPerson.setCompany(null); // Изчистване на връзката към компанията
+                contactPersonRepository.save(contactPerson); // Синхронизиране на промяната
+                contactPersonRepository.delete(contactPerson); // Изтриване на обекта Person
+            }
         }
 
         // Ръчно изтриване на мениджъра на компанията
@@ -139,7 +141,6 @@ public class CompanyServiceImpl implements CompanyService {
     CompanyDTO mapCompanyToCompanyDTO(Company company) {
         CompanyDTO companyDTO = new CompanyDTO();
 
-        // Мапване на основните полета
         companyDTO.setId(company.getId());
         companyDTO.setName(company.getName());
         companyDTO.setAddress(company.getAddress());
@@ -147,20 +148,17 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setEmail(company.getEmail());
         companyDTO.setLocationType(company.getLocationType().name());
 
-        // Мапване на контактните лица
         List<PersonDTO> contactPersons = company.getContactPersons().stream()
                 .map(contactPerson -> mapper.map(contactPerson, PersonDTO.class))
                 .collect(Collectors.toList());
 
         companyDTO.setContactPerson(contactPersons);
 
-        // Мапване на мениджъра на компанията
         if (company.getCompanyManager() != null) {
             PersonDTO companyManager = mapper.map(company.getCompanyManager(), PersonDTO.class);
             companyDTO.setCompanyManager(companyManager);
         }
 
-        // Мапване на индустриите
         List<String> industries = company.getIndustryTypes().stream()
                 .map(IndustryType::getDisplayName)
                 .collect(Collectors.toList());
@@ -170,17 +168,19 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDTO;
     }
 
-    //PersonDTO map to ContactPerson
-    ContactPerson personDTOMapToContactPerson(PersonDTO personDTO){
+    // PersonDTO map to ContactPerson
+    ContactPerson personDTOMapToContactPerson(PersonDTO personDTO) {
         ContactPerson contactPerson = new ContactPerson();
 
+        contactPerson.setId(null);
         contactPerson.setFirstName(personDTO.getFirstName());
+        if (personDTO.getMiddleName() != null) {
+            contactPerson.setMiddleName(personDTO.getMiddleName());
+        }
         contactPerson.setLastName(personDTO.getLastName());
         contactPerson.setEmail(personDTO.getEmail());
         contactPerson.setPhoneNumber(personDTO.getPhoneNumber());
 
-        // Уверяваме се, че ID-то е null, за да се създаде нов запис
-        contactPerson.setId(null);
 
         return contactPerson;
     }

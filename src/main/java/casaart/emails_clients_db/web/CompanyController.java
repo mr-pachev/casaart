@@ -6,6 +6,7 @@ import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
 import casaart.emails_clients_db.service.CompanyService;
+import casaart.emails_clients_db.service.ContactPersonService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +19,11 @@ import java.util.List;
 @Controller
 public class CompanyController {
     private final CompanyService companyService;
+    private final ContactPersonService contactPersonService;
 
-    public CompanyController(CompanyService companyService) {
+    public CompanyController(CompanyService companyService, ContactPersonService contactPersonService) {
         this.companyService = companyService;
+        this.contactPersonService = contactPersonService;
     }
 
     @ModelAttribute("addCompanyDTO")
@@ -165,6 +168,17 @@ public class CompanyController {
             model.addAttribute("companyDTO", companyDTO);
             rAtt.addFlashAttribute("personDTO", personDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
+
+            return "add-contact-person";
+        }
+
+        boolean isExistPerson = contactPersonService.isExistContactPerson(personDTO);
+
+        if (isExistPerson) {
+            model.addAttribute("companyDTO", companyDTO);
+            model.addAttribute("isExist", true);
+            model.addAttribute("personDTO", personDTO);
+            model.addAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
 
             return "add-contact-person";
         }
