@@ -38,8 +38,9 @@
                             th:errorclass="is-invalid"
                             multiple> <!-- Позволява избор на няколко стойности -->
                         <option th:each="industry : ${allIndustries}"
-                                th:value="${industry.getDisplayName()}"
-                                th:text="${industry.getDisplayName()}">
+                                th:value="${industry}"
+                                th:text="${industry}"
+                                th:selected="${companyDTO.industries.contains(industry)}">
                         </option>
                     </select>
                     <p class="invalid-feedback errors alert alert-danger">
@@ -90,7 +91,8 @@
                         <option value="">-- Избери --</option>
                         <option th:each="located: ${allLocations}"
                                 th:value="${located}"
-                                th:text="${located}">Регион
+                                th:text="${located}"
+                                th:selected="${companyDTO.locationType == located.name()}">Регион
                         </option>
                     </select>
                     <p class="invalid-feedback errors alert alert-danger">

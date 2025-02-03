@@ -216,8 +216,8 @@ public class CompanyController {
         CompanyDTO companyDTO = companyService.findCompanyById(id);
 
         model.addAttribute(companyDTO);
-        model.addAttribute("allLocations", companyDTO.getLocationType());
-        model.addAttribute("currentIndustry", companyDTO.getIndustries());
+        model.addAttribute("allLocations", LocationType.values());
+        model.addAttribute("allIndustries", IndustryType.values());
 
         return "company-details";
     }
@@ -233,6 +233,8 @@ public class CompanyController {
 
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("companyDTO", companyDTO);
+            rAtt.addFlashAttribute("allLocations", LocationType.values());
+            rAtt.addFlashAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
 
             return "company-details";
