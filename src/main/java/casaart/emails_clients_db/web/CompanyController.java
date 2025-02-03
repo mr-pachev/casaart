@@ -5,6 +5,7 @@ import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
+import casaart.emails_clients_db.service.CompanyManagerService;
 import casaart.emails_clients_db.service.CompanyService;
 import casaart.emails_clients_db.service.ContactPersonService;
 import jakarta.validation.Valid;
@@ -20,10 +21,12 @@ import java.util.List;
 public class CompanyController {
     private final CompanyService companyService;
     private final ContactPersonService contactPersonService;
+    private final CompanyManagerService companyManagerService;
 
-    public CompanyController(CompanyService companyService, ContactPersonService contactPersonService) {
+    public CompanyController(CompanyService companyService, ContactPersonService contactPersonService, CompanyManagerService companyManagerService) {
         this.companyService = companyService;
         this.contactPersonService = contactPersonService;
+        this.companyManagerService = companyManagerService;
     }
 
     @ModelAttribute("addCompanyDTO")
@@ -134,8 +137,6 @@ public class CompanyController {
             return "add-company-manager";
         }
 
-
-
         personDTO.setCompany(companyDTO.getName());
         companyService.addCompanyManager(personDTO, id);
 
@@ -179,6 +180,17 @@ public class CompanyController {
         if (isExistPerson) {
             model.addAttribute("companyDTO", companyDTO);
             model.addAttribute("isExist", true);
+            model.addAttribute("personDTO", personDTO);
+            model.addAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
+
+            return "add-contact-person";
+        }
+
+        boolean isExistPersonLikeManager = companyManagerService.isExistCompanyManager(personDTO);
+
+        if (isExistPersonLikeManager) {
+            model.addAttribute("companyDTO", companyDTO);
+            model.addAttribute("isExistLikeManager", true);
             model.addAttribute("personDTO", personDTO);
             model.addAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
 

@@ -131,6 +131,7 @@ public class CompanyServiceImpl implements CompanyService {
         if (company.getContactPersons() != null && !company.getContactPersons().isEmpty()) {
             for (ContactPerson contactPerson : company.getContactPersons()) {
                 contactPerson.setCompany(null); // Изчистване на връзката към компанията
+
                 contactPersonRepository.save(contactPerson); // Синхронизиране на промяната
                 contactPersonRepository.delete(contactPerson); // Изтриване на обекта Person
             }
