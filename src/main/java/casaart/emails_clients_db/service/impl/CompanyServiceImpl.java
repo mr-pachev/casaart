@@ -93,7 +93,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         companyRepository.save(company);
 
-        if(!company.getContactPersons().isEmpty()){
+        if (!company.getContactPersons().isEmpty()) {
             ContactPerson contactPerson = contactPersonRepository.findByFirstNameAndLastNameAndPhoneNumber(personDTO.getFirstName(),
                     personDTO.getLastName(),
                     personDTO.getPhoneNumber()).get();
@@ -134,7 +134,6 @@ public class CompanyServiceImpl implements CompanyService {
             for (ContactPerson contactPerson : company.getContactPersons()) {
                 contactPerson.setCompany(null); // Изчистване на връзката към компанията
 
-                contactPersonRepository.save(contactPerson); // Синхронизиране на промяната
                 contactPersonRepository.deleteById(contactPerson.getId()); // Изтриване на обекта Person
             }
         }
