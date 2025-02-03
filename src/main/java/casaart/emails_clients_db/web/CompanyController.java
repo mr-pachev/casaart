@@ -74,8 +74,8 @@ public class CompanyController {
             RedirectAttributes rAtt, Model model) {
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("allLocations", LocationType.values());
-            model.addAttribute("allIndustries", IndustryType.values());
+            rAtt.addFlashAttribute("allLocations", LocationType.values());
+            rAtt.addFlashAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCompanyDTO", bindingResult);
 

@@ -21,6 +21,7 @@ public class PersonDTO {
     @Email
     private String email;
 
+    @NotBlank
     @Size(max = 10)
     private String phoneNumber;
 
