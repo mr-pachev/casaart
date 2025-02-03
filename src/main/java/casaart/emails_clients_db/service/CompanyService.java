@@ -26,6 +26,9 @@ public interface CompanyService {
     //add contact person
     void addContactPerson(PersonDTO personDTO, long id);
 
+    //edit company
+    void editCompany(CompanyDTO companyDTO);
+
     //delete company by id
     void removeCompany(long id);
 }

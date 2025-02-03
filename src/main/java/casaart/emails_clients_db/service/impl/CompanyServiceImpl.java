@@ -93,7 +93,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         companyRepository.save(company);
 
-        if (!company.getContactPersons().isEmpty()) {
+        if (isManagerInContactList) {
             ContactPerson contactPerson = contactPersonRepository.findByFirstNameAndLastNameAndPhoneNumber(personDTO.getFirstName(),
                     personDTO.getLastName(),
                     personDTO.getPhoneNumber()).get();
@@ -122,6 +122,11 @@ public class CompanyServiceImpl implements CompanyService {
         contactPerson.setCompany(company);
 
         contactPersonRepository.save(contactPerson);
+    }
+
+    @Override
+    public void editCompany(CompanyDTO companyDTO) {
+
     }
 
     // delete company by id
@@ -178,6 +183,23 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setIndustries(industries);
 
         return companyDTO;
+    }
+
+    // PersonDTO map to CompanyManager
+    CompanyManager personDTOMapToCompanyManager(PersonDTO personDTO) {
+        CompanyManager companyManager = new CompanyManager();
+
+        companyManager.setId(null);
+        companyManager.setFirstName(personDTO.getFirstName());
+        if (personDTO.getMiddleName() != null) {
+            companyManager.setMiddleName(personDTO.getMiddleName());
+        }
+        companyManager.setLastName(personDTO.getLastName());
+        companyManager.setEmail(personDTO.getEmail());
+        companyManager.setPhoneNumber(personDTO.getPhoneNumber());
+
+
+        return companyManager;
     }
 
     // PersonDTO map to ContactPerson
