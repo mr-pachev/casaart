@@ -21,8 +21,7 @@ public class CompanyManager extends BaseEntity{
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "company_id")
+    @OneToOne(mappedBy = "companyManager", cascade = CascadeType.ALL)
     private Company company;
 
     public String getFullName() {

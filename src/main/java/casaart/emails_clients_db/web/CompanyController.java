@@ -134,6 +134,8 @@ public class CompanyController {
             return "add-company-manager";
         }
 
+
+
         personDTO.setCompany(companyDTO.getName());
         companyService.addCompanyManager(personDTO, id);
 

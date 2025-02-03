@@ -42,7 +42,7 @@ public class Company extends BaseEntity{
     @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ContactPerson> contactPersons = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "company_manager_id")
     private CompanyManager companyManager;
 

@@ -13,6 +13,7 @@ import casaart.emails_clients_db.repository.ContactPersonRepository;
 import casaart.emails_clients_db.service.CompanyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,11 +80,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     // add company manager
     @Override
+    @Transactional
     public void addCompanyManager(PersonDTO personDTO, long companyId) {
         Company company = companyRepository.findById(companyId).get();
-
-        CompanyManager manager = mapper.map(personDTO, CompanyManager.class);
-        manager.setCompany(company);
 
         boolean isManagerInContactList = company.getContactPersons().stream()
                 .anyMatch(person -> person.getFullName().equals(personDTO.getFullName()));
@@ -92,12 +91,23 @@ public class CompanyServiceImpl implements CompanyService {
             company.getContactPersons().removeIf(person -> person.getFullName().equals(personDTO.getFullName()));
         }
 
-        contactPersonRepository.delete(personDTOMapToContactPerson(personDTO));
+        companyRepository.save(company);
 
+        ContactPerson contactPerson = contactPersonRepository.findByFirstNameAndLastNameAndPhoneNumber(personDTO.getFirstName(),
+                personDTO.getLastName(),
+                personDTO.getPhoneNumber()).get();
+        contactPerson.setCompany(null);
+        contactPersonRepository.save(contactPerson);
+
+        contactPersonRepository.deleteById(contactPerson.getId());
+
+        CompanyManager manager = mapper.map(personDTO, CompanyManager.class);
+
+        manager.setId(null);
+        manager.setCompany(company);
         companyManagerRepository.save(manager);
 
         company.setCompanyManager(manager);
-
         companyRepository.save(company);
     }
 
