@@ -93,13 +93,15 @@ public class CompanyServiceImpl implements CompanyService {
 
         companyRepository.save(company);
 
-        ContactPerson contactPerson = contactPersonRepository.findByFirstNameAndLastNameAndPhoneNumber(personDTO.getFirstName(),
-                personDTO.getLastName(),
-                personDTO.getPhoneNumber()).get();
-        contactPerson.setCompany(null);
-        contactPersonRepository.save(contactPerson);
+        if(!company.getContactPersons().isEmpty()){
+            ContactPerson contactPerson = contactPersonRepository.findByFirstNameAndLastNameAndPhoneNumber(personDTO.getFirstName(),
+                    personDTO.getLastName(),
+                    personDTO.getPhoneNumber()).get();
+            contactPerson.setCompany(null);
+            contactPersonRepository.save(contactPerson);
 
-        contactPersonRepository.deleteById(contactPerson.getId());
+            contactPersonRepository.deleteById(contactPerson.getId());
+        }
 
         CompanyManager manager = mapper.map(personDTO, CompanyManager.class);
 
@@ -133,7 +135,7 @@ public class CompanyServiceImpl implements CompanyService {
                 contactPerson.setCompany(null); // Изчистване на връзката към компанията
 
                 contactPersonRepository.save(contactPerson); // Синхронизиране на промяната
-                contactPersonRepository.delete(contactPerson); // Изтриване на обекта Person
+                contactPersonRepository.deleteById(contactPerson.getId()); // Изтриване на обекта Person
             }
         }
 
