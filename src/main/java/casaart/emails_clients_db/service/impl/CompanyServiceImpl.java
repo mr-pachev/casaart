@@ -7,6 +7,7 @@ import casaart.emails_clients_db.model.entity.Company;
 import casaart.emails_clients_db.model.entity.CompanyManager;
 import casaart.emails_clients_db.model.entity.ContactPerson;
 import casaart.emails_clients_db.model.enums.IndustryType;
+import casaart.emails_clients_db.model.enums.LocationType;
 import casaart.emails_clients_db.repository.CompanyManagerRepository;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.ContactPersonRepository;
@@ -80,7 +81,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     // add company manager
     @Override
-    @Transactional
+//    @Transactional
     public void addCompanyManager(PersonDTO personDTO, long companyId) {
         Company company = companyRepository.findById(companyId).get();
 
@@ -124,9 +125,23 @@ public class CompanyServiceImpl implements CompanyService {
         contactPersonRepository.save(contactPerson);
     }
 
+    //edit company
     @Override
     public void editCompany(CompanyDTO companyDTO) {
+        Company company = companyRepository.findById(companyDTO.getId()).get();
 
+        company.setName(companyDTO.getName());
+        company.setAddress(companyDTO.getAddress());
+        company.setPhoneNumber(companyDTO.getPhoneNumber());
+        company.setEmail(companyDTO.getEmail());
+        company.setLocationType(LocationType.valueOf(companyDTO.getLocationType()));
+
+        List<IndustryType> industries = companyDTO.getIndustries().stream()
+                .map(IndustryType::valueOf)
+                .collect(Collectors.toList());
+
+        company.setIndustryTypes(industries);
+        companyRepository.save(company);
     }
 
     // delete company by id
