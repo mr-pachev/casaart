@@ -243,10 +243,10 @@ public class CompanyController {
         boolean isChangedCompanyName = !companyDTO.getName().equals(companyService.findCompanyById(id).getName());
 
         if (isChangedCompanyName && companyService.isExistCompany(companyDTO.getName())) {
-            rAtt.addFlashAttribute("companyDTO", companyDTO);
+            model.addAttribute(companyDTO);
+            model.addAttribute("allLocations", LocationType.values());
+            model.addAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("isExistCompany", true);
-            rAtt.addFlashAttribute("allLocations", LocationType.values());
-            rAtt.addFlashAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
 
             return "redirect:/company-details/" + id;
