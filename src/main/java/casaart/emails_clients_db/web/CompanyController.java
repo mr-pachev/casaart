@@ -232,9 +232,9 @@ public class CompanyController {
         companyDTO.setId(id);
 
         if (bindingResult.hasErrors()) {
-            rAtt.addFlashAttribute("companyDTO", companyDTO);
-            rAtt.addFlashAttribute("allLocations", LocationType.values());
-            rAtt.addFlashAttribute("allIndustries", IndustryType.values());
+            model.addAttribute(companyDTO);
+            model.addAttribute("allLocations", LocationType.values());
+            model.addAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
 
             return "company-details";

@@ -19,6 +19,7 @@ public class CompanyDTO {
     private String address;
 
     @NotBlank
+    @Size(min=10, max = 10)
     private String phoneNumber;
 
     @Email
@@ -29,8 +30,6 @@ public class CompanyDTO {
 
     private List<PersonDTO> contactPerson = new ArrayList<>();
 
-    @NotBlank
-    @Size(min = 5)
     private PersonDTO companyManager;
 
     private List<String> industries;

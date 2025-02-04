@@ -70,7 +70,7 @@ public class CompanyServiceImpl implements CompanyService {
         List<IndustryType> industryTypes = new ArrayList<>();
 
         for (String industry : addCompanyDTO.getIndustries()) {
-            industryTypes.add(IndustryType.fromCyrillicName(industry));
+            industryTypes.add(IndustryType.valueOf(industry));
         }
 
         company.setIndustryTypes(industryTypes);
@@ -177,7 +177,7 @@ public class CompanyServiceImpl implements CompanyService {
         }
 
         List<String> industries = company.getIndustryTypes().stream()
-                .map(IndustryType::getDisplayName)
+                .map(Enum::name)
                 .collect(Collectors.toList());
 
         companyDTO.setIndustries(industries);

@@ -38,8 +38,8 @@
                             th:errorclass="is-invalid"
                             multiple> <!-- Позволява избор на няколко стойности -->
                         <option th:each="industry : ${allIndustries}"
-                                th:value="${industry.getDisplayName()}"
-                                th:text="${industry.getDisplayName()}">
+                                th:value="${industry}"
+                                th:text="${industry}">
                         </option>
                     </select>
                     <p class="invalid-feedback errors alert alert-danger">
