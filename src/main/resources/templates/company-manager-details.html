@@ -82,9 +82,13 @@
                     <input type="text" th:placeholder="${personDTO.company}"
                            id="company"
                            name="company"
-                           readonly>
+                           th:field="*{company}"
+                           th:errorclass="is-invalid">
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Въведи компания.
+                    </p>
                 </div>
-                <button type="submit" class="btn btn-success">Добави</button>
+                <button type="submit" class="register">Запази</button>
             </form>
         </div>
     </div>

@@ -31,6 +31,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         CompanyManager companyManager = companyManagerRepository.findById(id);
 
         PersonDTO personDTO = mapper.map(companyManager, PersonDTO.class);
+        personDTO.setCompany(companyManager.getCompany().getName());
 
         return personDTO;
     }

@@ -54,16 +54,12 @@ main {
     transition: background-color 0.3s ease;
 }
 
-.buttons a.register {
-    background-color: #22a14a;
-}
-
-.buttons a.register:hover {
+.register:hover {
     background-color: #1e8d3e;
 }
 
 .register {
-    background-color: #f16e23;
+    background-color: #22a14a;
     color: white;
         padding: 8px 18px;
         font-size: 15px;
@@ -71,10 +67,6 @@ main {
         border: none;
         cursor: pointer;
         transition: background-color 0.3s ease;
-}
-
-.register:hover {
-    background-color: #d9601f;
 }
 
 .login {
