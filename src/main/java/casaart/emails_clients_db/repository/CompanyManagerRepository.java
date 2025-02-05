@@ -11,4 +11,6 @@ public interface CompanyManagerRepository extends JpaRepository<CompanyManager, 
    Optional<CompanyManager> findByFirstNameAndLastNameAndPhoneNumber(String firstName,
                                                                      String lastName,
                                                                      String phoneNumber);
+
+   CompanyManager findById(long id);
 }

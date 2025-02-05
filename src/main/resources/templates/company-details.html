@@ -103,8 +103,26 @@
                         Избери регион.
                     </p>
                 </div>
-                <button type="submit" class="btn btn-success">Добави</button>
+                <div class="form-group">
+                    <label th:for="companyManagerr">Управител</label>
+                    <input type="text" th:placeholder="${companyDTO.getCompanyManager().fullName}"
+                           id="companyManager"
+                           name="companyManager"
+                           readonly>
+                </div>
+                <button type="submit" class="btn btn-success">Запази</button>
             </form>
+            <div class="action-buttons">
+                <form th:method="POST"
+                      th:action="@{/company-manager-details/{id}(id=${companyDTO.getCompanyManager().id})}">
+                    <button type="submit" class="edit-button">Промяна управител</button>
+                </form>
+                <form th:method="POST"
+                      th:action="@{/company-details/{id}(id=${companyDTO.id})}"
+                      sec:authorize="hasRole('Admin')">
+                    <button type="submit" class="delete-button">Запази</button>
+                </form>
+            </div>
         </div>
     </div>
 </main>

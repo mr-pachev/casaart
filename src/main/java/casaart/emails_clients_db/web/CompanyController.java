@@ -256,6 +256,53 @@ public class CompanyController {
         return "redirect:/add-person/" + id;
     }
 
+    //edit company manager
+    @PostMapping("/company-manager-details/{id}")
+    public String referenceToEditCompanyManagerForm(@PathVariable("id") Long id) {
+
+        return "redirect:/company-manager-details/" + id;
+    }
+
+    @GetMapping("/company-manager-details/{id}")
+    public String fillEditCompanyManagerForm(@PathVariable("id") Long id, Model model) {
+        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+
+        model.addAttribute(personDTO);
+
+        return "company-manager-details";
+    }
+
+    @PostMapping("/company-manager-details")
+    public String editCompanyManager(@RequestParam("id") Long id,
+                              @Valid PersonDTO personDTO,
+                              BindingResult bindingResult,
+                              RedirectAttributes rAtt,
+                              Model model) {
+
+        personDTO.setId(id);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(personDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
+
+            return "company-manager-details";
+        }
+
+//        boolean isChangedCompanyName = !companyDTO.getName().equals(companyService.findCompanyById(id).getName());
+//
+//        if (isChangedCompanyName && companyService.isExistCompany(companyDTO.getName())) {
+//            model.addAttribute(companyDTO);
+//            model.addAttribute("allLocations", LocationType.values());
+//            model.addAttribute("allIndustries", IndustryType.values());
+//            rAtt.addFlashAttribute("isExistCompany", true);
+//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
+//
+//            return "redirect:/company-manager-details/" + id;
+//        }
+//
+//        companyService.editCompany(companyDTO);
+        return "redirect:/add-person/" + id;
+    }
 
     //delete company by id
     @PostMapping("/delete-company/{id}")

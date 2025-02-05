@@ -60,15 +60,15 @@
             <td th:text="${companyDTO.secondCall}">Дата на второ обаждане</td>
             <td>
                 <div class="action-buttons">
-                <form th:method="POST"
-                      th:action="@{/company-details/{id}(id=${companyDTO.id})}">
-                    <button type="submit" class="edit-button">Промяна</button>
-                </form>
-                <form th:method="POST"
-                      th:action="@{/delete-company/{id}(id=${companyDTO.id})}"
-                      sec:authorize="hasRole('Admin')">
-                    <button type="submit" class="delete-button">Премахване</button>
-                </form>
+                    <form th:method="POST"
+                          th:action="@{/company-details/{id}(id=${companyDTO.id})}">
+                        <button type="submit" class="edit-button">Промяна</button>
+                    </form>
+                    <form th:method="POST"
+                          th:action="@{/delete-company/{id}(id=${companyDTO.id})}"
+                          sec:authorize="hasRole('Admin')">
+                        <button type="submit" class="delete-button">Премахване</button>
+                    </form>
                 </div>
             </td>
         </tr>
