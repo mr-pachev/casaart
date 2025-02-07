@@ -34,7 +34,6 @@ public class CompanyServiceImpl implements CompanyService {
         this.mapper = mapper;
     }
 
-
     // get all companies
     @Override
     public List<CompanyDTO> getAllCompanies() {
@@ -63,6 +62,13 @@ public class CompanyServiceImpl implements CompanyService {
         return mapCompanyToCompanyDTO(company);
     }
 
+    // find company byn name
+    @Override
+    public CompanyDTO findCompanyByName(String name) {
+        CompanyDTO companyDTO = mapCompanyToCompanyDTO(companyRepository.findByName(name).get());
+        return companyDTO;
+    }
+
     // add company
     @Override
     public long addCompany(AddCompanyDTO addCompanyDTO) {
@@ -79,42 +85,7 @@ public class CompanyServiceImpl implements CompanyService {
         return company.getId();
     }
 
-    // add company manager
-    @Override
-//    @Transactional
-    public void addCompanyManager(PersonDTO personDTO, long companyId) {
-        Company company = companyRepository.findById(companyId).get();
-
-        boolean isManagerInContactList = company.getContactPersons().stream()
-                .anyMatch(person -> person.getFullName().equals(personDTO.getFullName()));
-
-        if (isManagerInContactList) {
-            company.getContactPersons().removeIf(person -> person.getFullName().equals(personDTO.getFullName()));
-        }
-
-        companyRepository.save(company);
-
-        if (isManagerInContactList) {
-            ContactPerson contactPerson = contactPersonRepository.findByFirstNameAndLastNameAndPhoneNumber(personDTO.getFirstName(),
-                    personDTO.getLastName(),
-                    personDTO.getPhoneNumber()).get();
-            contactPerson.setCompany(null);
-            contactPersonRepository.save(contactPerson);
-
-            contactPersonRepository.deleteById(contactPerson.getId());
-        }
-
-        CompanyManager manager = mapper.map(personDTO, CompanyManager.class);
-
-        manager.setId(null);
-        manager.setCompany(company);
-        companyManagerRepository.save(manager);
-
-        company.setCompanyManager(manager);
-        companyRepository.save(company);
-    }
-
-    //add contact person
+    // add contact person
     @Override
     public void addContactPerson(PersonDTO personDTO, long companyId) {
         Company company = companyRepository.findById(companyId).get();
@@ -125,7 +96,7 @@ public class CompanyServiceImpl implements CompanyService {
         contactPersonRepository.save(contactPerson);
     }
 
-    //edit company
+    // edit company
     @Override
     public void editCompany(CompanyDTO companyDTO) {
         Company company = companyRepository.findById(companyDTO.getId()).get();
@@ -198,23 +169,6 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setIndustries(industries);
 
         return companyDTO;
-    }
-
-    // PersonDTO map to CompanyManager
-    CompanyManager personDTOMapToCompanyManager(PersonDTO personDTO) {
-        CompanyManager companyManager = new CompanyManager();
-
-        companyManager.setId(null);
-        companyManager.setFirstName(personDTO.getFirstName());
-        if (personDTO.getMiddleName() != null) {
-            companyManager.setMiddleName(personDTO.getMiddleName());
-        }
-        companyManager.setLastName(personDTO.getLastName());
-        companyManager.setEmail(personDTO.getEmail());
-        companyManager.setPhoneNumber(personDTO.getPhoneNumber());
-
-
-        return companyManager;
     }
 
     // PersonDTO map to ContactPerson

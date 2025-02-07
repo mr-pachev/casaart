@@ -45,7 +45,7 @@ public class CompanyController {
         return new PersonDTO();
     }
 
-    //view all companies
+    // view all companies
     @GetMapping("/companies")
     public String getAllCompanies(Model model) {
         List<CompanyDTO> companyDTOS = companyService.getAllCompanies();
@@ -55,7 +55,7 @@ public class CompanyController {
         return "companies";
     }
 
-    //create new company
+    // create new company
     @GetMapping("/add-company")
     public String viewAddCompanyForm(Model model) {
         model.addAttribute("allLocations", LocationType.values());
@@ -106,45 +106,7 @@ public class CompanyController {
         return "add-person";
     }
 
-    //add company manager
-    @PostMapping("/add-company-manager-with-com-id/{id}")
-    public String referenceToAddCompanyManagerForm(@PathVariable("id") Long id) {
-
-        return "redirect:/add-company-manager/" + id;
-    }
-
-    @GetMapping("/add-company-manager/{id}")
-    public String showAddCompanyManagerForm(@PathVariable("id") Long id, Model model) {
-        CompanyDTO companyDTO = companyService.findCompanyById(id);
-        model.addAttribute("companyDTO", companyDTO);
-
-        return "add-company-manager";
-    }
-
-    @PostMapping("/add-company-manager")
-    public String addCompanyManager(@RequestParam("id") Long id,
-                                    @Valid PersonDTO personDTO,
-                                    BindingResult bindingResult,
-                                    RedirectAttributes rAtt,
-                                    Model model) {
-
-        CompanyDTO companyDTO = companyService.findCompanyById(id);
-
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("companyDTO", companyDTO);
-            rAtt.addFlashAttribute("personDTO", personDTO);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
-
-            return "add-company-manager";
-        }
-
-        personDTO.setCompany(companyDTO.getName());
-        companyService.addCompanyManager(personDTO, id);
-
-        return "redirect:/add-person/" + id;
-    }
-
-    //add contact person
+    // add contact person
     @PostMapping("/add-contact-person-with-com-id/{id}")
     public String referenceToAddContactPersonForm(@PathVariable("id") Long id) {
 
@@ -204,7 +166,7 @@ public class CompanyController {
         return "redirect:/add-person/" + id;
     }
 
-    //edit current company
+    // edit current company
     @PostMapping("/company-details/{id}")
     public String referenceToEditCompanyForm(@PathVariable("id") Long id) {
 
@@ -256,55 +218,7 @@ public class CompanyController {
         return "redirect:/add-person/" + id;
     }
 
-    //edit company manager
-    @PostMapping("/company-manager-details/{id}")
-    public String referenceToEditCompanyManagerForm(@PathVariable("id") Long id) {
-
-        return "redirect:/company-manager-details/" + id;
-    }
-
-    @GetMapping("/company-manager-details/{id}")
-    public String fillEditCompanyManagerForm(@PathVariable("id") Long id, Model model) {
-        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
-
-        model.addAttribute(personDTO);
-
-        return "company-manager-details";
-    }
-
-    @PostMapping("/company-manager-details")
-    public String editCompanyManager(@RequestParam("id") Long id,
-                              @Valid PersonDTO personDTO,
-                              BindingResult bindingResult,
-                              RedirectAttributes rAtt,
-                              Model model) {
-
-        personDTO.setId(id);
-
-        if (bindingResult.hasErrors()) {
-            model.addAttribute(personDTO);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
-
-            return "company-manager-details";
-        }
-
-//        boolean isChangedCompanyName = !companyDTO.getName().equals(companyService.findCompanyById(id).getName());
-//
-//        if (isChangedCompanyName && companyService.isExistCompany(companyDTO.getName())) {
-//            model.addAttribute(companyDTO);
-//            model.addAttribute("allLocations", LocationType.values());
-//            model.addAttribute("allIndustries", IndustryType.values());
-//            rAtt.addFlashAttribute("isExistCompany", true);
-//            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
-//
-//            return "redirect:/company-manager-details/" + id;
-//        }
-//
-//        companyService.editCompany(companyDTO);
-        return "redirect:/add-person/" + id;
-    }
-
-    //delete company by id
+    // delete company by id
     @PostMapping("/delete-company/{id}")
     public String removeCompany(@PathVariable("id") Long id) {
 

@@ -17,11 +17,11 @@ public interface CompanyService {
     //find company by id
     CompanyDTO findCompanyById(long id);
 
+    // find company byn name
+    CompanyDTO findCompanyByName(String name);
+
     //add company
     long addCompany(AddCompanyDTO addCompanyDTO);
-
-    //add company manager
-    void addCompanyManager(PersonDTO personDTO, long id);
 
     //add contact person
     void addContactPerson(PersonDTO personDTO, long id);

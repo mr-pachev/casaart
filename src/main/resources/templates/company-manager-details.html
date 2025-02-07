@@ -18,7 +18,7 @@
                   th:method="POST">
 
                 <!--Sends category id with a POST request-->
-                <input type="hidden" th:field="${companyDTO.id}"/>
+                <input type="hidden" th:field="${personDTO.id}"/>
 
                 <div class="form-group">
                     <label for="firstName">Име</label>
@@ -82,11 +82,7 @@
                     <input type="text" th:placeholder="${personDTO.company}"
                            id="company"
                            name="company"
-                           th:field="*{company}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Въведи компания.
-                    </p>
+                           readonly>
                 </div>
                 <button type="submit" class="register">Запази</button>
             </form>
