@@ -62,7 +62,7 @@ public class CompanyServiceImpl implements CompanyService {
         return mapCompanyToCompanyDTO(company);
     }
 
-    // find company byn name
+    // find company by name
     @Override
     public CompanyDTO findCompanyByName(String name) {
         CompanyDTO companyDTO = mapCompanyToCompanyDTO(companyRepository.findByName(name).get());

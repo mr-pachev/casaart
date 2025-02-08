@@ -103,7 +103,8 @@ public class CompanyManagerController {
 
         companyManagerService.editCompanyManager(personDTO);
 
-        long companyId = companyService.findCompanyByName(personDTO.getCompany()).getId();
-        return "redirect:/add-person/" + companyId;
+        CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany());
+
+        return "redirect:/add-person/" + findCompany.getId();
     }
 }
