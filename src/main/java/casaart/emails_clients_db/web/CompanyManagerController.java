@@ -86,13 +86,10 @@ public class CompanyManagerController {
     }
 
     @PostMapping("/company-manager-details")
-    public String editCompanyManager(@RequestParam("id") Long id,
-                                     @Valid PersonDTO personDTO,
+    public String editCompanyManager(@Valid PersonDTO personDTO,
                                      BindingResult bindingResult,
                                      RedirectAttributes rAtt,
                                      Model model) {
-
-        personDTO.setId(id);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute(personDTO);
@@ -103,7 +100,7 @@ public class CompanyManagerController {
 
         companyManagerService.editCompanyManager(personDTO);
 
-        CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany());
+        CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany().trim().replaceAll(",$", ""));
 
         return "redirect:/add-person/" + findCompany.getId();
     }
