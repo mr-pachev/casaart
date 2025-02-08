@@ -3,7 +3,6 @@ package casaart.emails_clients_db.web;
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
-import casaart.emails_clients_db.model.dto.ProviderDTO;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
 import casaart.emails_clients_db.service.CompanyManagerService;
@@ -209,9 +208,9 @@ public class CompanyController {
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("isExistCompany", true);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.companyDTO", bindingResult);
 
-            return "redirect:/company-details/" + id;
+            return "company-details";
         }
 
         companyService.editCompany(companyDTO);

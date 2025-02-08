@@ -18,6 +18,7 @@ public class PersonDTO {
     @Size(min = 2, max = 30)
     private String lastName;
 
+    @NotBlank
     @Email
     private String email;
 

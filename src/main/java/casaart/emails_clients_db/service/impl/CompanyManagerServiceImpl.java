@@ -47,7 +47,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
 
     // add company manager
     @Override
-    @Transactional
+//    @Transactional
     public void addCompanyManager(PersonDTO personDTO, long companyId) {
         Company company = companyRepository.findById(companyId).get();
 
