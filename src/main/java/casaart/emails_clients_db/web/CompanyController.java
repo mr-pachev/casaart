@@ -141,8 +141,8 @@ public class CompanyController {
 
         if (isExistPerson) {
             model.addAttribute("companyDTO", companyDTO);
-            model.addAttribute("isExist", true);
             model.addAttribute("personDTO", personDTO);
+            model.addAttribute("isExist", true);
             model.addAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
 
             return "add-contact-person";
@@ -152,8 +152,8 @@ public class CompanyController {
 
         if (isExistPersonLikeManager) {
             model.addAttribute("companyDTO", companyDTO);
-            model.addAttribute("isExistLikeManager", true);
             model.addAttribute("personDTO", personDTO);
+            model.addAttribute("isExistLikeManager", true);
             model.addAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
 
             return "add-contact-person";
@@ -179,6 +179,7 @@ public class CompanyController {
         model.addAttribute("companyDTO", companyDTO);
         model.addAttribute("allLocations", LocationType.values());
         model.addAttribute("allIndustries", IndustryType.values());
+        model.addAttribute("contactsPersons", companyDTO.getContactPerson());
 
         return "company-details";
     }
@@ -196,6 +197,7 @@ public class CompanyController {
             rAtt.addFlashAttribute("companyDTO", companyDTO);
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
+            model.addAttribute("contactsPersons", companyDTO.getContactPerson());
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
 
             return "company-details";
@@ -207,6 +209,7 @@ public class CompanyController {
             model.addAttribute("companyDTO", companyDTO);
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
+            model.addAttribute("contactsPersons", companyDTO.getContactPerson());
             model.addAttribute("isExistCompany", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.companyDTO", bindingResult);
 
