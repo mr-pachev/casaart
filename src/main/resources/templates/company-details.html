@@ -103,7 +103,7 @@
                         Избери регион.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-group" th:if="${companyDTO.companyManager} != null">
                     <label for="companyManager">Управител</label>
                     <input type="text" th:placeholder="*{companyManager}"
                            id="companyManager"
@@ -114,7 +114,7 @@
                 <button type="submit" class="register">Запази</button>
             </form>
             <br>
-            <div class="action-buttons">
+            <div class="action-buttons" th:if="${companyDTO.companyManager} != null">
                 <form th:method="POST"
                       th:action="@{/company-manager-details/{id}(id=*{id})}">
                     <button type="submit" class="edit-button">Промяна управител</button>
