@@ -28,7 +28,7 @@ public class CompanyDTO {
     @NotBlank
     private String locationType;
 
-    private List<PersonDTO> contactPerson = new ArrayList<>();
+    private List<String> contactPerson = new ArrayList<>();
 
     private String companyManager;
 
@@ -90,11 +90,11 @@ public class CompanyDTO {
         this.locationType = locationType;
     }
 
-    public List<PersonDTO> getContactPerson() {
+    public List<String> getContactPerson() {
         return contactPerson;
     }
 
-    public void setContactPerson(List<PersonDTO> contactPerson) {
+    public void setContactPerson(List<String> contactPerson) {
         this.contactPerson = contactPerson;
     }
 

@@ -151,8 +151,8 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setEmail(company.getEmail());
         companyDTO.setLocationType(company.getLocationType().name());
 
-        List<PersonDTO> contactPersons = company.getContactPersons().stream()
-                .map(contactPerson -> mapper.map(contactPerson, PersonDTO.class))
+        List<String> contactPersons = company.getContactPersons().stream()
+                .map(ContactPerson::getFullName)
                 .collect(Collectors.toList());
 
         companyDTO.setContactPerson(contactPersons);

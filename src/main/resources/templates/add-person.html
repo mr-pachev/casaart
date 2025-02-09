@@ -39,7 +39,7 @@
             <td>
                 <ul>
                     <li th:each="contact : ${companyDTO.getContactPerson()}"
-                        th:text="${contact.getFullName()}">Лице за контакт
+                        th:text="${contact}">Лице за контакт
                     </li>
                 </ul>
             </td>

@@ -43,7 +43,7 @@
             <td>
                 <ul>
                     <li th:each="contact : ${company.getContactPerson()}"
-                        th:text="${contact.getFullName()}">Лице за контакт</li>
+                        th:text="${contact}">Лице за контакт</li>
                 </ul>
             </td>
             <td th:if="${company.companyManager != null}"
