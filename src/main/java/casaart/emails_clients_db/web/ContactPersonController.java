@@ -95,7 +95,7 @@ public class ContactPersonController {
         }
 
         personDTO.setCompany(companyDTO.getName());
-        companyService.addContactPerson(personDTO, id);
+        contactPersonService.addContactPerson(personDTO, id);
 
         return "redirect:/add-person/" + id;
     }

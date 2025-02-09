@@ -85,17 +85,6 @@ public class CompanyServiceImpl implements CompanyService {
         return company.getId();
     }
 
-    // add contact person
-    @Override
-    public void addContactPerson(PersonDTO personDTO, long companyId) {
-        Company company = companyRepository.findById(companyId).get();
-
-        ContactPerson contactPerson = personDTOMapToContactPerson(personDTO);
-        contactPerson.setCompany(company);
-
-        contactPersonRepository.save(contactPerson);
-    }
-
     // edit company
     @Override
     public void editCompany(CompanyDTO companyDTO) {
@@ -169,22 +158,5 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setIndustries(industries);
 
         return companyDTO;
-    }
-
-    // PersonDTO map to ContactPerson
-    ContactPerson personDTOMapToContactPerson(PersonDTO personDTO) {
-        ContactPerson contactPerson = new ContactPerson();
-
-        contactPerson.setId(null);
-        contactPerson.setFirstName(personDTO.getFirstName());
-        if (personDTO.getMiddleName() != null) {
-            contactPerson.setMiddleName(personDTO.getMiddleName());
-        }
-        contactPerson.setLastName(personDTO.getLastName());
-        contactPerson.setEmail(personDTO.getEmail());
-        contactPerson.setPhoneNumber(personDTO.getPhoneNumber());
-
-
-        return contactPerson;
     }
 }

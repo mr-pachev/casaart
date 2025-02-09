@@ -6,4 +6,7 @@ public interface ContactPersonService {
 
     // check is exist contact person
     boolean isExistContactPerson(PersonDTO personDTO);
+
+    //add contact person
+    void addContactPerson(PersonDTO personDTO, long id);
 }
