@@ -99,6 +99,17 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         companyManagerRepository.save(companyManager);
     }
 
+    //delete company manager
+    @Override
+    public void removeCompanyManager(long id) {
+        Company company = companyRepository.findById(id).get();
+
+        companyManagerRepository.deleteById(company.getId());
+
+        company.setCompanyManager(null);
+        companyRepository.save(company);
+    }
+
     // PersonDTO map to CompanyManager
     CompanyManager personDTOMapToCompanyManager(PersonDTO personDTO) {
         CompanyManager companyManager = new CompanyManager();

@@ -18,4 +18,7 @@ public interface CompanyManagerService {
 
     // edit company manager
     void editCompanyManager(PersonDTO personDTO);
+
+    //delete company manager
+    void removeCompanyManager(long id);
 }

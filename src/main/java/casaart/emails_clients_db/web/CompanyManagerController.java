@@ -109,7 +109,7 @@ public class CompanyManagerController {
     @PostMapping("/delete-company-manager/{id}")
     public String removeCompanyManager(@PathVariable("id") Long id) {
 
-        companyService.removeCompany(id);
+        companyManagerService.removeCompanyManager(id);
 
         return "redirect:/add-person/" + id;
     }
