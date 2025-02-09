@@ -8,6 +8,7 @@ import casaart.emails_clients_db.repository.CompanyManagerRepository;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.ContactPersonRepository;
 import casaart.emails_clients_db.service.CompanyManagerService;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,12 +103,23 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     //delete company manager
     @Override
     public void removeCompanyManager(long id) {
-        Company company = companyRepository.findById(id).get();
+        Company company = companyRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Компания с id " + id + " не е намерена."));
 
-        companyManagerRepository.deleteById(company.getId());
+        // Ако company има CompanyManager, запазете временно неговото id
+        Long companyManagerId = null;
+        if (company.getCompanyManager() != null) {
+            companyManagerId = company.getCompanyManager().getId();
+        }
 
+        // Откачете CompanyManager от компанията
         company.setCompanyManager(null);
         companyRepository.save(company);
+
+        // Изтрийте CompanyManager, ако съществува
+        if (companyManagerId != null) {
+            companyManagerRepository.deleteById(companyManagerId);
+        }
     }
 
     // PersonDTO map to CompanyManager
