@@ -24,7 +24,7 @@
                     <input type="text"
                            id="name"
                            name="name"
-                           th:field="${companyDTO.name}"
+                           th:field="*{name}"
                            th:errorclass="is-invalid">
                     <p class="invalid-feedback errors alert alert-danger">
                         Името трябва да се състои от 2 до 50 букви.
@@ -38,7 +38,7 @@
                     <select class="form-control"
                             id="industries"
                             name="industries"
-                            th:field="${companyDTO.industries}"
+                            th:field="*{industries}"
                             th:errorclass="is-invalid"
                             multiple> <!-- Позволява избор на няколко стойности -->
                         <option th:each="industry : ${allIndustries}"
@@ -56,7 +56,7 @@
                     <input type="text"
                            id="address"
                            name="address"
-                           th:field="${companyDTO.address}"
+                           th:field="*{address}"
                            th:errorclass="is-invalid">
                     <p class="invalid-feedback errors alert alert-danger">
                         Въведете адрес.
@@ -67,7 +67,7 @@
                     <input type="text"
                            id="phoneNumber"
                            name="phoneNumber"
-                           th:field="${companyDTO.phoneNumber}"
+                           th:field="*{phoneNumber}"
                            th:errorclass="is-invalid"
                            placeholder="088XXXXXXX">
                     <p class="invalid-feedback errors alert alert-danger">
@@ -79,7 +79,7 @@
                     <input type="email"
                            id="email"
                            name="email"
-                           th:field="${companyDTO.email}"
+                           th:field="*{email}"
                            th:errorclass="is-invalid">
                     <p class="invalid-feedback errors alert alert-danger">
                         Въведи имейл адрес.
@@ -90,7 +90,7 @@
                     <select class="form-control"
                             id="locationType"
                             name="locationType"
-                            th:field="${companyDTO.locationType}"
+                            th:field="*{locationType}"
                             th:errorclass="is-invalid">
                         <option value="">-- Избери --</option>
                         <option th:each="located: ${allLocations}"
@@ -103,19 +103,20 @@
                         Избери регион.
                     </p>
                 </div>
+                <div class="form-group">
+                    <label for="companyManager">Управител</label>
+                    <input type="text"
+                           id="companyManager"
+                           name="companyManager"
+                           th:field="*{companyManager}"
+                           readonly>
+                </div>
                 <button type="submit" class="register">Запази</button>
             </form>
-            <div class="form-group">
-                <label th:for="companyManagerr">Управител</label>
-                <input type="text" th:placeholder="${companyDTO.getCompanyManager().fullName}"
-                       id="companyManager"
-                       name="companyManager"
-                       readonly>
-                <form th:method="POST"
-                      th:action="@{/company-manager-details/{id}(id=${companyDTO.getCompanyManager().id})}">
-                    <button type="submit" class="edit-button">Промяна управител</button>
-                </form>
-            </div>
+            <!--            <form th:method="POST"-->
+            <!--                  th:action="@{/company-manager-details/{id}(id=${companyDTO.getCompanyManager().id})}">-->
+            <!--                <button type="submit" class="edit-button">Промяна управител</button>-->
+            <!--            </form>-->
         </div>
     </div>
 </main>

@@ -159,7 +159,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         if (company.getCompanyManager() != null) {
             PersonDTO companyManager = mapper.map(company.getCompanyManager(), PersonDTO.class);
-            companyDTO.setCompanyManager(companyManager);
+            companyDTO.setCompanyManager(companyManager.getFullName());
         }
 
         List<String> industries = company.getIndustryTypes().stream()

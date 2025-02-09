@@ -44,9 +44,9 @@
                 </ul>
             </td>
             <td th:if="${companyDTO.companyManager != null}"
-                th:text="${companyDTO.companyManager.getFullName()}">Управител
+                th:text="${companyDTO.companyManager}">Управител
             </td>
-            <td th:if="${companyDTO.companyManager == null}">—</td>
+            <td th:if="${companyDTO.companyManager == null}">-</td>
             <td>
                 <ul>
                     <li th:each="industry : ${companyDTO.industries}"

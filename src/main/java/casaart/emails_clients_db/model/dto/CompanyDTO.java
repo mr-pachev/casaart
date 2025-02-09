@@ -30,7 +30,7 @@ public class CompanyDTO {
 
     private List<PersonDTO> contactPerson = new ArrayList<>();
 
-    private PersonDTO companyManager;
+    private String companyManager;
 
     private List<String> industries;
 
@@ -98,11 +98,11 @@ public class CompanyDTO {
         this.contactPerson = contactPerson;
     }
 
-    public PersonDTO getCompanyManager() {
+    public String getCompanyManager() {
         return companyManager;
     }
 
-    public void setCompanyManager(PersonDTO companyManager) {
+    public void setCompanyManager(String companyManager) {
         this.companyManager = companyManager;
     }
 

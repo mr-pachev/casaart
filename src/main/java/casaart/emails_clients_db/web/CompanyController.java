@@ -176,7 +176,7 @@ public class CompanyController {
     public String fillEditCompanyForm(@PathVariable("id") Long id, Model model) {
         CompanyDTO companyDTO = companyService.findCompanyById(id);
 
-        model.addAttribute(companyDTO);
+        model.addAttribute("companyDTO", companyDTO);
         model.addAttribute("allLocations", LocationType.values());
         model.addAttribute("allIndustries", IndustryType.values());
 
@@ -185,15 +185,15 @@ public class CompanyController {
 
     @PostMapping("/company-details")
     public String editCompany(@RequestParam("id") Long id,
-                               @Valid CompanyDTO companyDTO,
-                               BindingResult bindingResult,
-                               RedirectAttributes rAtt,
-                               Model model) {
+                              @Valid CompanyDTO companyDTO,
+                              BindingResult bindingResult,
+                              RedirectAttributes rAtt,
+                              Model model) {
 
         companyDTO.setId(id);
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute(companyDTO);
+            rAtt.addFlashAttribute("companyDTO", companyDTO);
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
@@ -204,7 +204,7 @@ public class CompanyController {
         boolean isChangedCompanyName = !companyDTO.getName().equals(companyService.findCompanyById(id).getName());
 
         if (isChangedCompanyName && companyService.isExistCompany(companyDTO.getName())) {
-            model.addAttribute(companyDTO);
+            rAtt.addFlashAttribute("companyDTO", companyDTO);
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("isExistCompany", true);
@@ -216,6 +216,7 @@ public class CompanyController {
         companyService.editCompany(companyDTO);
         return "redirect:/add-person/" + id;
     }
+
 
     // delete company by id
     @PostMapping("/delete-company/{id}")
