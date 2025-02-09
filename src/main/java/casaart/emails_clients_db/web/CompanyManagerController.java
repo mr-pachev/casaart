@@ -78,7 +78,7 @@ public class CompanyManagerController {
 
     @GetMapping("/company-manager-details/{id}")
     public String fillEditCompanyManagerForm(@PathVariable("id") Long id, Model model) {
-        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        PersonDTO personDTO = companyManagerService.findCompanyManagerByCompany(id);
 
         model.addAttribute(personDTO);
 
@@ -103,5 +103,14 @@ public class CompanyManagerController {
         CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany().trim().replaceAll(",$", ""));
 
         return "redirect:/add-person/" + findCompany.getId();
+    }
+
+    // delete company manager
+    @PostMapping("/delete-company-manager/{id}")
+    public String removeCompanyManager(@PathVariable("id") Long id) {
+
+        companyService.removeCompany(id);
+
+        return "redirect:/add-person/" + id;
     }
 }

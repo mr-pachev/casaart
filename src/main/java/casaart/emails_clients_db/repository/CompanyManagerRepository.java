@@ -13,4 +13,5 @@ public interface CompanyManagerRepository extends JpaRepository<CompanyManager, 
                                                                      String phoneNumber);
 
    CompanyManager findById(long id);
+   CompanyManager findByCompanyId(long id);
 }

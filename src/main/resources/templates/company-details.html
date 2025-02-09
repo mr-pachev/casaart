@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="bg" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -113,12 +113,18 @@
                 </div>
                 <button type="submit" class="register">Запази</button>
             </form>
-            <!--            <form th:method="POST"-->
-            <!--                  th:action="@{/company-manager-details/{id}(id=${companyDTO.getCompanyManager().id})}">-->
-            <!--                <button type="submit" class="edit-button">Промяна управител</button>-->
-            <!--            </form>-->
+            <br>
+            <div class="action-buttons">
+                <form th:method="POST"
+                      th:action="@{/company-manager-details/{id}(id=*{id})}">
+                    <button type="submit" class="edit-button">Промяна управител</button>
+                </form>
+                <form th:method="POST"
+                      th:action="@{/delete-company-manager/{id}(id=*{id})}">
+                    <button type="submit" class="delete-button">Премахване управител</button>
+                </form>
+            </div>
         </div>
-    </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>

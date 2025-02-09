@@ -45,6 +45,17 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         return personDTO;
     }
 
+    // find company manager by company id
+    @Override
+    public PersonDTO findCompanyManagerByCompany(long id) {
+        CompanyManager companyManager = companyManagerRepository.findByCompanyId(id);
+
+        PersonDTO personDTO = mapper.map(companyManager, PersonDTO.class);
+        personDTO.setCompany(companyManager.getCompany().getName());
+
+        return personDTO;
+    }
+
     // add company manager
     @Override
     @Transactional
