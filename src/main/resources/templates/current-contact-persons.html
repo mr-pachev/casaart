@@ -13,7 +13,10 @@
 <main>
     <h1>Контактни лица</h1>
     <div class="buttons">
-        <a th:href="@{/add-company}" class="register">Добави</a>
+        <form th:method="POST"
+              th:action="@{/add-contact-person-with-com-id/{id}(id=${companyDTO.id})}">
+            <button type="submit" class="register">Добави</button>
+        </form>
     </div>
     <table id="category-table">
         <thead>

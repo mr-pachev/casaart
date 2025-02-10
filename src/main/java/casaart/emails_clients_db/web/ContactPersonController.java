@@ -43,19 +43,21 @@ public class ContactPersonController {
     }
 
     //view contact persons
-    @PostMapping("/contact-persons/{id}")
+    @PostMapping("/current-contact-persons/{id}")
     public String referenceToViewContactPersonsForm(@PathVariable("id") Long id) {
 
-        return "redirect:/contact-persons/" + id;
+        return "redirect:/current-contact-persons/" + id;
     }
 
-    @GetMapping("/contact-persons/{id}")
+    @GetMapping("/current-contact-persons/{id}")
     public String fillEditContactPersonsForm(@PathVariable("id") Long id, Model model) {
         List<PersonDTO> contactPersonsDTOS = contactPersonService.allContactPersons(id);
+        CompanyDTO companyDTO = companyService.findCompanyById(id);
 
         model.addAttribute("contactPersons", contactPersonsDTOS);
+        model.addAttribute("companyDTO", companyDTO);
 
-        return "contact-persons";
+        return "current-contact-persons";
     }
 
     // add contact person
