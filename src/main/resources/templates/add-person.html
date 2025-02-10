@@ -76,15 +76,12 @@
     </table>
 
     <div class="buttons">
-        <!-- Форма за добавяне на управител -->
         <form th:method="POST"
               th:if="${companyDTO.companyManager == null}"
               th:action="@{/add-company-manager-with-com-id/{id}(id=${companyDTO.id})}"
               style="display: inline;">
             <button type="submit" class="register">Добави управител</button>
         </form>
-
-        <!-- Форма за добавяне на контактно лице -->
         <form th:method="POST"
               th:action="@{/add-contact-person-with-com-id/{id}(id=${companyDTO.id})}"
               style="display: inline;">
