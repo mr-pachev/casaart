@@ -87,12 +87,12 @@
                 </div>
                 <div class="form-group">
                     <label th:for="company">Фирма</label>
-                    <input type="text" th:placeholder="${companyDTO.name}"
+                    <input type="text" th:placeholder="*{company}"
                            id="company"
                            name="company"
                            readonly>
                 </div>
-                <button type="submit" class="btn btn-success">Добави</button>
+                <button type="submit" class="btn btn-success">Запази</button>
             </form>
         </div>
     </div>

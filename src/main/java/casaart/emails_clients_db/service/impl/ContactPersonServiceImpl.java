@@ -40,6 +40,17 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         return contactPersonsDTOS;
     }
 
+    // find contact person by id
+    @Override
+    public PersonDTO getContactPersonById(long id) {
+        ContactPerson contactPerson = contactPersonRepository.findById(id).get();
+
+        PersonDTO personDTO = mapper.map(contactPerson, PersonDTO.class);
+        personDTO.setCompany(contactPerson.getCompany().getName());
+
+        return personDTO;
+    }
+
     // check is exist contact person
     @Override
     public boolean isExistContactPerson(PersonDTO personDTO) {
@@ -57,6 +68,12 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         contactPerson.setCompany(company);
 
         contactPersonRepository.save(contactPerson);
+    }
+
+    // edit contact person
+    @Override
+    public void editContactPerson(PersonDTO personDTO) {
+
     }
 
     // PersonDTO map to ContactPerson

@@ -22,10 +22,6 @@
             <th style="width: 10%;">Лице за контакт</th>
             <th style="width: 10%;">Управител</th>
             <th style="width: 10%;">Бранш</th>
-            <th style="width: 10%;">Дата на първо обаждане</th>
-            <th style="width: 10%;">Дата на изпратен имейл</th>
-            <th style="width: 10%;">Дата на изпратено писмо</th>
-            <th style="width: 10%;">Дата на второ обаждане</th>
             <th style="width: 10%;">Действия</th>
         </tr>
         </thead>
@@ -54,10 +50,6 @@
                     </li>
                 </ul>
             </td>
-            <td th:text="${companyDTO.firstCall}">Дата на първо обаждане</td>
-            <td th:text="${companyDTO.sentEmail}">Дата на изпратен имейл</td>
-            <td th:text="${companyDTO.letterSent}">Дата на изпратено писмо</td>
-            <td th:text="${companyDTO.secondCall}">Дата на второ обаждане</td>
             <td>
                 <div class="action-buttons">
                     <form th:method="POST"

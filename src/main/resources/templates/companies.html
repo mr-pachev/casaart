@@ -26,10 +26,6 @@
             <th style="width: 10%;">Лице за контакт</th>
             <th style="width: 10%;">Управител</th>
             <th style="width: 10%;">Бранш</th>
-            <th style="width: 10%;">Дата на първо обаждане</th>
-            <th style="width: 10%;">Дата на изпратен имейл</th>
-            <th style="width: 10%;">Дата на изпратено писмо</th>
-            <th style="width: 10%;">Дата на второ обаждане</th>
             <th style="width: 10%;">Действия</th>
         </tr>
         </thead>
@@ -55,10 +51,6 @@
                         th:text="${industry}">Бранш</li>
                 </ul>
             </td>
-            <td th:text="${company.firstCall}">Дата на първо обаждане</td>
-            <td th:text="${company.sentEmail}">Дата на изпратен имейл</td>
-            <td th:text="${company.letterSent}">Дата на изпратено писмо</td>
-            <td th:text="${company.secondCall}">Дата на второ обаждане</td>
             <td>
                 <div class="action-buttons">
                     <form th:method="GET" th:action="@{/add-person/{id}(id=${company.id})}">

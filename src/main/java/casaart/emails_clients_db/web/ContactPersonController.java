@@ -117,6 +117,42 @@ public class ContactPersonController {
         personDTO.setCompany(companyDTO.getName());
         contactPersonService.addContactPerson(personDTO, id);
 
-        return "redirect:/add-person/" + id;
+        return "redirect:/current-contact-persons/" + id;
+    }
+
+    // edit contact person
+    @PostMapping("/contact-person-details/{id}")
+    public String referenceToEditContactPersonForm(@PathVariable("id") Long id) {
+
+        return "redirect:/contact-person-details/" + id;
+    }
+
+    @GetMapping("/contact-person-details/{id}")
+    public String fillEditCompanyManagerForm(@PathVariable("id") Long id, Model model) {
+        PersonDTO personDTO = contactPersonService.getContactPersonById(id);
+
+        model.addAttribute(personDTO);
+
+        return "contact-person-details";
+    }
+
+    @PostMapping("/contact-person-details")
+    public String editContactPerson(@Valid PersonDTO personDTO,
+                                     BindingResult bindingResult,
+                                     RedirectAttributes rAtt,
+                                     Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(personDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
+
+            return "contact-person-details";
+        }
+
+        companyManagerService.editCompanyManager(personDTO);
+
+        CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany().trim().replaceAll(",$", ""));
+
+        return "redirect:/current-contact-persons/" + findCompany.getId();
     }
 }
