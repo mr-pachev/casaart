@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 public class ContactPersonController {
     private final CompanyService companyService;
@@ -38,6 +40,22 @@ public class ContactPersonController {
     @ModelAttribute("personDTO")
     public PersonDTO personDTO() {
         return new PersonDTO();
+    }
+
+    //view contact persons
+    @PostMapping("/contact-persons/{id}")
+    public String referenceToViewContactPersonsForm(@PathVariable("id") Long id) {
+
+        return "redirect:/contact-persons/" + id;
+    }
+
+    @GetMapping("/contact-persons/{id}")
+    public String fillEditContactPersonsForm(@PathVariable("id") Long id, Model model) {
+        List<PersonDTO> contactPersonsDTOS = contactPersonService.allContactPersons(id);
+
+        model.addAttribute("contactPersons", contactPersonsDTOS);
+
+        return "contact-persons";
     }
 
     // add contact person

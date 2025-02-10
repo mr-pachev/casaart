@@ -2,6 +2,8 @@ package casaart.emails_clients_db.model.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "contacts_persons")
 public class ContactPerson extends BaseEntity{
@@ -23,6 +25,18 @@ public class ContactPerson extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
+
+    @Column(name = "first_call")
+    private LocalDate firstCall;
+
+    @Column(name = "sent_email")
+    private LocalDate sentEmail;
+
+    @Column(name = "letter_sent")
+    private LocalDate letterSent;
+
+    @Column(name = "second_call")
+    private LocalDate secondCall;
 
     public String getFullName() {
         StringBuilder sb = new StringBuilder();
@@ -82,5 +96,37 @@ public class ContactPerson extends BaseEntity{
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public LocalDate getFirstCall() {
+        return firstCall;
+    }
+
+    public void setFirstCall(LocalDate firstCall) {
+        this.firstCall = firstCall;
+    }
+
+    public LocalDate getSentEmail() {
+        return sentEmail;
+    }
+
+    public void setSentEmail(LocalDate sentEmail) {
+        this.sentEmail = sentEmail;
+    }
+
+    public LocalDate getLetterSent() {
+        return letterSent;
+    }
+
+    public void setLetterSent(LocalDate letterSent) {
+        this.letterSent = letterSent;
+    }
+
+    public LocalDate getSecondCall() {
+        return secondCall;
+    }
+
+    public void setSecondCall(LocalDate secondCall) {
+        this.secondCall = secondCall;
     }
 }

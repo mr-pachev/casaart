@@ -6,16 +6,38 @@ import casaart.emails_clients_db.model.entity.ContactPerson;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.ContactPersonRepository;
 import casaart.emails_clients_db.service.ContactPersonService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ContactPersonServiceImpl implements ContactPersonService {
     private final ContactPersonRepository contactPersonRepository;
     private final CompanyRepository companyRepository;
 
-    public ContactPersonServiceImpl(ContactPersonRepository contactPersonRepository, CompanyRepository companyRepository) {
+    private final ModelMapper mapper;
+
+    public ContactPersonServiceImpl(ContactPersonRepository contactPersonRepository, CompanyRepository companyRepository, ModelMapper mapper) {
         this.contactPersonRepository = contactPersonRepository;
         this.companyRepository = companyRepository;
+        this.mapper = mapper;
+    }
+
+    //all contact persons by company id
+    @Override
+    public List<PersonDTO> allContactPersons(long id) {
+        List<ContactPerson> contactPersonList = contactPersonRepository.findAllByCompanyId(id);
+        List<PersonDTO> contactPersonsDTOS = new ArrayList<>();
+
+        for (ContactPerson person : contactPersonList) {
+            PersonDTO contactPersonDTO = mapper.map(person, PersonDTO.class);
+            contactPersonDTO.setCompany(person.getCompany().getName());
+            contactPersonsDTOS.add(contactPersonDTO);
+        }
+
+        return contactPersonsDTOS;
     }
 
     // check is exist contact person

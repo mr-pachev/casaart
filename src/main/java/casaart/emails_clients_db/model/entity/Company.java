@@ -27,18 +27,6 @@ public class Company extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private LocationType locationType;
 
-    @Column(name = "first_call")
-    private LocalDate firstCall;
-
-    @Column(name = "sent_email")
-    private LocalDate sentEmail;
-
-    @Column(name = "letter_sent")
-    private LocalDate letterSent;
-
-    @Column(name = "second_call")
-    private LocalDate secondCall;
-
     @OneToMany(mappedBy = "company", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ContactPerson> contactPersons = new ArrayList<>();
 
@@ -89,38 +77,6 @@ public class Company extends BaseEntity{
 
     public void setLocationType(LocationType locationType) {
         this.locationType = locationType;
-    }
-
-    public LocalDate getFirstCall() {
-        return firstCall;
-    }
-
-    public void setFirstCall(LocalDate firstCall) {
-        this.firstCall = firstCall;
-    }
-
-    public LocalDate getSentEmail() {
-        return sentEmail;
-    }
-
-    public void setSentEmail(LocalDate sentEmail) {
-        this.sentEmail = sentEmail;
-    }
-
-    public LocalDate getLetterSent() {
-        return letterSent;
-    }
-
-    public void setLetterSent(LocalDate letterSent) {
-        this.letterSent = letterSent;
-    }
-
-    public LocalDate getSecondCall() {
-        return secondCall;
-    }
-
-    public void setSecondCall(LocalDate secondCall) {
-        this.secondCall = secondCall;
     }
 
     public List<ContactPerson> getContactPersons() {
