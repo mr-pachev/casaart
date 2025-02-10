@@ -32,9 +32,7 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         List<PersonDTO> contactPersonsDTOS = new ArrayList<>();
 
         for (ContactPerson person : contactPersonList) {
-            PersonDTO contactPersonDTO = mapper.map(person, PersonDTO.class);
-            contactPersonDTO.setCompany(person.getCompany().getName());
-            contactPersonsDTOS.add(contactPersonDTO);
+            contactPersonsDTOS.add(contactPersonMapToPersonDTO(person));
         }
 
         return contactPersonsDTOS;
@@ -73,7 +71,17 @@ public class ContactPersonServiceImpl implements ContactPersonService {
     // edit contact person
     @Override
     public void editContactPerson(PersonDTO personDTO) {
+        ContactPerson contactPerson = contactPersonRepository.findById(personDTO.getId()).get();
 
+        contactPerson.setFirstName(personDTO.getFirstName());
+        if (personDTO.getMiddleName() != null) {
+            contactPerson.setMiddleName(personDTO.getMiddleName());
+        }
+        contactPerson.setLastName(personDTO.getLastName());
+        contactPerson.setEmail(personDTO.getEmail());
+        contactPerson.setPhoneNumber(personDTO.getPhoneNumber());
+
+        contactPersonRepository.save(contactPerson);
     }
 
     // PersonDTO map to ContactPerson
@@ -89,7 +97,14 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         contactPerson.setEmail(personDTO.getEmail());
         contactPerson.setPhoneNumber(personDTO.getPhoneNumber());
 
-
         return contactPerson;
+    }
+
+    // ContactPerson map to PersonDTO
+    PersonDTO contactPersonMapToPersonDTO(ContactPerson contactPerson) {
+        PersonDTO contactPersonDTO = mapper.map(contactPerson, PersonDTO.class);
+        contactPersonDTO.setCompany(contactPerson.getCompany().getName());
+
+        return contactPersonDTO;
     }
 }
