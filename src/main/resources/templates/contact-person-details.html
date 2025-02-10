@@ -20,8 +20,8 @@
                 <input type="hidden" th:field="${personDTO.id}"/>
                 <input type="hidden" th:field="${personDTO.company}"/>
 
-                <div class="bg-danger text-center" th:if="${isExist}">
-                    <p class="d-block">Вече съществува лице за контакт с това име и телефон</p>
+                <div class="bg-danger text-center" th:if="${isExistContactPerson}">
+                    <p class="d-block">Вече е добавено лице за контакт с това име и телефон</p>
                 </div>
                 <div class="bg-danger text-center" th:if="${isExistLikeManager}">
                     <p class="d-block">Лицето е добавено, като управител</p>

@@ -149,7 +149,26 @@ public class ContactPersonController {
             return "contact-person-details";
         }
 
-        companyManagerService.editCompanyManager(personDTO);
+        boolean isExist = contactPersonService.isExistContactPerson(personDTO);
+        boolean isExistPersonLikeManager = companyManagerService.isExistCompanyManager(personDTO);
+
+        if (isExist) {
+            model.addAttribute("isExistContactPerson", true);
+            rAtt.addFlashAttribute(personDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
+
+            return "contact-person-details";
+        }
+
+        if (isExistPersonLikeManager) {
+            model.addAttribute("isExistLikeManager", true);
+            rAtt.addFlashAttribute(personDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
+
+            return "contact-person-details";
+        }
+
+        contactPersonService.editContactPerson(personDTO);
 
         CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany().trim().replaceAll(",$", ""));
 
