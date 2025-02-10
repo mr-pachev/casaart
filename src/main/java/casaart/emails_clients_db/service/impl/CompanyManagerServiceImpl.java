@@ -100,7 +100,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         companyManagerRepository.save(companyManager);
     }
 
-    //delete company manager
+    // delete company manager
     @Override
     public void removeCompanyManager(long id) {
         Company company = companyRepository.findById(id)

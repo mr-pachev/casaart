@@ -1,5 +1,6 @@
 package casaart.emails_clients_db.service;
 
+import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 
 import java.util.List;
@@ -19,4 +20,7 @@ public interface ContactPersonService {
 
     // edit contact person
     void editContactPerson(PersonDTO personDTO);
+
+    // delete contact person by id
+    void removeContactPerson(long id);
 }

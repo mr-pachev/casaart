@@ -53,7 +53,7 @@
                         <button type="submit" class="edit-button">Промяна</button>
                     </form>
                     <form th:method="POST"
-                          th:action="@{/delete-company/{id}(id=${companyDTO.id})}"
+                          th:action="@{/delete-contact-person/{id}(id=${person.id})}"
                           sec:authorize="hasRole('Admin')">
                         <button type="submit" class="delete-button">Премахване</button>
                     </form>

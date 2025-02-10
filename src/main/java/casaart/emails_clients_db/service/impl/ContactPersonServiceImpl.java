@@ -1,13 +1,16 @@
 package casaart.emails_clients_db.service.impl;
 
+import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Company;
 import casaart.emails_clients_db.model.entity.ContactPerson;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.ContactPersonRepository;
 import casaart.emails_clients_db.service.ContactPersonService;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,7 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         this.mapper = mapper;
     }
 
-    //all contact persons by company id
+    // all contact persons by company id
     @Override
     public List<PersonDTO> allContactPersons(long id) {
         List<ContactPerson> contactPersonList = contactPersonRepository.findAllByCompanyId(id);
@@ -82,6 +85,20 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         contactPerson.setPhoneNumber(personDTO.getPhoneNumber());
 
         contactPersonRepository.save(contactPerson);
+    }
+
+    // delete contact person by id
+    @Override
+    @Transactional
+    public void removeContactPerson(long id) {
+        ContactPerson contactPerson = contactPersonRepository.findById(id).get();
+        Company company = companyRepository.findByName(contactPerson.getCompany().getName()).get();
+
+        company.getContactPersons().remove(contactPerson);
+
+        companyRepository.save(company);
+
+        contactPersonRepository.delete(contactPerson);
     }
 
     // PersonDTO map to ContactPerson

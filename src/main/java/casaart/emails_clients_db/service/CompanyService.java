@@ -17,7 +17,7 @@ public interface CompanyService {
     //find company by id
     CompanyDTO findCompanyById(long id);
 
-    // find company byn name
+    // find company by name
     CompanyDTO findCompanyByName(String name);
 
     //add company

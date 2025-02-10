@@ -174,4 +174,15 @@ public class ContactPersonController {
 
         return "redirect:/current-contact-persons/" + findCompany.getId();
     }
+
+    // delete contact person
+    @PostMapping("/delete-contact-person/{id}")
+    public String removeContactPerson(@PathVariable("id") Long id) {
+        PersonDTO contactPerson = contactPersonService.getContactPersonById(id);
+        CompanyDTO companyDTO = companyService.findCompanyByName(contactPerson.getCompany());
+
+        contactPersonService.removeContactPerson(id);
+
+        return "redirect:/current-contact-persons/" + companyDTO.getId();
+    }
 }

@@ -1,5 +1,6 @@
 package casaart.emails_clients_db.repository;
 
+import casaart.emails_clients_db.model.entity.Company;
 import casaart.emails_clients_db.model.entity.CompanyManager;
 import casaart.emails_clients_db.model.entity.ContactPerson;
 import org.springframework.data.jpa.repository.JpaRepository;
