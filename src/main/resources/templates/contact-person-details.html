@@ -13,9 +13,12 @@
     <div class="container-form">
         <h1>Промяна контактно лице</h1>
         <div class="add-form">
-            <form th:action="@{/add-contact-person}"
+            <form th:action="@{/contact-person-details}"
                   th:object="${personDTO}"
                   th:method="POST">
+
+                <input type="hidden" th:field="${personDTO.id}"/>
+                <input type="hidden" th:field="${personDTO.company}"/>
 
                 <div class="bg-danger text-center" th:if="${isExist}">
                     <p class="d-block">Вече съществува лице за контакт с това име и телефон</p>
@@ -23,10 +26,6 @@
                 <div class="bg-danger text-center" th:if="${isExistLikeManager}">
                     <p class="d-block">Лицето е добавено, като управител</p>
                 </div>
-
-                <!--Sends category id with a POST request-->
-                <input type="hidden" th:field="${companyDTO.id}"/>
-                <input type="hidden" th:field="${companyDTO.name}"/>
 
                 <div class="form-group">
                     <label for="firstName">Име</label>

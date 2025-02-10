@@ -143,7 +143,7 @@ public class ContactPersonController {
                                      Model model) {
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute(personDTO);
+            rAtt.addFlashAttribute(personDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
 
             return "contact-person-details";
