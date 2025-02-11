@@ -46,18 +46,33 @@
                     </li>
                 </ul>
                 <div th:unless="${company.contactPerson != null and !company.contactPerson.isEmpty()}">
-                    <form th:method="POST" th:action="@{/add-contact-person-with-com-id/{id}(id=${company.id})}" style="display: inline;">
+                    <form th:method="POST" th:action="@{/add-contact-person-with-com-id/{id}(id=${company.id})}"
+                          style="display: inline;">
                         <button type="submit" class="register">Добави</button>
                     </form>
                 </div>
             </td>
-            <td th:if="${company.companyManager != null}"
-                th:text="${company.companyManager}">Управител</td>
-            <td th:if="${company.companyManager == null}"></td>
+            <td>
+                <ul th:if="${company.companyManager != null}">
+                    <li>
+                        <span th:text="${company.companyManager}"></span>
+                        <form th:method="POST" th:action="@{/current-contact-persons/{id}(id=${company.id})}">
+                            <button type="submit" class="view-button">Виж</button>
+                        </form>
+                    </li>
+                </ul>
+                <div th:unless="${company.companyManager != null}">
+                    <form th:method="POST" th:action="@{/add-company-manager-with-com-id/{id}(id=${company.id})}"
+                          style="display: inline;">
+                        <button type="submit" class="register">Добави</button>
+                    </form>
+                </div>
+            </td>
             <td>
                 <ul>
                     <li th:each="industry : ${company.industries}"
-                        th:text="${industry}">Бранш</li>
+                        th:text="${industry}">Бранш
+                    </li>
                 </ul>
             </td>
             <td>
