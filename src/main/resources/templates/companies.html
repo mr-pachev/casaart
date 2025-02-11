@@ -37,14 +37,19 @@
             <td th:text="${company.phoneNumber}">Телефонен номер</td>
             <td th:text="${company.locationType}">Локация</td>
             <td>
-                <ul>
+                <ul th:if="${company.contactPerson != null and !company.contactPerson.isEmpty()}">
                     <li th:each="contact : ${company.getContactPerson()}">
                         <span th:text="${contact}"></span>
                         <form th:method="POST" th:action="@{/current-contact-persons/{id}(id=${company.id})}">
-                            <input type="submit" value="Виж"/>
+                            <button type="submit" class="view-button">Виж</button>
                         </form>
                     </li>
                 </ul>
+                <div th:unless="${company.contactPerson != null and !company.contactPerson.isEmpty()}">
+                    <form th:method="POST" th:action="@{/add-contact-person-with-com-id/{id}(id=${company.id})}" style="display: inline;">
+                        <button type="submit" class="register">Добави</button>
+                    </form>
+                </div>
             </td>
             <td th:if="${company.companyManager != null}"
                 th:text="${company.companyManager}">Управител</td>

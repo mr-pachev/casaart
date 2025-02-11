@@ -101,7 +101,7 @@ table td {
     height: 100%;
 }
 
-.edit-button, .delete-button {
+.edit-button, .delete-button, .view-button {
     display: inline-block;
     margin: 0;
     padding: 6px 12px;
@@ -130,6 +130,16 @@ table td {
 
 .delete-button:hover {
     background-color: #d90429;
+    color: white;
+}
+
+.view-button {
+    background-color: #fee303;
+    color: white;
+}
+
+.view-button:hover {
+    background-color: #EAE24F;
     color: white;
 }
 
