@@ -56,7 +56,7 @@
                 <ul th:if="${company.companyManager != null}">
                     <li>
                         <span th:text="${company.companyManager}"></span>
-                        <form th:method="POST" th:action="@{/current-contact-persons/{id}(id=${company.id})}">
+                        <form th:method="GET" th:action="@{/current-manager/{id}(id=${company.id})}">
                             <button type="submit" class="view-button">Виж</button>
                         </form>
                     </li>

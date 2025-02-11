@@ -31,6 +31,16 @@ public class CompanyManagerController {
         this.companyService = companyService;
     }
 
+    // view current manager
+    @GetMapping("/current-manager/{id}")
+    public String viewCurrentManagerForm(@PathVariable("id") Long id, Model model) {
+        PersonDTO personDTO = companyManagerService.findCompanyManagerByCompany(id);
+
+        model.addAttribute(personDTO);
+
+        return "current-manager";
+    }
+
     // add company manager
     @PostMapping("/add-company-manager-with-com-id/{id}")
     public String referenceToAddCompanyManagerForm(@PathVariable("id") Long id) {
