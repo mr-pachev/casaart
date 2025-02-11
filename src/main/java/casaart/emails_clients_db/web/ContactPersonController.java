@@ -149,10 +149,13 @@ public class ContactPersonController {
             return "contact-person-details";
         }
 
+        PersonDTO contactPerson = contactPersonService.getContactPersonById(personDTO.getId());
+
+        boolean isChangedName = !personDTO.getFullName().equals(contactPerson.getFullName());
         boolean isExist = contactPersonService.isExistContactPerson(personDTO);
         boolean isExistPersonLikeManager = companyManagerService.isExistCompanyManager(personDTO);
 
-        if (isExist) {
+        if (isExist && isChangedName) {
             model.addAttribute("isExistContactPerson", true);
             rAtt.addFlashAttribute(personDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
