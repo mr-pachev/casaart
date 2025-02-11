@@ -71,7 +71,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     // add company
     @Override
-    public long addCompany(AddCompanyDTO addCompanyDTO) {
+    public void addCompany(AddCompanyDTO addCompanyDTO) {
 
         Company company = mapper.map(addCompanyDTO, Company.class);
         List<IndustryType> industryTypes = new ArrayList<>();
@@ -82,7 +82,6 @@ public class CompanyServiceImpl implements CompanyService {
 
         company.setIndustryTypes(industryTypes);
         companyRepository.save(company);
-        return company.getId();
     }
 
     // edit company

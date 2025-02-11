@@ -77,7 +77,7 @@
             </td>
             <td>
                 <div class="action-buttons">
-                    <form th:method="GET" th:action="@{/add-person/{id}(id=${company.id})}">
+                    <form th:method="GET" th:action="@{/company-details/{id}(id=${company.id})}">
                         <input class="edit-button" type="submit" th:value="Промяна"/>
                     </form>
                     <form th:method="POST" th:action="@{/delete-company/{id}(id=${company.id})}"

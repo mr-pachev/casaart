@@ -21,7 +21,7 @@ public interface CompanyService {
     CompanyDTO findCompanyByName(String name);
 
     //add company
-    long addCompany(AddCompanyDTO addCompanyDTO);
+    void addCompany(AddCompanyDTO addCompanyDTO);
 
     //edit company
     void editCompany(CompanyDTO companyDTO);

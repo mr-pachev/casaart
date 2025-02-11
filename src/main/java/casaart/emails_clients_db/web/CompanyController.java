@@ -90,19 +90,9 @@ public class CompanyController {
             return "redirect:/add-company";
         }
 
-        long companyId = companyService.addCompany(addCompanyDTO);
-        return "redirect:/add-person/" + companyId;
-    }
+        companyService.addCompany(addCompanyDTO);
 
-    @GetMapping("/add-person/{id}")
-    public String fillAddContactPersonForm(@PathVariable("id") Long id, Model model) {
-        CompanyDTO companyDTO = companyService.findCompanyById(id);
-
-        model.addAttribute(companyDTO);
-        model.addAttribute("allLocations", companyDTO.getLocationType());
-        model.addAttribute("currentIndustry", companyDTO.getIndustries());
-
-        return "add-person";
+        return "redirect:/companies";
     }
 
     // edit current company
