@@ -38,8 +38,12 @@
             <td th:text="${company.locationType}">Локация</td>
             <td>
                 <ul>
-                    <li th:each="contact : ${company.getContactPerson()}"
-                        th:text="${contact}">Лице за контакт</li>
+                    <li th:each="contact : ${company.getContactPerson()}">
+                        <span th:text="${contact}"></span>
+                        <form th:method="POST" th:action="@{/current-contact-persons/{id}(id=${company.id})}">
+                            <input type="submit" value="Виж"/>
+                        </form>
+                    </li>
                 </ul>
             </td>
             <td th:if="${company.companyManager != null}"
