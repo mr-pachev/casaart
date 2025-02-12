@@ -22,7 +22,7 @@
     </div>
 
     <!-- Добавен бутон "Продажба" -->
-    <div class="buttons" sec:authorize="isAuthenticated()">
+    <div class="buttons" sec:authorize="hasRole('Admin')" >
         <a th:href="@{/sell}" class="sell-button">Продажба</a>
     </div>
 </main>
