@@ -48,6 +48,14 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDTOS;
     }
 
+    // get sorted companies
+    @Override
+    public List<CompanyDTO> sortedCompanies(String companyType) {
+
+
+        return null;
+    }
+
     // checking if company exists
     @Override
     public boolean isExistCompany(String name) {

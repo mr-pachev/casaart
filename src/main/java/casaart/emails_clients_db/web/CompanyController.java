@@ -1,6 +1,7 @@
 package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
+import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.enums.IndustryType;
@@ -52,6 +53,16 @@ public class CompanyController {
         model.addAttribute("allCompanies", companyDTOS);
 
         return "companies";
+    }
+
+    //view all sorted companies
+    @PostMapping("/sort-compnies")
+    public String sortCompanies(@RequestParam("companyType") String companyType, Model model) {
+        List<CompanyDTO> sortedCompanies = companyService.sortedCompanies(companyType);
+
+        model.addAttribute("allCompanies", sortedCompanies);
+
+        return "companies"; // Връщаме същия шаблон с актуализиран списък
     }
 
     // create new company

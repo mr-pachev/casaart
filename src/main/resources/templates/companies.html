@@ -18,6 +18,17 @@
     <div class="buttons">
         <a th:href="@{/add-company}" class="register">Добави</a>
     </div>
+    <div class="buttons">
+        <form th:method="POST" th:action="@{/sort-compnies}" style="display: inline;">
+            <select name="companyType" class="source-type-select">
+                <option value="allCompanies">-- подреди по --</option>
+                <option value="allCompanies">Всички партьори</option>
+                <option value="name">Име</option>
+                <option value="industryType">Бранш</option>
+            </select>
+            <button type="submit" class="sort-button">Сортирай</button>
+        </form>
+    </div>
     <table id="category-table">
         <thead>
         <tr>
