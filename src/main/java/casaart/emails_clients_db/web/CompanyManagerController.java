@@ -76,7 +76,7 @@ public class CompanyManagerController {
         personDTO.setCompany(companyDTO.getName());
         companyManagerService.addCompanyManager(personDTO, id);
 
-        return "redirect:/add-person/" + id;
+        return "redirect:/companies";
     }
 
     // edit company manager

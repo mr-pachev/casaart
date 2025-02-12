@@ -113,46 +113,6 @@
                 </div>
                 <button type="submit" class="register">Запази</button>
             </form>
-            <br>
-            <div class="action-buttons" th:if="${companyDTO.companyManager} != null">
-                <form th:method="POST"
-                      th:action="@{/company-manager-details/{id}(id=*{id})}">
-                    <button type="submit" class="edit-button">Промяна управител</button>
-                </form>
-                <form th:method="POST"
-                      th:action="@{/delete-company-manager/{id}(id=*{id})}">
-                    <button type="submit" class="delete-button">Премахване управител</button>
-                </form>
-            </div>
-            <br>
-            <form th:method="POST"
-                  th:action="@{/contact-person-details}"
-                  th:object="${companyDTO}">
-                <div class="form-group">
-                    <label th:for="contactPerson">Контактно лице</label>
-                    <select class="form-control"
-                            id="contactPerson"
-                            name="contactPerson"
-                            th:field="*{contactPerson}"
-                            th:errorclass="is-invalid">
-                        <option th:each="person: ${contactsPersons}"
-                                th:value="${person}"
-                                th:text="${person}"
-                                th:selected="${companyDTO.contactPerson == person}">Контактно лице
-                        </option>
-                    </select>
-                </div>
-                <div class="action-buttons">
-                    <form th:method="POST"
-                          th:action="@{/contact-person-details/{id}(id=*{id})}">
-                        <button type="submit" class="edit-button">Промяна контактно лице</button>
-                    </form>
-                    <form th:method="POST"
-                          th:action="@{/delete-company-manager/{id}(id=*{id})}">
-                        <button type="submit" class="delete-button">Премахване контактно лице</button>
-                    </form>
-                </div>
-            </form>
         </div>
     </div>
 </main>

@@ -147,7 +147,7 @@ public class CompanyController {
         }
 
         companyService.editCompany(companyDTO);
-        return "redirect:/add-person/" + id;
+        return "redirect:/companies";
     }
 
 
