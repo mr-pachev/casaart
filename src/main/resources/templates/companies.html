@@ -11,7 +11,10 @@
 <div th:replace="~{fragments/navigation}"></div>
 
 <main>
-    <h1>Списък с партньори</h1>
+    <h1>
+        <span>Списък с партньори:</span>
+        <span class="count" th:text="${allCompanies.size()}"></span>
+    </h1>
     <div class="buttons">
         <a th:href="@{/add-company}" class="register">Добави</a>
     </div>

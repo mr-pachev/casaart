@@ -84,6 +84,13 @@ main {
     background-color: #148bbf;
 }
 
+/*count section*/
+.count {
+    font-size: 0.8em;
+    color: gray;
+    margin-left: 5px;
+}
+
 /* Центриране на съдържанието в клетките */
 table td {
     vertical-align: middle;
