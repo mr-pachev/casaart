@@ -6,8 +6,12 @@ import casaart.emails_clients_db.model.dto.PersonDTO;
 import java.util.List;
 
 public interface ContactPersonService {
-    //all contact persons by company id
-    List<PersonDTO> allContactPersons(long id);
+
+    // all contact persons
+    List<PersonDTO> allContactPersons();
+
+    // all contact persons by company id
+    List<PersonDTO> currentContactPersons(long id);
 
     // find contact person by id
     PersonDTO getContactPersonById(long id);

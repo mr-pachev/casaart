@@ -42,7 +42,17 @@ public class ContactPersonController {
         return new PersonDTO();
     }
 
-    //view contact persons
+    // view all contact persons
+    @GetMapping("/all-contact-persons")
+    public String viewAllContactPersonsForm(Model model) {
+        List<PersonDTO> allContactPersons = contactPersonService.allContactPersons();
+
+        model.addAttribute("allContactPersons", allContactPersons);
+
+        return "/all-contact-persons";
+    }
+
+    //view contact persons by company id
     @PostMapping("/current-contact-persons/{id}")
     public String referenceToViewContactPersonsForm(@PathVariable("id") Long id) {
 
@@ -51,7 +61,7 @@ public class ContactPersonController {
 
     @GetMapping("/current-contact-persons/{id}")
     public String fillEditContactPersonsForm(@PathVariable("id") Long id, Model model) {
-        List<PersonDTO> contactPersonsDTOS = contactPersonService.allContactPersons(id);
+        List<PersonDTO> contactPersonsDTOS = contactPersonService.currentContactPersons(id);
         CompanyDTO companyDTO = companyService.findCompanyById(id);
 
         model.addAttribute("contactPersons", contactPersonsDTOS);

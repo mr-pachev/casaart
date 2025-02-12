@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 public class CompanyManagerController {
     private final CompanyManagerService companyManagerService;
@@ -29,6 +31,16 @@ public class CompanyManagerController {
     public CompanyManagerController(CompanyManagerService companyManagerService, CompanyService companyService) {
         this.companyManagerService = companyManagerService;
         this.companyService = companyService;
+    }
+
+    // view all company managers
+    @GetMapping("/all-company-managers")
+    public String viewAllManagerForm(Model model) {
+        List<PersonDTO> allCompanyManagers = companyManagerService.allCompanyManagers();
+
+        model.addAttribute("allCompanyManagers", allCompanyManagers);
+
+        return "all-company-managers";
     }
 
     // view current manager

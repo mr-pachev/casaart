@@ -28,9 +28,24 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         this.mapper = mapper;
     }
 
+    // all contact persons
+    @Override
+    public List<PersonDTO> allContactPersons() {
+        List<ContactPerson> contactPersonList = contactPersonRepository.findAll();
+        List<PersonDTO> personDTOS = new ArrayList<>();
+
+        for (ContactPerson person : contactPersonList) {
+            PersonDTO personDTO = contactPersonMapToPersonDTO(person);
+
+            personDTOS.add(personDTO);
+        }
+
+        return personDTOS;
+    }
+
     // all contact persons by company id
     @Override
-    public List<PersonDTO> allContactPersons(long id) {
+    public List<PersonDTO> currentContactPersons(long id) {
         List<ContactPerson> contactPersonList = contactPersonRepository.findAllByCompanyId(id);
         List<PersonDTO> contactPersonsDTOS = new ArrayList<>();
 

@@ -13,6 +13,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CompanyManagerServiceImpl implements CompanyManagerService {
     private final CompanyManagerRepository companyManagerRepository;
@@ -25,6 +28,23 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         this.companyRepository = companyRepository;
         this.contactPersonRepository = contactPersonRepository;
         this.mapper = mapper;
+    }
+
+    // get all company managers
+    @Override
+    public List<PersonDTO> allCompanyManagers() {
+        List<CompanyManager> companyManagerList = companyManagerRepository.findAll();
+        List<PersonDTO> allCompanyManagersDTOS = new ArrayList<>();
+
+        for (CompanyManager manager : companyManagerList) {
+            PersonDTO personDTO = mapper.map(manager, PersonDTO.class);
+            personDTO.setCompany(manager.getCompany().getName());
+
+            allCompanyManagersDTOS.add(personDTO);
+        }
+
+
+        return allCompanyManagersDTOS;
     }
 
     // check is exist company manager
