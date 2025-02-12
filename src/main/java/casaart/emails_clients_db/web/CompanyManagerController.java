@@ -38,7 +38,7 @@ public class CompanyManagerController {
 
         model.addAttribute(personDTO);
 
-        return "current-manager";
+        return "current-company-manager";
     }
 
     // add company manager
@@ -88,7 +88,7 @@ public class CompanyManagerController {
 
     @GetMapping("/company-manager-details/{id}")
     public String fillEditCompanyManagerForm(@PathVariable("id") Long id, Model model) {
-        PersonDTO personDTO = companyManagerService.findCompanyManagerByCompany(id);
+        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
 
         model.addAttribute(personDTO);
 
@@ -112,7 +112,7 @@ public class CompanyManagerController {
 
         CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany().trim().replaceAll(",$", ""));
 
-        return "redirect:/add-person/" + findCompany.getId();
+        return "redirect:/current-manager/" + findCompany.getId();
     }
 
     // delete company manager
@@ -121,6 +121,6 @@ public class CompanyManagerController {
 
         companyManagerService.removeCompanyManager(id);
 
-        return "redirect:/add-person/" + id;
+        return "redirect:/companies";
     }
 }

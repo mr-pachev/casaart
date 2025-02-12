@@ -103,7 +103,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     // delete company manager
     @Override
     public void removeCompanyManager(long id) {
-        Company company = companyRepository.findById(id)
+        Company company = companyRepository.findByCompanyManagerId(id)
                 .orElseThrow(() -> new EntityNotFoundException("Компания с id " + id + " не е намерена."));
 
         // Ако company има CompanyManager, запазете временно неговото id
