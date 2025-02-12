@@ -40,6 +40,8 @@
                 <ul th:if="${company.contactPerson != null and !company.contactPerson.isEmpty()}">
                     <li th:each="contact : ${company.getContactPerson()}">
                         <span th:text="${contact}"></span>
+                    </li>
+                    <li>
                         <form th:method="POST" th:action="@{/current-contact-persons/{id}(id=${company.id})}">
                             <button type="submit" class="view-button">Виж</button>
                         </form>
