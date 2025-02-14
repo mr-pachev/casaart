@@ -27,9 +27,9 @@
             <th style="width: 10%;">Емейл адрес</th>
             <th style="width: 10%;">Телефонен номер</th>
             <th style="width: 10%;">Компания</th>
+            <th style="width: 10%;">Дата на първи имейл</th>
             <th style="width: 10%;">Дата на първо обаждане</th>
-            <th style="width: 10%;">Дата на изпратен имейл</th>
-            <th style="width: 10%;">Дата на изпратено писмо</th>
+            <th style="width: 10%;">Дата на втори имейл</th>
             <th style="width: 10%;">Дата на второ обаждане</th>
             <th style="width: 10%;">Действия</th>
         </tr>
@@ -42,9 +42,9 @@
             <td th:text="${person.email}">Имейл адрес</td>
             <td th:text="${person.phoneNumber}">Телефонен номер</td>
             <td th:text="${person.company}">Компания</td>
+            <td th:text="${person.firstEmail}">Дата на първи имейл</td>
             <td th:text="${person.firstCall}">Дата на първо обаждане</td>
-            <td th:text="${person.sentEmail}">Дата на изпратен имейл</td>
-            <td th:text="${person.letterSent}">Дата на изпратено писмо</td>
+            <td th:text="${person.secondEmail}">Дата на втори имейл</td>
             <td th:text="${person.secondCall}">Дата на второ обаждане</td>
             <td>
                 <div class="action-buttons">

@@ -35,6 +35,18 @@ public class Client extends BaseEntity{
 
     private String modifyFrom;
 
+    @Column(name = "first_call")
+    private LocalDate firstCall;
+
+    @Column(name = "first_email")
+    private LocalDate firstEmail;
+
+    @Column(name = "second_call")
+    private LocalDate secondCall;
+
+    @Column(name = "second_email")
+    private LocalDate secondEmail;
+
     public String getFirstName() {
         return firstName;
     }
@@ -105,5 +117,37 @@ public class Client extends BaseEntity{
 
     public void setModifyFrom(String modifyFrom) {
         this.modifyFrom = modifyFrom;
+    }
+
+    public LocalDate getFirstCall() {
+        return firstCall;
+    }
+
+    public void setFirstCall(LocalDate firstCall) {
+        this.firstCall = firstCall;
+    }
+
+    public LocalDate getFirstEmail() {
+        return firstEmail;
+    }
+
+    public void setFirstEmail(LocalDate firstEmail) {
+        this.firstEmail = firstEmail;
+    }
+
+    public LocalDate getSecondCall() {
+        return secondCall;
+    }
+
+    public void setSecondCall(LocalDate secondCall) {
+        this.secondCall = secondCall;
+    }
+
+    public LocalDate getSecondEmail() {
+        return secondEmail;
+    }
+
+    public void setSecondEmail(LocalDate secondEmail) {
+        this.secondEmail = secondEmail;
     }
 }

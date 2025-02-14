@@ -53,8 +53,10 @@
             <th style="width: 10%;">Имейл</th>
             <th style="width: 10%;">Телефон</th>
             <th style="width: 10%;">Тип източник</th>
-            <th style="width: 10%;">Дата на създаване</th>
-            <th style="width: 10%;">Дата на промяна</th>
+            <th style="width: 10%;">Дата на първи имейл</th>
+            <th style="width: 10%;">Дата на първо обаждане</th>
+            <th style="width: 10%;">Дата на втори имейл</th>
+            <th style="width: 10%;">Дата на втора обаждане</th>
             <th style="width: 10%;">Добавен от</th>
             <th style="width: 10%;">Променен от</th>
             <th style="width: 10%;">Действия</th>
@@ -69,8 +71,10 @@
             <td th:text="${client.email}">Емейл</td>
             <td th:text="${client.phoneNumber}">Телефонен номер</td>
             <td th:text="${client.sourceType}">Местоположение</td>
-            <td th:text="${client.creatDate}">Дата създаване</td>
-            <td th:text="${client.modifyDate}">Дата промяна</td>
+            <td th:text="${client.firstEmail}">Дата на първи имейл</td>
+            <td th:text="${client.firstCall}">Дата на първо обаждане</td>
+            <td th:text="${client.secondEmail}">Дата на втори имейл</td>
+            <td th:text="${client.secondCall}">Дата на второ обаждане</td>
             <td th:text="${client.addedFrom}">Служител никнейм</td>
             <td th:text="${client.modifyFrom}">Служител никнейм</td>
             <td>

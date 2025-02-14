@@ -140,18 +140,6 @@ public class ClientServiceImpl implements ClientService {
         for (Client client : clientList) {
             ClientDTO clientDTO = mapToClientDTO(client);
 
-            String createUp = mapper.map(client.createdAt, LocalDateTime.class).toString();
-            clientDTO.setCreatDate(createUp);
-
-            //ако по клиента няма провени
-            String updatedAt = "";
-            if(client.getUpdatedAt() == null){
-                updatedAt = createUp;
-            }else {
-                updatedAt = mapper.map(client.updatedAt, LocalDateTime.class).toString();
-            }
-            clientDTO.setModifyDate(updatedAt);
-
             allClientDTOS.add(clientDTO);
         }
 

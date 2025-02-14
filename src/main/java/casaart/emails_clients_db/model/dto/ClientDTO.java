@@ -2,6 +2,8 @@ package casaart.emails_clients_db.model.dto;
 
 import jakarta.validation.constraints.*;
 
+import java.time.LocalDate;
+
 public class ClientDTO {
     long id;
     @NotBlank
@@ -21,9 +23,13 @@ public class ClientDTO {
     @NotBlank
     private String sourceType;
 
-    private String creatDate;
+    private LocalDate firstCall;
 
-    private String modifyDate;
+    private LocalDate firstEmail;
+
+    private LocalDate secondCall;
+
+    private LocalDate secondEmail;
 
     private String addedFrom;
     private String modifyFrom;
@@ -92,20 +98,36 @@ public class ClientDTO {
         this.sourceType = sourceType;
     }
 
-    public String getCreatDate() {
-        return creatDate;
+    public LocalDate getFirstCall() {
+        return firstCall;
     }
 
-    public void setCreatDate(String creatDate) {
-        this.creatDate = creatDate;
+    public void setFirstCall(LocalDate firstCall) {
+        this.firstCall = firstCall;
     }
 
-    public String getModifyDate() {
-        return modifyDate;
+    public LocalDate getFirstEmail() {
+        return firstEmail;
     }
 
-    public void setModifyDate(String modifyDate) {
-        this.modifyDate = modifyDate;
+    public void setFirstEmail(LocalDate firstEmail) {
+        this.firstEmail = firstEmail;
+    }
+
+    public LocalDate getSecondCall() {
+        return secondCall;
+    }
+
+    public void setSecondCall(LocalDate secondCall) {
+        this.secondCall = secondCall;
+    }
+
+    public LocalDate getSecondEmail() {
+        return secondEmail;
+    }
+
+    public void setSecondEmail(LocalDate secondEmail) {
+        this.secondEmail = secondEmail;
     }
 
     public String getAddedFrom() {

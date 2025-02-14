@@ -29,14 +29,14 @@ public class ContactPerson extends BaseEntity{
     @Column(name = "first_call")
     private LocalDate firstCall;
 
-    @Column(name = "sent_email")
-    private LocalDate sentEmail;
-
-    @Column(name = "letter_sent")
-    private LocalDate letterSent;
+    @Column(name = "first_email")
+    private LocalDate firstEmail;
 
     @Column(name = "second_call")
     private LocalDate secondCall;
+
+    @Column(name = "second_email")
+    private LocalDate secondEmail;
 
     public String getFullName() {
         StringBuilder sb = new StringBuilder();
@@ -106,20 +106,20 @@ public class ContactPerson extends BaseEntity{
         this.firstCall = firstCall;
     }
 
-    public LocalDate getSentEmail() {
-        return sentEmail;
+    public LocalDate getFirstEmail() {
+        return firstEmail;
     }
 
-    public void setSentEmail(LocalDate sentEmail) {
-        this.sentEmail = sentEmail;
+    public void setFirstEmail(LocalDate firstEmail) {
+        this.firstEmail = firstEmail;
     }
 
-    public LocalDate getLetterSent() {
-        return letterSent;
+    public LocalDate getSecondEmail() {
+        return secondEmail;
     }
 
-    public void setLetterSent(LocalDate letterSent) {
-        this.letterSent = letterSent;
+    public void setSecondEmail(LocalDate secondEmail) {
+        this.secondEmail = secondEmail;
     }
 
     public LocalDate getSecondCall() {
