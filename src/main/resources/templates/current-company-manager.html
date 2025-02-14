@@ -48,9 +48,42 @@
                     </li>
                 </ul>
             </td>
-            <td th:text="${personDTO.firstCall}">Дата на първо обаждане</td>
-            <td th:text="${personDTO.secondEmail}">Дата на втори имейл</td>
-            <td th:text="${personDTO.secondCall}">Дата на второ обаждане</td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${personDTO.firstCall}"></span>
+                    </li>
+                    <li>
+                        <form th:method="GET" th:action="@{/first-call-manager/{id}(id=${personDTO.id})}">
+                            <button type="submit" class="view-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${personDTO.secondEmail}"></span>
+                    </li>
+                    <li>
+                        <form th:method="GET" th:action="@{/second-email-manager/{id}(id=${personDTO.id})}">
+                            <button type="submit" class="view-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${personDTO.secondCall}"></span>
+                    </li>
+                    <li>
+                        <form th:method="GET" th:action="@{/second-call-manager/{id}(id=${personDTO.id})}">
+                            <button type="submit" class="view-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
             <td>
                 <div class="action-buttons">
                     <form th:method="POST"

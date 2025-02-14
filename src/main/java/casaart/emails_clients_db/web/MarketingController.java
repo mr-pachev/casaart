@@ -27,4 +27,34 @@ public class MarketingController {
         model.addAttribute("personDTO", personDTO);
         return "current-company-manager";
     }
+
+    //register first call
+    @GetMapping("/first-call-manager/{id}")
+    public String registerFirstCallManager(@PathVariable("id") Long id, Model model) {
+
+        marketingService.registerFirstCallManager(id);
+        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        model.addAttribute("personDTO", personDTO);
+        return "current-company-manager";
+    }
+
+    //register second email
+    @GetMapping("/second-email-manager/{id}")
+    public String registerSecondEmailManager(@PathVariable("id") Long id, Model model) {
+
+        marketingService.registerSecondEmailManager(id);
+        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        model.addAttribute("personDTO", personDTO);
+        return "current-company-manager";
+    }
+
+    //register second call
+    @GetMapping("/second-call-manager/{id}")
+    public String registerSecondCallManager(@PathVariable("id") Long id, Model model) {
+
+        marketingService.registerSecondCallManager(id);
+        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        model.addAttribute("personDTO", personDTO);
+        return "current-company-manager";
+    }
 }

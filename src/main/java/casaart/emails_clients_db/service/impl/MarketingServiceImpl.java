@@ -23,4 +23,31 @@ public class MarketingServiceImpl implements MarketingService {
 
         companyManagerRepository.save(companyManager);
     }
+
+    // register first call for manager
+    @Override
+    public void registerFirstCallManager(long id) {
+        CompanyManager companyManager = companyManagerRepository.findById(id);
+        companyManager.setFirstCall(LocalDate.now());
+
+        companyManagerRepository.save(companyManager);
+    }
+
+    // register second email for manager
+    @Override
+    public void registerSecondEmailManager(long id) {
+        CompanyManager companyManager = companyManagerRepository.findById(id);
+        companyManager.setSecondEmail(LocalDate.now());
+
+        companyManagerRepository.save(companyManager);
+    }
+
+    // register second call for manager
+    @Override
+    public void registerSecondCallManager(long id) {
+        CompanyManager companyManager = companyManagerRepository.findById(id);
+        companyManager.setSecondCall(LocalDate.now());
+
+        companyManagerRepository.save(companyManager);
+    }
 }
