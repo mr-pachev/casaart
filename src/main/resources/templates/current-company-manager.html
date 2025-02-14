@@ -36,7 +36,18 @@
             <td th:text="${personDTO.email}">Имейл адрес</td>
             <td th:text="${personDTO.phoneNumber}">Телефонен номер</td>
             <td th:text="${personDTO.company}">Компания</td>
-            <td th:text="${personDTO.firstEmail}">Дата на първи имейл</td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${personDTO.firstEmail}"></span>
+                    </li>
+                    <li>
+                        <form th:method="GET" th:action="@{/first-email-manager/{id}(id=${personDTO.id})}">
+                            <button type="submit" class="view-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
             <td th:text="${personDTO.firstCall}">Дата на първо обаждане</td>
             <td th:text="${personDTO.secondEmail}">Дата на втори имейл</td>
             <td th:text="${personDTO.secondCall}">Дата на второ обаждане</td>

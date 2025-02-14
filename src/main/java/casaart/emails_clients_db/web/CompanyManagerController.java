@@ -44,7 +44,7 @@ public class CompanyManagerController {
     }
 
     // view current manager
-    @GetMapping("/current-manager/{id}")
+    @GetMapping("/current-company-manager/{id}")
     public String viewCurrentManagerForm(@PathVariable("id") Long id, Model model) {
         PersonDTO personDTO = companyManagerService.findCompanyManagerByCompany(id);
 
@@ -124,7 +124,7 @@ public class CompanyManagerController {
 
         CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany().trim().replaceAll(",$", ""));
 
-        return "redirect:/current-manager/" + findCompany.getId();
+        return "redirect:/current-company-manager/" + findCompany.getId();
     }
 
     // delete company manager
