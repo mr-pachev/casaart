@@ -19,16 +19,41 @@
         <a th:href="@{/add-company}" class="register">Добави</a>
     </div>
     <div class="buttons">
-        <form th:method="POST" th:action="@{/sort-compnies}" style="display: inline;">
-            <select name="companyType" class="source-type-select">
+        <form th:method="POST" th:action="@{/sort-companies}" style="display: inline;">
+            <!-- Основен селект -->
+            <select name="companyType" class="source-type-select" id="mainSelect" onchange="toggleIndustrySelect()">
                 <option value="allCompanies">-- подреди по --</option>
-                <option value="allCompanies">Всички партьори</option>
+                <option value="allCompanies">Всички партньори</option>
                 <option value="name">Име</option>
                 <option value="industryType">Бранш</option>
             </select>
+
+            <!-- Под-селекция за браншовете (скрита по подразбиране) -->
+            <select name="industryType" class="source-type-select" id="industrySelect" style="display: none;">
+                <option value="">-- Изберете бранш --</option>
+                <option th:each="industry : ${allIndustries}" th:value="${industry}" th:text="${industry}"></option>
+            </select>
+
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
     </div>
+
+    <!-- JavaScript за управление на селекциите -->
+    <script>
+        function toggleIndustrySelect() {
+            let mainSelect = document.getElementById("mainSelect");
+            let industrySelect = document.getElementById("industrySelect");
+
+            // Показва под-селекцията само ако избраната опция е "Бранш"
+            if (mainSelect.value === "industryType") {
+                industrySelect.style.display = "inline-block";
+            } else {
+                industrySelect.style.display = "none";
+                industrySelect.selectedIndex = 0; // Нулира избора при скриване
+            }
+        }
+    </script>
+
     <table id="category-table">
         <thead>
         <tr>

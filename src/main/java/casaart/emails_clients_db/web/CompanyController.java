@@ -1,7 +1,6 @@
 package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
-import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.enums.IndustryType;
@@ -51,6 +50,7 @@ public class CompanyController {
         List<CompanyDTO> companyDTOS = companyService.getAllCompanies();
 
         model.addAttribute("allCompanies", companyDTOS);
+        model.addAttribute("allIndustries", IndustryType.values());
 
         return "companies";
     }

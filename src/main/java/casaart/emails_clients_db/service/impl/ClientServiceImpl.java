@@ -28,7 +28,7 @@ public class ClientServiceImpl implements ClientService {
         this.mapper = mapper;
     }
 
-    //get all clients
+    // get all clients
     @Override
     public List<ClientDTO> getAllClients() {
         List<Client> clients = clientRepository.findAllByOrderByCreatedAtDesc();
@@ -36,7 +36,7 @@ public class ClientServiceImpl implements ClientService {
         return mapToClientDTOList(clients);
     }
 
-    //get sorted clients
+    // get sorted clients
     @Override
     public List<ClientDTO> sortedClients(String sortRule) {
         List<Client> sortedClientList = new ArrayList<>();
@@ -80,14 +80,14 @@ public class ClientServiceImpl implements ClientService {
         return mapToClientDTOList(sortedClientList);
     }
 
-    //checking is exist client email
+    // checking is exist client email
     @Override
     public boolean isExistClientEmail(String email) {
 
         return clientRepository.findByEmail(email).isPresent();
     }
 
-    //add client
+    // add client
     @Override
     public void addClient(AddClientDTO addClientDTO) {
         Client client = mapper.map(addClientDTO, Client.class);
@@ -97,7 +97,7 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.save(client);
     }
 
-    //find client by id
+    // find client by id
     @Override
     public ClientDTO findClientById(long id) {
         Client client = clientRepository.findById(id);
@@ -108,7 +108,7 @@ public class ClientServiceImpl implements ClientService {
         return clientDTO;
     }
 
-    //edit client
+    // edit client
     @Override
     public void editClient(ClientDTO clientDTO) {
         Client client = clientRepository.findById(clientDTO.getId());
@@ -121,7 +121,7 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.save(client);
     }
 
-    //delete client by id
+    // delete client by id
     @Override
     public void deleteClient(long id) {
         clientRepository.deleteById(id);
@@ -134,6 +134,7 @@ public class ClientServiceImpl implements ClientService {
         return clientDTO;
     }
 
+    // List<ClientDTO> map to List<Client>
     List<ClientDTO> mapToClientDTOList(List<Client> clientList) {
         List<ClientDTO> allClientDTOS = new ArrayList<>();
 
