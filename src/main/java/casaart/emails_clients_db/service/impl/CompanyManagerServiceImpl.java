@@ -41,27 +41,33 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     // sort company managers
     @Override
     public List<PersonDTO> sortedCompanyManagersByType(String type) {
+        String[] inputArr = convertInputString(type);
         List<CompanyManager> companyManagerList = new ArrayList<>();
 
-        switch (type) {
-            case "allCompanyManagers":
-                companyManagerList = companyManagerRepository.findAllByOrderByIdDesc();
-                break;
-            case "allCompanyManagersByName":
-                companyManagerList = companyManagerRepository.findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
-                break;
-            case "allCompanyManagersByFirstEmail":
-                companyManagerList = companyManagerRepository.findAllByOrderByFirstEmailDesc();
-                break;
-            case "allCompanyManagersByFirstCall":
-                companyManagerList = companyManagerRepository.findAllByOrderByFirstCallDesc();
-                break;
-            case "allCompanyManagersBySecondEmail":
-                companyManagerList = companyManagerRepository.findAllByOrderBySecondEmailDesc();
-                break;
-            case "allCompanyManagersBySecondCall":
-                companyManagerList = companyManagerRepository.findAllByOrderBySecondCallDesc();
-                break;
+        if ("allCompanyManagers".equals(type)) {
+            companyManagerList = companyManagerRepository.findAllByOrderByIdDesc();
+
+        } else if ("allCompanyManagersByName".equals(type)) {
+            companyManagerList = companyManagerRepository.findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
+
+        } else if ("allCompanyManagersByFirstEmail".equals(type)) {
+            companyManagerList = companyManagerRepository.findAllByOrderByFirstEmailDesc();
+
+        } else if ("allCompanyManagersByFirstCall".equals(type)) {
+            companyManagerList = companyManagerRepository.findAllByOrderByFirstCallDesc();
+
+        } else if ("allCompanyManagersBySecondEmail".equals(type)) {
+            companyManagerList = companyManagerRepository.findAllByOrderBySecondEmailDesc();
+
+        } else if ("allCompanyManagersBySecondCall".equals(type)) {
+            companyManagerList = companyManagerRepository.findAllByOrderBySecondCallDesc();
+
+        } else if(inputArr.length == 1){
+            companyManagerList = companyManagerRepository.findAllByOrderByFirstName();
+
+        } else if(inputArr.length == 2){
+            companyManagerList = companyManagerRepository.findAllByOrderByFirstNameAscLastNameAsc();
+
         }
 
         List<PersonDTO> companyManagerDTOS = companyManagersListMapToPersonDTOS(companyManagerList);
@@ -101,7 +107,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
 
     // add company manager
     @Override
-    @Transactional
+//    @Transactional
     public void addCompanyManager(PersonDTO personDTO, long companyId) {
         Company company = companyRepository.findById(companyId).get();
 
@@ -193,5 +199,26 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         }
 
         return allCompanyManagersDTOS;
+    }
+
+    // convert input string
+    String[] convertInputString(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return new String[0]; // Връщане на празен масив за нула или празен вход
+        }
+
+        // 1. Trim: Премахване на празните пространства в началото и края
+        String trimmedString = input.trim();
+
+        // 2. Преобразуване на всички символи в малки букви
+        String lowerCaseString = trimmedString.toLowerCase();
+
+        // 3. Премахване на препинателните знаци
+        String cleanedString = lowerCaseString.replaceAll("[^a-zA-Z\\s]", "");
+
+        // 4. Разделяне на низа на отделни думи (по интервали)
+        String[] words = cleanedString.split("\\s+");
+
+        return words;
     }
 }
