@@ -101,7 +101,7 @@ public class MarketingController {
         return "redirect:/marketing/current-contact-persons/" + id;
     }
 
-    // view current company managers after register marketing event
+    // view current contact persons after register marketing event
     @GetMapping("/marketing/current-contact-persons/{id}")
     public String showCurrentContactPerson(@PathVariable("id") Long id, Model model) {
         PersonDTO personDTO = contactPersonService.getContactPersonById(id);
