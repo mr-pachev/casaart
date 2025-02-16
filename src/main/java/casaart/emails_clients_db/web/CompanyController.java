@@ -55,14 +55,23 @@ public class CompanyController {
         return "companies";
     }
 
-    //view all sorted companies
-    @PostMapping("/sort-compnies")
-    public String sortCompanies(@RequestParam("companyType") String companyType, Model model) {
-        List<CompanyDTO> sortedCompanies = companyService.sortedCompanies(companyType);
+    // view all sorted companies
+    @PostMapping("/sort-companies")
+    public String sortCompanies(@RequestParam("companyType") String companyType,
+                                @RequestParam(value = "industryType", required = false) String industryType,
+                                Model model) {
+        List<CompanyDTO> sortedCompanies;
+
+        // Проверяваме дали е избран "Бранш" и има конкретна стойност
+        if ("industryType".equals(companyType) && industryType != null && !industryType.isEmpty()) {
+            sortedCompanies = companyService.sortedCompaniesByIndustryType(industryType);
+        } else {
+            sortedCompanies = companyService.sortedCompanies(companyType);
+        }
 
         model.addAttribute("allCompanies", sortedCompanies);
-
-        return "companies"; // Връщаме същия шаблон с актуализиран списък
+        model.addAttribute("allIndustries", IndustryType.values());
+        return "companies"; // Връщаме шаблона с обновения списък
     }
 
     // create new company

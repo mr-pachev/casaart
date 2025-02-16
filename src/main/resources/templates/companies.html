@@ -31,7 +31,9 @@
             <!-- Под-селекция за браншовете (скрита по подразбиране) -->
             <select name="industryType" class="source-type-select" id="industrySelect" style="display: none;">
                 <option value="">-- Изберете бранш --</option>
-                <option th:each="industry : ${allIndustries}" th:value="${industry}" th:text="${industry}"></option>
+                <option th:each="industry : ${allIndustries}"
+                        th:value="${industry}"
+                        th:text="${industry}"></option>
             </select>
 
             <button type="submit" class="sort-button">Сортирай</button>

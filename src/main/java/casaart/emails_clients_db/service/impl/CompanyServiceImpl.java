@@ -37,7 +37,7 @@ public class CompanyServiceImpl implements CompanyService {
     // get all companies
     @Override
     public List<CompanyDTO> getAllCompanies() {
-        List<Company> allCompanies = companyRepository.findAllByOrderByCreatedAtDesc();
+        List<Company> allCompanies = companyRepository.findAllByOrderByIdDesc();
         List<CompanyDTO> companyDTOS = new ArrayList<>();
 
         for (Company company : allCompanies) {
@@ -51,9 +51,22 @@ public class CompanyServiceImpl implements CompanyService {
     // get sorted companies
     @Override
     public List<CompanyDTO> sortedCompanies(String companyType) {
+        List<Company> companyList = companyRepository.findAllByOrderByNameAsc();
 
+        List<CompanyDTO> companyDTOS = companyListMapToCompanyDTOS(companyList);
 
-        return null;
+        return companyDTOS;
+    }
+
+    // get sorted companies by industryType
+    @Override
+    public List<CompanyDTO> sortedCompaniesByIndustryType(String industry) {
+        IndustryType industryType = IndustryType.valueOf(industry);
+
+        return companyRepository.findByIndustryTypes(industryType)
+                .stream()
+                .map(company -> mapCompanyToCompanyDTO(company)) // Преобразуване в DTO директно в ламбда израза
+                .collect(Collectors.toList());
     }
 
     // checking if company exists
@@ -165,5 +178,18 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setIndustries(industries);
 
         return companyDTO;
+    }
+
+    // List<Company> map to List<CompanyDTO>
+    List<CompanyDTO> companyListMapToCompanyDTOS(List<Company> companyList) {
+        List<CompanyDTO> allCompanyDTOS = new ArrayList<>();
+
+        for (Company company : companyList) {
+            CompanyDTO companyDTO = mapCompanyToCompanyDTO(company);
+
+            allCompanyDTOS.add(companyDTO);
+        }
+
+        return allCompanyDTOS;
     }
 }
