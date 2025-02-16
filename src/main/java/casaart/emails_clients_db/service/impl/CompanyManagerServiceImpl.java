@@ -33,7 +33,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     // get all company managers
     @Override
     public List<PersonDTO> allCompanyManagers() {
-        List<CompanyManager> companyManagerList = companyManagerRepository.findAll();
+        List<CompanyManager> companyManagerList = companyManagerRepository.findAllByOrderByIdDesc();
         List<PersonDTO> allCompanyManagersDTOS = new ArrayList<>();
 
         for (CompanyManager manager : companyManagerList) {
