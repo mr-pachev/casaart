@@ -71,6 +71,7 @@ public class CompanyController {
 
         model.addAttribute("allCompanies", sortedCompanies);
         model.addAttribute("allIndustries", IndustryType.values());
+
         return "companies"; // Връщаме шаблона с обновения списък
     }
 

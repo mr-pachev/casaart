@@ -51,10 +51,26 @@ public class CompanyServiceImpl implements CompanyService {
     // get sorted companies
     @Override
     public List<CompanyDTO> sortedCompanies(String companyType) {
-        List<Company> companyList = companyRepository.findAllByOrderByNameAsc();
+        String input = companyType.trim();
+
+        List<Company> companyList = new ArrayList<>();
+
+        if (input.equals("name")) {
+            companyList = companyRepository.findAllByOrderByNameAsc();
+
+        } else if (input.equals("allCompanies")) {
+            companyList = companyRepository.findAllByOrderByIdDesc();
+
+        } else {
+           if (companyRepository.findByName(input).isEmpty()){
+               companyList = companyRepository.findAllByOrderByIdDesc();
+            }else {
+                companyList.add(companyRepository.findByName(input).get());
+           }
+
+        }
 
         List<CompanyDTO> companyDTOS = companyListMapToCompanyDTOS(companyList);
-
         return companyDTOS;
     }
 

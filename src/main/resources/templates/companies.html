@@ -10,6 +10,14 @@
 <body>
 <div th:replace="~{fragments/navigation}"></div>
 
+<div style="text-align: right; margin: 10px 20px;">
+    <form th:method="POST" th:action="@{/sort-companies}" style="display: inline;">
+        <input type="text" name="companyType" placeholder="Търси по име" class="source-type-select"
+               style="width: 300px;">
+        <button type="submit" class="sort-button">Търси</button>
+    </form>
+</div>
+
 <main>
     <h1>
         <span>Списък с партньори:</span>
