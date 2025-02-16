@@ -34,17 +34,38 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     @Override
     public List<PersonDTO> allCompanyManagers() {
         List<CompanyManager> companyManagerList = companyManagerRepository.findAllByOrderByIdDesc();
-        List<PersonDTO> allCompanyManagersDTOS = new ArrayList<>();
 
-        for (CompanyManager manager : companyManagerList) {
-            PersonDTO personDTO = mapper.map(manager, PersonDTO.class);
-            personDTO.setCompany(manager.getCompany().getName());
+        return companyManagersListMapToPersonDTOS(companyManagerList);
+    }
 
-            allCompanyManagersDTOS.add(personDTO);
+    // sort company managers
+    @Override
+    public List<PersonDTO> sortedCompanyManagersByType(String type) {
+        List<CompanyManager> companyManagerList = new ArrayList<>();
+
+        switch (type) {
+            case "allCompanyManagers":
+                companyManagerList = companyManagerRepository.findAllByOrderByIdDesc();
+                break;
+            case "allCompanyManagersByFirstEmail":
+                companyManagerList = companyManagerRepository.findAllByOrderByFirstEmailDesc();
+                break;
+            case "allCompanyManagersByFirstCall":
+                companyManagerList = companyManagerRepository.findAllByOrderByFirstCallDesc();
+                break;
+            case "allCompanyManagersBySecondEmail":
+                companyManagerList = companyManagerRepository.findAllByOrderBySecondEmailDesc();
+                break;
+            case "allCompanyManagersBySecondtCall":
+                companyManagerList = companyManagerRepository.findAllByOrderBySecondCallDesc();
+                break;
+            default:
+                companyManagerList = companyManagerRepository.findAllByOrderByIdDesc();
         }
 
+        List<PersonDTO> companyManagerDTOS = companyManagersListMapToPersonDTOS(companyManagerList);
 
-        return allCompanyManagersDTOS;
+        return companyManagerDTOS;
     }
 
     // check is exist company manager
@@ -159,4 +180,17 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         return companyManager;
     }
 
+    // List<CompanyManager> map to List<PersonDTO>
+    List<PersonDTO> companyManagersListMapToPersonDTOS(List<CompanyManager> companyManagerList) {
+        List<PersonDTO> allCompanyManagersDTOS = new ArrayList<>();
+
+        for (CompanyManager manager : companyManagerList) {
+            PersonDTO personDTO = mapper.map(manager, PersonDTO.class);
+            personDTO.setCompany(manager.getCompany().getName());
+
+            allCompanyManagersDTOS.add(personDTO);
+        }
+
+        return allCompanyManagersDTOS;
+    }
 }
