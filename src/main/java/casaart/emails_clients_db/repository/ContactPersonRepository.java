@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface ContactPersonRepository extends JpaRepository<ContactPerson, Long> {
     Optional<ContactPerson> findByFirstNameAndLastNameAndPhoneNumber(String firstName, String lastName,String phoneNumber);
     Optional<ContactPerson> findById(long id);
+
+    List<ContactPerson> findAllByCompanyId(long id);
     List<ContactPerson> findAllByOrderByIdDesc();
     List<ContactPerson> findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
     List<ContactPerson> findAllByOrderByFirstEmailDesc();

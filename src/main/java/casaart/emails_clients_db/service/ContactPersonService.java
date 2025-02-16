@@ -1,6 +1,5 @@
 package casaart.emails_clients_db.service;
 
-import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 
 import java.util.List;
@@ -12,6 +11,9 @@ public interface ContactPersonService {
 
     // all contact persons by company id
     List<PersonDTO> currentContactPersons(long id);
+
+    // sort contact persons
+    List<PersonDTO> sortedContactPersonsByType(String type);
 
     // find contact person by id
     PersonDTO getContactPersonById(long id);

@@ -15,6 +15,22 @@
         <span>Всички контактни лица:</span>
         <span class="count" th:text="${allContactPersons.size()}"></span>
     </h1>
+
+    <div class="buttons">
+        <form th:method="POST" th:action="@{/sort-contact-persons}" style="display: inline;">
+            <select name="type" class="type-select">
+                <option value="allContactPersons">-- подреди по --</option>
+                <option value="allContactPersons">Всички контактни лица</option>
+                <option value="allContactPersonsByName">Име</option>
+                <option value="allContactPersonsByFirstEmail">Дата на първи имейл</option>
+                <option value="allContactPersonsByFirstCall">Дата на първо обаждане</option>
+                <option value="allContactPersonsBySecondEmail">Дата на втори имейл</option>
+                <option value="allContactPersonsBySecondCall">Добавен на второ обаждане</option>
+            </select>
+            <button type="submit" class="sort-button">Сортирай</button>
+        </form>
+    </div>
+
     <table id="category-table">
         <thead>
         <tr>

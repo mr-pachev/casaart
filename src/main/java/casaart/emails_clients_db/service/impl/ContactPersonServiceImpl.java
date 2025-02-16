@@ -1,13 +1,11 @@
 package casaart.emails_clients_db.service.impl;
 
-import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Company;
 import casaart.emails_clients_db.model.entity.ContactPerson;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.ContactPersonRepository;
 import casaart.emails_clients_db.service.ContactPersonService;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,10 +41,41 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         return personDTOS;
     }
 
+    // sort contact persons
+    @Override
+    public List<PersonDTO> sortedContactPersonsByType(String type) {
+        List<ContactPerson> contactPersonList = new ArrayList<>();
+
+        switch (type) {
+            case "allContactPersons":
+                contactPersonList = contactPersonRepository.findAllByOrderByIdDesc();
+                break;
+            case "allContactPersonsByName":
+                contactPersonList = contactPersonRepository.findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
+                break;
+            case "allContactPersonsByFirstEmail":
+                contactPersonList = contactPersonRepository.findAllByOrderByFirstEmailDesc();
+                break;
+            case "allContactPersonsByFirstCall":
+                contactPersonList = contactPersonRepository.findAllByOrderByFirstCallDesc();
+                break;
+            case "allContactPersonsBySecondEmail":
+                contactPersonList = contactPersonRepository.findAllByOrderBySecondEmailDesc();
+                break;
+            case "allContactPersonsBySecondCall":
+                contactPersonList = contactPersonRepository.findAllByOrderBySecondCallDesc();
+                break;
+        }
+
+        List<PersonDTO> contactPersonsDTOS = contactPersonsListMapToPersonDTOS(contactPersonList);
+
+        return contactPersonsDTOS;
+    }
+
     // all contact persons by company id
     @Override
     public List<PersonDTO> currentContactPersons(long id) {
-        List<ContactPerson> contactPersonList = contactPersonRepository.findAllByOrderByIdDesc();
+        List<ContactPerson> contactPersonList = contactPersonRepository.findAllByCompanyId(id);
         List<PersonDTO> contactPersonsDTOS = new ArrayList<>();
 
         for (ContactPerson person : contactPersonList) {
@@ -138,5 +167,19 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         contactPersonDTO.setCompany(contactPerson.getCompany().getName());
 
         return contactPersonDTO;
+    }
+
+    // List<ContactPerson> map to List<PersonDTO>
+    List<PersonDTO> contactPersonsListMapToPersonDTOS(List<ContactPerson> contactPersonListList) {
+        List<PersonDTO> allContactPersonsDTOS = new ArrayList<>();
+
+        for (ContactPerson person : contactPersonListList) {
+            PersonDTO personDTO = mapper.map(person, PersonDTO.class);
+            personDTO.setCompany(person.getCompany().getName());
+
+            allContactPersonsDTOS.add(personDTO);
+        }
+
+        return allContactPersonsDTOS;
     }
 }
