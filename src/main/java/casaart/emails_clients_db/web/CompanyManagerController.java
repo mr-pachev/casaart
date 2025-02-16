@@ -1,5 +1,6 @@
 package casaart.emails_clients_db.web;
 
+import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.service.CompanyManagerService;
@@ -41,6 +42,16 @@ public class CompanyManagerController {
         model.addAttribute("allCompanyManagers", allCompanyManagers);
 
         return "all-company-managers";
+    }
+
+    //view all sorted company managers
+    @PostMapping("/sort-company-managers")
+    public String sortCompanyManagers(@RequestParam("type") String type, Model model) {
+        List<PersonDTO> allCompanyManagers = companyManagerService.sortedCompanyManagersByType(type);
+
+        model.addAttribute("allCompanyManagers", allCompanyManagers);
+
+        return "all-company-managers"; // Връщаме същия шаблон с актуализиран списък
     }
 
     // view current manager

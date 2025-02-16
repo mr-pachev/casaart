@@ -47,6 +47,9 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
             case "allCompanyManagers":
                 companyManagerList = companyManagerRepository.findAllByOrderByIdDesc();
                 break;
+            case "allCompanyManagersByName":
+                companyManagerList = companyManagerRepository.findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
+                break;
             case "allCompanyManagersByFirstEmail":
                 companyManagerList = companyManagerRepository.findAllByOrderByFirstEmailDesc();
                 break;
@@ -56,11 +59,9 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
             case "allCompanyManagersBySecondEmail":
                 companyManagerList = companyManagerRepository.findAllByOrderBySecondEmailDesc();
                 break;
-            case "allCompanyManagersBySecondtCall":
+            case "allCompanyManagersBySecondCall":
                 companyManagerList = companyManagerRepository.findAllByOrderBySecondCallDesc();
                 break;
-            default:
-                companyManagerList = companyManagerRepository.findAllByOrderByIdDesc();
         }
 
         List<PersonDTO> companyManagerDTOS = companyManagersListMapToPersonDTOS(companyManagerList);

@@ -15,6 +15,22 @@
         <span>Управители:</span>
         <span class="count" th:text="${allCompanyManagers.size()}"></span>
     </h1>
+
+    <div class="buttons">
+        <form th:method="POST" th:action="@{/sort-company-managers}" style="display: inline;">
+            <select name="sourceType" class="source-type-select">
+                <option value="allCompanyManagers">-- подреди по --</option>
+                <option value="allCompanyManagers">Всички управители</option>
+                <option value="allCompanyManagersByName">Име</option>
+                <option value="allCompanyManagersByFirstEmail">Дата на първи имейл</option>
+                <option value="allCompanyManagersByFirstCall">Дата на първо обаждане</option>
+                <option value="allCompanyManagersBySecondEmail">Дата на втори имейл</option>
+                <option value="allCompanyManagersBySecondCall">Добавен на второ обаждане</option>
+            </select>
+            <button type="submit" class="sort-button">Сортирай</button>
+        </form>
+    </div>
+
     <table id="category-table">
         <thead>
         <tr>
