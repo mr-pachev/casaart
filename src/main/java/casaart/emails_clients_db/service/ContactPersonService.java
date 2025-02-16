@@ -10,7 +10,7 @@ public interface ContactPersonService {
     List<PersonDTO> allContactPersons();
 
     // all contact persons by company id
-    List<PersonDTO> currentContactPersons(long id);
+    List<PersonDTO> currentContactPersonsByCompanyId(long id);
 
     // sort contact persons
     List<PersonDTO> sortedContactPersonsByType(String type);

@@ -1,6 +1,5 @@
 package casaart.emails_clients_db.web;
 
-import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.service.CompanyManagerService;
@@ -44,7 +43,7 @@ public class CompanyManagerController {
         return "all-company-managers";
     }
 
-    //view all sorted company managers
+    // view all sorted company managers
     @PostMapping("/sort-company-managers")
     public String sortCompanyManagers(@RequestParam("type") String type, Model model) {
         List<PersonDTO> allCompanyManagers = companyManagerService.sortedCompanyManagersByType(type);

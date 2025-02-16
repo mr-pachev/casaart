@@ -55,10 +55,54 @@
             <td th:text="${person.email}">Имейл адрес</td>
             <td th:text="${person.phoneNumber}">Телефонен номер</td>
             <td th:text="${person.company}">Компания</td>
-            <td th:text="${person.firstEmail}">Дата на първи имейл</td>
-            <td th:text="${person.firstCall}">Дата на първо обаждане</td>
-            <td th:text="${person.secondEmail}">Дата на втори имейл</td>
-            <td th:text="${person.secondCall}">Дата на второ обаждане</td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${person.firstEmail}"></span>
+                    </li>
+                    <li>
+                        <form th:method="POST" th:action="@{/first-email-contact-person/{id}(id=${person.id})}">
+                            <button type="submit" class="view-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${person.firstCall}"></span>
+                    </li>
+                    <li>
+                        <form th:method="POST" th:action="@{/first-call-contact-person/{id}(id=${person.id})}">
+                            <button type="submit" class="view-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${person.secondEmail}"></span>
+                    </li>
+                    <li>
+                        <form th:method="POST" th:action="@{/second-email-contact-person/{id}(id=${person.id})}">
+                            <button type="submit" class="view-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${person.secondCall}"></span>
+                    </li>
+                    <li>
+                        <form th:method="POST" th:action="@{/second-call-contact-person/{id}(id=${person.id})}">
+                            <button type="submit" class="view-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
             <td>
                 <div class="action-buttons">
                     <form th:method="POST"

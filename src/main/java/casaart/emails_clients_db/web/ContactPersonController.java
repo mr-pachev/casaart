@@ -71,7 +71,7 @@ public class ContactPersonController {
 
     @GetMapping("/current-contact-persons/{id}")
     public String fillEditContactPersonsForm(@PathVariable("id") Long id, Model model) {
-        List<PersonDTO> contactPersonsDTOS = contactPersonService.currentContactPersons(id);
+        List<PersonDTO> contactPersonsDTOS = contactPersonService.currentContactPersonsByCompanyId(id);
         CompanyDTO companyDTO = companyService.findCompanyById(id);
 
         model.addAttribute("contactPersons", contactPersonsDTOS);

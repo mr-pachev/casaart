@@ -74,7 +74,7 @@ public class ContactPersonServiceImpl implements ContactPersonService {
 
     // all contact persons by company id
     @Override
-    public List<PersonDTO> currentContactPersons(long id) {
+    public List<PersonDTO> currentContactPersonsByCompanyId(long id) {
         List<ContactPerson> contactPersonList = contactPersonRepository.findAllByCompanyId(id);
         List<PersonDTO> contactPersonsDTOS = new ArrayList<>();
 
