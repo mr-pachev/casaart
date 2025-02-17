@@ -107,7 +107,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
 
     // add company manager
     @Override
-//    @Transactional
+    @Transactional
     public void addCompanyManager(PersonDTO personDTO, long companyId) {
         Company company = companyRepository.findById(companyId).get();
 
@@ -173,8 +173,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     // PersonDTO map to CompanyManager
     CompanyManager personDTOMapToCompanyManager(PersonDTO personDTO) {
         CompanyManager companyManager = companyManagerRepository.findById(personDTO.getId());
-//
-//        companyManager.setId(personDTO.getId());
+
         companyManager.setFirstName(personDTO.getFirstName());
 
         if (personDTO.getMiddleName() != null) {

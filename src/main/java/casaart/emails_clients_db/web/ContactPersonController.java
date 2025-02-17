@@ -193,7 +193,7 @@ public class ContactPersonController {
 
         contactPersonService.editContactPerson(personDTO);
 
-        CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany().trim().replaceAll(",$", ""));
+        CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany().trim().replaceAll(",+$", ""));
 
         return "redirect:/current-contact-persons/" + findCompany.getId();
     }

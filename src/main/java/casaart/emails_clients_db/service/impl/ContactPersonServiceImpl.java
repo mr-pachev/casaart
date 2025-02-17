@@ -2,6 +2,7 @@ package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Company;
+import casaart.emails_clients_db.model.entity.CompanyManager;
 import casaart.emails_clients_db.model.entity.ContactPerson;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.ContactPersonRepository;
@@ -118,15 +119,7 @@ public class ContactPersonServiceImpl implements ContactPersonService {
     // edit contact person
     @Override
     public void editContactPerson(PersonDTO personDTO) {
-        ContactPerson contactPerson = contactPersonRepository.findById(personDTO.getId()).get();
-
-        contactPerson.setFirstName(personDTO.getFirstName());
-        if (personDTO.getMiddleName() != null) {
-            contactPerson.setMiddleName(personDTO.getMiddleName());
-        }
-        contactPerson.setLastName(personDTO.getLastName());
-        contactPerson.setEmail(personDTO.getEmail());
-        contactPerson.setPhoneNumber(personDTO.getPhoneNumber());
+        ContactPerson contactPerson = personDTOMapToContactPerson(personDTO);
 
         contactPersonRepository.save(contactPerson);
     }
@@ -147,16 +140,31 @@ public class ContactPersonServiceImpl implements ContactPersonService {
 
     // PersonDTO map to ContactPerson
     ContactPerson personDTOMapToContactPerson(PersonDTO personDTO) {
-        ContactPerson contactPerson = new ContactPerson();
 
-        contactPerson.setId(null);
+        ContactPerson contactPerson = contactPersonRepository.findById(personDTO.getId()).get();
+
         contactPerson.setFirstName(personDTO.getFirstName());
+
         if (personDTO.getMiddleName() != null) {
             contactPerson.setMiddleName(personDTO.getMiddleName());
         }
         contactPerson.setLastName(personDTO.getLastName());
         contactPerson.setEmail(personDTO.getEmail());
         contactPerson.setPhoneNumber(personDTO.getPhoneNumber());
+
+        if (personDTO.getFirstEmail() != null) {
+            contactPerson.setFirstEmail(personDTO.getFirstEmail());
+        }
+        if (personDTO.getFirstCall() != null) {
+            contactPerson.setFirstCall(personDTO.getFirstCall());
+        }
+        if (personDTO.getSecondEmail() != null) {
+            contactPerson.setSecondEmail(personDTO.getSecondEmail());
+        }
+        if (personDTO.getSecondCall() != null) {
+            contactPerson.setSecondCall(personDTO.getSecondCall());
+        }
+
 
         return contactPerson;
     }
