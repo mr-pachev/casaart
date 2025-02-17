@@ -43,27 +43,33 @@ public class ContactPersonServiceImpl implements ContactPersonService {
     // sort contact persons
     @Override
     public List<PersonDTO> sortedContactPersonsByType(String type) {
+        String[] inputArr = convertInputString(type);
         List<ContactPerson> contactPersonList = new ArrayList<>();
 
-        switch (type) {
-            case "allContactPersons":
-                contactPersonList = contactPersonRepository.findAllByOrderByIdDesc();
-                break;
-            case "allContactPersonsByName":
-                contactPersonList = contactPersonRepository.findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
-                break;
-            case "allContactPersonsByFirstEmail":
-                contactPersonList = contactPersonRepository.findAllByOrderByFirstEmailDesc();
-                break;
-            case "allContactPersonsByFirstCall":
-                contactPersonList = contactPersonRepository.findAllByOrderByFirstCallDesc();
-                break;
-            case "allContactPersonsBySecondEmail":
-                contactPersonList = contactPersonRepository.findAllByOrderBySecondEmailDesc();
-                break;
-            case "allContactPersonsBySecondCall":
-                contactPersonList = contactPersonRepository.findAllByOrderBySecondCallDesc();
-                break;
+        if ("allContactPersons".equals(type)) {
+            contactPersonList = contactPersonRepository.findAllByOrderByIdDesc();
+
+        } else if ("allContactPersonsByName".equals(type)) {
+            contactPersonList = contactPersonRepository.findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
+
+        } else if ("allContactPersonsByFirstEmail".equals(type)) {
+            contactPersonList = contactPersonRepository.findAllByOrderByFirstEmailDesc();
+
+        } else if ("allContactPersonsByFirstCall".equals(type)) {
+            contactPersonList = contactPersonRepository.findAllByOrderByFirstCallDesc();
+
+        } else if ("allContactPersonsBySecondEmail".equals(type)) {
+            contactPersonList = contactPersonRepository.findAllByOrderBySecondEmailDesc();
+
+        } else if ("allContactPersonsBySecondCall".equals(type)) {
+            contactPersonList = contactPersonRepository.findAllByOrderBySecondCallDesc();
+
+        } else if(inputArr.length == 1){
+            contactPersonList = contactPersonRepository.findAllByFirstName(inputArr[0]);
+
+        } else if(inputArr.length == 2){
+            contactPersonList = contactPersonRepository.findAllByFirstNameAndLastName(inputArr[0], inputArr[1]);
+
         }
 
         List<PersonDTO> contactPersonsDTOS = contactPersonsListMapToPersonDTOS(contactPersonList);
@@ -138,8 +144,11 @@ public class ContactPersonServiceImpl implements ContactPersonService {
 
     // PersonDTO map to ContactPerson
     ContactPerson personDTOMapToContactPerson(PersonDTO personDTO) {
+        ContactPerson contactPerson = new ContactPerson();
 
-        ContactPerson contactPerson = contactPersonRepository.findById(personDTO.getId()).get();
+        if(contactPersonRepository.findById(personDTO.getId()).isPresent()){
+            contactPerson = contactPersonRepository.findById(personDTO.getId()).get();
+        }
 
         contactPerson.setFirstName(personDTO.getFirstName());
 
@@ -186,5 +195,26 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         }
 
         return allContactPersonsDTOS;
+    }
+
+    // convert input string
+    String[] convertInputString(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return new String[0]; // Връщане на празен масив за нула или празен вход
+        }
+
+        // 1. Trim: Премахване на празните пространства в началото и края
+        String trimmedString = input.trim();
+
+        // 2. Преобразуване на всички символи в малки букви
+        String lowerCaseString = trimmedString.toLowerCase();
+
+        // 3. Премахване на препинателните знаци
+        String cleanedString = lowerCaseString.replaceAll("[^a-zA-Zа-яА-Я\\s]", "");
+
+        // 4. Разделяне на низа на отделни думи (по интервали)
+        String[] words = cleanedString.split("\\s+");
+
+        return words;
     }
 }
