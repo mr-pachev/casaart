@@ -2,9 +2,7 @@ package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
-import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Client;
-import casaart.emails_clients_db.model.entity.CompanyManager;
 import casaart.emails_clients_db.model.entity.User;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.ClientRepository;
@@ -13,10 +11,9 @@ import casaart.emails_clients_db.service.UserHelperService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -62,10 +59,10 @@ public class ClientServiceImpl implements ClientService {
         } else if ("allClientsBySecondCall".equals(type)) {
             clientList = clientRepository.findAllByOrderBySecondCallDesc();
 
-        } else if(inputArr.length == 1){
+        } else if (inputArr.length == 1) {
             clientList = clientRepository.findAllByFirstName(inputArr[0]);
 
-        } else if(inputArr.length == 2){
+        } else if (inputArr.length == 2) {
             clientList = clientRepository.findAllByFirstNameAndLastName(inputArr[0], inputArr[1]);
 
         }
@@ -77,8 +74,13 @@ public class ClientServiceImpl implements ClientService {
 
     // get sorted clients by sourceType
     @Override
-    public List<ClientDTO> sortedClientsBySourceType(String sourceType) {
-        return null;
+    public List<ClientDTO> sortedClientsBySourceType(String type) {
+        SourceType sourceType = SourceType.valueOf(type);
+
+        return clientRepository.findAllBySourceType(sourceType)
+                .stream()
+                .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуване в DTO директно в ламбда израза
+                .collect(Collectors.toList());
     }
 
     // checking is exist client email
@@ -103,10 +105,7 @@ public class ClientServiceImpl implements ClientService {
     public ClientDTO findClientById(long id) {
         Client client = clientRepository.findById(id);
 
-        ClientDTO clientDTO = mapper.map(client, ClientDTO.class);
-        clientDTO.setAddedFrom(client.getSourceType().name());
-
-        return clientDTO;
+        return mapToClientDTO(client);
     }
 
     // edit client

@@ -1,6 +1,7 @@
 package casaart.emails_clients_db.repository;
 
 import casaart.emails_clients_db.model.entity.Client;
+import casaart.emails_clients_db.model.enums.SourceType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findAllByOrderBySecondCallDesc();
     List<Client> findAllByFirstName(String firstName);
     List<Client> findAllByFirstNameAndLastName(String firstName, String lastName);
+    List<Client> findAllBySourceType(SourceType sourceType);
 }
