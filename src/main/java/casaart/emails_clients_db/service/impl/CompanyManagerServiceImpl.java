@@ -63,10 +63,10 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
             companyManagerList = companyManagerRepository.findAllByOrderBySecondCallDesc();
 
         } else if(inputArr.length == 1){
-            companyManagerList = companyManagerRepository.findAllByOrderByFirstName();
+            companyManagerList = companyManagerRepository.findAllByFirstName(inputArr[0]);
 
         } else if(inputArr.length == 2){
-            companyManagerList = companyManagerRepository.findAllByOrderByFirstNameAscLastNameAsc();
+            companyManagerList = companyManagerRepository.findAllByFirstNameAndLastName(inputArr[0], inputArr[1]);
 
         }
 
