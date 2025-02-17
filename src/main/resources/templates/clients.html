@@ -28,20 +28,39 @@
     </div>
     <div class="buttons">
         <form th:method="POST" th:action="@{/sort-clients}" style="display: inline;">
-            <select name="sourceType" class="source-type-select">
+            <!-- Основен селект -->
+            <select name="type" class="source-type-select" id="mainSelect" onchange="toggleIndustrySelect()">
                 <option value="allClients">-- подреди по --</option>
                 <option value="allClients">Всички клиенти</option>
                 <option value="firstAndLastName">Име</option>
-                <option value="creatDate">Дата на създаване</option>
-                <option value="modifyDate">Дата на промяна</option>
                 <option value="addedFrom">Добавен от</option>
-                <option value="HOTEL">HOTEL</option>
-                <option value="SHOW_ROOM">SHOWROOM</option>
-                <option value="ONLINE_SHOP">ONLINE SHOP</option>
+                <option value="sourceType">Източник</option>
+            </select>
+
+            <!-- Под-селекция за източниците (скрита по подразбиране) -->
+            <select name="sourceType" class="source-type-select" id="industrySelect" style="display: none;">
+                <option value="">-- Изберете източник --</option>
+                <option th:each="sourceType : ${allSourceType}"
+                        th:value="${sourceType}"
+                        th:text="${sourceType}"></option>
             </select>
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
     </div>
+
+    <script>
+        function toggleIndustrySelect() {
+            var mainSelect = document.getElementById("mainSelect");
+            var industrySelect = document.getElementById("industrySelect");
+
+            // Ако избраната опция е "sourceType", показваме под-селекцията
+            if (mainSelect.value === "sourceType") {
+                industrySelect.style.display = "inline-block"; // Показва селекта
+            } else {
+                industrySelect.style.display = "none"; // Скрива селекта
+            }
+        }
+    </script>
 
     <table id="clients-table">
         <thead>

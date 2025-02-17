@@ -80,6 +80,12 @@ public class ClientServiceImpl implements ClientService {
         return mapToClientDTOList(sortedClientList);
     }
 
+    // get sorted clients by sourceType
+    @Override
+    public List<ClientDTO> sortedClientsBySourceType(String sourceType) {
+        return null;
+    }
+
     // checking is exist client email
     @Override
     public boolean isExistClientEmail(String email) {
