@@ -1,7 +1,9 @@
 package casaart.emails_clients_db.service.impl;
 
+import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.model.entity.CompanyManager;
 import casaart.emails_clients_db.model.entity.ContactPerson;
+import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.repository.CompanyManagerRepository;
 import casaart.emails_clients_db.repository.ContactPersonRepository;
 import casaart.emails_clients_db.service.MarketingService;
@@ -13,10 +15,12 @@ import java.time.LocalDate;
 public class MarketingServiceImpl implements MarketingService {
     private final CompanyManagerRepository companyManagerRepository;
     private final ContactPersonRepository contactPersonRepository;
+    private final ClientRepository clientRepository;
 
-    public MarketingServiceImpl(CompanyManagerRepository companyManagerRepository, ContactPersonRepository contactPersonRepository) {
+    public MarketingServiceImpl(CompanyManagerRepository companyManagerRepository, ContactPersonRepository contactPersonRepository, ClientRepository clientRepository) {
         this.companyManagerRepository = companyManagerRepository;
         this.contactPersonRepository = contactPersonRepository;
+        this.clientRepository = clientRepository;
     }
 
     // register first email for company manager
@@ -89,6 +93,42 @@ public class MarketingServiceImpl implements MarketingService {
         contactPerson.setSecondCall(LocalDate.now());
 
         contactPersonRepository.save(contactPerson);
+    }
+
+    // register first email for client
+    @Override
+    public void registerFirstEmailClient(long id) {
+        Client client = clientRepository.findById(id);
+        client.setFirstEmail(LocalDate.now());
+
+        clientRepository.save(client);
+    }
+
+    // register first call for client
+    @Override
+    public void registerFirstCallClient(long id) {
+        Client client = clientRepository.findById(id);
+        client.setFirstCall(LocalDate.now());
+
+        clientRepository.save(client);
+    }
+
+    // register second email for client
+    @Override
+    public void registerSecondEmailClient(long id) {
+        Client client = clientRepository.findById(id);
+        client.setSecondEmail(LocalDate.now());
+
+        clientRepository.save(client);
+    }
+
+    // register second call for client
+    @Override
+    public void registerSecondCallClient(long id) {
+        Client client = clientRepository.findById(id);
+        client.setSecondCall(LocalDate.now());
+
+        clientRepository.save(client);
     }
 
 

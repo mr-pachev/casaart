@@ -93,10 +93,54 @@
             <td th:text="${client.email}">Емейл</td>
             <td th:text="${client.phoneNumber}">Телефонен номер</td>
             <td th:text="${client.sourceType}">Местоположение</td>
-            <td th:text="${client.firstEmail}">Дата на първи имейл</td>
-            <td th:text="${client.firstCall}">Дата на първо обаждане</td>
-            <td th:text="${client.secondEmail}">Дата на втори имейл</td>
-            <td th:text="${client.secondCall}">Дата на второ обаждане</td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${client.firstEmail}"></span>
+                    </li>
+                    <li>
+                        <form th:method="GET" th:action="@{/first-email-client/{id}(id=${client.id})}">
+                            <button type="submit" class="view-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${client.firstCall}"></span>
+                    </li>
+                    <li>
+                        <form th:method="GET" th:action="@{/first-call-client/{id}(id=${client.id})}">
+                            <button type="submit" class="view-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${client.secondEmail}"></span>
+                    </li>
+                    <li>
+                        <form th:method="GET" th:action="@{/second-email-client/{id}(id=${client.id})}">
+                            <button type="submit" class="view-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${client.secondCall}"></span>
+                    </li>
+                    <li>
+                        <form th:method="GET" th:action="@{/second-call-client/{id}(id=${client.id})}">
+                            <button type="submit" class="view-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
             <td th:text="${client.addedFrom}">Служител никнейм</td>
             <td th:text="${client.modifyFrom}">Служител никнейм</td>
             <td>

@@ -25,4 +25,16 @@ public interface MarketingService {
 
     // register second call for contact person
     void registerSecondCallContactPerson(long id);
+
+    // register first email for client
+    void registerFirstEmailClient(long id);
+
+    // register first call for client
+    void registerFirstCallClient(long id);
+
+    // register second email for client
+    void registerSecondEmailClient(long id);
+
+    // register second call for client
+    void registerSecondCallClient(long id);
 }

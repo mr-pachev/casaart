@@ -1,11 +1,10 @@
 package casaart.emails_clients_db.web;
 
+import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
-import casaart.emails_clients_db.service.CompanyManagerService;
-import casaart.emails_clients_db.service.CompanyService;
-import casaart.emails_clients_db.service.ContactPersonService;
-import casaart.emails_clients_db.service.MarketingService;
+import casaart.emails_clients_db.model.enums.SourceType;
+import casaart.emails_clients_db.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +18,15 @@ public class MarketingController {
     private final MarketingService marketingService;
     private final CompanyManagerService companyManagerService;
     private final ContactPersonService contactPersonService;
+    private final ClientService clientService;
 
     private final CompanyService companyService;
 
-    public MarketingController(MarketingService marketingService, CompanyManagerService companyManagerService, ContactPersonService contactPersonService, CompanyService companyService) {
+    public MarketingController(MarketingService marketingService, CompanyManagerService companyManagerService, ContactPersonService contactPersonService, ClientService clientService, CompanyService companyService) {
         this.marketingService = marketingService;
         this.companyManagerService = companyManagerService;
         this.contactPersonService = contactPersonService;
+        this.clientService = clientService;
         this.companyService = companyService;
     }
 
@@ -113,5 +114,45 @@ public class MarketingController {
         model.addAttribute("companyDTO", companyDTO);
 
         return "current-contact-persons";
+    }
+
+    // register first email for client
+    @GetMapping("/first-email-client/{id}")
+    public String registerFirstEmailClient(@PathVariable("id") Long id, Model model) {
+
+        marketingService.registerFirstEmailClient(id);
+        return "redirect:/marketing/clients";
+    }
+
+    // register first call for client
+    @GetMapping("/first-call-client/{id}")
+    public String registerFirstCallClient(@PathVariable("id") Long id, Model model) {
+        marketingService.registerFirstCallClient(id);
+        return "redirect:/marketing/clients";
+    }
+
+    // register second email for client
+    @GetMapping("/second-email-client/{id}")
+    public String registerSecondEmailClient(@PathVariable("id") Long id, Model model) {
+        marketingService.registerSecondEmailClient(id);
+        return "redirect:/marketing/clients";
+    }
+
+    // register second call for client
+    @GetMapping("/second-call-client/{id}")
+    public String registerSecondCallClient(@PathVariable("id") Long id, Model model) {
+        marketingService.registerSecondCallClient(id);
+        return "redirect:/marketing/clients";
+    }
+
+    //view all clients
+    @GetMapping("/marketing/clients")
+    public String getAllClients(Model model) {
+        List<ClientDTO> clientDTOS = clientService.getAllClients();
+
+        model.addAttribute("allClients", clientDTOS);
+        model.addAttribute("allSourceType", SourceType.values());
+
+        return "clients";
     }
 }
