@@ -31,13 +31,13 @@ public class PersonDTO {
 
     private String company;
 
-    private LocalDate firstCall;
-
     private LocalDate firstEmail;
 
-    private LocalDate secondCall;
+    private LocalDate firstCall;
 
     private LocalDate secondEmail;
+
+    private LocalDate secondCall;
 
     public String getFullName() {
         StringBuilder sb = new StringBuilder();
@@ -107,14 +107,6 @@ public class PersonDTO {
         this.company = company;
     }
 
-    public LocalDate getFirstCall() {
-        return firstCall;
-    }
-
-    public void setFirstCall(LocalDate firstCall) {
-        this.firstCall = firstCall;
-    }
-
     public LocalDate getFirstEmail() {
         return firstEmail;
     }
@@ -123,12 +115,12 @@ public class PersonDTO {
         this.firstEmail = firstEmail;
     }
 
-    public LocalDate getSecondCall() {
-        return secondCall;
+    public LocalDate getFirstCall() {
+        return firstCall;
     }
 
-    public void setSecondCall(LocalDate secondCall) {
-        this.secondCall = secondCall;
+    public void setFirstCall(LocalDate firstCall) {
+        this.firstCall = firstCall;
     }
 
     public LocalDate getSecondEmail() {
@@ -137,5 +129,13 @@ public class PersonDTO {
 
     public void setSecondEmail(LocalDate secondEmail) {
         this.secondEmail = secondEmail;
+    }
+
+    public LocalDate getSecondCall() {
+        return secondCall;
+    }
+
+    public void setSecondCall(LocalDate secondCall) {
+        this.secondCall = secondCall;
     }
 }

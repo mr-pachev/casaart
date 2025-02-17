@@ -172,10 +172,11 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
 
     // PersonDTO map to CompanyManager
     CompanyManager personDTOMapToCompanyManager(PersonDTO personDTO) {
-        CompanyManager companyManager = new CompanyManager();
-
-        companyManager.setId(personDTO.getId());
+        CompanyManager companyManager = companyManagerRepository.findById(personDTO.getId());
+//
+//        companyManager.setId(personDTO.getId());
         companyManager.setFirstName(personDTO.getFirstName());
+
         if (personDTO.getMiddleName() != null) {
             companyManager.setMiddleName(personDTO.getMiddleName());
         }
@@ -183,6 +184,18 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         companyManager.setEmail(personDTO.getEmail());
         companyManager.setPhoneNumber(personDTO.getPhoneNumber());
 
+        if(personDTO.getFirstEmail() != null){
+            companyManager.setFirstEmail(personDTO.getFirstEmail());
+        }
+        if(personDTO.getFirstCall() != null){
+            companyManager.setFirstCall(personDTO.getFirstCall());
+        }
+        if(personDTO.getSecondEmail() != null){
+            companyManager.setSecondEmail(personDTO.getSecondEmail());
+        }
+        if(personDTO.getSecondCall() != null){
+            companyManager.setSecondCall(personDTO.getSecondCall());
+        }
 
         return companyManager;
     }

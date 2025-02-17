@@ -34,14 +34,6 @@ public class CompanyDTO {
 
     private List<String> industries;
 
-    private String firstCall;
-
-    private String sentEmail;
-
-    private String letterSent;
-
-    private String secondCall;
-
     public long getId() {
         return id;
     }
@@ -112,37 +104,5 @@ public class CompanyDTO {
 
     public void setIndustries(List<String> industries) {
         this.industries = industries;
-    }
-
-    public String getFirstCall() {
-        return firstCall;
-    }
-
-    public void setFirstCall(String firstCall) {
-        this.firstCall = firstCall;
-    }
-
-    public String getSentEmail() {
-        return sentEmail;
-    }
-
-    public void setSentEmail(String sentEmail) {
-        this.sentEmail = sentEmail;
-    }
-
-    public String getLetterSent() {
-        return letterSent;
-    }
-
-    public void setLetterSent(String letterSent) {
-        this.letterSent = letterSent;
-    }
-
-    public String getSecondCall() {
-        return secondCall;
-    }
-
-    public void setSecondCall(String secondCall) {
-        this.secondCall = secondCall;
     }
 }
