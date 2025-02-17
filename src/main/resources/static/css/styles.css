@@ -113,17 +113,28 @@ table td {
     color: white; /* Бял текст */
     font-size: 16px; /* Размер на текста */
     border: none; /* Без рамка */
-    border-radius: 8px; /* Заоблени ъгли */
+    border-radius: 5px; /* Заоблени ъгли */
     padding: 3px 10px; /* Вътрешен отстъп */
     cursor: pointer; /* Показалец за кликване */
 }
 
-.sort-button:hover {
+.sort-button:hover, .reg-button:hover {
     background-color: #0f0805;
 }
 
 
-.edit-button, .delete-button, .view-button {
+
+.reg-button {
+    background-color: #5c3725;
+    color: white; /* Бял текст */
+    font-size: 11px; /* Размер на текста */
+    border: none; /* Без рамка */
+    border-radius: 5px; /* Заоблени ъгли */
+    padding: 2px 10px; /* Вътрешен отстъп */
+    cursor: pointer; /* Показалец за кликване */
+}
+
+.edit-button, .delete-button{
     display: inline-block;
     margin: 0;
     padding: 6px 12px;
@@ -157,7 +168,12 @@ table td {
 
 .view-button {
     background-color: #F0E61F;
-    color: white;
+    color: white; /* Бял текст */
+    font-size: 11px; /* Размер на текста */
+    border: none; /* Без рамка */
+    border-radius: 5px; /* Заоблени ъгли */
+    padding: 2px 10px; /* Вътрешен отстъп */
+    cursor: pointer; /* Показалец за кликване */
 }
 
 .view-button:hover {

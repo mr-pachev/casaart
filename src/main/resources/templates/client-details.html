@@ -12,7 +12,7 @@
 
     <div class="container-form">
         <h1>Промяна клиент</h1>
-        <div class="login-form">
+        <div class="add-form">
             <form th:action="@{/client-details}"
                   th:object="${clientDTO}"
                   th:method="POST">
@@ -107,6 +107,22 @@
                     <p class="invalid-feedback errors alert alert-danger">
                         Избери източник.
                     </p>
+                </div>
+                <div class="form-group">
+                    <label for="firstEmail" class="form-label">Дата на първи имейл</label>
+                    <input type="date" class="form-control" id="firstEmail" name="firstEmail" th:value="${clientDTO.firstEmail}">
+                </div>
+                <div class="form-group">
+                    <label for="firstCall" class="form-label">Дата на първо обаждане</label>
+                    <input type="date" class="form-control" id="firstCall" name="firstCall" th:value="${clientDTO.firstCall}">
+                </div>
+                <div class="form-group">
+                    <label for="secondEmail" class="form-label">Дата на втори имейл</label>
+                    <input type="date" class="form-control" id="secondEmail" name="secondEmail" th:value="${clientDTO.secondEmail}">
+                </div>
+                <div class="form-group">
+                    <label for="secondCall" class="form-label">Дата на второ обаждане</label>
+                    <input type="date" class="form-control" id="secondCall" name="secondCall" th:value="${clientDTO.secondCall}">
                 </div>
                 <button type="submit" class="btn btn-success">Запази</button>
             </form>
