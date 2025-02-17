@@ -12,7 +12,7 @@
 
 <div style="text-align: right; margin: 10px 20px;">
     <form th:method="POST" th:action="@{/sort-clients}" style="display: inline;">
-        <input type="text" name="sourceType" placeholder="Търси по име" class="source-type-select"
+        <input type="text" name="type" placeholder="Търси по име" class="source-type-select"
                style="width: 300px;">
         <button type="submit" class="sort-button">Търси</button>
     </form>
@@ -32,8 +32,11 @@
             <select name="type" class="source-type-select" id="mainSelect" onchange="toggleIndustrySelect()">
                 <option value="allClients">-- подреди по --</option>
                 <option value="allClients">Всички клиенти</option>
-                <option value="firstAndLastName">Име</option>
-                <option value="addedFrom">Добавен от</option>
+                <option value="allClientsByName">Име</option>
+                <option value="allClientsByFirstEmail">Дата на първи имейл</option>
+                <option value="allClientsByFirstCall">Дата на първо обаждане</option>
+                <option value="allClientsBySecondEmail">Дата на втори имейл</option>
+                <option value="allClientsBySecondCall">Добавен на второ обаждане</option>
                 <option value="sourceType">Източник</option>
             </select>
 

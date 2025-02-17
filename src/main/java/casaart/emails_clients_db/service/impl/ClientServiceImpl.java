@@ -2,7 +2,9 @@ package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
+import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Client;
+import casaart.emails_clients_db.model.entity.CompanyManager;
 import casaart.emails_clients_db.model.entity.User;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.ClientRepository;
@@ -31,53 +33,46 @@ public class ClientServiceImpl implements ClientService {
     // get all clients
     @Override
     public List<ClientDTO> getAllClients() {
-        List<Client> clients = clientRepository.findAllByOrderByCreatedAtDesc();
+        List<Client> clients = clientRepository.findAllByOrderByIdDesc();
 
-        return mapToClientDTOList(clients);
+        return clienListMapToClientDTOS(clients);
     }
 
     // get sorted clients
     @Override
-    public List<ClientDTO> sortedClients(String sortRule) {
-        List<Client> sortedClientList = new ArrayList<>();
-        sortRule = sortRule.trim();
-        String[] words = sortRule.split("\\s+");
-        String oneName = "^[А-Я][а-я]*$";
+    public List<ClientDTO> sortedClients(String type) {
+        String[] inputArr = convertInputString(type);
+        List<Client> clientList = new ArrayList<>();
 
-        if ("creatDate".equals(words[0])) {
-            sortedClientList = clientRepository.findAllByOrderByCreatedAtDesc();
-        } else if ("modifyDate".equals(words[0])) {
-            sortedClientList = clientRepository.findAllByOrderByUpdatedAtDesc();
-        } else if ("addedFrom".equals(words[0])) {
-            sortedClientList = clientRepository.findAllByOrderByUserUsernameAsc();
-        } else if ("firstAndLastName".equals(words[0])) {
-            sortedClientList = clientRepository.findAllByOrderByFirstNameAscLastNameAsc();
-        } else if ("allClients".equals(words[0])) {
-            return getAllClients();
-        } else if ("clientFullName".equals(words[0])) {
-            return getAllClients();
-        } else if (words.length == 2) {
-            String firstName = words[0];
-            String lastName = words[1];
+        if ("allClients".equals(type)) {
+            clientList = clientRepository.findAllByOrderByIdDesc();
 
-            sortedClientList = clientRepository.findByFirstNameAndLastName(firstName, lastName);
-        } else if (words.length == 3) {
-            String firstName = words[0];
-            String middleName = words[1];
-            String lastName = words[2];
+        } else if ("allClientsByName".equals(type)) {
+            clientList = clientRepository.findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
 
-            sortedClientList = clientRepository.findByFirstNameAndMiddleNameAndLastName(firstName, middleName, lastName);
-        } else if (Pattern.matches(oneName, words[0])) {
-            sortedClientList = clientRepository.findByFirstName(words[0]);
-        } else if (!"HOTEL".equals(words[0]) &&
-                        !"SHOWROOM".equals(words[0]) &&
-                        !"ONLINE_SHOP".equals(words[0])) {
-            return getAllClients();
-        } else {
-            sortedClientList = clientRepository.findAllBySourceType(SourceType.valueOf(words[0]));
+        } else if ("allClientsByFirstEmail".equals(type)) {
+            clientList = clientRepository.findAllByOrderByFirstEmailDesc();
+
+        } else if ("allClientsByFirstCall".equals(type)) {
+            clientList = clientRepository.findAllByOrderByFirstCallDesc();
+
+        } else if ("allClientsBySecondEmail".equals(type)) {
+            clientList = clientRepository.findAllByOrderBySecondEmailDesc();
+
+        } else if ("allClientsBySecondCall".equals(type)) {
+            clientList = clientRepository.findAllByOrderBySecondCallDesc();
+
+        } else if(inputArr.length == 1){
+            clientList = clientRepository.findAllByFirstName(inputArr[0]);
+
+        } else if(inputArr.length == 2){
+            clientList = clientRepository.findAllByFirstNameAndLastName(inputArr[0], inputArr[1]);
+
         }
 
-        return mapToClientDTOList(sortedClientList);
+        List<ClientDTO> clientDTOS = clienListMapToClientDTOS(clientList);
+
+        return clientDTOS;
     }
 
     // get sorted clients by sourceType
@@ -133,6 +128,7 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.deleteById(id);
     }
 
+    // ClientDTO map to Client
     ClientDTO mapToClientDTO(Client client) {
         ClientDTO clientDTO = mapper.map(client, ClientDTO.class);
         clientDTO.setAddedFrom(client.getUser().getUsername());
@@ -140,8 +136,8 @@ public class ClientServiceImpl implements ClientService {
         return clientDTO;
     }
 
-    // List<ClientDTO> map to List<Client>
-    List<ClientDTO> mapToClientDTOList(List<Client> clientList) {
+    // List<Client> map to List<ClientDTO>
+    List<ClientDTO> clienListMapToClientDTOS(List<Client> clientList) {
         List<ClientDTO> allClientDTOS = new ArrayList<>();
 
         for (Client client : clientList) {
@@ -151,5 +147,26 @@ public class ClientServiceImpl implements ClientService {
         }
 
         return allClientDTOS;
+    }
+
+    // convert input string
+    String[] convertInputString(String input) {
+        if (input == null || input.trim().isEmpty()) {
+            return new String[0]; // Връщане на празен масив за нула или празен вход
+        }
+
+        // 1. Trim: Премахване на празните пространства в началото и края
+        String trimmedString = input.trim();
+
+        // 2. Преобразуване на всички символи в малки букви
+        String lowerCaseString = trimmedString.toLowerCase();
+
+        // 3. Премахване на препинателните знаци
+        String cleanedString = lowerCaseString.replaceAll("[^a-zA-Zа-яА-Я\\s]", "");
+
+        // 4. Разделяне на низа на отделни думи (по интервали)
+        String[] words = cleanedString.split("\\s+");
+
+        return words;
     }
 }

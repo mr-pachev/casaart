@@ -2,8 +2,6 @@ package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
-import casaart.emails_clients_db.model.dto.CompanyDTO;
-import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.service.ClientService;
 import jakarta.validation.Valid;
@@ -46,7 +44,7 @@ public class ClientController {
 
     //view all sorted clients
     @PostMapping("/sort-clients")
-    public String sortCients(@RequestParam("type") String type,
+    public String sortClients(@RequestParam("type") String type,
                              @RequestParam(value = "sourceType", required = false) String sourceType,
                              Model model) {
         List<ClientDTO> sortedClients;
