@@ -2,7 +2,6 @@ package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Company;
-import casaart.emails_clients_db.model.entity.CompanyManager;
 import casaart.emails_clients_db.model.entity.ContactPerson;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.ContactPersonRepository;
@@ -18,7 +17,6 @@ import java.util.List;
 public class ContactPersonServiceImpl implements ContactPersonService {
     private final ContactPersonRepository contactPersonRepository;
     private final CompanyRepository companyRepository;
-
     private final ModelMapper mapper;
 
     public ContactPersonServiceImpl(ContactPersonRepository contactPersonRepository, CompanyRepository companyRepository, ModelMapper mapper) {
@@ -164,7 +162,6 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         if (personDTO.getSecondCall() != null) {
             contactPerson.setSecondCall(personDTO.getSecondCall());
         }
-
 
         return contactPerson;
     }

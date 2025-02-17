@@ -107,7 +107,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
 
     // add company manager
     @Override
-    @Transactional
+//    @Transactional
     public void addCompanyManager(PersonDTO personDTO, long companyId) {
         Company company = companyRepository.findById(companyId).get();
 
@@ -226,7 +226,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         String lowerCaseString = trimmedString.toLowerCase();
 
         // 3. Премахване на препинателните знаци
-        String cleanedString = lowerCaseString.replaceAll("[^a-zA-Z\\s]", "");
+        String cleanedString = lowerCaseString.replaceAll("[^a-zA-Zа-яА-Я\\s]", "");
 
         // 4. Разделяне на низа на отделни думи (по интервали)
         String[] words = cleanedString.split("\\s+");

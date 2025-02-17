@@ -59,7 +59,7 @@ main {
 }
 
 .register {
-    background-color: #22a14a;
+    background-color: #279C38;
     color: white;
         padding: 8px 18px;
         font-size: 15px;
@@ -70,7 +70,7 @@ main {
 }
 
 .login {
-    background-color: #17a7e0;
+    background-color: #009CDE;
     color: white;
     padding: 8px 18px;
     font-size: 15px;
@@ -108,6 +108,21 @@ table td {
     height: 100%;
 }
 
+.sort-button {
+    background-color: #5c3725;
+    color: white; /* Бял текст */
+    font-size: 16px; /* Размер на текста */
+    border: none; /* Без рамка */
+    border-radius: 8px; /* Заоблени ъгли */
+    padding: 3px 10px; /* Вътрешен отстъп */
+    cursor: pointer; /* Показалец за кликване */
+}
+
+.sort-button:hover {
+    background-color: #0f0805;
+}
+
+
 .edit-button, .delete-button, .view-button {
     display: inline-block;
     margin: 0;
@@ -121,7 +136,7 @@ table td {
 }
 
 .edit-button {
-    background-color: #f16e23;
+    background-color: #FF671F;
     color: white;
 }
 
@@ -141,12 +156,12 @@ table td {
 }
 
 .view-button {
-    background-color: #fee303;
+    background-color: #F0E61F;
     color: white;
 }
 
 .view-button:hover {
-    background-color: #EAE24F;
+    background-color: #cfc61d;
     color: white;
 }
 
@@ -170,7 +185,7 @@ table td {
 }
 
 .form-group .add-button {
-    background-color: #22a14a;
+    background-color: #279C38;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -184,7 +199,7 @@ table td {
 }
 
 .sell-button {
-    background-color: #17a7e0;
+    background-color: #009CDE;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -226,7 +241,7 @@ table td {
 
 /* Навигация */
 .navbar {
-    background-color: #f16e23;
+    background-color: #FF671F;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
@@ -255,7 +270,7 @@ table td {
 }
 
 .navbar .nav-links a:hover, .navbar .nav-links .logout-button:hover {
-    color: #f1ea3b;
+    color: #F0E61F;
 }
 
 /* Заглавие */
@@ -280,7 +295,7 @@ table th, table td {
 }
 
 table th {
-    background-color: #17a7e0;
+    background-color: #009CDE;
     color: white;
 }
 
@@ -331,7 +346,7 @@ ul {
 }
 
 .form-group input:focus {
-    border-color: #17a7e0;
+    border-color: #009CDE;
     box-shadow: 0 0 5px rgba(23, 167, 224, 0.5);
 }
 
