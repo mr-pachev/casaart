@@ -1,14 +1,17 @@
 package casaart.emails_clients_db.service;
 
 import casaart.emails_clients_db.model.entity.Client;
+import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.repository.UserRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,33 +33,43 @@ public class ExcelService {
 
             Sheet sheet = workbook.getSheetAt(0); // Взимаме първия лист
             for (Row row : sheet) {
-                if (row.getRowNum() < 3) continue; // Прескачаме заглавния ред
+                if (row.getRowNum() == 0) continue; // Прескачаме заглавния ред
 
                 // Важно! Apache POI използва индексите от 0, затова:
+                Cell sourceTypeCell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);  // C
                 Cell firstNameCell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);  // D
                 Cell middleNameCell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK); // E
                 Cell lastNameCell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);   // F
                 Cell emailCell = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);      // G
                 Cell phoneCell = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);      // H
 
+                String sourceType = getCellValueAsString(sourceTypeCell);
                 String firstName = getCellValueAsString(firstNameCell);
                 String middleName = getCellValueAsString(middleNameCell);
                 String lastName = getCellValueAsString(lastNameCell);
                 String email = getCellValueAsString(emailCell);
                 String phoneNumber = getCellValueAsString(phoneCell);
 
+                // Проверка за празни редове
+                if(firstName.isEmpty() && lastName.isEmpty() && email.isEmpty()){
+                    continue;
+                }
+
                 // Създаваме нов клиент
                 Client client = new Client();
                 client.setUser(userRepository.findById(1));
+                client.setSourceType(SourceType.valueOf(sourceType));
                 client.setFirstName(firstName);
                 client.setMiddleName(middleName.isEmpty() ? null : middleName);
                 client.setLastName(lastName);
                 client.setEmail(email.isEmpty() ? null : email);
                 client.setPhoneNumber(phoneNumber.isEmpty() ? null : phoneNumber);
+                client.setCreatedAt(LocalDateTime.now());
 
-                clients.add(client);
-                System.out.println("Ред " + row.getRowNum() + ": " + firstName + " " + lastName + " | " + email + " | " + phoneNumber);
-
+                // Проверка за съществувващ клиент
+                if(clientRepository.findByFirstNameAndLastNameAndEmail(firstName, lastName, email).isEmpty()){
+                    clients.add(client);
+                }
             }
 
             clientRepository.saveAll(clients);
@@ -66,9 +79,8 @@ public class ExcelService {
         }
     }
 
-    /**
-     * Метод за извличане на стойност от клетка като String
-     */
+
+     // Метод за извличане на стойност от клетка като String
     private String getCellValueAsString(Cell cell) {
         if (cell == null) return "";
         switch (cell.getCellType()) {

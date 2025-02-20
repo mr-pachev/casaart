@@ -27,7 +27,7 @@ dependencies {
     // data base
     runtimeOnly 'com.mysql:mysql-connector-j'
     // exel input
-    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.4.0'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.3'
     // others
     implementation 'org.springframework.security:spring-security-crypto:6.2.1'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
