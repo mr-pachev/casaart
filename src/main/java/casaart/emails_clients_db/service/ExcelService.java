@@ -59,9 +59,18 @@ public class ExcelService {
                 Client client = new Client();
                 client.setUser(userRepository.findById(1));
                 client.setSourceType(SourceType.valueOf(sourceType));
-                client.setFirstName(firstName);
+
+                // Разделяне на firstName, ако съдържа две думи
+                if (firstName != null && firstName.trim().contains(" ")) {
+                    String[] nameParts = firstName.trim().split("\\s+", 2); // Разделяме по първия интервал
+                    client.setFirstName(nameParts[0]); // Първата дума -> firstName
+                    client.setLastName(nameParts[1]); // Втората дума -> lastName
+                } else {
+                    client.setFirstName(firstName);
+                    client.setLastName(lastName);
+                }
+
                 client.setMiddleName(middleName.isEmpty() ? null : middleName);
-                client.setLastName(lastName);
                 client.setEmail(email.isEmpty() ? null : email);
                 client.setPhoneNumber(phoneNumber.isEmpty() ? null : phoneNumber);
                 client.setCreatedAt(LocalDateTime.now());

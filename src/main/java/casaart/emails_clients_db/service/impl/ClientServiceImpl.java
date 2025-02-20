@@ -60,10 +60,10 @@ public class ClientServiceImpl implements ClientService {
             clientList = clientRepository.findAllByOrderBySecondCallDesc();
 
         } else if (inputArr.length == 1) {
-            clientList = clientRepository.findAllByFirstName(inputArr[0]);
+            clientList = clientRepository.findAllByFirstName(inputArr[0].toLowerCase());
 
         } else if (inputArr.length == 2) {
-            clientList = clientRepository.findAllByFirstNameAndLastName(inputArr[0], inputArr[1]);
+            clientList = clientRepository.findAllByFirstNameAndLastName(inputArr[0].toLowerCase(), inputArr[1].toLowerCase());
 
         }
 
