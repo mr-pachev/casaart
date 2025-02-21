@@ -73,7 +73,16 @@ public class ExcelService {
 
                 client.setMiddleName(middleName.isEmpty() ? null : middleName);
                 client.setEmail(email.isEmpty() ? null : email);
-                client.setPhoneNumber(phoneNumber.isEmpty() ? null : phoneNumber);
+
+                // Проверка и коригиране на телефонния номер
+                if (!phoneNumber.isEmpty()) {
+                    if (phoneNumber.startsWith("+359")) {
+                        phoneNumber = "0" + phoneNumber.substring(4);
+                    }
+                    client.setPhoneNumber(phoneNumber);
+                } else {
+                    client.setPhoneNumber(null);
+                }
                 client.setCreatedAt(LocalDateTime.now());
 
                 // Проверка за съществуващ клиент в базата
@@ -88,7 +97,7 @@ public class ExcelService {
                                 Objects.equals(c.getEmail(), client.getEmail()));
 
                 // Добавяне само ако клиентът не съществува нито в базата, нито в списъка
-                if (!existsInDatabase && !existsInList) {
+                if (!existsInDatabase && !existsInList && client.getEmail() != null) {
                     clients.add(client);
                 }
 
