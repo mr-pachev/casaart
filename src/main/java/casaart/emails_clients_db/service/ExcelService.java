@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ExcelService {
@@ -75,10 +76,22 @@ public class ExcelService {
                 client.setPhoneNumber(phoneNumber.isEmpty() ? null : phoneNumber);
                 client.setCreatedAt(LocalDateTime.now());
 
-                // Проверка за съществувващ клиент
-                if(clientRepository.findByFirstNameAndLastNameAndEmail(client.getFirstName(), client.getLastName(), client.getEmail()).isEmpty()){
+                // Проверка за съществуващ клиент в базата
+                boolean existsInDatabase = clientRepository
+                        .findByFirstNameAndLastNameAndEmail(client.getFirstName(), client.getLastName(), client.getEmail())
+                        .isPresent();
+
+                // Проверка за съществуващ клиент в списъка clients
+                boolean existsInList = clients.stream().anyMatch(c ->
+                        c.getFirstName().equals(client.getFirstName()) &&
+                                c.getLastName().equals(client.getLastName()) &&
+                                Objects.equals(c.getEmail(), client.getEmail()));
+
+                // Добавяне само ако клиентът не съществува нито в базата, нито в списъка
+                if (!existsInDatabase && !existsInList) {
                     clients.add(client);
                 }
+
             }
 
             clientRepository.saveAll(clients);
