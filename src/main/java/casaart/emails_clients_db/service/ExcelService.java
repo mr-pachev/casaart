@@ -103,6 +103,19 @@ public class ExcelService {
 
             }
 
+            // Проверка и коригиране на телефонните номера за всички записани клиенти в ClientRepository
+//            List<Client> allClients = clientRepository.findAll();
+//            for (Client c : allClients) {
+//                if (c.getPhoneNumber() != null) {
+//                    if (c.getPhoneNumber().startsWith("+359")) {
+//                        c.setPhoneNumber("0" + c.getPhoneNumber().substring(4));
+//                    } else if (c.getPhoneNumber().startsWith("8")) {
+//                        c.setPhoneNumber("0" + c.getPhoneNumber());
+//                    }
+//                    clientRepository.save(c);
+//                }
+//            }
+
             clientRepository.saveAll(clients);
             System.out.println("Успешно записани " + clients.size() + " клиента в базата.");
         } catch (IOException e) {
