@@ -15,10 +15,10 @@ public class ExcelDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        String filePath = "D:\\demo.xlsx"; // 🔥 Път до локалния Excel файл
+        String filePath = "C:\\Users\\user\\Documents\\IP\\demo.xlsx"; // Път до локалния Excel файл
 
-        System.out.println("🔄 Започва импорт на клиенти от " + filePath);
+        System.out.println("Започва импорт на клиенти от " + filePath);
         excelService.importClientsFromExcel(filePath);
-        System.out.println("🚀 Импортът приключи!");
+        System.out.println("Импортът приключи!");
     }
 }

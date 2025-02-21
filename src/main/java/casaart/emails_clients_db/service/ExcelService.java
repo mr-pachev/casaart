@@ -76,15 +76,15 @@ public class ExcelService {
                 client.setCreatedAt(LocalDateTime.now());
 
                 // Проверка за съществувващ клиент
-                if(clientRepository.findByFirstNameAndLastNameAndEmail(firstName, lastName, email).isEmpty()){
+                if(clientRepository.findByFirstNameAndLastNameAndEmail(client.getFirstName(), client.getLastName(), client.getEmail()).isEmpty()){
                     clients.add(client);
                 }
             }
 
             clientRepository.saveAll(clients);
-            System.out.println("✅ Успешно записани " + clients.size() + " клиента в базата.");
+            System.out.println("Успешно записани " + clients.size() + " клиента в базата.");
         } catch (IOException e) {
-            System.err.println("❌ Грешка при четене на Excel файла: " + e.getMessage());
+            System.err.println("Грешка при четене на Excel файла: " + e.getMessage());
         }
     }
 
