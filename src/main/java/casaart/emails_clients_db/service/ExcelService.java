@@ -74,15 +74,7 @@ public class ExcelService {
                 client.setMiddleName(middleName.isEmpty() ? null : middleName);
                 client.setEmail(email.isEmpty() ? null : email);
 
-                // Проверка и коригиране на телефонния номер
-                if (!phoneNumber.isEmpty()) {
-                    if (phoneNumber.startsWith("+359")) {
-                        phoneNumber = "0" + phoneNumber.substring(4);
-                    }
-                    client.setPhoneNumber(phoneNumber);
-                } else {
-                    client.setPhoneNumber(null);
-                }
+                client.setPhoneNumber(formatPhoneNumber(phoneNumber));
                 client.setCreatedAt(LocalDateTime.now());
 
                 // Проверка за съществуващ клиент в базата
@@ -102,27 +94,12 @@ public class ExcelService {
                 }
 
             }
-
-            // Проверка и коригиране на телефонните номера за всички записани клиенти в ClientRepository
-//            List<Client> allClients = clientRepository.findAll();
-//            for (Client c : allClients) {
-//                if (c.getPhoneNumber() != null) {
-//                    if (c.getPhoneNumber().startsWith("+359")) {
-//                        c.setPhoneNumber("0" + c.getPhoneNumber().substring(4));
-//                    } else if (c.getPhoneNumber().startsWith("8")) {
-//                        c.setPhoneNumber("0" + c.getPhoneNumber());
-//                    }
-//                    clientRepository.save(c);
-//                }
-//            }
-
             clientRepository.saveAll(clients);
             System.out.println("Успешно записани " + clients.size() + " клиента в базата.");
         } catch (IOException e) {
             System.err.println("Грешка при четене на Excel файла: " + e.getMessage());
         }
     }
-
 
      // Метод за извличане на стойност от клетка като String
     private String getCellValueAsString(Cell cell) {
@@ -149,4 +126,24 @@ public class ExcelService {
         }
     }
 
+    // Обработка на телефонния номер на клиент
+    private String formatPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.isEmpty()) {
+            return null;
+        }
+
+        // Премахване на всички интервали
+        phoneNumber = phoneNumber.replaceAll("\\s+", "");
+
+        // Замяна на +359 с 0
+        if (phoneNumber.startsWith("+359")) {
+            phoneNumber = "0" + phoneNumber.substring(4);
+        }
+        // Добавяне на 0 отпред, ако номерът започва с 8
+        else if (phoneNumber.startsWith("8")) {
+            phoneNumber = "0" + phoneNumber;
+        }
+
+        return phoneNumber;
+    }
 }
