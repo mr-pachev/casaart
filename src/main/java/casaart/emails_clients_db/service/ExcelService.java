@@ -7,6 +7,12 @@ import casaart.emails_clients_db.repository.UserRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -98,6 +104,46 @@ public class ExcelService {
             System.out.println("Успешно записани " + clients.size() + " клиента в базата.");
         } catch (IOException e) {
             System.err.println("Грешка при четене на Excel файла: " + e.getMessage());
+        }
+    }
+
+    public void exportClientsToExcel(String filePath) {
+        List<Client> clients = clientRepository.findAll();
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Clients");
+
+            // Заглавен ред
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {"First Name", "Middle Name", "Last Name", "Company Name", "Email", "Phone Number", "Source Type", "Modify From", "First Call", "First Email", "Second Call", "Second Email"};
+            for (int i = 0; i < headers.length; i++) {
+                headerRow.createCell(i).setCellValue(headers[i]);
+            }
+
+            // Попълване на данните
+            int rowNum = 1;
+            for (Client client : clients) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(client.getFirstName());
+                row.createCell(1).setCellValue(client.getMiddleName());
+                row.createCell(2).setCellValue(client.getLastName());
+                row.createCell(3).setCellValue(client.getCompanyName());
+                row.createCell(4).setCellValue(client.getEmail());
+                row.createCell(5).setCellValue(client.getPhoneNumber());
+                row.createCell(6).setCellValue(client.getSourceType().toString());
+                row.createCell(7).setCellValue(client.getModifyFrom());
+                row.createCell(8).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
+                row.createCell(9).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");
+                row.createCell(10).setCellValue(client.getSecondCall() != null ? client.getSecondCall().toString() : "");
+                row.createCell(11).setCellValue(client.getSecondEmail() != null ? client.getSecondEmail().toString() : "");
+            }
+
+            // Запис в файл
+            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+                workbook.write(fileOut);
+            }
+            System.out.println("Успешно експортирани " + clients.size() + " клиента в " + filePath);
+        } catch (IOException e) {
+            System.err.println("Грешка при запис в Excel файл: " + e.getMessage());
         }
     }
 

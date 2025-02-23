@@ -18,9 +18,11 @@ public class ExcelDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        String filePath = "D:\\demo.xlsx"; // Път до локалния Excel файл
+        String filePath = "D:\\demo1.xlsx"; // Път до локалния Excel файл
 
 //        clientRepository.removeDuplicateClients();
+
+//        excelService.exportClientsToExcel(filePath);
 
         System.out.println("Започва импорт на клиенти от " + filePath);
         excelService.importClientsFromExcel(filePath);
