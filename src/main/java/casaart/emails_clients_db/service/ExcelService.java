@@ -51,9 +51,9 @@ public class ExcelService {
                 Cell phoneCell = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);      // H
 
                 String sourceType = getCellValueAsString(sourceTypeCell);
-                String firstName = getCellValueAsString(firstNameCell);
-                String middleName = getCellValueAsString(middleNameCell);
-                String lastName = getCellValueAsString(lastNameCell);
+                String firstName = formatName(getCellValueAsString(firstNameCell));
+                String middleName = formatName(getCellValueAsString(middleNameCell));
+                String lastName = formatName(getCellValueAsString(lastNameCell));
                 String email = getCellValueAsString(emailCell);
                 String phoneNumber = getCellValueAsString(phoneCell);
 
@@ -170,6 +170,22 @@ public class ExcelService {
             default:
                 return "";
         }
+    }
+
+    // Обработка на имената
+    private String formatName(String name) {
+        if (name == null || name.isEmpty()) {
+            return "";
+        }
+        name = name.toLowerCase();
+        String[] words = name.split("\\s+");
+        StringBuilder formattedName = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                formattedName.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+            }
+        }
+        return formattedName.toString().trim();
     }
 
     // Обработка на телефонния номер на клиент
