@@ -21,6 +21,7 @@ public class ExcelDataLoader implements CommandLineRunner {
         String filePath = "D:\\demo.xlsx"; // Път до локалния Excel файл
 
 //        clientRepository.removeDuplicateClients();
+//        excelService.updateAllClientNames();
 
 //        excelService.exportClientsToExcel(filePath);
 

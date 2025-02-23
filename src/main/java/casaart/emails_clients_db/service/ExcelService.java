@@ -208,4 +208,18 @@ public class ExcelService {
 
         return phoneNumber;
     }
+
+    // Форматиране на имената от базата данни
+    public void updateAllClientNames() {
+        List<Client> allClients = clientRepository.findAll(); // Извличаме всички клиенти
+
+        for (Client client : allClients) {
+            client.setFirstName(formatName(client.getFirstName()));
+            client.setMiddleName(formatName(client.getMiddleName()));
+            client.setLastName(formatName(client.getLastName()));
+        }
+
+        clientRepository.saveAll(allClients); // Запазваме обновените клиенти
+        System.out.println("Обновени са " + allClients.size() + " клиента.");
+    }
 }
