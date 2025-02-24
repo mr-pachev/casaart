@@ -31,6 +31,9 @@ public class PersonDTO {
 
     private String company;
 
+    @NotBlank
+    private String loyaltyLevel;
+
     private LocalDate firstEmail;
 
     private LocalDate firstCall;
@@ -105,6 +108,14 @@ public class PersonDTO {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getLoyaltyLevel() {
+        return loyaltyLevel;
+    }
+
+    public void setLoyaltyLevel(String loyaltyLevel) {
+        this.loyaltyLevel = loyaltyLevel;
     }
 
     public LocalDate getFirstEmail() {

@@ -23,6 +23,9 @@ public class ClientDTO {
     @NotBlank
     private String sourceType;
 
+    @NotBlank
+    private String loyaltyLevel;
+
     private LocalDate firstCall;
 
     private LocalDate firstEmail;
@@ -32,6 +35,7 @@ public class ClientDTO {
     private LocalDate secondEmail;
 
     private String addedFrom;
+
     private String modifyFrom;
 
     public long getId() {
@@ -96,6 +100,14 @@ public class ClientDTO {
 
     public void setSourceType(String sourceType) {
         this.sourceType = sourceType;
+    }
+
+    public String getLoyaltyLevel() {
+        return loyaltyLevel;
+    }
+
+    public void setLoyaltyLevel(String loyaltyLevel) {
+        this.loyaltyLevel = loyaltyLevel;
     }
 
     public LocalDate getFirstCall() {

@@ -1,6 +1,6 @@
 package casaart.emails_clients_db;
 
-import casaart.emails_clients_db.repository.ClientRepository;
+import casaart.emails_clients_db.service.EditDataBaseService;
 import casaart.emails_clients_db.service.ExcelService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -9,21 +9,22 @@ import org.springframework.stereotype.Component;
 public class ExcelDataLoader implements CommandLineRunner {
 
     private final ExcelService excelService;
-    private final ClientRepository clientRepository;
 
-    public ExcelDataLoader(ExcelService excelService, ClientRepository clientRepository) {
+    private final EditDataBaseService editDataBaseService;
+
+    public ExcelDataLoader(ExcelService excelService, EditDataBaseService editDataBaseService) {
         this.excelService = excelService;
-        this.clientRepository = clientRepository;
+        this.editDataBaseService = editDataBaseService;
     }
 
     @Override
     public void run(String... args) {
-        String filePath = "C:\\Users\\user\\Documents\\IP\\demo.xlsx"; // Път до локалния Excel файл
+        String filePath = "D:\\demo1.xlsx"; // Път до локалния Excel файл
 
-        clientRepository.removeDuplicateClients();
-//        excelService.updateAllClientNames();
-
-//        excelService.exportClientsToExcel(filePath);
+//        editDataBaseService.removeDuplicateClients();
+//        editDataBaseService.updateAllClientNames();
+//        editDataBaseService.setLoyaltyLevel_1ForAll();
+//        editDataBaseService.exportClientsToExcel(filePath);
 
         System.out.println("Започва импорт на клиенти от " + filePath);
         excelService.importClientsFromExcel(filePath);

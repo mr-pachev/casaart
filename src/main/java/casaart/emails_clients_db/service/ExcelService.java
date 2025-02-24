@@ -7,12 +7,6 @@ import casaart.emails_clients_db.repository.UserRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,13 +38,15 @@ public class ExcelService {
 
                 // Важно! Apache POI използва индексите от 0, затова:
                 Cell sourceTypeCell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);  // C
-                Cell firstNameCell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);  // D
-                Cell middleNameCell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK); // E
-                Cell lastNameCell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);   // F
-                Cell emailCell = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);      // G
-                Cell phoneCell = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);      // H
+                Cell loyaltyLevelCell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);  // D
+                Cell firstNameCell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);  // E
+                Cell middleNameCell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK); // F
+                Cell lastNameCell = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);   // G
+                Cell emailCell = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);      // H
+                Cell phoneCell = row.getCell(8, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);      // I
 
                 String sourceType = getCellValueAsString(sourceTypeCell);
+                String loyaltyLevel = getCellValueAsString(loyaltyLevelCell);
                 String firstName = formatName(getCellValueAsString(firstNameCell));
                 String middleName = formatName(getCellValueAsString(middleNameCell));
                 String lastName = formatName(getCellValueAsString(lastNameCell));
@@ -112,46 +108,6 @@ public class ExcelService {
         }
     }
 
-    public void exportClientsToExcel(String filePath) {
-        List<Client> clients = clientRepository.findAll();
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Clients");
-
-            // Заглавен ред
-            Row headerRow = sheet.createRow(0);
-            String[] headers = {"First Name", "Middle Name", "Last Name", "Company Name", "Email", "Phone Number", "Source Type", "Modify From", "First Call", "First Email", "Second Call", "Second Email"};
-            for (int i = 0; i < headers.length; i++) {
-                headerRow.createCell(i).setCellValue(headers[i]);
-            }
-
-            // Попълване на данните
-            int rowNum = 1;
-            for (Client client : clients) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(client.getFirstName());
-                row.createCell(1).setCellValue(client.getMiddleName());
-                row.createCell(2).setCellValue(client.getLastName());
-                row.createCell(3).setCellValue(client.getCompanyName());
-                row.createCell(4).setCellValue(client.getEmail());
-                row.createCell(5).setCellValue(client.getPhoneNumber());
-                row.createCell(6).setCellValue(client.getSourceType().toString());
-                row.createCell(7).setCellValue(client.getModifyFrom());
-                row.createCell(8).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
-                row.createCell(9).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");
-                row.createCell(10).setCellValue(client.getSecondCall() != null ? client.getSecondCall().toString() : "");
-                row.createCell(11).setCellValue(client.getSecondEmail() != null ? client.getSecondEmail().toString() : "");
-            }
-
-            // Запис в файл
-            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
-                workbook.write(fileOut);
-            }
-            System.out.println("Успешно експортирани " + clients.size() + " клиента в " + filePath);
-        } catch (IOException e) {
-            System.err.println("Грешка при запис в Excel файл: " + e.getMessage());
-        }
-    }
-
      // Метод за извличане на стойност от клетка като String
     private String getCellValueAsString(Cell cell) {
         if (cell == null) return "";
@@ -194,7 +150,7 @@ public class ExcelService {
     }
 
     // Обработка на телефонния номер на клиент
-    private String formatPhoneNumber(String phoneNumber) {
+    String formatPhoneNumber(String phoneNumber) {
         if (phoneNumber == null || phoneNumber.isEmpty()) {
             return null;
         }
@@ -212,19 +168,5 @@ public class ExcelService {
         }
 
         return phoneNumber;
-    }
-
-    // Форматиране на имената от базата данни
-    public void updateAllClientNames() {
-        List<Client> allClients = clientRepository.findAll(); // Извличаме всички клиенти
-
-        for (Client client : allClients) {
-            client.setFirstName(formatName(client.getFirstName()));
-            client.setMiddleName(formatName(client.getMiddleName()));
-            client.setLastName(formatName(client.getLastName()));
-        }
-
-        clientRepository.saveAll(allClients); // Запазваме обновените клиенти
-        System.out.println("Обновени са " + allClients.size() + " клиента.");
     }
 }

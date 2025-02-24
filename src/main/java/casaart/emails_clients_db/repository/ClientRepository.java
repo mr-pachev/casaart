@@ -24,18 +24,4 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findAllByFirstName(String firstName);
     List<Client> findAllByFirstNameAndLastName(String firstName, String lastName);
     List<Client> findAllBySourceType(SourceType sourceType);
-
-    // Премахва дублирането на клиенти
-    @Transactional
-    default void removeDuplicateClients() {
-        List<Client> allClients = findAll();
-        allClients.stream()
-                .collect(Collectors.groupingBy(c -> c.getFirstName() + "|" + c.getLastName() + "|" + c.getEmail()))
-                .values()
-                .forEach(duplicates -> {
-                    if (duplicates.size() > 1) {
-                        duplicates.stream().skip(1).forEach(this::delete);
-                    }
-                });
-    }
 }
