@@ -5,7 +5,7 @@ import casaart.emails_clients_db.service.ExcelService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class ExcelDataLoader implements CommandLineRunner {
 
     private final ExcelService excelService;
