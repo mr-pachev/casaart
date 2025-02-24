@@ -58,6 +58,11 @@ public class ExcelService {
                 String phoneNumber = getCellValueAsString(phoneCell);
 
                 // Проверка за празни редове
+                if(firstName.isEmpty()){
+                    continue;
+                }
+
+                // Проверка за празни редове
                 if(firstName.isEmpty() && lastName.isEmpty() && email.isEmpty()){
                     continue;
                 }

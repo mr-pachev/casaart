@@ -5,7 +5,7 @@ import casaart.emails_clients_db.service.ExcelService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class ExcelDataLoader implements CommandLineRunner {
 
     private final ExcelService excelService;
@@ -18,9 +18,9 @@ public class ExcelDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        String filePath = "D:\\demo.xlsx"; // Път до локалния Excel файл
+        String filePath = "C:\\Users\\user\\Documents\\IP\\demo.xlsx"; // Път до локалния Excel файл
 
-//        clientRepository.removeDuplicateClients();
+        clientRepository.removeDuplicateClients();
 //        excelService.updateAllClientNames();
 
 //        excelService.exportClientsToExcel(filePath);
