@@ -4,6 +4,7 @@ import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.model.entity.User;
+import casaart.emails_clients_db.model.enums.LoyaltyLevel;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.service.ClientService;
@@ -78,6 +79,17 @@ public class ClientServiceImpl implements ClientService {
         SourceType sourceType = SourceType.valueOf(type);
 
         return clientRepository.findAllBySourceType(sourceType)
+                .stream()
+                .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуване в DTO директно в ламбда израза
+                .collect(Collectors.toList());
+    }
+
+    // get sorted clients by loyaltyLevel
+    @Override
+    public List<ClientDTO> sortedClientsByLoyaltyLevel(String type) {
+        LoyaltyLevel loyaltyLevel = LoyaltyLevel.valueOf(type);
+
+        return clientRepository.findAllByLoyaltyLevel(loyaltyLevel)
                 .stream()
                 .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуване в DTO директно в ламбда израза
                 .collect(Collectors.toList());

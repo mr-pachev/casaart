@@ -38,6 +38,7 @@
                 <option value="allClientsBySecondEmail">Дата на втори имейл</option>
                 <option value="allClientsBySecondCall">Добавен на второ обаждане</option>
                 <option value="sourceType">Източник</option>
+                <option value="loyaltyLevel">Ниво лоялност</option>
             </select>
 
             <!-- Под-селекция за източниците (скрита по подразбиране) -->
@@ -47,22 +48,41 @@
                         th:value="${sourceType}"
                         th:text="${sourceType}"></option>
             </select>
+
+            <!-- Под-селекция за ниво на лоялност (скрита по подразбиране) -->
+            <select name="loyaltyLevel" class="loyalty-level-select" id="loyaltySelect" style="display: none;">
+                <option value="">-- Изберете източник --</option>
+                <option th:each="loyaltyLevel : ${allLoyaltyLevel}"
+                        th:value="${loyaltyLevel}"
+                        th:text="${loyaltyLevel}"></option>
+            </select>
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
     </div>
 
     <script>
-        function toggleIndustrySelect() {
+        function toggleSelects() {
             var mainSelect = document.getElementById("mainSelect");
             var industrySelect = document.getElementById("industrySelect");
+            var loyaltySelect = document.getElementById("loyaltySelect");
 
-            // Ако избраната опция е "sourceType", показваме под-селекцията
+            // Показване/скриване на "Източник"
             if (mainSelect.value === "sourceType") {
-                industrySelect.style.display = "inline-block"; // Показва селекта
+                industrySelect.style.display = "inline-block";
             } else {
-                industrySelect.style.display = "none"; // Скрива селекта
+                industrySelect.style.display = "none";
+            }
+
+            // Показване/скриване на "Ниво лоялност"
+            if (mainSelect.value === "loyaltyLevel") {
+                loyaltySelect.style.display = "inline-block";
+            } else {
+                loyaltySelect.style.display = "none";
             }
         }
+
+        // Свързване на функцията със селекта
+        document.getElementById("mainSelect").addEventListener("change", toggleSelects);
     </script>
 
     <table id="clients-table">

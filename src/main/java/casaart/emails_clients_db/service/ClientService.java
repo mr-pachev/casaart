@@ -13,14 +13,16 @@ public interface ClientService {
     List<ClientDTO> sortedClients(String type);
     // get sorted clients by sourceType
     List<ClientDTO> sortedClientsBySourceType(String sourceType);
-    //checking is exist client email
+    // get sorted clients by loyaltyLevel
+    List<ClientDTO> sortedClientsByLoyaltyLevel(String loyaltyLevel);
+    // checking is exist client email
     boolean isExistClientEmail(String email);
-    //add client
+    // add client
    void addClient(AddClientDTO addClientDTO);
-   //find client by id
+   // find client by id
     ClientDTO findClientById(long id);
-    //edit client
+    // edit client
     void editClient(ClientDTO clientDTO);
-    //delete client by id
+    // delete client by id
     void deleteClient(long id);
 }

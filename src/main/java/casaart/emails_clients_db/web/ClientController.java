@@ -2,6 +2,7 @@ package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
+import casaart.emails_clients_db.model.enums.LoyaltyLevel;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.service.ClientService;
 import jakarta.validation.Valid;
@@ -38,6 +39,7 @@ public class ClientController {
 
         model.addAttribute("allClients", clientDTOS);
         model.addAttribute("allSourceType", SourceType.values());
+        model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
 
         return "clients";
     }
@@ -46,18 +48,22 @@ public class ClientController {
     @PostMapping("/sort-clients")
     public String sortClients(@RequestParam("type") String type,
                              @RequestParam(value = "sourceType", required = false) String sourceType,
+                              @RequestParam(value = "loyaltyLevel", required = false) String loyaltyLevel,
                              Model model) {
         List<ClientDTO> sortedClients;
 
         // Проверяваме дали е избран "Бранш" и има конкретна стойност
         if ("sourceType".equals(type) && sourceType != null && !sourceType.isEmpty()) {
             sortedClients = clientService.sortedClientsBySourceType(sourceType);
+        } else if ("loyaltyLevel".equals(type) && loyaltyLevel != null && !loyaltyLevel.isEmpty()){
+            sortedClients = clientService.sortedClientsByLoyaltyLevel(loyaltyLevel);
         } else {
             sortedClients = clientService.sortedClients(type);
         }
 
         model.addAttribute("allClients", sortedClients);
         model.addAttribute("allSourceType", SourceType.values());
+        model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
 
         return "clients"; // Връщаме същия шаблон с актуализиран списък
     }
@@ -112,6 +118,7 @@ public class ClientController {
         ClientDTO clientDTO = clientService.findClientById(id);
         model.addAttribute(clientDTO);
         model.addAttribute("sourceType", SourceType.values());
+        model.addAttribute("loyaltyLevel", LoyaltyLevel.values());
 
         return "client-details";
     }
@@ -129,6 +136,7 @@ public class ClientController {
             rAtt.addFlashAttribute("clientDTO", clientDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
             model.addAttribute("sourceType", SourceType.values());
+            model.addAttribute("loyaltyLevel", LoyaltyLevel.values());
 
             return "client-details";
         }
@@ -139,6 +147,7 @@ public class ClientController {
             rAtt.addFlashAttribute("clientDTO", clientDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
             model.addAttribute("sourceType", SourceType.values());
+            model.addAttribute("loyaltyLevel", LoyaltyLevel.values());
             model.addAttribute("isExistEmail", true);
 
             return "client-details";
