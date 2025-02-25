@@ -108,7 +108,7 @@
                         Избери източник.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-group" th:if="${clientDTO.sourceType == 'HOTEL' or clientDTO.sourceType == 'SHOWROOM'}">
                     <label for="loyaltyLevel">Ниво лоялност</label>
                     <select class="form-control" th:placeholder="${clientDTO.loyaltyLevel}"
                             id="loyaltyLevel"

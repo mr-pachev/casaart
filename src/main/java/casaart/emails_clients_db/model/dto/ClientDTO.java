@@ -22,7 +22,6 @@ public class ClientDTO {
     private String phoneNumber;
     @NotBlank
     private String sourceType;
-
     @NotBlank
     private String loyaltyLevel;
 

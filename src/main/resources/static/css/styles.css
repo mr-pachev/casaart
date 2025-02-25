@@ -305,14 +305,19 @@ table {
 
 table th, table td {
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 12px;
     text-align: center;
     color: #391e13;
+}
+
+table td {
+    font-size: 14px; /* По-малък шрифт за данните */
 }
 
 table th {
     background-color: #009CDE;
     color: white;
+    font-size: 14px; /* По-голям шрифт за заглавията */
 }
 
 table tr:nth-child(even) {
