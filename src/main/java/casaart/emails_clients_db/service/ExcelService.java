@@ -1,6 +1,7 @@
 package casaart.emails_clients_db.service;
 
 import casaart.emails_clients_db.model.entity.Client;
+import casaart.emails_clients_db.model.enums.LoyaltyLevel;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.repository.UserRepository;
@@ -63,42 +64,66 @@ public class ExcelService {
                     continue;
                 }
 
-                // Създаваме нов клиент
-                Client client = new Client();
-                client.setUser(userRepository.findById(1));
-                client.setSourceType(SourceType.valueOf(sourceType));
+//                // Създаваме нов клиент
+//                Client client = new Client();
+//                client.setUser(userRepository.findById(1));
+//                client.setSourceType(SourceType.valueOf(sourceType));
+//
+//                // Разделяне на firstName, ако съдържа две думи
+//                if (firstName != null && firstName.trim().contains(" ")) {
+//                    String[] nameParts = firstName.trim().split("\\s+", 2); // Разделяме по първия интервал
+//                    client.setFirstName(nameParts[0]); // Първата дума -> firstName
+//                    client.setLastName(nameParts[1]); // Втората дума -> lastName
+//                } else {
+//                    client.setFirstName(firstName);
+//                    client.setLastName(lastName);
+//                }
+//
+//                client.setMiddleName(middleName.isEmpty() ? null : middleName);
+//                client.setEmail(email.isEmpty() ? null : email);
+//
+//                client.setPhoneNumber(formatPhoneNumber(phoneNumber));
+//                client.setCreatedAt(LocalDateTime.now());
+//
+//                // Проверка за съществуващ клиент в базата
+//                boolean existsInDatabase = clientRepository
+//                        .findByFirstNameAndLastNameAndEmail(client.getFirstName(), client.getLastName(), client.getEmail())
+//                        .isPresent();
+//
+//                // Проверка за съществуващ клиент в списъка clients
+//                boolean existsInList = clients.stream().anyMatch(c ->
+//                        c.getFirstName().equals(client.getFirstName()) &&
+//                                c.getLastName().equals(client.getLastName()) &&
+//                                Objects.equals(c.getEmail(), client.getEmail()));
+//
+//                // Добавяне само ако клиентът не съществува нито в базата, нито в списъка
+//                if (!existsInDatabase && !existsInList && client.getEmail() != null) {
+//                    clients.add(client);
+//                }
 
-                // Разделяне на firstName, ако съдържа две думи
-                if (firstName != null && firstName.trim().contains(" ")) {
-                    String[] nameParts = firstName.trim().split("\\s+", 2); // Разделяме по първия интервал
-                    client.setFirstName(nameParts[0]); // Първата дума -> firstName
-                    client.setLastName(nameParts[1]); // Втората дума -> lastName
+
+                // Обновяване на loyaltyLevel/добавяне на клиент с loyaltyLevel
+                Client existingClient = clientRepository
+                        .findByFirstNameAndLastNameAndEmail(firstName, lastName, email)
+                        .orElse(null);
+
+                if (existingClient != null) {
+                    existingClient.setLoyaltyLevel(LoyaltyLevel.valueOf(loyaltyLevel));
+                    clientRepository.save(existingClient);
                 } else {
-                    client.setFirstName(firstName);
-                    client.setLastName(lastName);
+                    Client newClient = new Client();
+                    newClient.setUser(userRepository.findById(1));
+                    newClient.setSourceType(SourceType.valueOf(sourceType));
+                    newClient.setFirstName(firstName);
+                    newClient.setMiddleName(middleName.isEmpty() ? null : middleName);
+                    newClient.setLastName(lastName);
+                    newClient.setEmail(email.isEmpty() ? null : email);
+                    newClient.setPhoneNumber(formatPhoneNumber(phoneNumber));
+                    newClient.setCreatedAt(LocalDateTime.now());
+                    newClient.setLoyaltyLevel(LoyaltyLevel.valueOf(loyaltyLevel));
+                    clients.add(newClient);
                 }
 
-                client.setMiddleName(middleName.isEmpty() ? null : middleName);
-                client.setEmail(email.isEmpty() ? null : email);
-
-                client.setPhoneNumber(formatPhoneNumber(phoneNumber));
-                client.setCreatedAt(LocalDateTime.now());
-
-                // Проверка за съществуващ клиент в базата
-                boolean existsInDatabase = clientRepository
-                        .findByFirstNameAndLastNameAndEmail(client.getFirstName(), client.getLastName(), client.getEmail())
-                        .isPresent();
-
-                // Проверка за съществуващ клиент в списъка clients
-                boolean existsInList = clients.stream().anyMatch(c ->
-                        c.getFirstName().equals(client.getFirstName()) &&
-                                c.getLastName().equals(client.getLastName()) &&
-                                Objects.equals(c.getEmail(), client.getEmail()));
-
-                // Добавяне само ако клиентът не съществува нито в базата, нито в списъка
-                if (!existsInDatabase && !existsInList && client.getEmail() != null) {
-                    clients.add(client);
-                }
 
             }
             clientRepository.saveAll(clients);
@@ -108,7 +133,7 @@ public class ExcelService {
         }
     }
 
-     // Метод за извличане на стойност от клетка като String
+    // Метод за извличане на стойност от клетка като String
     private String getCellValueAsString(Cell cell) {
         if (cell == null) return "";
         switch (cell.getCellType()) {
