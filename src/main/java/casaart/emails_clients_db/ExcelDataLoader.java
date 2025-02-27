@@ -21,17 +21,19 @@ public class ExcelDataLoader implements CommandLineRunner {
         String filePathImport = "C:\\Users\\user\\Documents\\IP\\demo.xlsx"; // Път до локалния Excel файл
         String filePathExport = "C:\\Users\\user\\Documents\\IP\\demo1.xlsx"; // Път до локалния Excel файл
 
-        editDataBaseService.removeDuplicateClients();
-        editDataBaseService.updateAllClientNames();
+//        editDataBaseService.removeDuplicateClients();
+//        editDataBaseService.updateAllClientNames();
+//
+//        System.out.println("Export of clients from " + filePathExport);
+//        exelService.exportClientsToExcel(filePathExport);
+//        System.out.println("Export is finished!");
+//
+//        System.out.println("Starts importing clients from " + filePathImport);
+//        exelService.importClientsFromExcel(filePathImport);
+//        System.out.println("Import is finished!");
 
-        System.out.println("Export of clients from " + filePathExport);
-        exelService.exportClientsToExcel(filePathExport);
-        System.out.println("Export is finished!");
-
-        System.out.println("Starts importing clients from " + filePathImport);
-        exelService.importClientsFromExcel(filePathImport);
-        System.out.println("Import is finished!");
-
-
+        System.out.println("Starts updating clients from " + filePathImport);
+        exelService.updateOrAddLoyaltyLevel(filePathImport);
+        System.out.println("Updating is finished!");
     }
 }
