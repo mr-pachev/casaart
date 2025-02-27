@@ -98,21 +98,6 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
         }
     }
 
-    // set loyalty level_1 for all clients
-    @Override
-    public void setLoyaltyLevel_1ForAll() {
-        List<Client> allClients = clientRepository.findAll(); // Извличаме всички клиенти
-
-        for (Client client : allClients) {
-            if (client.getSourceType().equals(SourceType.HOTEL) ||
-                    client.getSourceType().equals(SourceType.SHOWROOM)) {
-                client.setLoyaltyLevel(LoyaltyLevel.LEVEL_1);
-            }
-        }
-        clientRepository.saveAll(allClients); // Запазваме обновените клиенти
-        System.out.println("Обновени са " + allClients.size() + " клиента.");
-    }
-
     // Обработка на имената
     private String formatName(String name) {
         if (name == null || name.isEmpty()) {

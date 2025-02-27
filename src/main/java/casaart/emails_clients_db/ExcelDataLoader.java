@@ -5,7 +5,7 @@ import casaart.emails_clients_db.service.ExcelService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class ExcelDataLoader implements CommandLineRunner {
 
     private final ExcelService excelService;
@@ -23,11 +23,10 @@ public class ExcelDataLoader implements CommandLineRunner {
 
 //        editDataBaseService.removeDuplicateClients();
 //        editDataBaseService.updateAllClientNames();
-//        editDataBaseService.setLoyaltyLevel_1ForAll();
 //        editDataBaseService.exportClientsToExcel(filePath);
 
 //        System.out.println("Започва импорт на клиенти от " + filePath);
-//        excelService.importClientsFromExcel(filePath);
+        excelService.importClientsFromExcel(filePath);
 //        System.out.println("Импортът приключи!");
     }
 }

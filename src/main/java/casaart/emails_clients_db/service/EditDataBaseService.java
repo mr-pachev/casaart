@@ -10,7 +10,4 @@ public interface EditDataBaseService {
 
     // export clients to exel
     void exportClientsToExcel(String filePath);
-
-    // set loyalty level_1 for all clients
-    void setLoyaltyLevel_1ForAll();
 }
