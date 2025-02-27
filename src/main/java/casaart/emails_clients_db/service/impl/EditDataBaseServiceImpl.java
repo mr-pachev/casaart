@@ -80,7 +80,7 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
                 row.createCell(4).setCellValue(client.getEmail());
                 row.createCell(5).setCellValue(client.getPhoneNumber());
                 row.createCell(6).setCellValue(client.getSourceType().toString());
-                row.createCell(7).setCellValue(client.getLoyaltyLevel().toString());
+                row.createCell(7).setCellValue(client.getLoyaltyLevel() != null ? client.getLoyaltyLevel().toString() : "");
                 row.createCell(8).setCellValue(client.getModifyFrom());
                 row.createCell(9).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
                 row.createCell(10).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");

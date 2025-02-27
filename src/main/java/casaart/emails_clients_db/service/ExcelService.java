@@ -55,12 +55,12 @@ public class ExcelService {
                 String phoneNumber = getCellValueAsString(phoneCell);
 
                 // Проверка за празни редове
-                if(firstName.isEmpty()){
+                if (firstName.isEmpty()) {
                     continue;
                 }
 
                 // Проверка за празни редове
-                if(firstName.isEmpty() && lastName.isEmpty() && email.isEmpty()){
+                if (firstName.isEmpty() && lastName.isEmpty() && email.isEmpty()) {
                     continue;
                 }
 
@@ -121,77 +121,86 @@ public class ExcelService {
                     newClient.setPhoneNumber(formatPhoneNumber(phoneNumber));
                     newClient.setCreatedAt(LocalDateTime.now());
                     newClient.setLoyaltyLevel(LoyaltyLevel.valueOf(loyaltyLevel));
-                    clients.add(newClient);
+
+                    // Проверка за съществуващ клиент в списъка clients
+                    boolean existsInList = clients.stream().anyMatch(c ->
+                            c.getFirstName().equals(newClient.getFirstName()) &&
+                                    c.getLastName().equals(newClient.getLastName()) &&
+                                    Objects.equals(c.getEmail(), newClient.getEmail()));
+
+                    if (!existsInList) {
+                            clients.add(newClient);
+                        }
+                    }
+
+
                 }
-
-
+                clientRepository.saveAll(clients);
+                System.out.println("Успешно записани " + clients.size() + " клиента в базата.");
+            } catch(IOException e){
+                System.err.println("Грешка при четене на Excel файла: " + e.getMessage());
             }
-            clientRepository.saveAll(clients);
-            System.out.println("Успешно записани " + clients.size() + " клиента в базата.");
-        } catch (IOException e) {
-            System.err.println("Грешка при четене на Excel файла: " + e.getMessage());
         }
-    }
 
-    // Метод за извличане на стойност от клетка като String
-    private String getCellValueAsString(Cell cell) {
-        if (cell == null) return "";
-        switch (cell.getCellType()) {
-            case STRING:
-                return cell.getStringCellValue().trim();
-            case NUMERIC:
-                if (DateUtil.isCellDateFormatted(cell)) {
-                    return cell.getDateCellValue().toString(); // Преобразува датите в текст
-                } else {
-                    return String.valueOf((long) cell.getNumericCellValue()).trim(); // Принудително конвертира числата
-                }
-            case BOOLEAN:
-                return String.valueOf(cell.getBooleanCellValue()).trim();
-            case FORMULA:
-                try {
-                    return cell.getStringCellValue().trim(); // Опит за вземане на резултата като текст
-                } catch (IllegalStateException e) {
-                    return String.valueOf(cell.getNumericCellValue()).trim(); // Ако не е текст, взима числовата стойност
-                }
-            default:
+        // Метод за извличане на стойност от клетка като String
+        private String getCellValueAsString (Cell cell){
+            if (cell == null) return "";
+            switch (cell.getCellType()) {
+                case STRING:
+                    return cell.getStringCellValue().trim();
+                case NUMERIC:
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        return cell.getDateCellValue().toString(); // Преобразува датите в текст
+                    } else {
+                        return String.valueOf((long) cell.getNumericCellValue()).trim(); // Принудително конвертира числата
+                    }
+                case BOOLEAN:
+                    return String.valueOf(cell.getBooleanCellValue()).trim();
+                case FORMULA:
+                    try {
+                        return cell.getStringCellValue().trim(); // Опит за вземане на резултата като текст
+                    } catch (IllegalStateException e) {
+                        return String.valueOf(cell.getNumericCellValue()).trim(); // Ако не е текст, взима числовата стойност
+                    }
+                default:
+                    return "";
+            }
+        }
+
+        // Обработка на имената
+        private String formatName (String name){
+            if (name == null || name.isEmpty()) {
                 return "";
-        }
-    }
-
-    // Обработка на имената
-    private String formatName(String name) {
-        if (name == null || name.isEmpty()) {
-            return "";
-        }
-        name = name.toLowerCase();
-        String[] words = name.split("\\s+");
-        StringBuilder formattedName = new StringBuilder();
-        for (String word : words) {
-            if (!word.isEmpty()) {
-                formattedName.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
             }
+            name = name.toLowerCase();
+            String[] words = name.split("\\s+");
+            StringBuilder formattedName = new StringBuilder();
+            for (String word : words) {
+                if (!word.isEmpty()) {
+                    formattedName.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+                }
+            }
+            return formattedName.toString().trim();
         }
-        return formattedName.toString().trim();
+
+        // Обработка на телефонния номер на клиент
+        String formatPhoneNumber (String phoneNumber){
+            if (phoneNumber == null || phoneNumber.isEmpty()) {
+                return null;
+            }
+
+            // Премахване на всички интервали
+            phoneNumber = phoneNumber.replaceAll("\\s+", "");
+
+            // Замяна на +359 с 0
+            if (phoneNumber.startsWith("+359")) {
+                phoneNumber = "0" + phoneNumber.substring(4);
+            }
+            // Добавяне на 0 отпред, ако номерът започва с 8
+            else if (phoneNumber.startsWith("8")) {
+                phoneNumber = "0" + phoneNumber;
+            }
+
+            return phoneNumber;
+        }
     }
-
-    // Обработка на телефонния номер на клиент
-    String formatPhoneNumber(String phoneNumber) {
-        if (phoneNumber == null || phoneNumber.isEmpty()) {
-            return null;
-        }
-
-        // Премахване на всички интервали
-        phoneNumber = phoneNumber.replaceAll("\\s+", "");
-
-        // Замяна на +359 с 0
-        if (phoneNumber.startsWith("+359")) {
-            phoneNumber = "0" + phoneNumber.substring(4);
-        }
-        // Добавяне на 0 отпред, ако номерът започва с 8
-        else if (phoneNumber.startsWith("8")) {
-            phoneNumber = "0" + phoneNumber;
-        }
-
-        return phoneNumber;
-    }
-}
