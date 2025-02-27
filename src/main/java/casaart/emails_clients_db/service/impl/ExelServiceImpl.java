@@ -102,10 +102,10 @@ public class ExelServiceImpl implements ExelService {
                 }
 
                 clientRepository.saveAll(clients);
-                System.out.println("Successfully added " + clients.size() + " new clients in the database.");
+                System.out.println("SUCCESSFULLY ADDED --< " + clients.size() + " >-- NEW clients IN THE DATABASE.");
             }
         } catch (IOException e) {
-            System.err.println("Грешка при четене на Excel файла: " + e.getMessage());
+            System.err.println("ERROR READING Excel file: " + e.getMessage());
         }
     }
 
@@ -146,9 +146,9 @@ public class ExelServiceImpl implements ExelService {
             try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
                 workbook.write(fileOut);
             }
-            System.out.println("Successfully exported " + clients.size() + " clients in " + filePath);
+            System.out.println("SUCCESSFULLY EXPORTED --< " + clients.size() + " >-- clients IN " + filePath);
         } catch (IOException e) {
-            System.err.println("Error reading Excel file: " + e.getMessage());
+            System.err.println("ERROR READING Excel file: " + e.getMessage());
         }
     }
 
@@ -235,10 +235,10 @@ public class ExelServiceImpl implements ExelService {
 
             }
             clientRepository.saveAll(clients);
-            System.out.println("Successfully upgraded " + counterUpdated + " clients.");
-            System.out.println("Successfully added " + clients.size() + " new clients in the database.");
+            System.out.println("SUCCESSFULLY UPGRADED --< " + counterUpdated + " >-- clients.");
+            System.out.println("SUCCESSFULLY ADDED --< " + clients.size() + " >-- new clients in the database.");
         } catch (IOException e) {
-            System.err.println("Error reading Excel file: " + e.getMessage());
+            System.err.println("ERROR READING Excel file: " + e.getMessage());
         }
     }
 
