@@ -7,7 +7,4 @@ public interface EditDataBaseService {
 
     // update all client names
     void updateAllClientNames();
-
-    // export clients to exel
-    void exportClientsToExcel(String filePath);
 }

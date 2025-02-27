@@ -1,16 +1,18 @@
-package casaart.emails_clients_db.service;
+package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.model.enums.LoyaltyLevel;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.repository.UserRepository;
+import casaart.emails_clients_db.service.ExelService;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,15 +20,18 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class ExcelService {
+public class ExelServiceImpl implements ExelService {
     private final ClientRepository clientRepository;
     private final UserRepository userRepository;
 
-    public ExcelService(ClientRepository clientRepository, UserRepository userRepository) {
+    public ExelServiceImpl(ClientRepository clientRepository, UserRepository userRepository) {
         this.clientRepository = clientRepository;
         this.userRepository = userRepository;
     }
 
+
+    // import new clients from exel
+    @Override
     public void importClientsFromExcel(String filePath) {
         List<Client> clients = new ArrayList<>();
 
@@ -55,54 +60,133 @@ public class ExcelService {
                 String phoneNumber = getCellValueAsString(phoneCell);
 
                 // Проверка за празни редове
-                if (firstName.isEmpty()) {
-                    continue;
-                }
-
-                // Проверка за празни редове
-                if (firstName.isEmpty() && lastName.isEmpty() && email.isEmpty()) {
+                if (firstName.isEmpty() || email.isEmpty()) {
                     continue;
                 }
 
                 // Внасяне на нови клиенти
-//                Client client = new Client();
-//                client.setUser(userRepository.findById(1));
-//                client.setSourceType(SourceType.valueOf(sourceType));
-//
-//                // Разделяне на firstName, ако съдържа две думи
-//                if (firstName != null && firstName.trim().contains(" ")) {
-//                    String[] nameParts = firstName.trim().split("\\s+", 2); // Разделяме по първия интервал
-//                    client.setFirstName(nameParts[0]); // Първата дума -> firstName
-//                    client.setLastName(nameParts[1]); // Втората дума -> lastName
-//                } else {
-//                    client.setFirstName(firstName);
-//                    client.setLastName(lastName);
-//                }
-//
-//                client.setMiddleName(middleName.isEmpty() ? null : middleName);
-//                client.setEmail(email.isEmpty() ? null : email);
-//
-//                client.setPhoneNumber(formatPhoneNumber(phoneNumber));
-//                client.setCreatedAt(LocalDateTime.now());
-//
-//                // Проверка за съществуващ клиент в базата
-//                boolean existsInDatabase = clientRepository
-//                        .findByFirstNameAndLastNameAndEmail(client.getFirstName(), client.getLastName(), client.getEmail())
-//                        .isPresent();
-//
-//                // Проверка за съществуващ клиент в списъка clients
-//                boolean existsInList = clients.stream().anyMatch(c ->
-//                        c.getFirstName().equals(client.getFirstName()) &&
-//                                c.getLastName().equals(client.getLastName()) &&
-//                                Objects.equals(c.getEmail(), client.getEmail()));
-//
-//                // Добавяне само ако клиентът не съществува нито в базата, нито в списъка
-//                if (!existsInDatabase && !existsInList && client.getEmail() != null) {
-//                    clients.add(client);
-//                }
+                Client client = new Client();
+                client.setUser(userRepository.findById(1));
+                client.setSourceType(SourceType.valueOf(sourceType));
 
+                // Разделяне на firstName, ако съдържа две думи
+                if (firstName != null && firstName.trim().contains(" ")) {
+                    String[] nameParts = firstName.trim().split("\\s+", 2); // Разделяме по първия интервал
+                    client.setFirstName(nameParts[0]); // Първата дума -> firstName
+                    client.setLastName(nameParts[1]); // Втората дума -> lastName
+                } else {
+                    client.setFirstName(firstName);
+                    client.setLastName(lastName);
+                }
 
-                // Обновяване на loyaltyLevel/добавяне на клиент с loyaltyLevel
+                client.setMiddleName(middleName.isEmpty() ? null : middleName);
+                client.setEmail(email.isEmpty() ? null : email);
+
+                client.setPhoneNumber(formatPhoneNumber(phoneNumber));
+                client.setCreatedAt(LocalDateTime.now());
+
+                // Проверка за съществуващ клиент в базата
+                boolean existsInDatabase = clientRepository
+                        .findByFirstNameAndLastNameAndEmail(client.getFirstName(), client.getLastName(), client.getEmail())
+                        .isPresent();
+
+                // Проверка за съществуващ клиент в списъка clients
+                boolean existsInList = clients.stream().anyMatch(c ->
+                        c.getFirstName().equals(client.getFirstName()) &&
+                                c.getLastName().equals(client.getLastName()) &&
+                                Objects.equals(c.getEmail(), client.getEmail()));
+
+                // Добавяне само ако клиентът не съществува нито в базата, нито в списъка
+                if (!existsInDatabase && !existsInList && client.getEmail() != null) {
+                    clients.add(client);
+                }
+
+                clientRepository.saveAll(clients);
+                System.out.println("Successfully added " + clients.size() + " new clients in the database.");
+            }
+        } catch (IOException e) {
+            System.err.println("Грешка при четене на Excel файла: " + e.getMessage());
+        }
+    }
+
+    // export clients to exel
+    @Override
+    public void exportClientsToExcel(String filePath) {
+        List<Client> clients = clientRepository.findAll();
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Clients");
+
+            // Заглавен ред
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {"First Name", "Middle Name", "Last Name", "Company Name", "Email", "Phone Number", "Source Type", "Loyalty Level", "Modify From", "First Call", "First Email", "Second Call", "Second Email"};
+            for (int i = 0; i < headers.length; i++) {
+                headerRow.createCell(i).setCellValue(headers[i]);
+            }
+
+            // Попълване на данните
+            int rowNum = 1;
+            for (Client client : clients) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(client.getFirstName());
+                row.createCell(1).setCellValue(client.getMiddleName());
+                row.createCell(2).setCellValue(client.getLastName());
+                row.createCell(3).setCellValue(client.getCompanyName());
+                row.createCell(4).setCellValue(client.getEmail());
+                row.createCell(5).setCellValue(client.getPhoneNumber());
+                row.createCell(6).setCellValue(client.getSourceType().toString());
+                row.createCell(7).setCellValue(client.getLoyaltyLevel() != null ? client.getLoyaltyLevel().toString() : "");
+                row.createCell(8).setCellValue(client.getModifyFrom());
+                row.createCell(9).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
+                row.createCell(10).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");
+                row.createCell(11).setCellValue(client.getSecondCall() != null ? client.getSecondCall().toString() : "");
+                row.createCell(12).setCellValue(client.getSecondEmail() != null ? client.getSecondEmail().toString() : "");
+            }
+
+            // Запис в файл
+            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+                workbook.write(fileOut);
+            }
+            System.out.println("Successfully exported " + clients.size() + " clients in " + filePath);
+        } catch (IOException e) {
+            System.err.println("Error reading Excel file: " + e.getMessage());
+        }
+    }
+
+    // update or add loyaltyLevel on clients
+    @Override
+    public void updateOrAddLoyaltyLevel(String filePath) {
+        List<Client> clients = new ArrayList<>();
+        int counterUpdated = 0;
+
+        try (FileInputStream fis = new FileInputStream(new File(filePath));
+             Workbook workbook = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = workbook.getSheetAt(0); // Взимаме първия лист
+            for (Row row : sheet) {
+                if (row.getRowNum() == 0) continue; // Прескачаме заглавния ред
+
+                // Важно! Apache POI използва индексите от 0, затова:
+                Cell sourceTypeCell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);  // C
+                Cell loyaltyLevelCell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);  // D
+                Cell firstNameCell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);  // E
+                Cell middleNameCell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK); // F
+                Cell lastNameCell = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);   // G
+                Cell emailCell = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);      // H
+                Cell phoneCell = row.getCell(8, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);      // I
+
+                String sourceType = getCellValueAsString(sourceTypeCell);
+                String loyaltyLevel = getCellValueAsString(loyaltyLevelCell);
+                String firstName = formatName(getCellValueAsString(firstNameCell));
+                String middleName = formatName(getCellValueAsString(middleNameCell));
+                String lastName = formatName(getCellValueAsString(lastNameCell));
+                String email = getCellValueAsString(emailCell);
+                String phoneNumber = getCellValueAsString(phoneCell);
+
+                // Проверка за празни редове
+                if (firstName.isEmpty() || email.isEmpty()) {
+                    continue;
+                }
+
                 Client existingClient = clientRepository
                         .findByFirstNameAndLastNameAndEmail(firstName, lastName, email)
                         .orElse(null);
@@ -114,6 +198,7 @@ public class ExcelService {
                         existingClient.setPhoneNumber(phoneNumber);
                     }
 
+                    counterUpdated++;
                     clientRepository.save(existingClient);
                 } else {
                     Client newClient = new Client();
@@ -129,8 +214,8 @@ public class ExcelService {
                         newClient.setFirstName(firstName);
                         newClient.setLastName(lastName);
                     }
-
                     newClient.setMiddleName(middleName.isEmpty() ? null : middleName);
+
                     newClient.setEmail(email);
                     newClient.setPhoneNumber(formatPhoneNumber(phoneNumber));
                     newClient.setCreatedAt(LocalDateTime.now());
@@ -150,9 +235,10 @@ public class ExcelService {
 
             }
             clientRepository.saveAll(clients);
-            System.out.println("Успешно записани " + clients.size() + " клиента в базата.");
+            System.out.println("Successfully upgraded " + counterUpdated + " clients.");
+            System.out.println("Successfully added " + clients.size() + " new clients in the database.");
         } catch (IOException e) {
-            System.err.println("Грешка при четене на Excel файла: " + e.getMessage());
+            System.err.println("Error reading Excel file: " + e.getMessage());
         }
     }
 
