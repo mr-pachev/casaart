@@ -108,10 +108,6 @@ public class ClientServiceImpl implements ClientService {
         Client client = mapper.map(addClientDTO, Client.class);
         client.setUser(userHelperService.getUser());
 
-        if(addClientDTO.getSourceType().equals("SHOWROOM") || addClientDTO.getSourceType().equals("HOTEL")){
-            client.setLoyaltyLevel(LoyaltyLevel.LEVEL_1);
-        }
-
         client.setModifyFrom(userHelperService.getUser().getUsername());
 
         clientRepository.save(client);
