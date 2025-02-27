@@ -33,7 +33,7 @@ public class ClientServiceImpl implements ClientService {
     public List<ClientDTO> getAllClients() {
         List<Client> clients = clientRepository.findAllByOrderByIdDesc();
 
-        return clienListMapToClientDTOS(clients);
+        return clientListMapToClientDTOS(clients);
     }
 
     // get sorted clients
@@ -68,7 +68,7 @@ public class ClientServiceImpl implements ClientService {
 
         }
 
-        List<ClientDTO> clientDTOS = clienListMapToClientDTOS(clientList);
+        List<ClientDTO> clientDTOS = clientListMapToClientDTOS(clientList);
 
         return clientDTOS;
     }
@@ -149,7 +149,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     // List<Client> map to List<ClientDTO>
-    List<ClientDTO> clienListMapToClientDTOS(List<Client> clientList) {
+    List<ClientDTO> clientListMapToClientDTOS(List<Client> clientList) {
         List<ClientDTO> allClientDTOS = new ArrayList<>();
 
         for (Client client : clientList) {
