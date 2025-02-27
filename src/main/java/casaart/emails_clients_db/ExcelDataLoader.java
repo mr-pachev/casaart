@@ -22,12 +22,9 @@ public class ExcelDataLoader implements CommandLineRunner {
         String filePathExport = "D:\\demo1.xlsx"; // Път до локалния Excel файл
 
 //        editDataBaseService.removeDuplicateClients();
+//        editDataBaseService.removedClientsWithFalseEmail();
 //        editDataBaseService.updateAllClientNames();
-//
-//        System.out.println("EXPORT OF clients TO " + filePathExport);
-//        exelService.exportClientsToExcel(filePathExport);
-//        System.out.println("EXPORT is FINISHED!");
-//
+
 //        System.out.println("START IMPORTING clients FROM " + filePathImport);
 //        exelService.importClientsFromExcel(filePathImport);
 //        System.out.println("IMPORT is FINISHED!");
@@ -35,5 +32,9 @@ public class ExcelDataLoader implements CommandLineRunner {
         System.out.println("START UPDATING clients FROM " + filePathImport);
         exelService.updateOrAddLoyaltyLevel(filePathImport);
         System.out.println("UPDATING IS FINISHED!");
+
+//        System.out.println("EXPORT OF clients TO " + filePathExport);
+//        exelService.exportClientsToExcel(filePathExport);
+//        System.out.println("EXPORT is FINISHED!");
     }
 }

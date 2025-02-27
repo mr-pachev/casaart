@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @Service
 public class EditDataBaseServiceImpl implements EditDataBaseService {
     private final ClientRepository clientRepository;
-
     public EditDataBaseServiceImpl(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
@@ -41,6 +40,17 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
                 });
     }
 
+    // remove clients who email ended on @guest.booking.com
+    @Override
+    @Transactional
+    public void removedClientsWithFalseEmail() {
+        List<Client> allClients = clientRepository.findAll();
+
+        allClients.stream()
+                .filter(client -> client.getEmail().endsWith("@guest.booking.com"))
+                .forEach(clientRepository::delete);
+    }
+
     // update all client names
     @Override
     public void updateAllClientNames() {
@@ -53,7 +63,7 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
         }
 
         clientRepository.saveAll(allClients); // Запазваме обновените клиенти
-        System.out.println("Обновени са " + allClients.size() + " клиента.");
+        System.out.println("UPDATED ARE --< " + allClients.size() + " >-- CLIENTS.");
     }
 
     // Обработка на имената
