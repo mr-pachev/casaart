@@ -311,7 +311,6 @@ table th, table td {
 
 table td {
     font-size: 14px; /* По-малък шрифт за данните */
-    width: 10%;
 }
 
 table th {
