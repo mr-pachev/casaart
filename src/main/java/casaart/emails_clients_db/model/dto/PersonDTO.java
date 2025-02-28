@@ -1,6 +1,5 @@
 package casaart.emails_clients_db.model.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -30,9 +29,6 @@ public class PersonDTO {
     private String phoneNumber;
 
     private String company;
-
-    @NotBlank
-    private String loyaltyLevel;
 
     private LocalDate firstEmail;
 
@@ -108,14 +104,6 @@ public class PersonDTO {
 
     public void setCompany(String company) {
         this.company = company;
-    }
-
-    public String getLoyaltyLevel() {
-        return loyaltyLevel;
-    }
-
-    public void setLoyaltyLevel(String loyaltyLevel) {
-        this.loyaltyLevel = loyaltyLevel;
     }
 
     public LocalDate getFirstEmail() {
