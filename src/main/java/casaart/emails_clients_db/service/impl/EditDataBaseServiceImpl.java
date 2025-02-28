@@ -47,7 +47,7 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
         List<Client> allClients = clientRepository.findAll();
 
         allClients.stream()
-                .filter(client -> client.getEmail().endsWith("@guest.booking.com"))
+                .filter(client -> client.getEmail() == null || client.getEmail().endsWith("@guest.booking.com"))
                 .forEach(clientRepository::delete);
     }
 
