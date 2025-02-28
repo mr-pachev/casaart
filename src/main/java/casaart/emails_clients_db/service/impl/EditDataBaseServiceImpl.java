@@ -37,18 +37,9 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
 
     // remove duplicate clients same email
     @Override
+    @Transactional
     public void removeDuplicateClientsSameEmail() {
-        List<Client> allClients = clientRepository.findAll();
-        Set<String> seenEmails = new HashSet<>();
-        List<Client> duplicates = new ArrayList<>();
-
-        for (Client client : allClients) {
-            if (!seenEmails.add(client.getEmail())) {
-                duplicates.add(client);
-            }
-        }
-        clientRepository.deleteAll(duplicates);
-        System.out.println("SUCCESSFULLY REMOVED --< " + duplicates.size() + " >-- DUPLICATE clients SAME EMAIL.");
+        clientRepository.removeDuplicateClientsEmail();
     }
 
     // remove clients who email ended on @guest.booking.com

@@ -22,7 +22,7 @@ public class ExcelDataLoader implements CommandLineRunner {
         String filePathExport = "C:\\Users\\user\\Documents\\IP\\BACKUP_CLIENTS.xlsx"; // Път до локалния Excel файл
 
 //        editDataBaseService.removeDuplicateClients();
-        editDataBaseService.removeDuplicateClientsSameEmail();
+//        editDataBaseService.removeDuplicateClientsSameEmail();
 //        editDataBaseService.removedClientsWithFalseEmail();
 //        editDataBaseService.updateAllClientNames();
 

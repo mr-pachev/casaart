@@ -149,11 +149,11 @@ public class ExelServiceImpl implements ExelService {
 
                     if (!existsInList &&
                             newClient.getEmail() != null &&
+                            clientRepository.findByEmail(email).isEmpty() &&
                             !newClient.getEmail().endsWith("@guest.booking.com")) {
                         clients.add(newClient);
                     }
                 }
-
 
             }
             clientRepository.saveAll(clients);
