@@ -61,12 +61,12 @@ main {
 .register {
     background-color: #279C38;
     color: white;
-        padding: 8px 18px;
-        font-size: 15px;
-        border-radius: 5px;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+    padding: 8px 18px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .login {
@@ -123,7 +123,6 @@ table td {
 }
 
 
-
 .reg-button {
     background-color: #5c3725;
     color: white; /* Бял текст */
@@ -134,7 +133,7 @@ table td {
     cursor: pointer; /* Показалец за кликване */
 }
 
-.edit-button, .delete-button{
+.edit-button, .delete-button {
     display: inline-block;
     margin: 0;
     padding: 6px 12px;
@@ -312,6 +311,7 @@ table th, table td {
 
 table td {
     font-size: 14px; /* По-малък шрифт за данните */
+    width: 10%;
 }
 
 table th {
@@ -379,7 +379,7 @@ ul {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
- }
+}
 
 .details-form {
     display: inline-block;

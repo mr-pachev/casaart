@@ -15,13 +15,13 @@
     <table id="clients-table">
         <thead>
         <tr>
-            <th style="width: 10%;">Никнейм</th>
-            <th style="width: 10%;">Роля</th>
-            <th style="width: 10%;">Име</th>
-            <th style="width: 10%;">Презиме</th>
-            <th style="width: 10%;">Фамилия</th>
-            <th style="width: 10%;">Тип източник</th>
-            <th style="width: 10%;" sec:authorize="hasRole('Admin')">Действия</th>
+            <th>Никнейм</th>
+            <th>Роля</th>
+            <th>Име</th>
+            <th>Презиме</th>
+            <th>Фамилия</th>
+            <th>Тип източник</th>
+            <th sec:authorize="hasRole('Admin')">Действия</th>
         </tr>
         </thead>
         <tbody>
@@ -32,14 +32,19 @@
             <td th:text="${user.middleName}">Презиме</td>
             <td th:text="${user.lastName}">Фамилия</td>
             <td th:text="${user.located}">Месторабота</td>
-            <td class="action-buttons" sec:authorize="hasRole('Admin')">
-                <form th:method="POST" th:action="@{/user-details/{id}(id=${user.id})}">
-                    <input class="edit-button" type="submit" th:value="Промяна"/>
-                </form>
-                <form th:method="POST" th:action="@{/delete-client/{id}(id=${user.id})}" sec:authorize="hasRole('Admin')">
-                    <input class="delete-button" type="submit" th:value="Премахване"/>
-                </form>
+
+            <td>
+                <div class="action-buttons">
+                    <form th:method="POST" th:action="@{/user-details/{id}(id=${user.id})}">
+                        <input class="edit-button" type="submit" th:value="Промяна"/>
+                    </form>
+                    <form th:method="POST" th:action="@{/delete-client/{id}(id=${user.id})}"
+                          sec:authorize="hasRole('Admin')">
+                        <input class="delete-button" type="submit" th:value="Премахване"/>
+                    </form>
+                </div>
             </td>
+
         </tr>
         </tbody>
     </table>

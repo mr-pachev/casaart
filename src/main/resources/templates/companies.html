@@ -45,13 +45,12 @@
                         th:text="${industry}"></option>
             </select>
 
-            <!-- Под-селекция за район на дейност (скрита по подразбиране) -->
-            <select name="locationType" class="location-type-select" id="locationSelect" style="display: none;">
+            <!-- Под-селекция за район на дейност (скрита по подразбиране)class="location-type-select" id="locationSelect" style="display: none;">
                 <option value="">-- Изберете източник --</option>
                 <option th:each="location : ${allLocations}"
                         th:value="${location}"
                         th:text="${location}"></option>
-            </select>
+            </>
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
     </div>
@@ -84,15 +83,15 @@
     <table id="category-table">
         <thead>
         <tr>
-            <th style="width: 10%;">Име</th>
-            <th style="width: 10%;">Адрес</th>
-            <th style="width: 10%;">Емейл адрес</th>
-            <th style="width: 10%;">Телефонен номер</th>
-            <th style="width: 10%;">Локация</th>
-            <th style="width: 10%;">Лице за контакт</th>
-            <th style="width: 10%;">Управител</th>
-            <th style="width: 10%;">Бранш</th>
-            <th style="width: 10%;">Действия</th>
+            <th>Име</th>
+            <th>Адрес</th>
+            <th>Емейл адрес</th>
+            <th>Телефонен номер</th>
+            <th>Локация</th>
+            <th>Лице за контакт</th>
+            <th>Управител</th>
+            <th>Бранш</th>
+            <th>Действия</th>
         </tr>
         </thead>
         <tbody>
