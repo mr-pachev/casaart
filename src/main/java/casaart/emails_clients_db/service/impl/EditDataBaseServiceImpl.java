@@ -1,20 +1,15 @@
 package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.entity.Client;
-import casaart.emails_clients_db.model.enums.LoyaltyLevel;
-import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.service.EditDataBaseService;
 import jakarta.transaction.Transactional;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +33,22 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
                         duplicates.stream().skip(1).forEach(clientRepository::delete);
                     }
                 });
+    }
+
+    // remove duplicate clients same email
+    @Override
+    public void removeDuplicateClientsSameEmail() {
+        List<Client> allClients = clientRepository.findAll();
+        Set<String> seenEmails = new HashSet<>();
+        List<Client> duplicates = new ArrayList<>();
+
+        for (Client client : allClients) {
+            if (!seenEmails.add(client.getEmail())) {
+                duplicates.add(client);
+            }
+        }
+        clientRepository.deleteAll(duplicates);
+        System.out.println("SUCCESSFULLY REMOVED --< " + duplicates.size() + " >-- DUPLICATE clients SAME EMAIL.");
     }
 
     // remove clients who email ended on @guest.booking.com

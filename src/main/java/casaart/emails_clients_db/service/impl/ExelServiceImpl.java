@@ -29,88 +29,6 @@ public class ExelServiceImpl implements ExelService {
         this.userRepository = userRepository;
     }
 
-
-    // import new clients from exel
-    @Override
-    public void importClientsFromExcel(String filePath) {
-        List<Client> clients = new ArrayList<>();
-
-        try (FileInputStream fis = new FileInputStream(new File(filePath));
-             Workbook workbook = new XSSFWorkbook(fis)) {
-
-            Sheet sheet = workbook.getSheetAt(0); // Взимаме първия лист
-            for (Row row : sheet) {
-                if (row.getRowNum() == 0) continue; // Прескачаме заглавния ред
-
-                // Важно! Apache POI използва индексите от 0, затова:
-                Cell sourceTypeCell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);       // C
-                Cell loyaltyLevelCell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);     // D
-                Cell firstNameCell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);        // E
-                Cell middleNameCell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);       // F
-                Cell lastNameCell = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);         // G
-                Cell phoneCell = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);            // H
-                Cell emailCell = row.getCell(8, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);            // I
-
-                String sourceType = getCellValueAsString(sourceTypeCell);
-                String loyaltyLevel = getCellValueAsString(loyaltyLevelCell);
-                String firstName = formatName(getCellValueAsString(firstNameCell));
-                String middleName = formatName(getCellValueAsString(middleNameCell));
-                String lastName = formatName(getCellValueAsString(lastNameCell));
-                String phoneNumber = getCellValueAsString(phoneCell);
-                String email = getCellValueAsString(emailCell);
-
-                // Проверка за празни редове
-                if (firstName.isEmpty() || email.isEmpty()) {
-                    continue;
-                }
-
-                // Внасяне на нови клиенти
-                Client client = new Client();
-                client.setUser(userRepository.findById(1));
-                client.setSourceType(SourceType.valueOf(sourceType));
-
-                // Разделяне на firstName, ако съдържа две думи
-                if (firstName != null && firstName.trim().contains(" ")) {
-                    String[] nameParts = firstName.trim().split("\\s+", 2); // Разделяме по първия интервал
-                    client.setFirstName(nameParts[0]);  // Първата дума -> firstName
-                    client.setLastName(nameParts[1]);   // Втората дума -> lastName
-                } else {
-                    client.setFirstName(firstName);
-                    client.setLastName(lastName);
-                }
-
-                client.setMiddleName(middleName.isEmpty() ? null : middleName);
-                client.setEmail(email);
-
-                client.setPhoneNumber(formatPhoneNumber(phoneNumber));
-                client.setCreatedAt(LocalDateTime.now());
-
-                // Проверка за съществуващ клиент в базата
-                boolean existsInDatabase = clientRepository
-                        .findByFirstNameAndLastNameAndEmail(client.getFirstName(), client.getLastName(), client.getEmail())
-                        .isPresent();
-
-                // Проверка за съществуващ клиент в списъка clients
-                boolean existsInList = clients.stream().anyMatch(c ->
-                        c.getFirstName().equals(client.getFirstName()) &&
-                                c.getLastName().equals(client.getLastName()) &&
-                                Objects.equals(c.getEmail(), client.getEmail()));
-
-                // Добавяне само ако клиентът не съществува нито в базата, нито в списъка и имейла е реален
-                if (!existsInDatabase && !existsInList &&
-                        client.getEmail() != null &&
-                        !client.getEmail().endsWith("@guest.booking.com")) {
-                    clients.add(client);
-                }
-
-                clientRepository.saveAll(clients);
-                System.out.println("SUCCESSFULLY ADDED --< " + clients.size() + " >-- NEW clients IN THE DATABASE.");
-            }
-        } catch (IOException e) {
-            System.err.println("ERROR READING Excel file: " + e.getMessage());
-        }
-    }
-
     // export clients to exel
     @Override
     public void exportClientsToExcel(String filePath) {
@@ -193,7 +111,7 @@ public class ExelServiceImpl implements ExelService {
                         .findByFirstNameAndLastNameAndEmail(firstName, lastName, email)
                         .orElse(null);
 
-                if (existingClient != null) {
+                if (existingClient != null && !loyaltyLevel.isEmpty()) {
                     existingClient.setLoyaltyLevel(LoyaltyLevel.valueOf(loyaltyLevel));
 
                     if (existingClient.getPhoneNumber() == null) {
@@ -221,7 +139,7 @@ public class ExelServiceImpl implements ExelService {
                     newClient.setEmail(email);
                     newClient.setPhoneNumber(formatPhoneNumber(phoneNumber));
                     newClient.setCreatedAt(LocalDateTime.now());
-                    newClient.setLoyaltyLevel(LoyaltyLevel.valueOf(loyaltyLevel));
+                    newClient.setLoyaltyLevel(loyaltyLevel.isEmpty() ? null :  LoyaltyLevel.valueOf(loyaltyLevel));
 
                     // Проверка за съществуващ клиент в списъка clients
                     boolean existsInList = clients.stream().anyMatch(c ->
@@ -229,7 +147,9 @@ public class ExelServiceImpl implements ExelService {
                                     c.getLastName().equals(newClient.getLastName()) &&
                                     Objects.equals(c.getEmail(), newClient.getEmail()));
 
-                    if (!existsInList && !newClient.getEmail().endsWith("@guest.booking.com")) {
+                    if (!existsInList &&
+                            newClient.getEmail() != null &&
+                            !newClient.getEmail().endsWith("@guest.booking.com")) {
                         clients.add(newClient);
                     }
                 }

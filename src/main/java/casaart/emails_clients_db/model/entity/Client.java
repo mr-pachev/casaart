@@ -162,4 +162,8 @@ public class Client extends BaseEntity{
     public void setSecondEmail(LocalDate secondEmail) {
         this.secondEmail = secondEmail;
     }
+
+    public String getAddedFrom() {
+        return null;
+    }
 }

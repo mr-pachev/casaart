@@ -2,9 +2,6 @@ package casaart.emails_clients_db.service;
 
 public interface ExelService {
 
-    // import new clients from exel
-    void importClientsFromExcel(String filePath);
-
     // export clients to exel
     void exportClientsToExcel(String filePath);
 
