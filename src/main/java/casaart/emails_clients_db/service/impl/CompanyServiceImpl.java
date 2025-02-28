@@ -85,6 +85,17 @@ public class CompanyServiceImpl implements CompanyService {
                 .collect(Collectors.toList());
     }
 
+    // get sorted companies by locationType
+    @Override
+    public List<CompanyDTO> sortedCompaniesByLocationType(String location) {
+        LocationType locationType = LocationType.valueOf(location);
+
+        return companyRepository.findByLocationType(locationType)
+                .stream()
+                .map(company -> mapCompanyToCompanyDTO(company)) // Преобразуване в DTO директно в ламбда израза
+                .collect(Collectors.toList());
+    }
+
     // checking if company exists
     @Override
     public boolean isExistCompany(String name) {

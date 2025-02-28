@@ -18,6 +18,9 @@ public interface CompanyService {
     // get sorted companies by industryType
     List<CompanyDTO> sortedCompaniesByIndustryType(String industryType);
 
+    // get sorted companies by locationType
+    List<CompanyDTO> sortedCompaniesByLocationType(String locationType);
+
     // checking is exist company
     boolean isExistCompany(String name);
 

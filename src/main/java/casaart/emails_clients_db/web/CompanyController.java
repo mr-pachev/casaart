@@ -51,6 +51,7 @@ public class CompanyController {
 
         model.addAttribute("allCompanies", companyDTOS);
         model.addAttribute("allIndustries", IndustryType.values());
+        model.addAttribute("allLocations", LocationType.values());
 
         return "companies";
     }
@@ -59,18 +60,22 @@ public class CompanyController {
     @PostMapping("/sort-companies")
     public String sortCompanies(@RequestParam("companyType") String companyType,
                                 @RequestParam(value = "industryType", required = false) String industryType,
+                                @RequestParam(value = "locationType", required = false) String locationType,
                                 Model model) {
         List<CompanyDTO> sortedCompanies;
 
-        // Проверяваме дали е избран "Бранш" и има конкретна стойност
+        // Проверяваме дали е избран "Бранш", "Район на дейност" или има конкретна стойност
         if ("industryType".equals(companyType) && industryType != null && !industryType.isEmpty()) {
             sortedCompanies = companyService.sortedCompaniesByIndustryType(industryType);
+        } else if ("locationType".equals(companyType) && industryType != null && !locationType.isEmpty()) {
+            sortedCompanies = companyService.sortedCompaniesByLocationType(locationType);
         } else {
             sortedCompanies = companyService.sortedCompanies(companyType);
         }
 
         model.addAttribute("allCompanies", sortedCompanies);
         model.addAttribute("allIndustries", IndustryType.values());
+        model.addAttribute("allLocations", LocationType.values());
 
         return "companies"; // Връщаме шаблона с обновения списък
     }

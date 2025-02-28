@@ -34,6 +34,7 @@
                 <option value="allCompanies">Всички партньори</option>
                 <option value="name">Име</option>
                 <option value="industryType">Бранш</option>
+                <option value="locationType">Район на дейност</option>
             </select>
 
             <!-- Под-селекция за браншовете (скрита по подразбиране) -->
@@ -44,6 +45,13 @@
                         th:text="${industry}"></option>
             </select>
 
+            <!-- Под-селекция за район на дейност (скрита по подразбиране) -->
+            <select name="locationType" class="location-type-select" id="locationSelect" style="display: none;">
+                <option value="">-- Изберете източник --</option>
+                <option th:each="location : ${allLocations}"
+                        th:value="${location}"
+                        th:text="${location}"></option>
+            </select>
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
     </div>
@@ -53,6 +61,7 @@
         function toggleIndustrySelect() {
             let mainSelect = document.getElementById("mainSelect");
             let industrySelect = document.getElementById("industrySelect");
+            let locationSelect = document.getElementById("locationSelect");
 
             // Показва под-селекцията само ако избраната опция е "Бранш"
             if (mainSelect.value === "industryType") {
@@ -60,6 +69,14 @@
             } else {
                 industrySelect.style.display = "none";
                 industrySelect.selectedIndex = 0; // Нулира избора при скриване
+            }
+
+            // Показва под-селекцията само ако избраната опция е "Район на действие"
+            if (mainSelect.value === "locationType") {
+                locationSelect.style.display = "inline-block";
+            } else {
+                locationSelect.style.display = "none";
+                locationSelect.selectedIndex = 0; // Нулира избора при скриване
             }
         }
     </script>
