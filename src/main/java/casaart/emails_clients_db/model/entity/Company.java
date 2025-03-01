@@ -37,6 +37,7 @@ public class Company extends BaseEntity{
     @ElementCollection(targetClass = IndustryType.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "company_industries", joinColumns = @JoinColumn(name = "company_id"))
     @Enumerated(EnumType.STRING)
+    @Column(length = 50)
     private List<IndustryType> industryTypes;
 
     public String getName() {

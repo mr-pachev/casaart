@@ -3,15 +3,16 @@ package casaart.emails_clients_db.model.enums;
 public enum IndustryType {
     КУХНЯ,
     БАР,
+    ВИНАРИ,
     АРТИСТИ,
     КОЗМЕТИКА,
     ФОТОГРАФИ,
     ТРАНСПОРТ,
     ИНТЕРНЕТ,
-    ХАМАЛИ,
     IT,
     ТЕХНИКА,
+    ХАМАЛИ,
     ДЕНТАЛНА_ГРИЖА,
-    ВИНАРИ
+    УСЛУГИ
 }
 
