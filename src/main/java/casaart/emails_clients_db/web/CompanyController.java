@@ -80,7 +80,7 @@ public class CompanyController {
         return "companies"; // Връщаме шаблона с обновения списък
     }
 
-    // create new company
+    // add new company
     @GetMapping("/add-company")
     public String viewAddCompanyForm(Model model) {
         model.addAttribute("allLocations", LocationType.values());

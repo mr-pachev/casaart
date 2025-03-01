@@ -45,12 +45,13 @@
                         th:text="${industry}"></option>
             </select>
 
-            <!-- Под-селекция за район на дейност (скрита по подразбиране)class="location-type-select" id="locationSelect" style="display: none;">
+            <!-- Под-селекция за район на дейност (скрита по подразбиране) -->
+            <select name="locationType" class="location-type-select" id="locationSelect" style="display: none;">
                 <option value="">-- Изберете източник --</option>
                 <option th:each="location : ${allLocations}"
                         th:value="${location}"
                         th:text="${location}"></option>
-            </>
+            </select>
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
     </div>

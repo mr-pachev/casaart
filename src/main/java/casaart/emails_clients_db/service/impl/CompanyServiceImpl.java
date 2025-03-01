@@ -125,7 +125,7 @@ public class CompanyServiceImpl implements CompanyService {
         List<IndustryType> industryTypes = new ArrayList<>();
 
         for (String industry : addCompanyDTO.getIndustries()) {
-            industryTypes.add(IndustryType.valueOf(industry));
+            industryTypes.add(IndustryType.valueOf("ВИНАРИ"));
         }
 
         company.setIndustryTypes(industryTypes);
