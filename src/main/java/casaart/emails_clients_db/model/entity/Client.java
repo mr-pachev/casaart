@@ -18,9 +18,6 @@ public class Client extends BaseEntity{
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "company_name")
-    private String companyName;
-
     @Column(name = "email")
     private String email;
 
@@ -73,14 +70,6 @@ public class Client extends BaseEntity{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
     }
 
     public String getEmail() {

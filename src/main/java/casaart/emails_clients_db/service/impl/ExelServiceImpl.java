@@ -38,7 +38,7 @@ public class ExelServiceImpl implements ExelService {
 
             // Заглавен ред
             Row headerRow = sheet.createRow(0);
-            String[] headers = {"First Name", "Middle Name", "Last Name", "Company Name", "Email", "Phone Number", "Source Type", "Loyalty Level", "Modify From", "First Call", "First Email", "Second Call", "Second Email"};
+            String[] headers = {"First Name", "Middle Name", "Last Name", "Phone Number", "Email", "Source Type", "Loyalty Level", "Modify From", "First Call", "First Email", "Second Call", "Second Email"};
             for (int i = 0; i < headers.length; i++) {
                 headerRow.createCell(i).setCellValue(headers[i]);
             }
@@ -50,16 +50,15 @@ public class ExelServiceImpl implements ExelService {
                 row.createCell(0).setCellValue(client.getFirstName());
                 row.createCell(1).setCellValue(client.getMiddleName());
                 row.createCell(2).setCellValue(client.getLastName());
-                row.createCell(3).setCellValue(client.getCompanyName());
+                row.createCell(3).setCellValue(client.getPhoneNumber());
                 row.createCell(4).setCellValue(client.getEmail());
-                row.createCell(5).setCellValue(client.getPhoneNumber());
-                row.createCell(6).setCellValue(client.getSourceType().toString());
-                row.createCell(7).setCellValue(client.getLoyaltyLevel() != null ? client.getLoyaltyLevel().toString() : "");
-                row.createCell(8).setCellValue(client.getModifyFrom());
-                row.createCell(9).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
-                row.createCell(10).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");
-                row.createCell(11).setCellValue(client.getSecondCall() != null ? client.getSecondCall().toString() : "");
-                row.createCell(12).setCellValue(client.getSecondEmail() != null ? client.getSecondEmail().toString() : "");
+                row.createCell(5).setCellValue(client.getSourceType().toString());
+                row.createCell(6).setCellValue(client.getLoyaltyLevel() != null ? client.getLoyaltyLevel().toString() : "");
+                row.createCell(7).setCellValue(client.getModifyFrom());
+                row.createCell(8).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
+                row.createCell(9).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");
+                row.createCell(10).setCellValue(client.getSecondCall() != null ? client.getSecondCall().toString() : "");
+                row.createCell(11).setCellValue(client.getSecondEmail() != null ? client.getSecondEmail().toString() : "");
             }
 
             // Запис в файл

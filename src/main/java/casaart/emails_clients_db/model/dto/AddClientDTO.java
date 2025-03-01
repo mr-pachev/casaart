@@ -15,9 +15,6 @@ public class AddClientDTO {
     @Size(min = 2, max = 30)
     private String lastName;
 
-    @Size(max = 15)
-    private String companyName;
-
     @NotBlank
     @Email
     private String email;
@@ -50,14 +47,6 @@ public class AddClientDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
     }
 
     public String getEmail() {
