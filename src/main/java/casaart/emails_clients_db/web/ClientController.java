@@ -3,6 +3,7 @@ package casaart.emails_clients_db.web;
 import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.enums.LoyaltyLevel;
+import casaart.emails_clients_db.model.enums.Nationality;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.service.ClientService;
 import jakarta.validation.Valid;
@@ -40,6 +41,7 @@ public class ClientController {
         model.addAttribute("allClients", clientDTOS);
         model.addAttribute("allSourceType", SourceType.values());
         model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
+        model.addAttribute("allNationality", Nationality.values());
 
         return "clients";
     }
@@ -49,6 +51,7 @@ public class ClientController {
     public String sortClients(@RequestParam("type") String type,
                              @RequestParam(value = "sourceType", required = false) String sourceType,
                               @RequestParam(value = "loyaltyLevel", required = false) String loyaltyLevel,
+                              @RequestParam(value = "nationality", required = false) String nationality,
                              Model model) {
         List<ClientDTO> sortedClients;
 
@@ -64,6 +67,7 @@ public class ClientController {
         model.addAttribute("allClients", sortedClients);
         model.addAttribute("allSourceType", SourceType.values());
         model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
+        model.addAttribute("allNationality", Nationality.values());
 
         return "clients"; // Връщаме същия шаблон с актуализиран списък
     }
@@ -119,6 +123,7 @@ public class ClientController {
         model.addAttribute(clientDTO);
         model.addAttribute("sourceType", SourceType.values());
         model.addAttribute("loyaltyLevel", LoyaltyLevel.values());
+        model.addAttribute("nationality", Nationality.values());
 
         return "client-details";
     }
@@ -137,6 +142,7 @@ public class ClientController {
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
             model.addAttribute("sourceType", SourceType.values());
             model.addAttribute("loyaltyLevel", LoyaltyLevel.values());
+            model.addAttribute("nationality", Nationality.values());
 
             return "client-details";
         }
@@ -148,6 +154,7 @@ public class ClientController {
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
             model.addAttribute("sourceType", SourceType.values());
             model.addAttribute("loyaltyLevel", LoyaltyLevel.values());
+            model.addAttribute("nationality", Nationality.values());
             model.addAttribute("isExistEmail", true);
 
             return "client-details";

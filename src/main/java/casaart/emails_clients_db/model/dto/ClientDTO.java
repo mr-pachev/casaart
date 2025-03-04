@@ -18,10 +18,15 @@ public class ClientDTO {
     private String email;
     @Size(max = 10)
     private String phoneNumber;
+
+    int counterStay;
+
     @NotBlank
     private String sourceType;
 
     private String loyaltyLevel;
+
+    private String nationality;
 
     private LocalDate firstCall;
 
@@ -83,6 +88,14 @@ public class ClientDTO {
         this.phoneNumber = phoneNumber;
     }
 
+    public int getCounterStay() {
+        return counterStay;
+    }
+
+    public void setCounterStay(int counterStay) {
+        this.counterStay = counterStay;
+    }
+
     public String getSourceType() {
         return sourceType;
     }
@@ -97,6 +110,14 @@ public class ClientDTO {
 
     public void setLoyaltyLevel(String loyaltyLevel) {
         this.loyaltyLevel = loyaltyLevel;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public LocalDate getFirstCall() {

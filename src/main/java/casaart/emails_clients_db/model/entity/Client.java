@@ -1,6 +1,7 @@
 package casaart.emails_clients_db.model.entity;
 
 import casaart.emails_clients_db.model.enums.LoyaltyLevel;
+import casaart.emails_clients_db.model.enums.Nationality;
 import casaart.emails_clients_db.model.enums.SourceType;
 import jakarta.persistence.*;
 
@@ -24,11 +25,17 @@ public class Client extends BaseEntity{
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "counter_stay")
+    Integer counterStay;
+
     @Enumerated(EnumType.STRING)
     private SourceType sourceType;
 
     @Enumerated(EnumType.STRING)
     private LoyaltyLevel loyaltyLevel;
+
+    @Enumerated(EnumType.STRING)
+    private Nationality nationality;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -88,6 +95,14 @@ public class Client extends BaseEntity{
         this.phoneNumber = phoneNumber;
     }
 
+    public Integer getCounterStay() {
+        return counterStay;
+    }
+
+    public void setCounterStay(Integer counterStay) {
+        this.counterStay = counterStay;
+    }
+
     public SourceType getSourceType() {
         return sourceType;
     }
@@ -102,6 +117,14 @@ public class Client extends BaseEntity{
 
     public void setLoyaltyLevel(LoyaltyLevel loyaltyLevel) {
         this.loyaltyLevel = loyaltyLevel;
+    }
+
+    public Nationality getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(Nationality nationality) {
+        this.nationality = nationality;
     }
 
     public User getUser() {

@@ -5,7 +5,7 @@ import casaart.emails_clients_db.service.ExelService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class ExcelDataLoader implements CommandLineRunner {
 
     final ExelService exelService;
@@ -24,7 +24,7 @@ public class ExcelDataLoader implements CommandLineRunner {
 //        EDIT
 //        editDataBaseService.removeDuplicateClients();
 //        editDataBaseService.removeDuplicateClientsSameEmail();
-        editDataBaseService.removedClientsWithFalseEmail();
+//        editDataBaseService.removedClientsWithFalseEmail();
 //        editDataBaseService.updateAllClientNames();
 
 //        IMPORT
