@@ -39,6 +39,7 @@
                 <option value="allClientsBySecondCall">Добавен на второ обаждане</option>
                 <option value="sourceType">Източник</option>
                 <option value="loyaltyLevel">Ниво лоялност</option>
+                <option value="nationality">Националност</option>
             </select>
 
             <!-- Под-селекция за източниците (скрита по подразбиране) -->
@@ -51,10 +52,18 @@
 
             <!-- Под-селекция за ниво на лоялност (скрита по подразбиране) -->
             <select name="loyaltyLevel" class="loyalty-level-select" id="loyaltySelect" style="display: none;">
-                <option value="">-- Изберете източник --</option>
+                <option value="">-- Изберете ниво лоялност --</option>
                 <option th:each="loyaltyLevel : ${allLoyaltyLevel}"
                         th:value="${loyaltyLevel}"
                         th:text="${loyaltyLevel}"></option>
+            </select>
+
+            <!-- Под-селекция за националност (скрита по подразбиране) -->
+            <select name="nationality" class="nationality-select" id="nationalitySelect" style="display: none;">
+                <option value="">-- Изберете ниво лоялност --</option>
+                <option th:each="nat : ${allNationality}"
+                        th:value="${nat}"
+                        th:text="${nat}"></option>
             </select>
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
@@ -65,6 +74,7 @@
             var mainSelect = document.getElementById("mainSelect");
             var industrySelect = document.getElementById("industrySelect");
             var loyaltySelect = document.getElementById("loyaltySelect");
+            var nationalitySelect = document.getElementById("nationalitySelect");
 
             // Показване/скриване на "Източник"
             if (mainSelect.value === "sourceType") {
@@ -78,6 +88,13 @@
                 loyaltySelect.style.display = "inline-block";
             } else {
                 loyaltySelect.style.display = "none";
+            }
+
+            // Показване/скриване на "Националност"
+            if (mainSelect.value === "nationality") {
+                nationalitySelect.style.display = "inline-block";
+            } else {
+                nationalitySelect.style.display = "none";
             }
         }
 

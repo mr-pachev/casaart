@@ -5,6 +5,7 @@ import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.model.entity.User;
 import casaart.emails_clients_db.model.enums.LoyaltyLevel;
+import casaart.emails_clients_db.model.enums.Nationality;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.service.ClientService;
@@ -65,7 +66,6 @@ public class ClientServiceImpl implements ClientService {
 
         } else if (inputArr.length == 2) {
             clientList = clientRepository.findAllByFirstNameAndLastName(inputArr[0].toLowerCase(), inputArr[1].toLowerCase());
-
         }
 
         List<ClientDTO> clientDTOS = clientListMapToClientDTOS(clientList);
@@ -90,6 +90,17 @@ public class ClientServiceImpl implements ClientService {
         LoyaltyLevel loyaltyLevel = LoyaltyLevel.valueOf(type);
 
         return clientRepository.findAllByLoyaltyLevel(loyaltyLevel)
+                .stream()
+                .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуване в DTO директно в ламбда израза
+                .collect(Collectors.toList());
+    }
+
+    // get sorted clients by nationality
+    @Override
+    public List<ClientDTO> sortedClientsByNationality(String nationalityType) {
+        Nationality nationality = Nationality.valueOf(nationalityType);
+
+        return clientRepository.findAllByNationality(nationality)
                 .stream()
                 .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуване в DTO директно в ламбда израза
                 .collect(Collectors.toList());

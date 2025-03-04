@@ -58,8 +58,13 @@ public class ClientController {
         // Проверяваме дали е избран "Бранш" и има конкретна стойност
         if ("sourceType".equals(type) && sourceType != null && !sourceType.isEmpty()) {
             sortedClients = clientService.sortedClientsBySourceType(sourceType);
+
         } else if ("loyaltyLevel".equals(type) && loyaltyLevel != null && !loyaltyLevel.isEmpty()){
             sortedClients = clientService.sortedClientsByLoyaltyLevel(loyaltyLevel);
+
+        } else if ("nationality".equals(type) && nationality != null && !nationality.isEmpty()){
+            sortedClients = clientService.sortedClientsByNationality(nationality);
+
         } else {
             sortedClients = clientService.sortedClients(type);
         }
