@@ -19,4 +19,5 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     List<Company> findByIndustryTypes(IndustryType industryType);
     List<Company> findByLocationType(LocationType locationType);
     List<Company> findAllByOrderByNameAsc();
+    List<Company> findByNameStartingWithIgnoreCase(String name);
 }

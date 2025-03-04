@@ -42,14 +42,16 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
         clientRepository.removeDuplicateClientsEmail();
     }
 
-    // remove clients who email ended on @guest.booking.com
+    // remove clients who email ended on @guest.booking.com and @m.expediapartnercentral.com
     @Override
     @Transactional
     public void removedClientsWithFalseEmail() {
         List<Client> allClients = clientRepository.findAll();
 
         allClients.stream()
-                .filter(client -> client.getEmail() == null || client.getEmail().endsWith("@guest.booking.com"))
+                .filter(client -> client.getEmail() == null ||
+                        client.getEmail().endsWith("@guest.booking.com") ||
+                        client.getEmail().endsWith("@m.expediapartnercentral.com"))
                 .forEach(clientRepository::delete);
     }
 

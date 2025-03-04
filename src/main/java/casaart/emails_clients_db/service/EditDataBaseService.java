@@ -8,7 +8,7 @@ public interface EditDataBaseService {
     // remove duplicate clients same email
     void removeDuplicateClientsSameEmail();
 
-    // remove clients who email ended on @guest.booking.com
+    // remove clients who email ended on @guest.booking.com and @m.expediapartnercentral.com
     void removedClientsWithFalseEmail();
 
     // update all client names
