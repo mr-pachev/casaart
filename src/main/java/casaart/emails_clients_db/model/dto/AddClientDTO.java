@@ -25,6 +25,9 @@ public class AddClientDTO {
     @NotBlank
     private String sourceType;
 
+    @NotBlank
+    private String nationality;
+
     public String getFirstName() {
         return firstName;
     }
@@ -71,5 +74,13 @@ public class AddClientDTO {
 
     public void setSourceType(String sourceType) {
         this.sourceType = sourceType;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 }

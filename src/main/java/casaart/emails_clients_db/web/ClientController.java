@@ -81,6 +81,7 @@ public class ClientController {
     @GetMapping("/add-client")
     public String viewAddClientForm(Model model) {
         model.addAttribute("sourceType", SourceType.values());
+        model.addAttribute("nationality", Nationality.values());
 
         if (!model.containsAttribute("isExistEmail")) {
             model.addAttribute("isExistEmail", false);
