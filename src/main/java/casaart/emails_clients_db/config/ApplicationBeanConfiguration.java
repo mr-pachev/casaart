@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 @Configuration
 public class ApplicationBeanConfiguration {
@@ -65,6 +66,14 @@ public class ApplicationBeanConfiguration {
                         mappingContext.getSource(),
                         DateTimeFormatter.ofPattern("HH:mm:ss")
                 );
+            }
+        });
+
+        modelMapper.addConverter(new Converter<String, LocalDate>() {
+            @Override
+            public LocalDate convert(MappingContext<String, LocalDate> mappingContext) {
+                return LocalDate.parse(mappingContext.getSource(),
+                        DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH));
             }
         });
 

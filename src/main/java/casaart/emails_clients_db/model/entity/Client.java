@@ -43,6 +43,9 @@ public class Client extends BaseEntity{
 
     private String modifyFrom;
 
+    @Column(name = "accommodation_date")
+    private LocalDate accommodationDate;
+
     @Column(name = "first_call")
     private LocalDate firstCall;
 
@@ -141,6 +144,14 @@ public class Client extends BaseEntity{
 
     public void setModifyFrom(String modifyFrom) {
         this.modifyFrom = modifyFrom;
+    }
+
+    public LocalDate getAccommodationDate() {
+        return accommodationDate;
+    }
+
+    public void setAccommodationDate(LocalDate accommodationDate) {
+        this.accommodationDate = accommodationDate;
     }
 
     public LocalDate getFirstCall() {

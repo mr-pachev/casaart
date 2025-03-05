@@ -40,6 +40,8 @@ public class ClientDTO {
 
     private String modifyFrom;
 
+    private LocalDate accommodationDate;
+
     public long getId() {
         return id;
     }
@@ -166,5 +168,13 @@ public class ClientDTO {
 
     public void setModifyFrom(String modifyFrom) {
         this.modifyFrom = modifyFrom;
+    }
+
+    public LocalDate getAccommodationDate() {
+        return accommodationDate;
+    }
+
+    public void setAccommodationDate(LocalDate accommodationDate) {
+        this.accommodationDate = accommodationDate;
     }
 }

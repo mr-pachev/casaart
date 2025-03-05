@@ -6,17 +6,22 @@ import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.repository.UserRepository;
 import casaart.emails_clients_db.service.ExelService;
+import casaart.emails_clients_db.service.UserHelperService;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 @Service
@@ -24,9 +29,15 @@ public class ExelServiceImpl implements ExelService {
     private final ClientRepository clientRepository;
     private final UserRepository userRepository;
 
-    public ExelServiceImpl(ClientRepository clientRepository, UserRepository userRepository) {
+    private final ModelMapper mapper;
+
+    private final UserHelperService userHelperService;
+
+    public ExelServiceImpl(ClientRepository clientRepository, UserRepository userRepository, ModelMapper mapper, UserHelperService userHelperService) {
         this.clientRepository = clientRepository;
         this.userRepository = userRepository;
+        this.mapper = mapper;
+        this.userHelperService = userHelperService;
     }
 
     // export clients to exel
@@ -38,7 +49,7 @@ public class ExelServiceImpl implements ExelService {
 
             // Заглавен ред
             Row headerRow = sheet.createRow(0);
-            String[] headers = {"First Name", "Middle Name", "Last Name", "Phone Number", "Email", "Source Type", "Loyalty Level", "Modify From", "First Call", "First Email", "Second Call", "Second Email"};
+            String[] headers = {"First Name", "Middle Name", "Last Name", "Phone Number", "Email", "Source Type", "Loyalty Level", "Modify From", "Acc Date","First Call", "First Email", "Second Call", "Second Email"};
             for (int i = 0; i < headers.length; i++) {
                 headerRow.createCell(i).setCellValue(headers[i]);
             }
@@ -55,10 +66,11 @@ public class ExelServiceImpl implements ExelService {
                 row.createCell(5).setCellValue(client.getSourceType().toString());
                 row.createCell(6).setCellValue(client.getLoyaltyLevel() != null ? client.getLoyaltyLevel().toString() : "");
                 row.createCell(7).setCellValue(client.getModifyFrom());
-                row.createCell(8).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
-                row.createCell(9).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");
-                row.createCell(10).setCellValue(client.getSecondCall() != null ? client.getSecondCall().toString() : "");
-                row.createCell(11).setCellValue(client.getSecondEmail() != null ? client.getSecondEmail().toString() : "");
+                row.createCell(8).setCellValue(client.getAccommodationDate() != null ? client.getAccommodationDate().toString() : "");
+                row.createCell(9).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
+                row.createCell(10).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");
+                row.createCell(11).setCellValue(client.getSecondCall() != null ? client.getSecondCall().toString() : "");
+                row.createCell(12).setCellValue(client.getSecondEmail() != null ? client.getSecondEmail().toString() : "");
             }
 
             // Запис в файл
@@ -75,7 +87,6 @@ public class ExelServiceImpl implements ExelService {
     @Override
     public void updateOrAddLoyaltyLevel(String filePath) {
         List<Client> clients = new ArrayList<>();
-        int counterUpdated = 0;
 
         try (FileInputStream fis = new FileInputStream(new File(filePath));
              Workbook workbook = new XSSFWorkbook(fis)) {
@@ -85,14 +96,16 @@ public class ExelServiceImpl implements ExelService {
                 if (row.getRowNum() == 0) continue; // Прескачаме заглавния ред
 
                 // Важно! Apache POI използва индексите от 0, затова:
-                Cell sourceTypeCell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);  // C
-                Cell loyaltyLevelCell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);  // D
-                Cell firstNameCell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);  // E
-                Cell middleNameCell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK); // F
-                Cell lastNameCell = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);   // G
-                Cell phoneCell = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);      // I
-                Cell emailCell = row.getCell(8, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);      // H
+                Cell accommodationDateCell = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);    // A
+                Cell sourceTypeCell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);           // B
+                Cell loyaltyLevelCell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);         // C
+                Cell firstNameCell = row.getCell(3, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);            // D
+                Cell middleNameCell = row.getCell(4, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);           // E
+                Cell lastNameCell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);             // F
+                Cell phoneCell = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);                // G
+                Cell emailCell = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);                // H
 
+                String accommodationDate = getCellValueAsString(accommodationDateCell);
                 String sourceType = getCellValueAsString(sourceTypeCell);
                 String loyaltyLevel = getCellValueAsString(loyaltyLevelCell);
                 String firstName = formatName(getCellValueAsString(firstNameCell));
@@ -106,39 +119,50 @@ public class ExelServiceImpl implements ExelService {
                     continue;
                 }
 
+                // Проверка дали клиента от таблицата съществува в базата
                 Client existingClient = clientRepository
                         .findByFirstNameAndLastNameAndEmail(firstName, lastName, email)
                         .orElse(null);
 
+                // Ако съществува клиента в базата и има попълнен loyaltyLevel в таблицата за този клиент
                 if (existingClient != null && !loyaltyLevel.isEmpty()) {
+
                     existingClient.setLoyaltyLevel(LoyaltyLevel.valueOf(loyaltyLevel));
 
                     if (existingClient.getPhoneNumber() == null) {
                         existingClient.setPhoneNumber(phoneNumber);
                     }
 
-                    counterUpdated++;
                     clientRepository.save(existingClient);
+
                 } else {
                     Client newClient = new Client();
-                    newClient.setUser(userRepository.findById(1));
+                    newClient.setUser(userHelperService.getUser());
                     newClient.setSourceType(SourceType.valueOf(sourceType));
 
                     // Разделяне на firstName, ако съдържа две думи
                     if (firstName != null && firstName.trim().contains(" ")) {
                         String[] nameParts = firstName.trim().split("\\s+", 2); // Разделяме по първия интервал
-                        newClient.setFirstName(nameParts[0]); // Първата дума -> firstName
-                        newClient.setLastName(nameParts[1]); // Втората дума -> lastName
+                        newClient.setFirstName(nameParts[0]);   // Първата дума -> firstName
+                        newClient.setLastName(nameParts[1]);    // Втората дума -> lastName
                     } else {
                         newClient.setFirstName(firstName);
                         newClient.setLastName(lastName);
                     }
+
                     newClient.setMiddleName(middleName.isEmpty() ? null : middleName);
 
                     newClient.setEmail(email);
                     newClient.setPhoneNumber(formatPhoneNumber(phoneNumber));
                     newClient.setCreatedAt(LocalDateTime.now());
                     newClient.setLoyaltyLevel(loyaltyLevel.isEmpty() ? null :  LoyaltyLevel.valueOf(loyaltyLevel));
+
+                    if(!accommodationDate.isEmpty()){
+                        LocalDate date = mapper.map(accommodationDate, LocalDate.class);
+                        newClient.setAccommodationDate(date);
+                    }
+
+                    newClient.setAccommodationDate(null);
 
                     // Проверка за съществуващ клиент в списъка clients
                     boolean existsInList = clients.stream().anyMatch(c ->
@@ -149,14 +173,14 @@ public class ExelServiceImpl implements ExelService {
                     if (!existsInList &&
                             newClient.getEmail() != null &&
                             clientRepository.findByEmail(email).isEmpty() &&
-                            !newClient.getEmail().endsWith("@guest.booking.com")) {
+                            !newClient.getEmail().endsWith("@guest.booking.com") ||
+                            !newClient.getEmail().endsWith("@m.expediapartnercentral.com")) {
                         clients.add(newClient);
                     }
                 }
 
             }
             clientRepository.saveAll(clients);
-            System.out.println("SUCCESSFULLY UPGRADED --< " + counterUpdated + " >-- clients.");
             System.out.println("SUCCESSFULLY ADDED --< " + clients.size() + " >-- new clients in the database.");
         } catch (IOException e) {
             System.err.println("ERROR READING Excel file: " + e.getMessage());
