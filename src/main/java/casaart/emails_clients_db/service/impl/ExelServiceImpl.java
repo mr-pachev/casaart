@@ -121,7 +121,7 @@ public class ExelServiceImpl implements ExelService {
 
                 // Проверка дали клиента от таблицата съществува в базата
                 Client existingClient = clientRepository
-                        .findByFirstNameAndLastNameAndEmail(firstName, lastName, email)
+                        .findByFirstNameIgnoreCaseAndLastNameIgnoreCaseAndEmailIgnoreCase(firstName, lastName, email)
                         .orElse(null);
 
                 // Ако съществува клиента в базата и има попълнен loyaltyLevel в таблицата за този клиент
@@ -172,7 +172,7 @@ public class ExelServiceImpl implements ExelService {
 
                     if (!existsInList &&
                             newClient.getEmail() != null &&
-                            clientRepository.findByEmail(email).isEmpty() &&
+                            clientRepository.findByEmailIgnoreCase(email).isEmpty() &&
                             !newClient.getEmail().endsWith("@guest.booking.com") ||
                             !newClient.getEmail().endsWith("@m.expediapartnercentral.com")) {
                         clients.add(newClient);

@@ -14,7 +14,6 @@ import casaart.emails_clients_db.repository.ContactPersonRepository;
 import casaart.emails_clients_db.service.CompanyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,7 @@ public class CompanyServiceImpl implements CompanyService {
     // get sorted companies
     @Override
     public List<CompanyDTO> sortedCompanies(String companyType) {
-        String input = companyType.trim();
+        String input = companyType.trim().replaceAll("\\s+", " "); // Премахване на излишни интервали
 
         List<Company> companyList = new ArrayList<>();
 
@@ -62,11 +61,22 @@ public class CompanyServiceImpl implements CompanyService {
             companyList = companyRepository.findAllByOrderByIdDesc();
 
         } else {
-           if (companyRepository.findByName(input).isEmpty()){
-               companyList = companyRepository.findAllByOrderByIdDesc();
-            }else {
-                companyList.add(companyRepository.findByName(input).get());
-           }
+            // Разделяне на входния низ на думи (разделители: интервал или тире)
+            String[] words = input.split("[-\s]+");
+
+            for (String word : words) {
+                List<Company> matchedCompanies = companyRepository.findByNameStartingWithIgnoreCase(word);
+
+                for (Company company : matchedCompanies) {
+                    if (!companyList.contains(company)) {
+                        companyList.add(company);
+                    }
+                }
+            }
+
+            if (companyList.isEmpty()) {
+                companyList = companyRepository.findAllByOrderByIdDesc();
+            }
 
         }
 
@@ -99,7 +109,7 @@ public class CompanyServiceImpl implements CompanyService {
     // checking if company exists
     @Override
     public boolean isExistCompany(String name) {
-        return companyRepository.findByName(name).isPresent();
+        return companyRepository.findByNameIgnoreCase(name).isPresent();
     }
 
     // find company by id
@@ -113,7 +123,7 @@ public class CompanyServiceImpl implements CompanyService {
     // find company by name
     @Override
     public CompanyDTO findCompanyByName(String name) {
-        CompanyDTO companyDTO = mapCompanyToCompanyDTO(companyRepository.findByName(name).get());
+        CompanyDTO companyDTO = mapCompanyToCompanyDTO(companyRepository.findByNameIgnoreCase(name).get());
         return companyDTO;
     }
 

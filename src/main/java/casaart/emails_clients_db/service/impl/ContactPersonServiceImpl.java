@@ -133,7 +133,7 @@ public class ContactPersonServiceImpl implements ContactPersonService {
     @Transactional
     public void removeContactPerson(long id) {
         ContactPerson contactPerson = contactPersonRepository.findById(id).get();
-        Company company = companyRepository.findByName(contactPerson.getCompany().getName()).get();
+        Company company = companyRepository.findByNameIgnoreCase(contactPerson.getCompany().getName()).get();
 
         company.getContactPersons().remove(contactPerson);
 

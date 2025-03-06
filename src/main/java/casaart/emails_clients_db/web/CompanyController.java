@@ -109,6 +109,8 @@ public class CompanyController {
         }
 
         if (companyService.isExistCompany(addCompanyDTO.getName())) {
+            rAtt.addFlashAttribute("allLocations", LocationType.values());
+            rAtt.addFlashAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
             rAtt.addFlashAttribute("isExistCompany", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCompanyDTO", bindingResult);

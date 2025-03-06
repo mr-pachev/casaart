@@ -15,8 +15,8 @@ import java.util.Optional;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
-    Optional<Client> findByEmail(String email);
-    Optional<Client> findByFirstNameAndLastNameAndEmail(String firstName, String lastName, String email);
+    Optional<Client> findByEmailIgnoreCase(String email);
+    Optional<Client> findByFirstNameIgnoreCaseAndLastNameIgnoreCaseAndEmailIgnoreCase(String firstName, String lastName, String email);
     Client findById(long id);
     List<Client> findAllByOrderByIdDesc();
     List<Client> findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
@@ -24,8 +24,8 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findAllByOrderByFirstCallDesc();
     List<Client> findAllByOrderBySecondEmailDesc();
     List<Client> findAllByOrderBySecondCallDesc();
-    List<Client> findAllByFirstName(String firstName);
-    List<Client> findAllByFirstNameAndLastName(String firstName, String lastName);
+    List<Client> findAllByFirstNameIgnoreCase(String firstName);
+    List<Client> findAllByFirstNameIgnoreCaseAndLastNameIgnoreCase(String firstName, String lastName);
     List<Client> findAllBySourceType(SourceType sourceType);
     List<Client> findAllByLoyaltyLevel(LoyaltyLevel loyaltyLevel);
     List<Client> findAllByNationality(Nationality nationality);

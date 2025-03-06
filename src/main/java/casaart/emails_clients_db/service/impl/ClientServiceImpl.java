@@ -62,10 +62,11 @@ public class ClientServiceImpl implements ClientService {
             clientList = clientRepository.findAllByOrderBySecondCallDesc();
 
         } else if (inputArr.length == 1) {
-            clientList = clientRepository.findAllByFirstName(inputArr[0].toLowerCase());
+            clientList = clientRepository.findAllByFirstNameIgnoreCase(inputArr[0]);
 
         } else if (inputArr.length == 2) {
-            clientList = clientRepository.findAllByFirstNameAndLastName(inputArr[0].toLowerCase(), inputArr[1].toLowerCase());
+            clientList = clientRepository.findAllByFirstNameIgnoreCaseAndLastNameIgnoreCase(inputArr[0], inputArr[1]);
+
         }
 
         List<ClientDTO> clientDTOS = clientListMapToClientDTOS(clientList);
@@ -110,7 +111,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public boolean isExistClientEmail(String email) {
 
-        return clientRepository.findByEmail(email).isPresent();
+        return clientRepository.findByEmailIgnoreCase(email).isPresent();
     }
 
     // add client
