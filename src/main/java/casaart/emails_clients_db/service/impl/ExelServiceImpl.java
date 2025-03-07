@@ -87,6 +87,7 @@ public class ExelServiceImpl implements ExelService {
     @Override
     public void updateOrAddLoyaltyLevel(String filePath) {
         List<Client> newClients = new ArrayList<>();
+        int counterUpdated = 0;
 
         try (FileInputStream fis = new FileInputStream(new File(filePath));
              Workbook workbook = new XSSFWorkbook(fis)) {
@@ -156,6 +157,7 @@ public class ExelServiceImpl implements ExelService {
 
                 // Проверка дали ще се обновява съществуващ клиент или ще се създава нов
                 if (existingClient != null) {
+                    counterUpdated++;
                     // Обновяване само на липсващи данни
                     if (accommodationDate != null) {
                         if (existingClient.getAccommodationDate() == null) {
@@ -227,6 +229,7 @@ public class ExelServiceImpl implements ExelService {
 
             clientRepository.saveAll(newClients);
             System.out.println("SUCCESSFULLY ADDED --< " + newClients.size() + " >-- new clients in the database.");
+            System.out.println("SUCCESSFULLY UPDATED --< " + counterUpdated + " >-- clients from the database.");
         } catch (IOException e) {
             System.err.println("ERROR READING Excel file: " + e.getMessage());
         }

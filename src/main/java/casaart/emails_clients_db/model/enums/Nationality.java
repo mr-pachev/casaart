@@ -2,21 +2,22 @@ package casaart.emails_clients_db.model.enums;
 
 public enum Nationality {
     BG,
-    ES,
+    US,
     DE,
-    IT,
+    GB,
     FR,
+    IT,
+    ES,
     RO,
-    CH,
-    TR,
-    MK,
-    RS,
-    RU,
-    UA,
     GR,
     PL,
     CZ,
-    GB,
-    US,
-    IL
+    CH,
+    TR,
+    RS,
+    MK,
+    RU,
+    UA,
+    IL,
+    SA
 }

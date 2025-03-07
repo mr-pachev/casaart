@@ -6,10 +6,7 @@ import casaart.emails_clients_db.service.EditDataBaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +32,7 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
                         duplicates.stream().skip(1).forEach(clientRepository::delete);
                     }
                 });
+        System.out.println("REMOVED --< " + (allClients.size() - clientRepository.findAll().size()) + " >-- clients from the database.");
     }
 
     // remove duplicate clients same email
@@ -55,6 +53,7 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
                         client.getEmail().endsWith("@guest.booking.com") ||
                         client.getEmail().endsWith("@m.expediapartnercentral.com"))
                 .forEach(clientRepository::delete);
+        System.out.println("REMOVED --< " + (allClients.size() - clientRepository.findAll().size()) + " >-- clients from the database.");
     }
 
     // edit all emails in lower case
@@ -67,6 +66,7 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
             }
         }
         clientRepository.saveAll(clients);
+        System.out.println("EDIT EMAILS IN LOWER CASE--< " + (clients.size() - clientRepository.findAll().size()) + " >-- clients from the database.");
     }
 
     // update all client names
