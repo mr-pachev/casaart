@@ -130,6 +130,26 @@ public class ExelServiceImpl implements ExelService {
                     }
                 }
 
+                // Обработка на имената, когато са въведени в колона firstName
+                if(firstName.split("\\s+").length > 1){
+                    if (firstName.trim().isEmpty()) {
+                        return;
+                    }
+
+                    String[] nameParts = firstName.trim().split("\\s+");
+
+                    if (nameParts.length == 1) {
+                        firstName = (nameParts[0]);
+                    } else if (nameParts.length == 2) {
+                        firstName = (nameParts[0]);
+                        lastName = (nameParts[1]);
+                    } else {
+                        firstName = (nameParts[0]);
+                        lastName = (nameParts[nameParts.length - 1]);
+                        middleName = (String.join(" ", Arrays.copyOfRange(nameParts, 1, nameParts.length - 1)));
+                    }
+                }
+
                 Client existingClient = clientRepository
                         .findByFirstNameAndLastNameAndEmail(firstName, lastName, email)
                         .orElse(null);
@@ -213,8 +233,6 @@ public class ExelServiceImpl implements ExelService {
     }
 
 
-
-
     // Метод за извличане на стойност от клетка като String
     private String getCellValueAsString(Cell cell) {
         if (cell == null) return "";
@@ -294,7 +312,6 @@ public class ExelServiceImpl implements ExelService {
             client.setMiddleName(String.join(" ", Arrays.copyOfRange(nameParts, 1, nameParts.length - 1)));
         }
     }
-
 
     // Обработка на телефонния номер на клиент
     String formatPhoneNumber(String phoneNumber) {
