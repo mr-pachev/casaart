@@ -77,6 +77,14 @@ public class ApplicationBeanConfiguration {
             }
         });
 
+        modelMapper.addConverter(new Converter<String, LocalDate>() {
+            @Override
+            public LocalDate convert(MappingContext<String, LocalDate> mappingContext) {
+                return LocalDate.parse(mappingContext.getSource(),
+                        DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+            }
+        });
+
         return modelMapper;
     }
 }

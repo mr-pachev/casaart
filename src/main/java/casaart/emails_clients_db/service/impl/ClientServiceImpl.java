@@ -65,7 +65,7 @@ public class ClientServiceImpl implements ClientService {
             clientList = clientRepository.findAllByFirstNameIgnoreCase(inputArr[0]);
 
         } else if (inputArr.length == 2) {
-            clientList = clientRepository.findAllByFirstNameIgnoreCaseAndLastNameIgnoreCase(inputArr[0], inputArr[1]);
+            clientList = clientRepository.findAllByFirstNameAndLastName(inputArr[0], inputArr[1]);
 
         }
 
@@ -111,7 +111,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public boolean isExistClientEmail(String email) {
 
-        return clientRepository.findByEmailIgnoreCase(email).isPresent();
+        return clientRepository.findByEmail(email).isPresent();
     }
 
     // add client

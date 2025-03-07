@@ -11,6 +11,9 @@ public interface EditDataBaseService {
     // remove clients who email ended on @guest.booking.com and @m.expediapartnercentral.com
     void removedClientsWithFalseEmail();
 
+    // edit all emails in lower case
+    void normalizeEmails();
+
     // update all client names
     void updateAllClientNames();
 }

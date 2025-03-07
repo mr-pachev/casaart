@@ -2,6 +2,7 @@ package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.model.enums.LoyaltyLevel;
+import casaart.emails_clients_db.model.enums.Nationality;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.repository.UserRepository;
@@ -19,10 +20,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class ExelServiceImpl implements ExelService {
@@ -49,7 +47,7 @@ public class ExelServiceImpl implements ExelService {
 
             // Заглавен ред
             Row headerRow = sheet.createRow(0);
-            String[] headers = {"First Name", "Middle Name", "Last Name", "Phone Number", "Email", "Source Type", "Loyalty Level", "Modify From", "Acc Date","First Call", "First Email", "Second Call", "Second Email"};
+            String[] headers = {"First Name", "Middle Name", "Last Name", "Phone Number", "Email", "Source Type", "Loyalty Level", "Modify From", "Acc Date", "Nat","First Call", "First Email", "Second Call", "Second Email"};
             for (int i = 0; i < headers.length; i++) {
                 headerRow.createCell(i).setCellValue(headers[i]);
             }
@@ -67,10 +65,11 @@ public class ExelServiceImpl implements ExelService {
                 row.createCell(6).setCellValue(client.getLoyaltyLevel() != null ? client.getLoyaltyLevel().toString() : "");
                 row.createCell(7).setCellValue(client.getModifyFrom());
                 row.createCell(8).setCellValue(client.getAccommodationDate() != null ? client.getAccommodationDate().toString() : "");
-                row.createCell(9).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
-                row.createCell(10).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");
-                row.createCell(11).setCellValue(client.getSecondCall() != null ? client.getSecondCall().toString() : "");
-                row.createCell(12).setCellValue(client.getSecondEmail() != null ? client.getSecondEmail().toString() : "");
+                row.createCell(9).setCellValue(client.getNationality() != null ? client.getNationality().toString() : "");
+                row.createCell(10).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
+                row.createCell(12).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");
+                row.createCell(13).setCellValue(client.getSecondCall() != null ? client.getSecondCall().toString() : "");
+                row.createCell(14).setCellValue(client.getSecondEmail() != null ? client.getSecondEmail().toString() : "");
             }
 
             // Запис в файл
@@ -78,6 +77,7 @@ public class ExelServiceImpl implements ExelService {
                 workbook.write(fileOut);
             }
             System.out.println("SUCCESSFULLY EXPORTED --< " + clients.size() + " >-- clients IN " + filePath);
+
         } catch (IOException e) {
             System.err.println("ERROR READING Excel file: " + e.getMessage());
         }
@@ -86,16 +86,16 @@ public class ExelServiceImpl implements ExelService {
     // update or add loyaltyLevel on clients
     @Override
     public void updateOrAddLoyaltyLevel(String filePath) {
-        List<Client> clients = new ArrayList<>();
+        List<Client> newClients = new ArrayList<>();
 
         try (FileInputStream fis = new FileInputStream(new File(filePath));
              Workbook workbook = new XSSFWorkbook(fis)) {
 
-            Sheet sheet = workbook.getSheetAt(0); // Взимаме първия лист
+            Sheet sheet = workbook.getSheetAt(0);
             for (Row row : sheet) {
-                if (row.getRowNum() == 0) continue; // Прескачаме заглавния ред
+                if (row.getRowNum() == 0) continue;
 
-                // Важно! Apache POI използва индексите от 0, затова:
+                // Apache POI използва индекси от 0, затова взимаме колоните коректно:
                 Cell accommodationDateCell = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);    // A
                 Cell sourceTypeCell = row.getCell(1, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);           // B
                 Cell loyaltyLevelCell = row.getCell(2, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);         // C
@@ -104,8 +104,10 @@ public class ExelServiceImpl implements ExelService {
                 Cell lastNameCell = row.getCell(5, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);             // F
                 Cell phoneCell = row.getCell(6, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);                // G
                 Cell emailCell = row.getCell(7, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);                // H
+                Cell nationalityCell = row.getCell(8, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);          // I
 
-                String accommodationDate = getCellValueAsString(accommodationDateCell);
+                // Преобразуване на стойностите в string
+                String accommodationDateStr = getCellValueAsString(accommodationDateCell);
                 String sourceType = getCellValueAsString(sourceTypeCell);
                 String loyaltyLevel = getCellValueAsString(loyaltyLevelCell);
                 String firstName = formatName(getCellValueAsString(firstNameCell));
@@ -113,79 +115,105 @@ public class ExelServiceImpl implements ExelService {
                 String lastName = formatName(getCellValueAsString(lastNameCell));
                 String phoneNumber = getCellValueAsString(phoneCell);
                 String email = getCellValueAsString(emailCell);
+                String nationalityStr = getCellValueAsString(nationalityCell);
 
-                // Проверка за празни редове
-                if (firstName.isEmpty() || email.isEmpty()) {
-                    continue;
+                if (firstName.isEmpty() || email.isEmpty()) continue;
+
+                // Обработка на датата за настаняване
+                LocalDate accommodationDate = accommodationDateStr.isEmpty() ? null : mapper.map(accommodationDateStr, LocalDate.class);
+                Nationality nationality = null;
+                if (!nationalityStr.isEmpty()) {
+                    try {
+                        nationality = Nationality.valueOf(nationalityStr);
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("INVALID NATIONALITY: " + nationalityStr);
+                    }
                 }
 
-                // Проверка дали клиента от таблицата съществува в базата
                 Client existingClient = clientRepository
-                        .findByFirstNameIgnoreCaseAndLastNameIgnoreCaseAndEmailIgnoreCase(firstName, lastName, email)
+                        .findByFirstNameAndLastNameAndEmail(firstName, lastName, email)
                         .orElse(null);
 
-                // Ако съществува клиента в базата и има попълнен loyaltyLevel в таблицата за този клиент
-                if (existingClient != null && !loyaltyLevel.isEmpty()) {
+                // Проверка дали ще се обновява съществуващ клиент или ще се създава нов
+                if (existingClient != null) {
+                    // Обновяване само на липсващи данни
+                    if (accommodationDate != null) {
+                        if (existingClient.getAccommodationDate() == null) {
+                            existingClient.setAccommodationDate(accommodationDate);
+                        } else if (!existingClient.getAccommodationDate().equals(accommodationDate)) {
+                            existingClient.setCounterStay(existingClient.getCounterStay() + 1);
+                            if (existingClient.getCounterStay() >= 20) {
+                                existingClient.setLoyaltyLevel(LoyaltyLevel.LEVEL_3);
+                            } else if (existingClient.getCounterStay() >= 10) {
+                                existingClient.setLoyaltyLevel(LoyaltyLevel.LEVEL_2);
+                            }
+                        }
+                    }
 
-                    existingClient.setLoyaltyLevel(LoyaltyLevel.valueOf(loyaltyLevel));
+                    if (existingClient.getLoyaltyLevel() == null && !loyaltyLevel.isEmpty()) {
+                        existingClient.setLoyaltyLevel(LoyaltyLevel.valueOf(loyaltyLevel));
+                    }
 
-                    if (existingClient.getPhoneNumber() == null) {
+                    if (existingClient.getPhoneNumber() == null && !phoneNumber.isEmpty()) {
                         existingClient.setPhoneNumber(phoneNumber);
                     }
 
+                    if (existingClient.getNationality() == null && nationality != null) {
+                        existingClient.setNationality(nationality);
+                    }
+
+                    if(firstName.split("\\s+").length > 1){
+                        splitName(existingClient, firstName);
+                    }else {
+                        existingClient.setFirstName(firstName);
+                        existingClient.setMiddleName(!middleName.isEmpty() ? middleName : null);
+                    }
                     clientRepository.save(existingClient);
 
                 } else {
+                    // Създаване на нов клиент
                     Client newClient = new Client();
-                    newClient.setUser(userHelperService.getUser());
-                    newClient.setSourceType(SourceType.valueOf(sourceType));
-
-                    // Разделяне на firstName, ако съдържа две думи
-                    if (firstName != null && firstName.trim().contains(" ")) {
-                        String[] nameParts = firstName.trim().split("\\s+", 2); // Разделяме по първия интервал
-                        newClient.setFirstName(nameParts[0]);   // Първата дума -> firstName
-                        newClient.setLastName(nameParts[1]);    // Втората дума -> lastName
-                    } else {
-                        newClient.setFirstName(firstName);
-                        newClient.setLastName(lastName);
-                    }
-
-                    newClient.setMiddleName(middleName.isEmpty() ? null : middleName);
-
+                    newClient.setUser(userRepository.findById(1));
+                    newClient.setSourceType(sourceType.isEmpty() ? null : SourceType.valueOf(sourceType));
+                    newClient.setLoyaltyLevel(loyaltyLevel.isEmpty() ? null : LoyaltyLevel.valueOf(loyaltyLevel));
+                    newClient.setNationality(nationality);
                     newClient.setEmail(email);
                     newClient.setPhoneNumber(formatPhoneNumber(phoneNumber));
                     newClient.setCreatedAt(LocalDateTime.now());
-                    newClient.setLoyaltyLevel(loyaltyLevel.isEmpty() ? null :  LoyaltyLevel.valueOf(loyaltyLevel));
+                    newClient.setAccommodationDate(accommodationDate);
+                    newClient.setCounterStay(loyaltyLevel.equals("LEVEL_1") ? 1 : 0);
 
-                    if(!accommodationDate.isEmpty()){
-                        LocalDate date = mapper.map(accommodationDate, LocalDate.class);
-                        newClient.setAccommodationDate(date);
+                    if(firstName.split("\\s+").length > 1){
+                        splitName(newClient, firstName);
+                    }else {
+                        newClient.setFirstName(firstName);
+                        newClient.setMiddleName(!middleName.isEmpty() ? middleName : null);
                     }
 
-                    newClient.setAccommodationDate(null);
-
-                    // Проверка за съществуващ клиент в списъка clients
-                    boolean existsInList = clients.stream().anyMatch(c ->
+                    boolean existsInList = newClients.stream().anyMatch(c ->
                             c.getFirstName().equals(newClient.getFirstName()) &&
                                     c.getLastName().equals(newClient.getLastName()) &&
                                     Objects.equals(c.getEmail(), newClient.getEmail()));
 
+                    // Проверка дали новосъздадения клиент вече съществува в базата
                     if (!existsInList &&
-                            newClient.getEmail() != null &&
-                            clientRepository.findByEmailIgnoreCase(email).isEmpty() &&
-                            !newClient.getEmail().endsWith("@guest.booking.com") ||
-                            !newClient.getEmail().endsWith("@m.expediapartnercentral.com")) {
-                        clients.add(newClient);
+                            clientRepository.findByEmail(email).isEmpty() &&
+                            !email.endsWith("@guest.booking.com") &&
+                            !email.endsWith("@m.expediapartnercentral.com")) {
+                        newClients.add(newClient);
                     }
                 }
-
             }
-            clientRepository.saveAll(clients);
-            System.out.println("SUCCESSFULLY ADDED --< " + clients.size() + " >-- new clients in the database.");
+
+            clientRepository.saveAll(newClients);
+            System.out.println("SUCCESSFULLY ADDED --< " + newClients.size() + " >-- new clients in the database.");
         } catch (IOException e) {
             System.err.println("ERROR READING Excel file: " + e.getMessage());
         }
     }
+
+
+
 
     // Метод за извличане на стойност от клетка като String
     private String getCellValueAsString(Cell cell) {
@@ -220,13 +248,53 @@ public class ExelServiceImpl implements ExelService {
         name = name.toLowerCase();
         String[] words = name.split("\\s+");
         StringBuilder formattedName = new StringBuilder();
+
         for (String word : words) {
             if (!word.isEmpty()) {
-                formattedName.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+                // Разделяме по тире, ако има
+                String[] hyphenParts = word.split("-");
+                StringBuilder formattedWord = new StringBuilder();
+
+                for (int i = 0; i < hyphenParts.length; i++) {
+                    if (!hyphenParts[i].isEmpty()) {
+                        formattedWord.append(Character.toUpperCase(hyphenParts[i].charAt(0)))
+                                .append(hyphenParts[i].substring(1));
+                    }
+                    if (i < hyphenParts.length - 1) {
+                        formattedWord.append("-"); // Добавяме тире, ако не е последната част
+                    }
+                }
+
+                formattedName.append(formattedWord).append(" ");
             }
         }
+
         return formattedName.toString().trim();
     }
+
+    // Разделяне на името
+    private void splitName(Client client, String firstName) {
+        if (firstName == null || firstName.trim().isEmpty()) {
+            return;
+        }
+
+        String[] nameParts = firstName.trim().split("\\s+");
+
+        if (nameParts.length == 1) {
+            client.setFirstName(nameParts[0]);
+            client.setMiddleName(null);
+            client.setLastName(null);
+        } else if (nameParts.length == 2) {
+            client.setFirstName(nameParts[0]);
+            client.setMiddleName(null);
+            client.setLastName(nameParts[1]);
+        } else {
+            client.setFirstName(nameParts[0]);
+            client.setLastName(nameParts[nameParts.length - 1]);
+            client.setMiddleName(String.join(" ", Arrays.copyOfRange(nameParts, 1, nameParts.length - 1)));
+        }
+    }
+
 
     // Обработка на телефонния номер на клиент
     String formatPhoneNumber(String phoneNumber) {
