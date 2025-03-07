@@ -47,7 +47,7 @@ public class ExelServiceImpl implements ExelService {
 
             // Заглавен ред
             Row headerRow = sheet.createRow(0);
-            String[] headers = {"First Name", "Middle Name", "Last Name", "Phone Number", "Email", "Source Type", "Loyalty Level", "Modify From", "Acc Date", "Nat","First Call", "First Email", "Second Call", "Second Email"};
+            String[] headers = {"First Name", "Middle Name", "Last Name", "Phone Number", "Email", "Source Type", "Loyalty Level", "Modify From", "Acc Date", "Nat", "First Call", "First Email", "Second Call", "Second Email"};
             for (int i = 0; i < headers.length; i++) {
                 headerRow.createCell(i).setCellValue(headers[i]);
             }
@@ -132,7 +132,7 @@ public class ExelServiceImpl implements ExelService {
                 }
 
                 // Обработка на имената, когато са въведени в колона firstName
-                if(firstName.split("\\s+").length > 1){
+                if (firstName.split("\\s+").length > 1) {
                     if (firstName.trim().isEmpty()) {
                         return;
                     }
@@ -184,9 +184,9 @@ public class ExelServiceImpl implements ExelService {
                         existingClient.setNationality(nationality);
                     }
 
-                    if(firstName.split("\\s+").length > 1){
+                    if (firstName.split("\\s+").length > 1) {
                         splitName(existingClient, firstName);
-                    }else {
+                    } else {
                         existingClient.setFirstName(firstName);
                         existingClient.setMiddleName(!middleName.isEmpty() ? middleName : null);
                     }
@@ -205,23 +205,24 @@ public class ExelServiceImpl implements ExelService {
                     newClient.setAccommodationDate(accommodationDate);
                     newClient.setCounterStay(loyaltyLevel.equals("LEVEL_1") ? 1 : 0);
 
-                    if(firstName.split("\\s+").length > 1){
+                    if (firstName.split("\\s+").length > 1) {
                         splitName(newClient, firstName);
-                    }else {
+                    } else {
                         newClient.setFirstName(firstName);
                         newClient.setMiddleName(!middleName.isEmpty() ? middleName : null);
                     }
 
                     boolean existsInList = newClients.stream().anyMatch(c ->
-                            c.getFirstName().equals(newClient.getFirstName()) &&
-                                    c.getLastName().equals(newClient.getLastName()) &&
+                            Objects.equals(c.getFirstName(), newClient.getFirstName()) &&
+                                    Objects.equals(c.getLastName(), newClient.getLastName()) ||
                                     Objects.equals(c.getEmail(), newClient.getEmail()));
+
 
                     // Проверка дали новосъздадения клиент вече съществува в базата
                     if (!existsInList &&
-                            clientRepository.findByEmail(email).isEmpty() &&
                             !email.endsWith("@guest.booking.com") &&
-                            !email.endsWith("@m.expediapartnercentral.com")) {
+                            !email.endsWith("@m.expediapartnercentral.com") &&
+                            clientRepository.findByEmail(email).isEmpty()) {
                         newClients.add(newClient);
                     }
                 }
@@ -267,6 +268,10 @@ public class ExelServiceImpl implements ExelService {
             return "";
         }
         name = name.toLowerCase();
+
+        // Премахване на " - Loyalty 1", ако се съдържа
+        name = name.replace(" - loyalty 1", "");
+
         String[] words = name.split("\\s+");
         StringBuilder formattedName = new StringBuilder();
 
@@ -292,6 +297,7 @@ public class ExelServiceImpl implements ExelService {
 
         return formattedName.toString().trim();
     }
+
 
     // Разделяне на името
     private void splitName(Client client, String firstName) {
