@@ -210,6 +210,7 @@ public class ExelServiceImpl implements ExelService {
                     } else {
                         newClient.setFirstName(firstName);
                         newClient.setMiddleName(!middleName.isEmpty() ? middleName : null);
+                        newClient.setLastName(lastName);
                     }
 
                     boolean existsInList = newClients.stream().anyMatch(c ->
@@ -267,17 +268,25 @@ public class ExelServiceImpl implements ExelService {
         if (name == null || name.isEmpty()) {
             return "";
         }
-        name = name.toLowerCase();
+        name = name.toLowerCase().trim();
 
         // Премахване на " - Loyalty 1", ако се съдържа
         name = name.replace(" - loyalty 1", "");
+
+        // Премахване на всичко след " / "
+        if (name.contains(" / ")) {
+            name = name.substring(0, name.indexOf(" / ")).trim();
+        }
+
+        // Премахване на излишни интервали около тирета
+        name = name.replaceAll("\\s*-\\s*", "-");
 
         String[] words = name.split("\\s+");
         StringBuilder formattedName = new StringBuilder();
 
         for (String word : words) {
             if (!word.isEmpty()) {
-                // Разделяме по тире, ако има
+                // Запазваме тирето в думата
                 String[] hyphenParts = word.split("-");
                 StringBuilder formattedWord = new StringBuilder();
 
@@ -287,7 +296,7 @@ public class ExelServiceImpl implements ExelService {
                                 .append(hyphenParts[i].substring(1));
                     }
                     if (i < hyphenParts.length - 1) {
-                        formattedWord.append("-"); // Добавяме тире, ако не е последната част
+                        formattedWord.append("-"); // Запазваме тирето
                     }
                 }
 
@@ -299,13 +308,18 @@ public class ExelServiceImpl implements ExelService {
     }
 
 
+
+
     // Разделяне на името
-    private void splitName(Client client, String firstName) {
-        if (firstName == null || firstName.trim().isEmpty()) {
+    private void splitName(Client client, String fullName) {
+        if (fullName == null || fullName.trim().isEmpty()) {
             return;
         }
 
-        String[] nameParts = firstName.trim().split("\\s+");
+        // Премахване на излишни интервали около тирета
+        fullName = fullName.replaceAll("\\s*-\\s*", "-").trim();
+
+        String[] nameParts = fullName.split("\\s+");
 
         if (nameParts.length == 1) {
             client.setFirstName(nameParts[0]);
@@ -321,6 +335,7 @@ public class ExelServiceImpl implements ExelService {
             client.setMiddleName(String.join(" ", Arrays.copyOfRange(nameParts, 1, nameParts.length - 1)));
         }
     }
+
 
     // Обработка на телефонния номер на клиент
     String formatPhoneNumber(String phoneNumber) {
