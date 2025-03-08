@@ -64,10 +64,13 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         } else if ("allContactPersonsBySecondCall".equals(type)) {
             contactPersonList = contactPersonRepository.findAllByOrderBySecondCallDesc();
 
+        } else if(type.contains("@")){
+            contactPersonList = contactPersonRepository.findByEmailStartingWithIgnoreCase(type);
+
         } else if(inputArr.length == 1){
             contactPersonList = contactPersonRepository.findAllByFirstName(inputArr[0]);
 
-        } else if(inputArr.length == 2){
+        }else if(inputArr.length == 2){
             contactPersonList = contactPersonRepository.findAllByFirstNameAndLastName(inputArr[0], inputArr[1]);
 
         }

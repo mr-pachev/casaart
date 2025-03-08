@@ -21,4 +21,5 @@ public interface ContactPersonRepository extends JpaRepository<ContactPerson, Lo
     List<ContactPerson> findAllByOrderBySecondCallDesc();
     List<ContactPerson> findAllByFirstName(String firstName);
     List<ContactPerson> findAllByFirstNameAndLastName(String firstName, String lastName);
+    List<ContactPerson> findByEmailStartingWithIgnoreCase(String email);
 }
