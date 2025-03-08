@@ -23,4 +23,5 @@ public interface CompanyManagerRepository extends JpaRepository<CompanyManager, 
    List<CompanyManager> findAllByOrderBySecondCallDesc();
    List<CompanyManager> findAllByFirstName(String firstName);
    List<CompanyManager> findAllByFirstNameAndLastName(String firstName, String lastName);
+   List<CompanyManager> findByEmailStartingWithIgnoreCase(String email);
 }

@@ -62,10 +62,13 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         } else if ("allCompanyManagersBySecondCall".equals(type)) {
             companyManagerList = companyManagerRepository.findAllByOrderBySecondCallDesc();
 
+        } else if(type.contains("@")){
+            companyManagerList = companyManagerRepository.findByEmailStartingWithIgnoreCase(type);
+
         } else if(inputArr.length == 1){
             companyManagerList = companyManagerRepository.findAllByFirstName(inputArr[0]);
 
-        } else if(inputArr.length == 2){
+        }else if(inputArr.length == 2){
             companyManagerList = companyManagerRepository.findAllByFirstNameAndLastName(inputArr[0], inputArr[1]);
 
         }

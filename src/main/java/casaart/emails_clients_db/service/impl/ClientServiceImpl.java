@@ -61,7 +61,7 @@ public class ClientServiceImpl implements ClientService {
         } else if ("allClientsBySecondCall".equals(type)) {
             clientList = clientRepository.findAllByOrderBySecondCallDesc();
 
-        } else if (inputArr.length == 1 && type.contains("@")) {
+        } else if (type.contains("@")) {
 
             if(clientRepository.findByEmail(type).isPresent()){
                 clientList.add(clientRepository.findByEmail(type).get());
