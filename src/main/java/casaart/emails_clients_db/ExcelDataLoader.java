@@ -25,7 +25,8 @@ public class ExcelDataLoader implements CommandLineRunner {
 //        editDataBaseService.removeDuplicateClients();
 //        editDataBaseService.removeDuplicateClientsSameEmail();
 //        editDataBaseService.removedClientsWithFalseEmail();
-//        editDataBaseService.normalizeEmails();
+//        editDataBaseService.normalizeEmailsForClients();
+//        editDataBaseService.normalizeEmailsForCompanies();
 //        editDataBaseService.updateAllClientNames();
 
 //        IMPORT

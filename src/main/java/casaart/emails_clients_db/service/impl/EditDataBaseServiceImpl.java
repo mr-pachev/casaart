@@ -1,7 +1,9 @@
 package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.entity.Client;
+import casaart.emails_clients_db.model.entity.Company;
 import casaart.emails_clients_db.repository.ClientRepository;
+import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.service.EditDataBaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -13,8 +15,11 @@ import java.util.stream.Collectors;
 public class EditDataBaseServiceImpl implements EditDataBaseService {
     private final ClientRepository clientRepository;
 
-    public EditDataBaseServiceImpl(ClientRepository clientRepository) {
+    private final CompanyRepository companyRepository;
+
+    public EditDataBaseServiceImpl(ClientRepository clientRepository, CompanyRepository companyRepository) {
         this.clientRepository = clientRepository;
+        this.companyRepository = companyRepository;
     }
 
     // remove duplicate clients by firstName, lastName and email
@@ -55,9 +60,9 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
                 .forEach(clientRepository::delete);
     }
 
-    // edit all emails in lower case
+    // edit all emails in lower case for clients
     @Override
-    public void normalizeEmails() {
+    public void normalizeEmailsForClients() {
         List<Client> clients = clientRepository.findAll();
         for (Client client : clients) {
             if (client.getEmail() != null) {
@@ -65,6 +70,18 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
             }
         }
         clientRepository.saveAll(clients);
+    }
+
+    // edit all emails in lower case for company
+    @Override
+    public void normalizeEmailsForCompanies() {
+        List<Company> companies = companyRepository.findAll();
+        for (Company company : companies) {
+            if (company.getEmail() != null) {
+                company.setEmail(company.getEmail().toLowerCase());
+            }
+        }
+        companyRepository.saveAll(companies);
     }
 
     // update all client names
