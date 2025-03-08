@@ -11,11 +11,12 @@ import java.util.Optional;
 
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Long> {
-    Optional<Company> findByNameIgnoreCase(String name);
+    Optional<Company> findByName(String name);
     Optional<Company> findByCompanyManagerId(long id);
     List<Company> findAllByOrderByIdDesc();
     List<Company> findByIndustryTypes(IndustryType industryType);
     List<Company> findByLocationType(LocationType locationType);
     List<Company> findAllByOrderByNameAsc();
     List<Company> findByNameStartingWithIgnoreCase(String name);
-}
+    List<Company> findByEmailStartingWithIgnoreCase(String email);
+    }

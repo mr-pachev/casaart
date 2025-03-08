@@ -60,6 +60,9 @@ public class CompanyServiceImpl implements CompanyService {
         } else if (input.equals("allCompanies")) {
             companyList = companyRepository.findAllByOrderByIdDesc();
 
+        } else if (input.contains("@")) {
+            companyList = companyRepository.findByEmailStartingWithIgnoreCase(input);
+
         } else {
             // Разделяне на входния низ на думи (разделители: интервал или тире)
             String[] words = input.split("[-\s]+");
@@ -109,7 +112,7 @@ public class CompanyServiceImpl implements CompanyService {
     // checking if company exists
     @Override
     public boolean isExistCompany(String name) {
-        return companyRepository.findByNameIgnoreCase(name).isPresent();
+        return companyRepository.findByName(name).isPresent();
     }
 
     // find company by id
@@ -123,7 +126,7 @@ public class CompanyServiceImpl implements CompanyService {
     // find company by name
     @Override
     public CompanyDTO findCompanyByName(String name) {
-        CompanyDTO companyDTO = mapCompanyToCompanyDTO(companyRepository.findByNameIgnoreCase(name).get());
+        CompanyDTO companyDTO = mapCompanyToCompanyDTO(companyRepository.findByName(name).get());
         return companyDTO;
     }
 
