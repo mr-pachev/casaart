@@ -24,7 +24,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findAllByOrderByFirstCallDesc();
     List<Client> findAllByOrderBySecondEmailDesc();
     List<Client> findAllByOrderBySecondCallDesc();
-    List<Client> findAllByFirstNameIgnoreCase(String firstName);
+    List<Client> findAllByFirstName(String firstName);
     List<Client> findAllByFirstNameAndLastName(String firstName, String lastName);
     List<Client> findAllBySourceType(SourceType sourceType);
     List<Client> findAllByLoyaltyLevel(LoyaltyLevel loyaltyLevel);
