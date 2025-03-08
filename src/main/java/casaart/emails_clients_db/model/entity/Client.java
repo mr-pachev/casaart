@@ -35,6 +35,7 @@ public class Client extends BaseEntity{
     private LoyaltyLevel loyaltyLevel;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 50)
     private Nationality nationality;
 
     @ManyToOne

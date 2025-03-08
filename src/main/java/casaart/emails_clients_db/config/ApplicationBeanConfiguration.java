@@ -10,11 +10,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.Locale;
 
 @Configuration
@@ -44,14 +45,27 @@ public class ApplicationBeanConfiguration {
                 try {
                     if (source.matches("\\d{4}-\\d{2}-\\d{2}")) { // yyyy-MM-dd
                         return LocalDate.parse(source, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
                     } else if (source.matches("\\d{2}\\d{2}\\d{2}")) { // yyMMdd
                         return LocalDate.parse(source, DateTimeFormatter.ofPattern("yyMMdd"));
+
                     } else if (source.matches("\\d{2} [A-Za-z]{3} \\d{4}")) { // 25 Feb 2025
                         return LocalDate.parse(source, DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH));
+
                     } else if (source.matches("\\d{2}\\.\\d{2}\\.\\d{4}")) { // 25.02.2025
                         return LocalDate.parse(source, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+
+                    } else if (source.matches("\\d{1,2}\\.\\d{1,2}\\.\\d{4}")) { // 29.5.2024
+                        return LocalDate.parse(source, DateTimeFormatter.ofPattern("d.M.yyyy"));
+
+                    } else if (source.matches("[A-Za-z]{3} [A-Za-z]{3} \\d{2} \\d{2}:\\d{2}:\\d{2} [A-Z]{3} \\d{4}")) {
+                        // Формат: Wed May 29 00:00:00 EEST 2024
+                        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+                        sdf.setLenient(false); // За по-строго парсване
+                        Date date = sdf.parse(source);
+                        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     }
-                } catch (DateTimeParseException e) {
+                } catch (DateTimeParseException | ParseException e) {
                     throw new IllegalArgumentException("Невалиден формат на датата: " + source, e);
                 }
 
@@ -59,29 +73,10 @@ public class ApplicationBeanConfiguration {
             }
         });
 
-        modelMapper.addConverter(new Converter<String, LocalDateTime>() {
-            @Override
-            public LocalDateTime convert(MappingContext<String, LocalDateTime> context) {
-                String source = context.getSource();
-                if (source == null || source.isEmpty()) {
-                    return null;
-                }
-                return LocalDateTime.parse(source, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            }
-        });
-
-        modelMapper.addConverter(new Converter<String, LocalTime>() {
-            @Override
-            public LocalTime convert(MappingContext<String, LocalTime> context) {
-                String source = context.getSource();
-                if (source == null || source.isEmpty()) {
-                    return null;
-                }
-                return LocalTime.parse(source, DateTimeFormatter.ofPattern("HH:mm:ss"));
-            }
-        });
-
         return modelMapper;
     }
+
+
+
 }
 

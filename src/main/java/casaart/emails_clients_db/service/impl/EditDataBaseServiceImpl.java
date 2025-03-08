@@ -17,7 +17,7 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
         this.clientRepository = clientRepository;
     }
 
-    // remove duplicate clients
+    // remove duplicate clients by firstName, lastName and email
     @Override
     @Transactional
     public void removeDuplicateClients() {
@@ -53,7 +53,6 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
                         client.getEmail().endsWith("@guest.booking.com") ||
                         client.getEmail().endsWith("@m.expediapartnercentral.com"))
                 .forEach(clientRepository::delete);
-        System.out.println("REMOVED --< " + (allClients.size() - clientRepository.findAll().size()) + " >-- clients from the database.");
     }
 
     // edit all emails in lower case
@@ -66,7 +65,6 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
             }
         }
         clientRepository.saveAll(clients);
-        System.out.println("EDIT EMAILS IN LOWER CASE--< " + (clients.size() - clientRepository.findAll().size()) + " >-- clients from the database.");
     }
 
     // update all client names
@@ -81,7 +79,6 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
         }
 
         clientRepository.saveAll(allClients); // Запазваме обновените клиенти
-        System.out.println("UPDATED ARE --< " + allClients.size() + " >-- CLIENTS.");
     }
 
     // Обработка на имената

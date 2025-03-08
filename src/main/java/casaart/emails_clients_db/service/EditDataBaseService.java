@@ -2,7 +2,7 @@ package casaart.emails_clients_db.service;
 
 public interface EditDataBaseService {
 
-    // remove duplicate clients
+    // remove duplicate clients by firstName, lastName and email
     void removeDuplicateClients();
 
     // remove duplicate clients same email

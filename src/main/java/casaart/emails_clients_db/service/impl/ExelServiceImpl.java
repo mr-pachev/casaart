@@ -47,7 +47,7 @@ public class ExelServiceImpl implements ExelService {
 
             // Заглавен ред
             Row headerRow = sheet.createRow(0);
-            String[] headers = {"First Name", "Middle Name", "Last Name", "Phone Number", "Email", "Source Type", "Loyalty Level", "Modify From", "Acc Date", "Nat", "First Call", "First Email", "Second Call", "Second Email"};
+            String[] headers = {"First Name", "Middle Name", "Last Name", "Phone Number", "Email", "Source Type", "Loyalty Level", "Counter stay","Modify From", "Acc Date", "Nat", "First Call", "First Email", "Second Call", "Second Email"};
             for (int i = 0; i < headers.length; i++) {
                 headerRow.createCell(i).setCellValue(headers[i]);
             }
@@ -63,10 +63,11 @@ public class ExelServiceImpl implements ExelService {
                 row.createCell(4).setCellValue(client.getEmail());
                 row.createCell(5).setCellValue(client.getSourceType().toString());
                 row.createCell(6).setCellValue(client.getLoyaltyLevel() != null ? client.getLoyaltyLevel().toString() : "");
-                row.createCell(7).setCellValue(client.getModifyFrom());
-                row.createCell(8).setCellValue(client.getAccommodationDate() != null ? client.getAccommodationDate().toString() : "");
-                row.createCell(9).setCellValue(client.getNationality() != null ? client.getNationality().toString() : "");
-                row.createCell(10).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
+                row.createCell(7).setCellValue(client.getCounterStay() != null ? client.getCounterStay().toString() : "");
+                row.createCell(8).setCellValue(client.getModifyFrom());
+                row.createCell(9).setCellValue(client.getAccommodationDate() != null ? client.getAccommodationDate().toString() : "");
+                row.createCell(10).setCellValue(client.getNationality() != null ? client.getNationality().toString() : "");
+                row.createCell(11).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
                 row.createCell(12).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");
                 row.createCell(13).setCellValue(client.getSecondCall() != null ? client.getSecondCall().toString() : "");
                 row.createCell(14).setCellValue(client.getSecondEmail() != null ? client.getSecondEmail().toString() : "");
@@ -122,6 +123,8 @@ public class ExelServiceImpl implements ExelService {
 
                 // Обработка на датата за настаняване
                 LocalDate accommodationDate = accommodationDateStr.isEmpty() ? null : mapper.map(accommodationDateStr, LocalDate.class);
+
+                // Обработка на колона националност
                 Nationality nationality = null;
                 if (!nationalityStr.isEmpty()) {
                     try {
@@ -133,21 +136,21 @@ public class ExelServiceImpl implements ExelService {
 
                 // Обработка на имената, когато са въведени в колона firstName
                 if (firstName.split("\\s+").length > 1) {
-                    if (firstName.trim().isEmpty()) {
-                        return;
-                    }
 
                     String[] nameParts = firstName.trim().split("\\s+");
 
                     if (nameParts.length == 1) {
                         firstName = (nameParts[0]);
+
                     } else if (nameParts.length == 2) {
                         firstName = (nameParts[0]);
                         lastName = (nameParts[1]);
+
                     } else {
                         firstName = (nameParts[0]);
                         lastName = (nameParts[nameParts.length - 1]);
                         middleName = (String.join(" ", Arrays.copyOfRange(nameParts, 1, nameParts.length - 1)));
+
                     }
                 }
 
@@ -158,18 +161,24 @@ public class ExelServiceImpl implements ExelService {
                 // Проверка дали ще се обновява съществуващ клиент или ще се създава нов
                 if (existingClient != null) {
                     counterUpdated++;
+
                     // Обновяване само на липсващи данни
                     if (accommodationDate != null) {
+
+                        // Проверка има ли въведена дата на настаняване
                         if (existingClient.getAccommodationDate() == null) {
-                            existingClient.setAccommodationDate(accommodationDate);
+                            existingClient.setCounterStay(1);
+
                         } else if (!existingClient.getAccommodationDate().equals(accommodationDate)) {
                             existingClient.setCounterStay(existingClient.getCounterStay() + 1);
+
                             if (existingClient.getCounterStay() >= 20) {
                                 existingClient.setLoyaltyLevel(LoyaltyLevel.LEVEL_3);
                             } else if (existingClient.getCounterStay() >= 10) {
                                 existingClient.setLoyaltyLevel(LoyaltyLevel.LEVEL_2);
                             }
                         }
+                        existingClient.setAccommodationDate(accommodationDate);
                     }
 
                     if (existingClient.getLoyaltyLevel() == null && !loyaltyLevel.isEmpty()) {
@@ -180,16 +189,16 @@ public class ExelServiceImpl implements ExelService {
                         existingClient.setPhoneNumber(phoneNumber);
                     }
 
-                    if (existingClient.getNationality() == null && nationality != null) {
+                    if (nationality != null) {
                         existingClient.setNationality(nationality);
+                    }else if(existingClient.getNationality() == null){
+                        existingClient.setNationality(Nationality.BG);
                     }
 
-                    if (firstName.split("\\s+").length > 1) {
-                        splitName(existingClient, firstName);
-                    } else {
-                        existingClient.setFirstName(firstName);
-                        existingClient.setMiddleName(!middleName.isEmpty() ? middleName : null);
-                    }
+                    existingClient.setFirstName(firstName);
+                    existingClient.setMiddleName(!middleName.isEmpty() ? middleName : null);
+                    existingClient.setLastName(lastName);
+
                     clientRepository.save(existingClient);
 
                 } else {
@@ -203,15 +212,14 @@ public class ExelServiceImpl implements ExelService {
                     newClient.setPhoneNumber(formatPhoneNumber(phoneNumber));
                     newClient.setCreatedAt(LocalDateTime.now());
                     newClient.setAccommodationDate(accommodationDate);
-                    newClient.setCounterStay(loyaltyLevel.equals("LEVEL_1") ? 1 : 0);
 
-                    if (firstName.split("\\s+").length > 1) {
-                        splitName(newClient, firstName);
-                    } else {
-                        newClient.setFirstName(firstName);
-                        newClient.setMiddleName(!middleName.isEmpty() ? middleName : null);
-                        newClient.setLastName(lastName);
+                    if (accommodationDate != null) {
+                        newClient.setCounterStay(1);
                     }
+
+                    newClient.setFirstName(firstName);
+                    newClient.setMiddleName(!middleName.isEmpty() ? middleName : null);
+                    newClient.setLastName(lastName);
 
                     boolean existsInList = newClients.stream().anyMatch(c ->
                             Objects.equals(c.getFirstName(), newClient.getFirstName()) &&
@@ -233,10 +241,9 @@ public class ExelServiceImpl implements ExelService {
             System.out.println("SUCCESSFULLY ADDED --< " + newClients.size() + " >-- new clients in the database.");
             System.out.println("SUCCESSFULLY UPDATED --< " + counterUpdated + " >-- clients from the database.");
         } catch (IOException e) {
-            System.err.println("ERROR READING Excel file: " + e.getMessage());
+            System.err.println("ERROR READING EXEL FILE: " + e.getMessage());
         }
     }
-
 
     // Метод за извличане на стойност от клетка като String
     private String getCellValueAsString(Cell cell) {
@@ -263,15 +270,15 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
-    // Обработка на имената
+    // Обработка на имената на ниво String
     private String formatName(String name) {
         if (name == null || name.isEmpty()) {
             return "";
         }
         name = name.toLowerCase().trim();
 
-        // Премахване на " - Loyalty 1", ако се съдържа
-        name = name.replace(" - loyalty 1", "");
+        // Премахване на " - loyalty 1" независимо от разстоянията
+        name = name.replaceAll("\\s*-\\s*loyalty\\s*1\\s*", "");
 
         // Премахване на всичко след " / "
         if (name.contains(" / ")) {
@@ -305,35 +312,6 @@ public class ExelServiceImpl implements ExelService {
         }
 
         return formattedName.toString().trim();
-    }
-
-
-
-
-    // Разделяне на името
-    private void splitName(Client client, String fullName) {
-        if (fullName == null || fullName.trim().isEmpty()) {
-            return;
-        }
-
-        // Премахване на излишни интервали около тирета
-        fullName = fullName.replaceAll("\\s*-\\s*", "-").trim();
-
-        String[] nameParts = fullName.split("\\s+");
-
-        if (nameParts.length == 1) {
-            client.setFirstName(nameParts[0]);
-            client.setMiddleName(null);
-            client.setLastName(null);
-        } else if (nameParts.length == 2) {
-            client.setFirstName(nameParts[0]);
-            client.setMiddleName(null);
-            client.setLastName(nameParts[1]);
-        } else {
-            client.setFirstName(nameParts[0]);
-            client.setLastName(nameParts[nameParts.length - 1]);
-            client.setMiddleName(String.join(" ", Arrays.copyOfRange(nameParts, 1, nameParts.length - 1)));
-        }
     }
 
 
