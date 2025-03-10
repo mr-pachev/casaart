@@ -114,7 +114,7 @@
                         Избери ниво на лоялност.
                     </p>
                 </div>
-                <div class="form-group" th:if="${clientDTO.sourceType == 'HOTEL' or clientDTO.sourceType == 'SHOWROOM'}">
+                <div class="form-group">
                     <label for="nationality">Националност</label>
                     <select class="form-control" th:placeholder="${clientDTO.nationality}"
                             id="nationality"
@@ -146,6 +146,10 @@
                 <div class="form-group">
                     <label for="secondCall" class="form-label">Дата на второ обаждане</label>
                     <input type="date" class="form-control" id="secondCall" name="secondCall" th:value="${clientDTO.secondCall}">
+                </div>
+                <div class="form-group" th:if="${clientDTO.sourceType == 'HOTEL'}">
+                    <label for="accommodationDate" class="form-label">Дата настаняване</label>
+                    <input type="date" class="form-control" id="accommodationDate" name="accommodationDate" th:value="${clientDTO.accommodationDate}">
                 </div>
                 <button type="submit" class="btn btn-success">Запази</button>
             </form>
