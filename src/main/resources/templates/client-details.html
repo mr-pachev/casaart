@@ -98,7 +98,7 @@
                         Избери източник.
                     </p>
                 </div>
-                <div class="form-group" >
+                <div class="form-group" th:if="${#lists.contains(clientDTO.sourceTypes, 'HOTEL')}">
                     <label for="loyaltyLevel">Ниво лоялност</label>
                     <select class="form-control" th:placeholder="${clientDTO.loyaltyLevel}"
                             id="loyaltyLevel"
@@ -115,6 +115,10 @@
                         Избери ниво на лоялност.
                     </p>
                 </div>
+                <div class="form-group" th:if="${#lists.contains(clientDTO.sourceTypes, 'HOTEL')}">
+                    <label for="accommodationDate" class="form-label">Дата настаняване</label>
+                    <input type="date" class="form-control" id="accommodationDate" name="accommodationDate" th:value="${clientDTO.accommodationDate}">
+                </div>
                 <div class="form-group" >
                     <label for="nationality">Националност</label>
                     <select class="form-control" th:placeholder="${clientDTO.nationality}"
@@ -130,6 +134,23 @@
                     </select>
                     <p class="invalid-feedback errors alert alert-danger">
                         Избери националност.
+                    </p>
+                </div>
+                <div class="form-group" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
+                    <label for="rating">Оценка</label>
+                    <select class="form-control"
+                            id="rating"
+                            name="rating"
+                            th:field="*{rating}"
+                            th:errorclass="is-invalid">
+                        <option value="">-- Избери --</option>
+                        <option th:each="rating: ${allRating}"
+                                th:value="${rating}"
+                                th:text="${rating}">Оценка
+                        </option>
+                    </select>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Избери оценка.
                     </p>
                 </div>
                 <div class="form-group">

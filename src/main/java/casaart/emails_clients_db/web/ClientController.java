@@ -4,6 +4,7 @@ import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.enums.LoyaltyLevel;
 import casaart.emails_clients_db.model.enums.Nationality;
+import casaart.emails_clients_db.model.enums.Rating;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.service.ClientService;
 import jakarta.validation.Valid;
@@ -86,6 +87,7 @@ public class ClientController {
         model.addAttribute("allSourceType", SourceType.values());
         model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
         model.addAttribute("allNationality", Nationality.values());
+        model.addAttribute("allRating", Rating.values());
 
         if (!model.containsAttribute("isExistEmail")) {
             model.addAttribute("isExistEmail", false);
@@ -105,6 +107,7 @@ public class ClientController {
             rAtt.addFlashAttribute("allSourceType", SourceType.values());
             rAtt.addFlashAttribute("allLoyaltyLevel", LoyaltyLevel.values());
             rAtt.addFlashAttribute("allNationality", Nationality.values());
+            rAtt.addFlashAttribute("allRating", Rating.values());
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
 
             return "redirect:/add-client";
@@ -115,6 +118,7 @@ public class ClientController {
             rAtt.addFlashAttribute("allSourceType", SourceType.values());
             rAtt.addFlashAttribute("allLoyaltyLevel", LoyaltyLevel.values());
             rAtt.addFlashAttribute("allNationality", Nationality.values());
+            rAtt.addFlashAttribute("allRating", Rating.values());
             rAtt.addFlashAttribute("isExistEmail", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
 
@@ -140,6 +144,7 @@ public class ClientController {
         model.addAttribute("allSourceType", SourceType.values());
         model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
         model.addAttribute("allNationality", Nationality.values());
+        model.addAttribute("allRating", Rating.values());
 
         return "client-details";
     }
@@ -159,6 +164,7 @@ public class ClientController {
             model.addAttribute("allSourceType", SourceType.values());
             model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
             model.addAttribute("allNationality", Nationality.values());
+            model.addAttribute("allRating", Rating.values());
 
             return "client-details";
         }
@@ -171,6 +177,7 @@ public class ClientController {
             model.addAttribute("allSourceType", SourceType.values());
             model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
             model.addAttribute("allNationality", Nationality.values());
+            model.addAttribute("allRating", Rating.values());
             model.addAttribute("isExistEmail", true);
 
             return "client-details";

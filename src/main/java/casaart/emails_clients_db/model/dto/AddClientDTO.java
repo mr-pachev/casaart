@@ -2,6 +2,7 @@ package casaart.emails_clients_db.model.dto;
 
 import jakarta.validation.constraints.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class AddClientDTO {
@@ -29,6 +30,8 @@ public class AddClientDTO {
 
     @NotBlank
     private String nationality;
+
+    private LocalDate accommodationDate;
 
     private String rating;
 
@@ -86,6 +89,14 @@ public class AddClientDTO {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public LocalDate getAccommodationDate() {
+        return accommodationDate;
+    }
+
+    public void setAccommodationDate(LocalDate accommodationDate) {
+        this.accommodationDate = accommodationDate;
     }
 
     public String getRating() {
