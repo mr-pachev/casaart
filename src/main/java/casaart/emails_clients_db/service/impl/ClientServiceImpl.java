@@ -4,6 +4,7 @@ import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.model.entity.User;
+import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LoyaltyLevel;
 import casaart.emails_clients_db.model.enums.Nationality;
 import casaart.emails_clients_db.model.enums.SourceType;
@@ -85,7 +86,7 @@ public class ClientServiceImpl implements ClientService {
     public List<ClientDTO> sortedClientsBySourceType(String type) {
         SourceType sourceType = SourceType.valueOf(type);
 
-        return clientRepository.findAllBySourceType(sourceType)
+        return clientRepository.findAllBySourceTypes(sourceType)
                 .stream()
                 .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуване в DTO директно в ламбда израза
                 .collect(Collectors.toList());
@@ -124,8 +125,14 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void addClient(AddClientDTO addClientDTO) {
         Client client = mapper.map(addClientDTO, Client.class);
-        client.setUser(userHelperService.getUser());
+        List<SourceType> sourceTypes = new ArrayList<>();
 
+        for (String source : addClientDTO.getSourceTypes()) {
+            sourceTypes.add(SourceType.valueOf(source));
+        }
+        client.setSourceTypes(sourceTypes);
+
+        client.setUser(userHelperService.getUser());
         client.setModifyFrom(userHelperService.getUser().getUsername());
 
         clientRepository.save(client);
@@ -146,6 +153,15 @@ public class ClientServiceImpl implements ClientService {
         User user = client.getUser();
 
         client = mapper.map(clientDTO, Client.class);
+
+        List<SourceType> sourceTypes = new ArrayList<>();
+
+        for (String source : clientDTO.getSourceTypes()) {
+            sourceTypes.add(SourceType.valueOf(source));
+        }
+
+        client.setSourceTypes(sourceTypes);
+
         client.setUser(user);
         client.setModifyFrom(userHelperService.getUser().getUsername());
 

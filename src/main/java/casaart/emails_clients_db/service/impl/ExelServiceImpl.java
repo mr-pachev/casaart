@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ExelServiceImpl implements ExelService {
@@ -61,7 +62,11 @@ public class ExelServiceImpl implements ExelService {
                 row.createCell(2).setCellValue(client.getLastName());
                 row.createCell(3).setCellValue(client.getPhoneNumber());
                 row.createCell(4).setCellValue(client.getEmail());
-                row.createCell(5).setCellValue(client.getSourceType().toString());
+                row.createCell(5).setCellValue(
+                        client.getSourceTypes().stream()
+                                .map(SourceType::toString)
+                                .collect(Collectors.joining(", "))
+                );
                 row.createCell(6).setCellValue(client.getLoyaltyLevel() != null ? client.getLoyaltyLevel().toString() : "");
                 row.createCell(7).setCellValue(client.getCounterStay() != null ? client.getCounterStay().toString() : "");
                 row.createCell(8).setCellValue(client.getModifyFrom());
@@ -205,7 +210,13 @@ public class ExelServiceImpl implements ExelService {
                     // Създаване на нов клиент
                     Client newClient = new Client();
                     newClient.setUser(userRepository.findById(1));
-                    newClient.setSourceType(sourceType.isEmpty() ? null : SourceType.valueOf(sourceType));
+                    newClient.setSourceTypes(
+                            sourceType.isEmpty() ? Collections.emptyList() :
+                                    Arrays.stream(sourceType.split(","))
+                                            .map(String::trim) // Премахване на излишни интервали
+                                            .map(SourceType::valueOf) // Преобразуване в SourceType
+                                            .collect(Collectors.toList())
+                    );
                     newClient.setLoyaltyLevel(loyaltyLevel.isEmpty() ? null : LoyaltyLevel.valueOf(loyaltyLevel));
                     newClient.setNationality(nationality);
                     newClient.setEmail(email);

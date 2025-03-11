@@ -3,6 +3,7 @@ package casaart.emails_clients_db.model.dto;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class ClientDTO {
     long id;
@@ -21,12 +22,14 @@ public class ClientDTO {
 
     int counterStay;
 
-    @NotBlank
-    private String sourceType;
+    private List<String> sourceTypes;
 
     private String loyaltyLevel;
 
+    @NotBlank
     private String nationality;
+
+    private String rating;
 
     private LocalDate firstCall;
 
@@ -98,12 +101,12 @@ public class ClientDTO {
         this.counterStay = counterStay;
     }
 
-    public String getSourceType() {
-        return sourceType;
+    public List<String> getSourceTypes() {
+        return sourceTypes;
     }
 
-    public void setSourceType(String sourceType) {
-        this.sourceType = sourceType;
+    public void setSourceTypes(List<String> sourceTypes) {
+        this.sourceTypes = sourceTypes;
     }
 
     public String getLoyaltyLevel() {
@@ -120,6 +123,14 @@ public class ClientDTO {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public LocalDate getFirstCall() {

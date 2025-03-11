@@ -2,6 +2,8 @@ package casaart.emails_clients_db.model.dto;
 
 import jakarta.validation.constraints.*;
 
+import java.util.List;
+
 public class AddClientDTO {
 
     @NotBlank
@@ -22,11 +24,13 @@ public class AddClientDTO {
     @Size(max = 10)
     private String phoneNumber;
 
-    @NotBlank
-    private String sourceType;
+    @NotEmpty
+    private List<String> sourceTypes;
 
     @NotBlank
     private String nationality;
+
+    private String rating;
 
     public String getFirstName() {
         return firstName;
@@ -68,12 +72,12 @@ public class AddClientDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getSourceType() {
-        return sourceType;
+    public List<String> getSourceTypes() {
+        return sourceTypes;
     }
 
-    public void setSourceType(String sourceType) {
-        this.sourceType = sourceType;
+    public void setSourceTypes(List<String> sourceTypes) {
+        this.sourceTypes = sourceTypes;
     }
 
     public String getNationality() {
@@ -82,5 +86,13 @@ public class AddClientDTO {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 }

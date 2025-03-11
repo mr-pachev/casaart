@@ -129,7 +129,13 @@
             <td th:text="${client.lastName}">Фамилия</td>
             <td th:text="${client.email}">Емейл</td>
             <td th:text="${client.phoneNumber}">Телефонен номер</td>
-            <td th:text="${client.sourceType}">Местоположение</td>
+            <td>
+                <ul>
+                    <li th:each="source : ${client.sourceTypes}"
+                        th:text="${source}">Източник
+                    </li>
+                </ul>
+            </td>
             <td th:text="${client.loyaltyLevel}">Ниво лоялност</td>
             <td th:text="${client.nationality}">Националност</td>
             <td>

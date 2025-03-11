@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,10 +31,12 @@ public class ClientController {
 
     @ModelAttribute("clientDTO")
     public ClientDTO clientDTO() {
-        return new ClientDTO();
+        ClientDTO clientDTO = new ClientDTO();
+        clientDTO.setSourceTypes(new ArrayList<>()); // Инициализиране на празен списък
+        return clientDTO;
     }
 
-    //view all clients
+    // view all clients
     @GetMapping("/clients")
     public String getAllClients(Model model) {
         List<ClientDTO> clientDTOS = clientService.getAllClients();
@@ -46,7 +49,7 @@ public class ClientController {
         return "clients";
     }
 
-    //view all sorted clients
+    // view all sorted clients
     @PostMapping("/sort-clients")
     public String sortClients(@RequestParam("type") String type,
                              @RequestParam(value = "sourceType", required = false) String sourceType,
@@ -77,11 +80,12 @@ public class ClientController {
         return "clients"; // Връщаме същия шаблон с актуализиран списък
     }
 
-    //create new client
+    // create new client
     @GetMapping("/add-client")
     public String viewAddClientForm(Model model) {
-        model.addAttribute("sourceType", SourceType.values());
-        model.addAttribute("nationality", Nationality.values());
+        model.addAttribute("allSourceType", SourceType.values());
+        model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
+        model.addAttribute("allNationality", Nationality.values());
 
         if (!model.containsAttribute("isExistEmail")) {
             model.addAttribute("isExistEmail", false);
@@ -98,6 +102,9 @@ public class ClientController {
 
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("addClientDTO", addClientDTO);
+            rAtt.addFlashAttribute("allSourceType", SourceType.values());
+            rAtt.addFlashAttribute("allLoyaltyLevel", LoyaltyLevel.values());
+            rAtt.addFlashAttribute("allNationality", Nationality.values());
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
 
             return "redirect:/add-client";
@@ -105,6 +112,9 @@ public class ClientController {
 
         if (clientService.isExistClientEmail(addClientDTO.getEmail())) {
             rAtt.addFlashAttribute("addClientDTO", addClientDTO);
+            rAtt.addFlashAttribute("allSourceType", SourceType.values());
+            rAtt.addFlashAttribute("allLoyaltyLevel", LoyaltyLevel.values());
+            rAtt.addFlashAttribute("allNationality", Nationality.values());
             rAtt.addFlashAttribute("isExistEmail", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addClientDTO", bindingResult);
 
@@ -116,7 +126,7 @@ public class ClientController {
         return "redirect:/clients";
     }
 
-    //edit current client
+    // edit current client
     @PostMapping("/client-details/{id}")
     public String referenceToEdithClientForm(@PathVariable("id") Long id) {
 
@@ -127,9 +137,9 @@ public class ClientController {
     public String fillEditClientForm(@PathVariable("id") Long id, Model model) {
         ClientDTO clientDTO = clientService.findClientById(id);
         model.addAttribute(clientDTO);
-        model.addAttribute("sourceType", SourceType.values());
-        model.addAttribute("loyaltyLevel", LoyaltyLevel.values());
-        model.addAttribute("nationality", Nationality.values());
+        model.addAttribute("allSourceType", SourceType.values());
+        model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
+        model.addAttribute("allNationality", Nationality.values());
 
         return "client-details";
     }
@@ -146,9 +156,9 @@ public class ClientController {
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("clientDTO", clientDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
-            model.addAttribute("sourceType", SourceType.values());
-            model.addAttribute("loyaltyLevel", LoyaltyLevel.values());
-            model.addAttribute("nationality", Nationality.values());
+            model.addAttribute("allSourceType", SourceType.values());
+            model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
+            model.addAttribute("allNationality", Nationality.values());
 
             return "client-details";
         }
@@ -158,9 +168,9 @@ public class ClientController {
         if (isChangedEmail && clientService.isExistClientEmail(clientDTO.getEmail())) {
             rAtt.addFlashAttribute("clientDTO", clientDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.clientDTO", bindingResult);
-            model.addAttribute("sourceType", SourceType.values());
-            model.addAttribute("loyaltyLevel", LoyaltyLevel.values());
-            model.addAttribute("nationality", Nationality.values());
+            model.addAttribute("allSourceType", SourceType.values());
+            model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
+            model.addAttribute("allNationality", Nationality.values());
             model.addAttribute("isExistEmail", true);
 
             return "client-details";
@@ -170,7 +180,7 @@ public class ClientController {
         return "redirect:/clients";
     }
 
-    //delete client by id
+    // delete client by id
     @PostMapping("/delete-client/{id}")
     public String removeClient(@PathVariable("id") Long id) {
 

@@ -77,16 +77,17 @@
                     </p>
                 </div>
                 <div class="form-group">
-                    <label for="sourceType">Източник данни</label>
+                    <label th:for="sourceTypes">Източник данни</label>
                     <select class="form-control"
-                            id="sourceType"
-                            name="sourceType"
-                            th:field="*{sourceType}"
-                            th:errorclass="is-invalid">
-                        <option value="">-- Избери --</option>
-                        <option th:each="located: ${sourceType}"
-                                th:value="${located}"
-                                th:text="${located}">Източник данни
+                            id="sourceTypes"
+                            name="sourceTypes"
+                            th:field="*{sourceTypes}"
+                            th:errorclass="is-invalid"
+                            multiple> <!-- Позволява избор на няколко стойности -->
+                        <option th:each="source : ${allSourceType}"
+                                th:value="${source}"
+                                th:text="${source}"
+                                th:selected="${clientDTO.sourceTypes.contains(source)}">
                         </option>
                     </select>
                     <p class="invalid-feedback errors alert alert-danger">
@@ -101,7 +102,7 @@
                             th:field="*{nationality}"
                             th:errorclass="is-invalid">
                         <option value="">-- Избери --</option>
-                        <option th:each="nat: ${nationality}"
+                        <option th:each="nat: ${allNationality}"
                                 th:value="${nat}"
                                 th:text="${nat}">Националност
                         </option>

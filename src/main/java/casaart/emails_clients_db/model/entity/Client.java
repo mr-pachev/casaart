@@ -1,11 +1,10 @@
 package casaart.emails_clients_db.model.entity;
 
-import casaart.emails_clients_db.model.enums.LoyaltyLevel;
-import casaart.emails_clients_db.model.enums.Nationality;
-import casaart.emails_clients_db.model.enums.SourceType;
+import casaart.emails_clients_db.model.enums.*;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "clients")
@@ -28,8 +27,11 @@ public class Client extends BaseEntity{
     @Column(name = "counter_stay")
     Integer counterStay;
 
+    @ElementCollection(targetClass = SourceType.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "client_sources", joinColumns = @JoinColumn(name = "client_id"))
     @Enumerated(EnumType.STRING)
-    private SourceType sourceType;
+    @Column(length = 100)
+    private List<SourceType> sourceTypes;
 
     @Enumerated(EnumType.STRING)
     private LoyaltyLevel loyaltyLevel;
@@ -37,6 +39,10 @@ public class Client extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Column(length = 50)
     private Nationality nationality;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private Rating rating;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -107,12 +113,12 @@ public class Client extends BaseEntity{
         this.counterStay = counterStay;
     }
 
-    public SourceType getSourceType() {
-        return sourceType;
+    public List<SourceType> getSourceTypes() {
+        return sourceTypes;
     }
 
-    public void setSourceType(SourceType sourceType) {
-        this.sourceType = sourceType;
+    public void setSourceTypes(List<SourceType> sourceTypes) {
+        this.sourceTypes = sourceTypes;
     }
 
     public LoyaltyLevel getLoyaltyLevel() {
@@ -129,6 +135,14 @@ public class Client extends BaseEntity{
 
     public void setNationality(Nationality nationality) {
         this.nationality = nationality;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 
     public User getUser() {
