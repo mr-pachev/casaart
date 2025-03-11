@@ -64,7 +64,7 @@ public class ClientServiceImpl implements ClientService {
 
         } else if (type.contains("@")) {
 
-            if(clientRepository.findByEmail(type).isPresent()){
+            if (clientRepository.findByEmail(type).isPresent()) {
                 clientList.add(clientRepository.findByEmail(type).get());
             }
 
@@ -132,6 +132,11 @@ public class ClientServiceImpl implements ClientService {
         }
         client.setSourceTypes(sourceTypes);
 
+        if (addClientDTO.getAccommodationDate() != null) {
+            client.setCounterStay(1);
+            client.setAccommodationDate(addClientDTO.getAccommodationDate());
+        }
+
         client.setUser(userHelperService.getUser());
         client.setModifyFrom(userHelperService.getUser().getUsername());
 
@@ -149,23 +154,45 @@ public class ClientServiceImpl implements ClientService {
     // edit client
     @Override
     public void editClient(ClientDTO clientDTO) {
-        Client client = clientRepository.findById(clientDTO.getId());
-        User user = client.getUser();
+        Client existClient = clientRepository.findById(clientDTO.getId());
+        User user = existClient.getUser();
 
-        client = mapper.map(clientDTO, Client.class);
+        Client editedClient = mapper.map(clientDTO, Client.class);
 
         List<SourceType> sourceTypes = new ArrayList<>();
 
         for (String source : clientDTO.getSourceTypes()) {
             sourceTypes.add(SourceType.valueOf(source));
         }
+        editedClient.setSourceTypes(sourceTypes);
 
-        client.setSourceTypes(sourceTypes);
+        // Настройка на дата настаняване и брояча за престой
+        if (existClient.getAccommodationDate() == null && clientDTO.getAccommodationDate() != null) { // Няма дата настаняване и е въведена така
+            editedClient.setCounterStay(1);
 
-        client.setUser(user);
-        client.setModifyFrom(userHelperService.getUser().getUsername());
+            editedClient.setAccommodationDate(clientDTO.getAccommodationDate());
+        } else if (!existClient.getAccommodationDate().equals(clientDTO.getAccommodationDate()) && clientDTO.getAccommodationDate() != null) { // Има дата настаняване но е добавена нова
+            editedClient.setCounterStay(existClient.getCounterStay() + 1);
 
-        clientRepository.save(client);
+            if (existClient.getCounterStay() >= 20) {
+                editedClient.setLoyaltyLevel(LoyaltyLevel.LEVEL_3);
+            } else if (existClient.getCounterStay() >= 10) {
+                editedClient.setLoyaltyLevel(LoyaltyLevel.LEVEL_2);
+            }
+
+            editedClient.setAccommodationDate(clientDTO.getAccommodationDate());
+        } else if (existClient.getAccommodationDate().equals(clientDTO.getAccommodationDate())){ // Има дата настаняване и съответства на въведената
+            editedClient.setCounterStay(existClient.getCounterStay());
+
+        }else if (clientDTO.getAccommodationDate() == null){ // Няма въведена дата настаняване
+            editedClient.setCounterStay(null);
+            editedClient.setAccommodationDate(null);
+        }
+
+        editedClient.setUser(user);
+        editedClient.setModifyFrom(userHelperService.getUser().getUsername());
+
+        clientRepository.save(editedClient);
     }
 
     // delete client by id
