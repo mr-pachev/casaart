@@ -106,7 +106,7 @@
                             th:field="*{loyaltyLevel}"
                             th:errorclass="is-invalid">
                         <option value="">-- Избери --</option>
-                        <option th:each="level: ${loyaltyLevel}"
+                        <option th:each="level: ${allLoyaltyLevel}"
                                 th:value="${level}"
                                 th:text="${level}">Ниво лоялност
                         </option>

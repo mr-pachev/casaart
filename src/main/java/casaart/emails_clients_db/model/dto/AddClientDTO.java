@@ -31,6 +31,8 @@ public class AddClientDTO {
     @NotBlank
     private String nationality;
 
+    private String loyaltyLevel;
+
     private LocalDate accommodationDate;
 
     private String rating;
@@ -89,6 +91,14 @@ public class AddClientDTO {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public String getLoyaltyLevel() {
+        return loyaltyLevel;
+    }
+
+    public void setLoyaltyLevel(String loyaltyLevel) {
+        this.loyaltyLevel = loyaltyLevel;
     }
 
     public LocalDate getAccommodationDate() {

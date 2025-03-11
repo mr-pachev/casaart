@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -132,9 +133,13 @@ public class ClientServiceImpl implements ClientService {
         }
         client.setSourceTypes(sourceTypes);
 
+        // Има ли въведена дата настаняване
         if (addClientDTO.getAccommodationDate() != null) {
             client.setCounterStay(1);
             client.setAccommodationDate(addClientDTO.getAccommodationDate());
+
+        } else {
+            client.setLoyaltyLevel(null);
         }
 
         client.setUser(userHelperService.getUser());
@@ -171,7 +176,8 @@ public class ClientServiceImpl implements ClientService {
             editedClient.setCounterStay(1);
 
             editedClient.setAccommodationDate(clientDTO.getAccommodationDate());
-        } else if (!existClient.getAccommodationDate().equals(clientDTO.getAccommodationDate()) && clientDTO.getAccommodationDate() != null) { // Има дата настаняване но е добавена нова
+        } else if (!Objects.equals(existClient.getAccommodationDate(), clientDTO.getAccommodationDate()) &&
+                clientDTO.getAccommodationDate() != null) { // Има дата настаняване но е добавена нова
             editedClient.setCounterStay(existClient.getCounterStay() + 1);
 
             if (existClient.getCounterStay() >= 20) {
@@ -181,12 +187,16 @@ public class ClientServiceImpl implements ClientService {
             }
 
             editedClient.setAccommodationDate(clientDTO.getAccommodationDate());
-        } else if (existClient.getAccommodationDate().equals(clientDTO.getAccommodationDate())){ // Има дата настаняване и съответства на въведената
+        } else if (existClient.getAccommodationDate() == null &&
+                Objects.equals(existClient.getAccommodationDate(), clientDTO.getAccommodationDate())) { // Има дата настаняване и съответства на въведената
             editedClient.setCounterStay(existClient.getCounterStay());
 
-        }else if (clientDTO.getAccommodationDate() == null){ // Няма въведена дата настаняване
+        } else if (clientDTO.getAccommodationDate() == null) { // Няма въведена дата настаняване
             editedClient.setCounterStay(null);
             editedClient.setAccommodationDate(null);
+
+        } else { // Няма въведена дата настаняване но има въведено ниво лоялност
+            editedClient.setLoyaltyLevel(null);
         }
 
         editedClient.setUser(user);
