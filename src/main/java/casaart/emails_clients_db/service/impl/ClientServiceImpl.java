@@ -138,7 +138,7 @@ public class ClientServiceImpl implements ClientService {
         }
 
         return clients.stream()
-                .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуваме в DTO
+                .map(this::mapToClientDTO) // Преобразуваме в DTO
                 .collect(Collectors.toList());
     }
 
