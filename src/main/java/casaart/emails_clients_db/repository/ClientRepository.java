@@ -3,6 +3,7 @@ package casaart.emails_clients_db.repository;
 import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.model.enums.LoyaltyLevel;
 import casaart.emails_clients_db.model.enums.Nationality;
+import casaart.emails_clients_db.model.enums.Rating;
 import casaart.emails_clients_db.model.enums.SourceType;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,6 +30,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findAllBySourceTypes(SourceType sourceType);
     List<Client> findAllByLoyaltyLevel(LoyaltyLevel loyaltyLevel);
     List<Client> findAllByNationality(Nationality nationality);
+    List<Client> findAllByRating(Rating rating);
 
     // Изтрива всички дубликати, оставяйки само един запис за всеки email
     @Modifying

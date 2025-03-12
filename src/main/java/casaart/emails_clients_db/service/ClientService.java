@@ -17,6 +17,8 @@ public interface ClientService {
     List<ClientDTO> sortedClientsByLoyaltyLevel(String loyaltyLevel);
     // get sorted clients by nationality
     List<ClientDTO> sortedClientsByNationality(String nationality);
+    // get sorted clients by rating
+    List<ClientDTO> sortedClientsByRating(String rating);
     // checking is exist client email
     boolean isExistClientEmail(String email);
     // add client

@@ -4,10 +4,7 @@ import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
 import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.model.entity.User;
-import casaart.emails_clients_db.model.enums.IndustryType;
-import casaart.emails_clients_db.model.enums.LoyaltyLevel;
-import casaart.emails_clients_db.model.enums.Nationality;
-import casaart.emails_clients_db.model.enums.SourceType;
+import casaart.emails_clients_db.model.enums.*;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.service.ClientService;
 import casaart.emails_clients_db.service.UserHelperService;
@@ -110,6 +107,17 @@ public class ClientServiceImpl implements ClientService {
         Nationality nationality = Nationality.valueOf(nationalityType);
 
         return clientRepository.findAllByNationality(nationality)
+                .stream()
+                .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуване в DTO директно в ламбда израза
+                .collect(Collectors.toList());
+    }
+
+    // get sorted clients by rating
+    @Override
+    public List<ClientDTO> sortedClientsByRating(String ratingType) {
+        Rating rating = Rating.valueOf(ratingType);
+
+        return clientRepository.findAllByRating(rating)
                 .stream()
                 .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуване в DTO директно в ламбда израза
                 .collect(Collectors.toList());

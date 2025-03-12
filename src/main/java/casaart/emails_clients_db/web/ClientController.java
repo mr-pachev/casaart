@@ -46,6 +46,7 @@ public class ClientController {
         model.addAttribute("allSourceType", SourceType.values());
         model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
         model.addAttribute("allNationality", Nationality.values());
+        model.addAttribute("allRating", Rating.values());
 
         return "clients";
     }
@@ -56,6 +57,7 @@ public class ClientController {
                              @RequestParam(value = "sourceType", required = false) String sourceType,
                               @RequestParam(value = "loyaltyLevel", required = false) String loyaltyLevel,
                               @RequestParam(value = "nationality", required = false) String nationality,
+                              @RequestParam(value = "rating", required = false) String rating,
                              Model model) {
         List<ClientDTO> sortedClients;
 
@@ -69,7 +71,10 @@ public class ClientController {
         } else if ("nationality".equals(type) && nationality != null && !nationality.isEmpty()){
             sortedClients = clientService.sortedClientsByNationality(nationality);
 
-        } else {
+        } else if ("rating".equals(type) && rating != null && !rating.isEmpty()){
+            sortedClients = clientService.sortedClientsByRating(rating);
+
+        }else {
             sortedClients = clientService.sortedClients(type);
         }
 
@@ -77,6 +82,7 @@ public class ClientController {
         model.addAttribute("allSourceType", SourceType.values());
         model.addAttribute("allLoyaltyLevel", LoyaltyLevel.values());
         model.addAttribute("allNationality", Nationality.values());
+        model.addAttribute("allRating", Rating.values());
 
         return "clients"; // Връщаме същия шаблон с актуализиран списък
     }

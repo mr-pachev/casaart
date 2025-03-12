@@ -40,6 +40,7 @@
                 <option value="sourceType">Източник</option>
                 <option value="loyaltyLevel">Ниво лоялност</option>
                 <option value="nationality">Националност</option>
+                <option value="rating">Оценка</option>
             </select>
 
             <!-- Под-селекция за източниците (скрита по подразбиране) -->
@@ -65,6 +66,14 @@
                         th:value="${nat}"
                         th:text="${nat}"></option>
             </select>
+
+            <!-- Под-селекция за рейтинг (скрита по подразбиране) -->
+            <select name="rating" class="rating-select" id="ratingSelect" style="display: none;">
+                <option value="">-- Оценете --</option>
+                <option th:each="rating : ${allRating}"
+                        th:value="${rating}"
+                        th:text="${rating}"></option>
+            </select>
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
     </div>
@@ -75,6 +84,7 @@
             var industrySelect = document.getElementById("industrySelect");
             var loyaltySelect = document.getElementById("loyaltySelect");
             var nationalitySelect = document.getElementById("nationalitySelect");
+            var ratingSelect = document.getElementById("ratingSelect");
 
             // Показване/скриване на "Източник"
             if (mainSelect.value === "sourceType") {
@@ -95,6 +105,13 @@
                 nationalitySelect.style.display = "inline-block";
             } else {
                 nationalitySelect.style.display = "none";
+            }
+
+            // Показване/скриване на "Националност"
+            if (mainSelect.value === "rating") {
+                ratingSelect.style.display = "inline-block";
+            } else {
+                ratingSelect.style.display = "none";
             }
         }
 
