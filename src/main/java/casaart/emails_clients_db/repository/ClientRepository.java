@@ -30,7 +30,10 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findAllBySourceTypes(SourceType sourceType);
     List<Client> findAllByLoyaltyLevel(LoyaltyLevel loyaltyLevel);
     List<Client> findAllByNationality(Nationality nationality);
-    List<Client> findAllByRating(Rating rating);
+    List<Client> findAllByRatingFood(Rating ratingFood);
+    List<Client> findAllByRatingQualityPrice(Rating ratingQualityPrice);
+    List<Client> findAllByRatingPoliteness(Rating ratingPoliteness);
+    List<Client> findAllByRatingCleanTidy(Rating ratingCleanTidy);
 
     // Изтрива всички дубликати, оставяйки само един запис за всеки email
     @Modifying

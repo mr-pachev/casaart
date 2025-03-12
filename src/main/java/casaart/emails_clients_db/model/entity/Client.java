@@ -42,7 +42,19 @@ public class Client extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
     @Column(length = 50)
-    private Rating rating;
+    private Rating ratingFood;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private Rating ratingQualityPrice;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private Rating ratingPoliteness;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private Rating ratingCleanTidy;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -64,6 +76,9 @@ public class Client extends BaseEntity{
 
     @Column(name = "second_email")
     private LocalDate secondEmail;
+
+    @Column(name = "comment", columnDefinition = "TEXT")
+    private String comment;
 
     public String getFirstName() {
         return firstName;
@@ -137,12 +152,36 @@ public class Client extends BaseEntity{
         this.nationality = nationality;
     }
 
-    public Rating getRating() {
-        return rating;
+    public Rating getRatingFood() {
+        return ratingFood;
     }
 
-    public void setRating(Rating rating) {
-        this.rating = rating;
+    public void setRatingFood(Rating ratingFood) {
+        this.ratingFood = ratingFood;
+    }
+
+    public Rating getRatingQualityPrice() {
+        return ratingQualityPrice;
+    }
+
+    public void setRatingQualityPrice(Rating ratingQualityPrice) {
+        this.ratingQualityPrice = ratingQualityPrice;
+    }
+
+    public Rating getRatingPoliteness() {
+        return ratingPoliteness;
+    }
+
+    public void setRatingPoliteness(Rating ratingPoliteness) {
+        this.ratingPoliteness = ratingPoliteness;
+    }
+
+    public Rating getRatingCleanTidy() {
+        return ratingCleanTidy;
+    }
+
+    public void setRatingCleanTidy(Rating ratingCleanTidy) {
+        this.ratingCleanTidy = ratingCleanTidy;
     }
 
     public User getUser() {
@@ -201,7 +240,11 @@ public class Client extends BaseEntity{
         this.secondEmail = secondEmail;
     }
 
-    public String getAddedFrom() {
-        return null;
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

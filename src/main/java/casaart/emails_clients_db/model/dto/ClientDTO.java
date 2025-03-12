@@ -45,6 +45,16 @@ public class ClientDTO {
 
     private LocalDate accommodationDate;
 
+    private String comment;
+
+    private String ratingFood;
+
+    private String ratingQualityPrice;
+
+    private String ratingPoliteness;
+
+    private String ratingCleanTidy;
+
     public long getId() {
         return id;
     }
@@ -187,5 +197,45 @@ public class ClientDTO {
 
     public void setAccommodationDate(LocalDate accommodationDate) {
         this.accommodationDate = accommodationDate;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getRatingFood() {
+        return ratingFood;
+    }
+
+    public void setRatingFood(String ratingFood) {
+        this.ratingFood = ratingFood;
+    }
+
+    public String getRatingQualityPrice() {
+        return ratingQualityPrice;
+    }
+
+    public void setRatingQualityPrice(String ratingQualityPrice) {
+        this.ratingQualityPrice = ratingQualityPrice;
+    }
+
+    public String getRatingPoliteness() {
+        return ratingPoliteness;
+    }
+
+    public void setRatingPoliteness(String ratingPoliteness) {
+        this.ratingPoliteness = ratingPoliteness;
+    }
+
+    public String getRatingCleanTidy() {
+        return ratingCleanTidy;
+    }
+
+    public void setRatingCleanTidy(String ratingCleanTidy) {
+        this.ratingCleanTidy = ratingCleanTidy;
     }
 }

@@ -54,27 +54,28 @@ public class ClientController {
     // view all sorted clients
     @PostMapping("/sort-clients")
     public String sortClients(@RequestParam("type") String type,
-                             @RequestParam(value = "sourceType", required = false) String sourceType,
+                              @RequestParam(value = "sourceType", required = false) String sourceType,
                               @RequestParam(value = "loyaltyLevel", required = false) String loyaltyLevel,
                               @RequestParam(value = "nationality", required = false) String nationality,
+                              @RequestParam(value = "ratingType", required = false) String ratingType,
                               @RequestParam(value = "rating", required = false) String rating,
-                             Model model) {
+                              Model model) {
         List<ClientDTO> sortedClients;
 
         // Проверяваме дали е избран "Бранш" и има конкретна стойност
         if ("sourceType".equals(type) && sourceType != null && !sourceType.isEmpty()) {
             sortedClients = clientService.sortedClientsBySourceType(sourceType);
 
-        } else if ("loyaltyLevel".equals(type) && loyaltyLevel != null && !loyaltyLevel.isEmpty()){
+        } else if ("loyaltyLevel".equals(type) && loyaltyLevel != null && !loyaltyLevel.isEmpty()) {
             sortedClients = clientService.sortedClientsByLoyaltyLevel(loyaltyLevel);
 
-        } else if ("nationality".equals(type) && nationality != null && !nationality.isEmpty()){
+        } else if ("nationality".equals(type) && nationality != null && !nationality.isEmpty()) {
             sortedClients = clientService.sortedClientsByNationality(nationality);
 
-        } else if ("rating".equals(type) && rating != null && !rating.isEmpty()){
-            sortedClients = clientService.sortedClientsByRating(rating);
+        } else if ("rating".equals(type) && ratingType != null && !ratingType.isEmpty() && rating != null && !rating.isEmpty()) {
+            sortedClients = clientService.sortedClientsByRating(ratingType, rating);
 
-        }else {
+        } else {
             sortedClients = clientService.sortedClients(type);
         }
 
@@ -86,6 +87,7 @@ public class ClientController {
 
         return "clients"; // Връщаме същия шаблон с актуализиран списък
     }
+
 
     // create new client
     @GetMapping("/add-client")

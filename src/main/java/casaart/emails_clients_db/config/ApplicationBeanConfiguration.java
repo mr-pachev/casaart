@@ -1,7 +1,11 @@
 package casaart.emails_clients_db.config;
 
+import casaart.emails_clients_db.model.dto.ClientDTO;
+import casaart.emails_clients_db.model.entity.Client;
+import casaart.emails_clients_db.model.enums.Rating;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +16,8 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
@@ -75,8 +80,6 @@ public class ApplicationBeanConfiguration {
 
         return modelMapper;
     }
-
-
 
 }
 

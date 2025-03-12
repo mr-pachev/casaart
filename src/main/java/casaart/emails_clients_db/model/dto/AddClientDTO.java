@@ -35,7 +35,15 @@ public class AddClientDTO {
 
     private LocalDate accommodationDate;
 
-    private String rating;
+    private String comment;
+
+    private String ratingFood;
+
+    private String ratingQualityPrice;
+
+    private String ratingPoliteness;
+
+    private String ratingCleanTidy;
 
     public String getFirstName() {
         return firstName;
@@ -109,11 +117,43 @@ public class AddClientDTO {
         this.accommodationDate = accommodationDate;
     }
 
-    public String getRating() {
-        return rating;
+    public String getComment() {
+        return comment;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getRatingFood() {
+        return ratingFood;
+    }
+
+    public void setRatingFood(String ratingFood) {
+        this.ratingFood = ratingFood;
+    }
+
+    public String getRatingQualityPrice() {
+        return ratingQualityPrice;
+    }
+
+    public void setRatingQualityPrice(String ratingQualityPrice) {
+        this.ratingQualityPrice = ratingQualityPrice;
+    }
+
+    public String getRatingPoliteness() {
+        return ratingPoliteness;
+    }
+
+    public void setRatingPoliteness(String ratingPoliteness) {
+        this.ratingPoliteness = ratingPoliteness;
+    }
+
+    public String getRatingCleanTidy() {
+        return ratingCleanTidy;
+    }
+
+    public void setRatingCleanTidy(String ratingCleanTidy) {
+        this.ratingCleanTidy = ratingCleanTidy;
     }
 }

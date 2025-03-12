@@ -114,14 +114,34 @@ public class ClientServiceImpl implements ClientService {
 
     // get sorted clients by rating
     @Override
-    public List<ClientDTO> sortedClientsByRating(String ratingType) {
-        Rating rating = Rating.valueOf(ratingType);
+    public List<ClientDTO> sortedClientsByRating(String ratingType, String ratingValue) {
+        Rating rating = Rating.valueOf(ratingValue); // Стойността на рейтинга като enum
 
-        return clientRepository.findAllByRating(rating)
-                .stream()
-                .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуване в DTO директно в ламбда израза
+        List<Client> clients;
+
+        // Извикваме съответния метод от репозитория в зависимост от типа на рейтинга
+        switch (ratingType) {
+            case "ratingFood":
+                clients = clientRepository.findAllByRatingFood(rating);
+                break;
+            case "ratingQualityPrice":
+                clients = clientRepository.findAllByRatingQualityPrice(rating);
+                break;
+            case "ratingPoliteness":
+                clients = clientRepository.findAllByRatingPoliteness(rating);
+                break;
+            case "ratingCleanTidy":
+                clients = clientRepository.findAllByRatingCleanTidy(rating);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid rating type: " + ratingType);
+        }
+
+        return clients.stream()
+                .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуваме в DTO
                 .collect(Collectors.toList());
     }
+
 
     // checking is exist client email
     @Override
@@ -221,8 +241,56 @@ public class ClientServiceImpl implements ClientService {
 
     // ClientDTO map to Client
     ClientDTO mapToClientDTO(Client client) {
-        ClientDTO clientDTO = mapper.map(client, ClientDTO.class);
-        clientDTO.setAddedFrom(client.getUser().getUsername());
+        if (client == null) {
+            return null;
+        }
+
+        ClientDTO clientDTO = new ClientDTO();
+        clientDTO.setId(client.getId());
+        clientDTO.setFirstName(client.getFirstName());
+        clientDTO.setMiddleName(client.getMiddleName());
+        clientDTO.setLastName(client.getLastName());
+        clientDTO.setEmail(client.getEmail());
+        clientDTO.setPhoneNumber(client.getPhoneNumber());
+        clientDTO.setCounterStay(client.getCounterStay() != null ? client.getCounterStay() : 0);
+        clientDTO.setModifyFrom(client.getModifyFrom());
+        clientDTO.setAccommodationDate(client.getAccommodationDate());
+
+        // Преобразуване на Enum списък към String списък
+        if (client.getSourceTypes() != null) {
+            List<String> sourceTypes = client.getSourceTypes().stream()
+                    .map(Enum::name)
+                    .collect(Collectors.toList());
+            clientDTO.setSourceTypes(sourceTypes);
+        }
+
+        // Преобразуване на Enum LoyaltyLevel към String
+        clientDTO.setLoyaltyLevel(client.getLoyaltyLevel() != null ? client.getLoyaltyLevel().name() : null);
+
+        // Преобразуване на Enum Nationality към String
+        clientDTO.setNationality(client.getNationality() != null ? client.getNationality().name() : null);
+
+        // Задаване на потребителя, добавил клиента
+        clientDTO.setAddedFrom(client.getUser() != null ? client.getUser().getUsername() : null);
+
+        // Преобразуване на рейтингите от Enum към String
+        clientDTO.setRatingFood(client.getRatingFood() != null ? client.getRatingFood().name() : null);
+        clientDTO.setRatingQualityPrice(client.getRatingQualityPrice() != null ? client.getRatingQualityPrice().name() : null);
+        clientDTO.setRatingPoliteness(client.getRatingPoliteness() != null ? client.getRatingPoliteness().name() : null);
+        clientDTO.setRatingCleanTidy(client.getRatingCleanTidy() != null ? client.getRatingCleanTidy().name() : null);
+
+        // Определяне на основния рейтинг (ако има такъв)
+        String rating = "Няма рейтинг";
+        if (client.getRatingFood() != null) {
+            rating = client.getRatingFood().name();
+        } else if (client.getRatingQualityPrice() != null) {
+            rating = client.getRatingQualityPrice().name();
+        } else if (client.getRatingPoliteness() != null) {
+            rating = client.getRatingPoliteness().name();
+        } else if (client.getRatingCleanTidy() != null) {
+            rating = client.getRatingCleanTidy().name();
+        }
+        clientDTO.setRating(rating);
 
         return clientDTO;
     }

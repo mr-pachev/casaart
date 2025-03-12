@@ -128,23 +128,80 @@
                         Избери националност.
                     </p>
                 </div>
+
+
+
                 <div class="form-group">
-                    <label for="rating">Оценка</label>
+                    <label for="ratingFood">Оценка храна</label>
                     <select class="form-control"
-                            id="rating"
-                            name="rating"
-                            th:field="*{rating}"
+                            id="ratingFood"
+                            name="ratingFood"
+                            th:field="*{ratingFood}"
                             th:errorclass="is-invalid">
                         <option value="">-- Избери --</option>
                         <option th:each="rating: ${allRating}"
                                 th:value="${rating}"
-                                th:text="${rating}">Оценка
+                                th:text="${rating}">Оценка храна
                         </option>
                     </select>
                     <p class="invalid-feedback errors alert alert-danger">
                         Избери оценка.
                     </p>
                 </div>
+                <div class="form-group">
+                    <label for="ratingQualityPrice">Оценка качество-цена</label>
+                    <select class="form-control"
+                            id="ratingQualityPrice"
+                            name="ratingQualityPrice"
+                            th:field="*{ratingQualityPrice}"
+                            th:errorclass="is-invalid">
+                        <option value="">-- Избери --</option>
+                        <option th:each="rating: ${allRating}"
+                                th:value="${rating}"
+                                th:text="${rating}">Оценка качество-цена
+                        </option>
+                    </select>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Избери оценка.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="ratingPoliteness">Оценка учтивост</label>
+                    <select class="form-control"
+                            id="ratingPoliteness"
+                            name="ratingPoliteness"
+                            th:field="*{ratingPoliteness}"
+                            th:errorclass="is-invalid">
+                        <option value="">-- Избери --</option>
+                        <option th:each="rating: ${allRating}"
+                                th:value="${rating}"
+                                th:text="${rating}">Оценка учтивост
+                        </option>
+                    </select>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Избери оценка.
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label for="ratingCleanTidy">Оценка чистота</label>
+                    <select class="form-control"
+                            id="ratingCleanTidy"
+                            name="ratingCleanTidy"
+                            th:field="*{ratingCleanTidy}"
+                            th:errorclass="is-invalid">
+                        <option value="">-- Избери --</option>
+                        <option th:each="rating: ${allRating}"
+                                th:value="${rating}"
+                                th:text="${rating}">Оценка чистота
+                        </option>
+                    </select>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Избери оценка.
+                    </p>
+                </div>
+
+
+
                 <div class="form-group">
                     <label for="accommodationDate" class="form-label">Дата настаняване</label>
                     <input type="date" class="form-control" id="accommodationDate" name="accommodationDate" th:value="${addClientDTO.accommodationDate}">

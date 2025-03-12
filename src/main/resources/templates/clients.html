@@ -29,7 +29,7 @@
     <div class="buttons">
         <form th:method="POST" th:action="@{/sort-clients}" style="display: inline;">
             <!-- Основен селект -->
-            <select name="type" class="source-type-select" id="mainSelect" onchange="toggleIndustrySelect()">
+            <select name="type" class="source-type-select" id="mainSelect" onchange="toggleSelects()">
                 <option value="allClients">-- подреди по --</option>
                 <option value="allClients">Всички клиенти</option>
                 <option value="allClientsByName">Име</option>
@@ -61,10 +61,19 @@
 
             <!-- Под-селекция за националност (скрита по подразбиране) -->
             <select name="nationality" class="nationality-select" id="nationalitySelect" style="display: none;">
-                <option value="">-- Изберете ниво лоялност --</option>
+                <option value="">-- Изберете националност --</option>
                 <option th:each="nat : ${allNationality}"
                         th:value="${nat}"
                         th:text="${nat}"></option>
+            </select>
+
+            <!-- Селект за тип на рейтинга (скрит по подразбиране) -->
+            <select name="ratingType" class="rating-type-select" id="ratingTypeSelect" style="display: none;">
+                <option value="">-- Изберете тип оценка --</option>
+                <option value="ratingFood">Храна</option>
+                <option value="ratingQualityPrice">Качество/Цена</option>
+                <option value="ratingPoliteness">Учтивост</option>
+                <option value="ratingCleanTidy">Чистота</option>
             </select>
 
             <!-- Под-селекция за рейтинг (скрита по подразбиране) -->
@@ -74,6 +83,7 @@
                         th:value="${rating}"
                         th:text="${rating}"></option>
             </select>
+
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
     </div>
@@ -84,40 +94,40 @@
             var industrySelect = document.getElementById("industrySelect");
             var loyaltySelect = document.getElementById("loyaltySelect");
             var nationalitySelect = document.getElementById("nationalitySelect");
+            var ratingTypeSelect = document.getElementById("ratingTypeSelect");
             var ratingSelect = document.getElementById("ratingSelect");
 
-            // Показване/скриване на "Източник"
-            if (mainSelect.value === "sourceType") {
-                industrySelect.style.display = "inline-block";
-            } else {
-                industrySelect.style.display = "none";
-            }
+            // Скриваме всички под-селекти
+            industrySelect.style.display = "none";
+            loyaltySelect.style.display = "none";
+            nationalitySelect.style.display = "none";
+            ratingTypeSelect.style.display = "none";
+            ratingSelect.style.display = "none";
 
-            // Показване/скриване на "Ниво лоялност"
-            if (mainSelect.value === "loyaltyLevel") {
-                loyaltySelect.style.display = "inline-block";
-            } else {
-                loyaltySelect.style.display = "none";
-            }
-
-            // Показване/скриване на "Националност"
-            if (mainSelect.value === "nationality") {
-                nationalitySelect.style.display = "inline-block";
-            } else {
-                nationalitySelect.style.display = "none";
-            }
-
-            // Показване/скриване на "Националност"
-            if (mainSelect.value === "rating") {
-                ratingSelect.style.display = "inline-block";
-            } else {
-                ratingSelect.style.display = "none";
+            // Показваме под-селект на база на основния избор
+            switch (mainSelect.value) {
+                case "sourceType":
+                    industrySelect.style.display = "inline-block";
+                    break;
+                case "loyaltyLevel":
+                    loyaltySelect.style.display = "inline-block";
+                    break;
+                case "nationality":
+                    nationalitySelect.style.display = "inline-block";
+                    break;
+                case "rating":
+                    ratingTypeSelect.style.display = "inline-block";
+                    ratingSelect.style.display = "inline-block";
+                    break;
+                default:
+                    break;
             }
         }
 
         // Свързване на функцията със селекта
         document.getElementById("mainSelect").addEventListener("change", toggleSelects);
     </script>
+
 
     <table id="clients-table">
         <thead>
