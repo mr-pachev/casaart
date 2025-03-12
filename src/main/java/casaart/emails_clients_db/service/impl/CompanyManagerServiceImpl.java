@@ -188,15 +188,26 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
 
         if(personDTO.getFirstEmail() != null){
             companyManager.setFirstEmail(personDTO.getFirstEmail());
+        }else {
+            companyManager.setFirstEmail(null);
         }
+
         if(personDTO.getFirstCall() != null){
             companyManager.setFirstCall(personDTO.getFirstCall());
+        }else {
+            companyManager.setFirstCall(null);
         }
+
         if(personDTO.getSecondEmail() != null){
             companyManager.setSecondEmail(personDTO.getSecondEmail());
+        }else {
+            companyManager.setSecondEmail(null);
         }
+
         if(personDTO.getSecondCall() != null){
             companyManager.setSecondCall(personDTO.getSecondCall());
+        }else {
+            companyManager.setSecondCall(null);
         }
 
         return companyManager;
