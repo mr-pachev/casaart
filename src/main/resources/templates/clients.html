@@ -144,8 +144,6 @@
             <th>Дата на първо обаждане</th>
             <th>Дата на втори имейл</th>
             <th>Дата на втора обаждане</th>
-            <th>Добавен от</th>
-            <th>Променен от</th>
             <th>Действия</th>
         </tr>
         </thead>
@@ -213,8 +211,6 @@
                     </li>
                 </ul>
             </td>
-            <td th:text="${client.addedFrom}">Служител никнейм</td>
-            <td th:text="${client.modifyFrom}">Служител никнейм</td>
             <td>
                 <div class="action-buttons">
                     <form th:method="POST" th:action="@{/client-details/{id}(id=${client.id})}">

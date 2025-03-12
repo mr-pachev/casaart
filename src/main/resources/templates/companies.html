@@ -33,13 +33,13 @@
                 <option value="allCompanies">-- подреди по --</option>
                 <option value="allCompanies">Всички партньори</option>
                 <option value="name">Име</option>
-                <option value="industryType">Бранш</option>
+                <option value="industryType">Продукти/услуги</option>
                 <option value="locationType">Район на дейност</option>
             </select>
 
             <!-- Под-селекция за браншовете (скрита по подразбиране) -->
             <select name="industryType" class="source-type-select" id="industrySelect" style="display: none;">
-                <option value="">-- Изберете бранш --</option>
+                <option value="">-- Изберете продукт/услуга --</option>
                 <option th:each="industry : ${allIndustries}"
                         th:value="${industry}"
                         th:text="${industry}"></option>
@@ -63,7 +63,7 @@
             let industrySelect = document.getElementById("industrySelect");
             let locationSelect = document.getElementById("locationSelect");
 
-            // Показва под-селекцията само ако избраната опция е "Бранш"
+            // Показва под-селекцията само ако избраната опция е "Продукти/услуги"
             if (mainSelect.value === "industryType") {
                 industrySelect.style.display = "inline-block";
             } else {

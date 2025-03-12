@@ -19,11 +19,11 @@
     <div class="welcome">Здравей, <span th:text="${@userHelperService.getUser().getUsername()}"></span>!</div>
     <nav class="nav-links">
         <a sec:authorize="hasRole('Admin')" th:href="@{/sell}">Продажба</a>
-        <a sec:authorize="hasRole('Admin')" th:href="@{/providers}">Доставчици</a>
+        <a sec:authorize="hasRole('Admin')" th:href="@{/providers}">Доставчици аксесоари</a>
         <a sec:authorize="hasRole('Admin')" th:href="@{/products}">Продукти</a>
         <a sec:authorize="hasRole('Admin')" th:href="@{/types}">Типове</a>
         <a sec:authorize="hasRole('Admin')" th:href="@{/categories}">Категории</a>
-        <a th:href="@{/companies}">Партньори</a>
+        <a th:href="@{/companies}">Доставчици</a>
         <a th:href="@{/all-contact-persons}">Всички контактни лица</a>
         <a th:href="@{/all-company-managers}">Всички управители</a>
         <a th:href="@{/users}">Потребители</a>
