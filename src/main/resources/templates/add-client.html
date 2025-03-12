@@ -128,9 +128,6 @@
                         Избери националност.
                     </p>
                 </div>
-
-
-
                 <div class="form-group">
                     <label for="ratingFood">Оценка храна</label>
                     <select class="form-control"
@@ -199,9 +196,14 @@
                         Избери оценка.
                     </p>
                 </div>
-
-
-
+                <div class="form-group">
+                    <label for="comment">Коментар</label>
+                    <input type="text"
+                           id="comment"
+                           name="comment"
+                           class="form-control"
+                           th:field="*{comment}">
+                </div>
                 <div class="form-group">
                     <label for="accommodationDate" class="form-label">Дата настаняване</label>
                     <input type="date" class="form-control" id="accommodationDate" name="accommodationDate" th:value="${addClientDTO.accommodationDate}">

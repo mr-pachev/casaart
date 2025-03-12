@@ -86,7 +86,7 @@ public class ClientServiceImpl implements ClientService {
 
         return clientRepository.findAllBySourceTypes(sourceType)
                 .stream()
-                .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуване в DTO директно в ламбда израза
+                .map(this::mapToClientDTO) // Преобразуваме в DTO
                 .collect(Collectors.toList());
     }
 
@@ -97,7 +97,7 @@ public class ClientServiceImpl implements ClientService {
 
         return clientRepository.findAllByLoyaltyLevel(loyaltyLevel)
                 .stream()
-                .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуване в DTO директно в ламбда израза
+                .map(this::mapToClientDTO) // Преобразуваме в DTO
                 .collect(Collectors.toList());
     }
 
@@ -108,7 +108,7 @@ public class ClientServiceImpl implements ClientService {
 
         return clientRepository.findAllByNationality(nationality)
                 .stream()
-                .map(client -> mapper.map(client, ClientDTO.class)) // Преобразуване в DTO директно в ламбда израза
+                .map(this::mapToClientDTO) // Преобразуваме в DTO
                 .collect(Collectors.toList());
     }
 
@@ -255,6 +255,11 @@ public class ClientServiceImpl implements ClientService {
         clientDTO.setCounterStay(client.getCounterStay() != null ? client.getCounterStay() : 0);
         clientDTO.setModifyFrom(client.getModifyFrom());
         clientDTO.setAccommodationDate(client.getAccommodationDate());
+
+        clientDTO.setFirstEmail(client.getFirstEmail());
+        clientDTO.setFirstCall(client.getFirstCall());
+        clientDTO.setSecondEmail(client.getSecondEmail());
+        clientDTO.setSecondCall(client.getSecondCall());
 
         // Преобразуване на Enum списък към String списък
         if (client.getSourceTypes() != null) {
