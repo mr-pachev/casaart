@@ -187,11 +187,11 @@ public class ClientServiceImpl implements ClientService {
             }
 
             editedClient.setAccommodationDate(clientDTO.getAccommodationDate());
-        } else if (existClient.getAccommodationDate() == null &&
+        } else if (existClient.getAccommodationDate() != null &&
                 Objects.equals(existClient.getAccommodationDate(), clientDTO.getAccommodationDate())) { // Има дата настаняване и съответства на въведената
             editedClient.setCounterStay(existClient.getCounterStay());
 
-        } else if (clientDTO.getAccommodationDate() == null) { // Няма въведена дата настаняване
+        } else if (clientDTO.getAccommodationDate() == null && clientDTO.getLoyaltyLevel() == null) { // Няма въведена дата настаняване и няма въвведено ниво лоялност
             editedClient.setCounterStay(null);
             editedClient.setAccommodationDate(null);
 
