@@ -8,10 +8,7 @@ import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LoyaltyLevel;
 import casaart.emails_clients_db.model.enums.Nationality;
 import casaart.emails_clients_db.model.enums.SourceType;
-import casaart.emails_clients_db.repository.ClientRepository;
-import casaart.emails_clients_db.repository.CompanyManagerRepository;
-import casaart.emails_clients_db.repository.CompanyRepository;
-import casaart.emails_clients_db.repository.UserRepository;
+import casaart.emails_clients_db.repository.*;
 import casaart.emails_clients_db.service.ExelService;
 import casaart.emails_clients_db.service.UserHelperService;
 import org.apache.poi.ss.usermodel.*;
@@ -34,16 +31,18 @@ public class ExelServiceImpl implements ExelService {
     private final UserRepository userRepository;
     private final CompanyRepository companyRepository;
     private final CompanyManagerRepository companyManagerRepository;
+    private final ContactPersonRepository contactPersonRepository;
 
     private final ModelMapper mapper;
 
     private final UserHelperService userHelperService;
 
-    public ExelServiceImpl(ClientRepository clientRepository, UserRepository userRepository, CompanyRepository companyRepository, CompanyManagerRepository companyManagerRepository, ModelMapper mapper, UserHelperService userHelperService) {
+    public ExelServiceImpl(ClientRepository clientRepository, UserRepository userRepository, CompanyRepository companyRepository, CompanyManagerRepository companyManagerRepository, ContactPersonRepository contactPersonRepository, ModelMapper mapper, UserHelperService userHelperService) {
         this.clientRepository = clientRepository;
         this.userRepository = userRepository;
         this.companyRepository = companyRepository;
         this.companyManagerRepository = companyManagerRepository;
+        this.contactPersonRepository = contactPersonRepository;
         this.mapper = mapper;
         this.userHelperService = userHelperService;
     }
@@ -167,9 +166,9 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
-    // export companyManager to exel
+    // export companyManagers to exel
     @Override
-    public void exportCompanyManagerToExcel(String filePath) {
+    public void exportCompanyManagersToExcel(String filePath) {
         List<CompanyManager> managers = companyManagerRepository.findAll();
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Company Managers");
@@ -215,6 +214,61 @@ public class ExelServiceImpl implements ExelService {
                 workbook.write(fileOut);
             }
             System.out.println("SUCCESSFULLY EXPORTED --< " + managers.size() + " >-- company managers IN " + filePath);
+
+        } catch (IOException e) {
+            System.err.println("ERROR WRITING Excel file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // export contactPersons to exel
+    @Override
+    public void exportContactPersonsToExcel(String filePath) {
+        List<ContactPerson> contactPersons = contactPersonRepository.findAll();
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Contact Persons");
+
+            // Заглавен ред
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {"First Name", "Middle Name", "Last Name", "Email", "Phone Number", "Company", "First Call", "First Email", "Second Call", "Second Email"};
+
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerStyle.setFont(headerFont);
+
+            for (int i = 0; i < headers.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+                cell.setCellStyle(headerStyle);
+            }
+
+            // Попълване на данните
+            int rowNum = 1;
+            for (ContactPerson person : contactPersons) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(person.getFirstName() != null ? person.getFirstName() : "");
+                row.createCell(1).setCellValue(person.getMiddleName() != null ? person.getMiddleName() : "");
+                row.createCell(2).setCellValue(person.getLastName() != null ? person.getLastName() : "");
+                row.createCell(3).setCellValue(person.getEmail() != null ? person.getEmail() : "");
+                row.createCell(4).setCellValue(person.getPhoneNumber() != null ? person.getPhoneNumber() : "");
+                row.createCell(5).setCellValue(person.getCompany() != null ? person.getCompany().getName() : "");
+                row.createCell(6).setCellValue(person.getFirstCall() != null ? person.getFirstCall().toString() : "");
+                row.createCell(7).setCellValue(person.getFirstEmail() != null ? person.getFirstEmail().toString() : "");
+                row.createCell(8).setCellValue(person.getSecondCall() != null ? person.getSecondCall().toString() : "");
+                row.createCell(9).setCellValue(person.getSecondEmail() != null ? person.getSecondEmail().toString() : "");
+            }
+
+            // Автоматично нагласяне на ширината на колоните
+            for (int i = 0; i < headers.length; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            // Запис в файл
+            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+                workbook.write(fileOut);
+            }
+            System.out.println("SUCCESSFULLY EXPORTED --< " + contactPersons.size() + " >-- contact persons IN " + filePath);
 
         } catch (IOException e) {
             System.err.println("ERROR WRITING Excel file: " + e.getMessage());
