@@ -47,34 +47,49 @@ public class ExelServiceImpl implements ExelService {
 
             // Заглавен ред
             Row headerRow = sheet.createRow(0);
-            String[] headers = {"First Name", "Middle Name", "Last Name", "Phone Number", "Email", "Source Type", "Loyalty Level", "Counter stay","Modify From", "Acc Date", "Nat", "First Call", "First Email", "Second Call", "Second Email"};
+            String[] headers = {"First Name", "Middle Name", "Last Name", "Phone Number", "Email", "Source Type", "Loyalty Level", "Counter stay", "Modify From", "Acc Date", "Nat", "First Call", "First Email", "Second Call", "Second Email", "Rating Food", "Rating Quality Price", "Rating Politeness", "Rating Clean Tidy", "User", "Comment"};
+
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerStyle.setFont(headerFont);
+
             for (int i = 0; i < headers.length; i++) {
-                headerRow.createCell(i).setCellValue(headers[i]);
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+                cell.setCellStyle(headerStyle);
             }
 
             // Попълване на данните
             int rowNum = 1;
             for (Client client : clients) {
                 Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(client.getFirstName());
-                row.createCell(1).setCellValue(client.getMiddleName());
-                row.createCell(2).setCellValue(client.getLastName());
-                row.createCell(3).setCellValue(client.getPhoneNumber());
-                row.createCell(4).setCellValue(client.getEmail());
-                row.createCell(5).setCellValue(
-                        client.getSourceTypes().stream()
-                                .map(SourceType::toString)
-                                .collect(Collectors.joining(", "))
-                );
+                row.createCell(0).setCellValue(client.getFirstName() != null ? client.getFirstName() : "");
+                row.createCell(1).setCellValue(client.getMiddleName() != null ? client.getMiddleName() : "");
+                row.createCell(2).setCellValue(client.getLastName() != null ? client.getLastName() : "");
+                row.createCell(3).setCellValue(client.getPhoneNumber() != null ? client.getPhoneNumber() : "");
+                row.createCell(4).setCellValue(client.getEmail() != null ? client.getEmail() : "");
+                row.createCell(5).setCellValue(client.getSourceTypes() != null ? client.getSourceTypes().stream().map(SourceType::toString).collect(Collectors.joining(", ")) : "");
                 row.createCell(6).setCellValue(client.getLoyaltyLevel() != null ? client.getLoyaltyLevel().toString() : "");
                 row.createCell(7).setCellValue(client.getCounterStay() != null ? client.getCounterStay().toString() : "");
-                row.createCell(8).setCellValue(client.getModifyFrom());
+                row.createCell(8).setCellValue(client.getModifyFrom() != null ? client.getModifyFrom() : "");
                 row.createCell(9).setCellValue(client.getAccommodationDate() != null ? client.getAccommodationDate().toString() : "");
                 row.createCell(10).setCellValue(client.getNationality() != null ? client.getNationality().toString() : "");
                 row.createCell(11).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
                 row.createCell(12).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");
                 row.createCell(13).setCellValue(client.getSecondCall() != null ? client.getSecondCall().toString() : "");
                 row.createCell(14).setCellValue(client.getSecondEmail() != null ? client.getSecondEmail().toString() : "");
+                row.createCell(15).setCellValue(client.getRatingFood() != null ? client.getRatingFood().toString() : "");
+                row.createCell(16).setCellValue(client.getRatingQualityPrice() != null ? client.getRatingQualityPrice().toString() : "");
+                row.createCell(17).setCellValue(client.getRatingPoliteness() != null ? client.getRatingPoliteness().toString() : "");
+                row.createCell(18).setCellValue(client.getRatingCleanTidy() != null ? client.getRatingCleanTidy().toString() : "");
+                row.createCell(19).setCellValue(client.getUser() != null ? client.getUser().getUsername() : "");
+                row.createCell(20).setCellValue(client.getComment() != null ? client.getComment() : "");
+            }
+
+            // Автоматично нагласяне на ширината на колоните
+            for (int i = 0; i < headers.length; i++) {
+                sheet.autoSizeColumn(i);
             }
 
             // Запис в файл
@@ -84,9 +99,11 @@ public class ExelServiceImpl implements ExelService {
             System.out.println("SUCCESSFULLY EXPORTED --< " + clients.size() + " >-- clients IN " + filePath);
 
         } catch (IOException e) {
-            System.err.println("ERROR READING Excel file: " + e.getMessage());
+            System.err.println("ERROR WRITING Excel file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+
 
     // update or add loyaltyLevel on clients
     @Override

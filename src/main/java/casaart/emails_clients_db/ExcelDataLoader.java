@@ -5,7 +5,7 @@ import casaart.emails_clients_db.service.ExelService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class ExcelDataLoader implements CommandLineRunner {
 
     final ExelService exelService;
@@ -30,13 +30,13 @@ public class ExcelDataLoader implements CommandLineRunner {
 //        editDataBaseService.updateAllClientNames();
 
 //        IMPORT
-        System.out.println("START UPDATING/IMPORT clients FROM " + filePathImport);
-        exelService.updateOrAddLoyaltyLevel(filePathImport);
-        System.out.println("UPDATING/IMPORT IS FINISHED!");
+//        System.out.println("START UPDATING/IMPORT clients FROM " + filePathImport);
+//        exelService.updateOrAddLoyaltyLevel(filePathImport);
+//        System.out.println("UPDATING/IMPORT IS FINISHED!");
 
 //        EXPORT
-//        System.out.println("EXPORT OF clients TO " + filePathExport);
-//        exelService.exportClientsToExcel(filePathExport);
-//        System.out.println("EXPORT is FINISHED!");
+        System.out.println("EXPORT OF clients TO " + filePathExport);
+        exelService.exportClientsToExcel(filePathExport);
+        System.out.println("EXPORT is FINISHED!");
     }
 }
