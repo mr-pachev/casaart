@@ -8,6 +8,9 @@ public interface ExelService {
     // export companies to exel
     void exportCompaniesToExcel(String filePath);
 
+    // export companyManager to exel
+    void exportCompanyManagerToExcel(String filePath);
+
     // update or add loyaltyLevel on clients
     void updateOrAddLoyaltyLevel(String filePath);
 }
