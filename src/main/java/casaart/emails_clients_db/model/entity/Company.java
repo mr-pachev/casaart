@@ -2,9 +2,10 @@ package casaart.emails_clients_db.model.entity;
 
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
+import casaart.emails_clients_db.model.enums.UnitType;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import javax.lang.model.type.UnionType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,12 @@ public class Company extends BaseEntity{
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "company_manager_id")
     private CompanyManager companyManager;
+
+    @ElementCollection(targetClass = UnitType.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "company_units", joinColumns = @JoinColumn(name = "company_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private List<UnitType> unitTypes;
 
     @ElementCollection(targetClass = IndustryType.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "company_industries", joinColumns = @JoinColumn(name = "company_id"))
@@ -94,6 +101,14 @@ public class Company extends BaseEntity{
 
     public CompanyManager getCompanyManager() {
         return companyManager;
+    }
+
+    public List<UnitType> getUnitTypes() {
+        return unitTypes;
+    }
+
+    public void setUnitTypes(List<UnitType> unitTypes) {
+        this.unitTypes = unitTypes;
     }
 
     public List<IndustryType> getIndustryTypes() {

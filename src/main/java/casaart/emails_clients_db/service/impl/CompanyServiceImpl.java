@@ -8,6 +8,7 @@ import casaart.emails_clients_db.model.entity.CompanyManager;
 import casaart.emails_clients_db.model.entity.ContactPerson;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
+import casaart.emails_clients_db.model.enums.UnitType;
 import casaart.emails_clients_db.repository.CompanyManagerRepository;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.ContactPersonRepository;
@@ -15,6 +16,7 @@ import casaart.emails_clients_db.service.CompanyService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.lang.model.type.UnionType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -87,14 +89,26 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDTOS;
     }
 
+    // get sorted companies by unitType
+    @Override
+    public List<CompanyDTO> sortedCompaniesByUnit(String unitType) {
+        UnitType unit = UnitType.valueOf(unitType);
+
+        return companyRepository.findByUnitTypes(unit)
+                .stream()
+                .map(this::mapCompanyToCompanyDTO) // Използване на референция към метод за по-четим код
+                .collect(Collectors.toList());
+    }
+
     // get sorted companies by industryType
     @Override
-    public List<CompanyDTO> sortedCompaniesByIndustryType(String industry) {
-        IndustryType industryType = IndustryType.valueOf(industry);
+    public List<CompanyDTO> sortedCompaniesByUnitAndIndustry(String unitType, String industryType) {
+        UnitType unit = UnitType.valueOf(unitType);
+        IndustryType industry = IndustryType.valueOf(industryType);
 
-        return companyRepository.findByIndustryTypes(industryType)
+        return companyRepository.findByUnitTypesAndIndustryTypes(unit, industry)
                 .stream()
-                .map(company -> mapCompanyToCompanyDTO(company)) // Преобразуване в DTO директно в ламбда израза
+                .map(this::mapCompanyToCompanyDTO) // Използване на референция към метод за по-четим код
                 .collect(Collectors.toList());
     }
 
@@ -141,7 +155,15 @@ public class CompanyServiceImpl implements CompanyService {
             industryTypes.add(IndustryType.valueOf(industry));
         }
 
+        List<UnitType> unitTypes = new ArrayList<>();
+
+        for (String unit : addCompanyDTO.getUnits()) {
+            unitTypes.add(UnitType.valueOf(unit));
+        }
+
         company.setIndustryTypes(industryTypes);
+        company.setUnitTypes(unitTypes);
+
         companyRepository.save(company);
     }
 
@@ -211,10 +233,15 @@ public class CompanyServiceImpl implements CompanyService {
             companyDTO.setCompanyManager(companyManager.getFullName());
         }
 
+        List<String> units = company.getUnitTypes().stream()
+                .map(Enum::name)
+                .collect(Collectors.toList());
+
         List<String> industries = company.getIndustryTypes().stream()
                 .map(Enum::name)
                 .collect(Collectors.toList());
 
+        companyDTO.setUnits(units);
         companyDTO.setIndustries(industries);
 
         return companyDTO;

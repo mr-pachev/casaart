@@ -29,20 +29,25 @@
     <div class="buttons">
         <form th:method="POST" th:action="@{/sort-companies}" style="display: inline;">
             <!-- Основен селект -->
-            <select name="companyType" class="source-type-select" id="mainSelect" onchange="toggleIndustrySelect()">
+            <select name="companyType" class="source-type-select" id="mainSelect" onchange="toggleUnitSelect()">
                 <option value="allCompanies">-- подреди по --</option>
                 <option value="allCompanies">Всички партньори</option>
                 <option value="name">Име</option>
-                <option value="industryType">Продукти/услуги</option>
+                <option value="unitType">Звено</option>
                 <option value="locationType">Район на дейност</option>
             </select>
 
-            <!-- Под-селекция за браншовете (скрита по подразбиране) -->
+            <!-- Под-селекция за звената (скрита по подразбиране) -->
+            <select name="unitType" class="source-type-select" id="unitSelect" style="display: none;" onchange="toggleIndustrySelect()">
+                <option value="">-- Изберете звено --</option>
+                <option th:each="unit : ${allUnits}"
+                        th:value="${unit}"
+                        th:text="${unit}"></option>
+            </select>
+
+            <!-- Под-селекция за продукти/услуги (скрита по подразбиране) -->
             <select name="industryType" class="source-type-select" id="industrySelect" style="display: none;">
                 <option value="">-- Изберете продукт/услуга --</option>
-                <option th:each="industry : ${allIndustries}"
-                        th:value="${industry}"
-                        th:text="${industry}"></option>
             </select>
 
             <!-- Под-селекция за район на дейност (скрита по подразбиране) -->
@@ -52,31 +57,61 @@
                         th:value="${location}"
                         th:text="${location}"></option>
             </select>
+
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
     </div>
 
     <!-- JavaScript за управление на селекциите -->
     <script>
-        function toggleIndustrySelect() {
-            let mainSelect = document.getElementById("mainSelect");
-            let industrySelect = document.getElementById("industrySelect");
-            let locationSelect = document.getElementById("locationSelect");
+        // Данни за продукти/услуги спрямо звеното
+        const unitIndustries = {
+            'КУХНЯ': ['ХРАНИ', 'КЕРАМИКА', 'ПРЕПАРАТИ', 'ОБОРУДВАНЕ'],
+            'БАР': ['НАПИТКИ', 'ВИНАРИ', 'КЕРАМИКА', 'ОБОРУДВАНЕ'],
+            'ХОТЕЛ': ['КОНСУМАТИВИ_СТАИ', 'ОФИС_КОНСУМАТИВИ', 'ПРЕПАРАТИ', 'ТО_АГЕНЦИИ', 'ТРАНСПОРТ'],
+            'ИНТЕРИОР': ['СТРОИТЕЛИ', 'МАЗИЛКИ', 'ОБОРУДВАНЕ'],
+            'АКСЕСОАРИ': ['АРТИСТИ', 'СЪБИТИЯ', 'МЕДИИ', 'КОЗМЕТИКА', 'ФРИЗЬОРИ']
+        };
 
-            // Показва под-селекцията само ако избраната опция е "Продукти/услуги"
-            if (mainSelect.value === "industryType") {
-                industrySelect.style.display = "inline-block";
+        function toggleUnitSelect() {
+            let mainSelect = document.getElementById("mainSelect");
+            let unitSelect = document.getElementById("unitSelect");
+            let locationSelect = document.getElementById("locationSelect");
+            let industrySelect = document.getElementById("industrySelect");
+
+            if (mainSelect.value === "unitType") {
+                unitSelect.style.display = "inline-block";
             } else {
+                unitSelect.style.display = "none";
+                unitSelect.selectedIndex = 0;
                 industrySelect.style.display = "none";
-                industrySelect.selectedIndex = 0; // Нулира избора при скриване
             }
 
-            // Показва под-селекцията само ако избраната опция е "Район на действие"
             if (mainSelect.value === "locationType") {
                 locationSelect.style.display = "inline-block";
             } else {
                 locationSelect.style.display = "none";
-                locationSelect.selectedIndex = 0; // Нулира избора при скриване
+                locationSelect.selectedIndex = 0;
+            }
+        }
+
+        function toggleIndustrySelect() {
+            let unitSelect = document.getElementById("unitSelect");
+            let industrySelect = document.getElementById("industrySelect");
+            let selectedUnit = unitSelect.value;
+
+            if (selectedUnit && unitIndustries[selectedUnit]) {
+                industrySelect.style.display = "inline-block";
+                industrySelect.innerHTML = '<option value="">-- Изберете продукт/услуга --</option>';
+
+                unitIndustries[selectedUnit].forEach(industry => {
+                    let option = document.createElement("option");
+                    option.value = industry;
+                    option.textContent = industry;
+                    industrySelect.appendChild(option);
+                });
+            } else {
+                industrySelect.style.display = "none";
             }
         }
     </script>
@@ -91,6 +126,7 @@
             <th>Локация</th>
             <th>Лице за контакт</th>
             <th>Управител</th>
+            <th>Звено</th>
             <th>Бранш</th>
             <th>Действия</th>
         </tr>
@@ -137,6 +173,13 @@
                         <button type="submit" class="register">Добави</button>
                     </form>
                 </div>
+            </td>
+            <td>
+                <ul>
+                    <li th:each="unit : ${company.units}"
+                        th:text="${unit}">Звено
+                    </li>
+                </ul>
             </td>
             <td>
                 <ul>

@@ -3,6 +3,7 @@ package casaart.emails_clients_db.repository;
 import casaart.emails_clients_db.model.entity.Company;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
+import casaart.emails_clients_db.model.enums.UnitType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,8 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     Optional<Company> findByName(String name);
     Optional<Company> findByCompanyManagerId(long id);
     List<Company> findAllByOrderByIdDesc();
-    List<Company> findByIndustryTypes(IndustryType industryType);
+    List<Company> findByUnitTypes(UnitType unitType);
+    List<Company> findByUnitTypesAndIndustryTypes(UnitType unitType, IndustryType industryType);
     List<Company> findByLocationType(LocationType locationType);
     List<Company> findAllByOrderByNameAsc();
     List<Company> findByNameStartingWithIgnoreCase(String name);

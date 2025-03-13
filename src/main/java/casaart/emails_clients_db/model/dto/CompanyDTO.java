@@ -2,6 +2,7 @@ package casaart.emails_clients_db.model.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class CompanyDTO {
 
     @NotBlank
     private String locationType;
+
+    @NotEmpty
+    private List<String> units;
 
     private List<String> contactPerson = new ArrayList<>();
 
@@ -80,6 +84,14 @@ public class CompanyDTO {
 
     public void setLocationType(String locationType) {
         this.locationType = locationType;
+    }
+
+    public List<String> getUnits() {
+        return units;
+    }
+
+    public void setUnits(List<String> units) {
+        this.units = units;
     }
 
     public List<String> getContactPerson() {

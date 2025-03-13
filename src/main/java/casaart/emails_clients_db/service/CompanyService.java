@@ -15,8 +15,11 @@ public interface CompanyService {
     // get sorted companies
     List<CompanyDTO> sortedCompanies(String companyType);
 
-    // get sorted companies by industryType
-    List<CompanyDTO> sortedCompaniesByIndustryType(String industryType);
+    // get sorted companies by unitType
+    List<CompanyDTO> sortedCompaniesByUnit(String unitType);
+
+    // get sorted companies by unitType and industryType
+    List<CompanyDTO> sortedCompaniesByUnitAndIndustry(String unitType, String industryType);
 
     // get sorted companies by locationType
     List<CompanyDTO> sortedCompaniesByLocationType(String locationType);

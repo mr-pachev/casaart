@@ -5,6 +5,7 @@ import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
+import casaart.emails_clients_db.model.enums.UnitType;
 import casaart.emails_clients_db.service.CompanyManagerService;
 import casaart.emails_clients_db.service.CompanyService;
 import casaart.emails_clients_db.service.ContactPersonService;
@@ -15,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.lang.model.type.UnionType;
 import java.util.List;
 
 @Controller
@@ -50,6 +52,7 @@ public class CompanyController {
         List<CompanyDTO> companyDTOS = companyService.getAllCompanies();
 
         model.addAttribute("allCompanies", companyDTOS);
+        model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allIndustries", IndustryType.values());
         model.addAttribute("allLocations", LocationType.values());
 
@@ -59,30 +62,51 @@ public class CompanyController {
     // view all sorted companies
     @PostMapping("/sort-companies")
     public String sortCompanies(@RequestParam("companyType") String companyType,
+                                @RequestParam(value = "unitType", required = false) String unitType,
                                 @RequestParam(value = "industryType", required = false) String industryType,
                                 @RequestParam(value = "locationType", required = false) String locationType,
                                 Model model) {
         List<CompanyDTO> sortedCompanies;
 
-        // Проверяваме дали е избран "Бранш", "Район на дейност" или има конкретна стойност
-        if ("industryType".equals(companyType) && industryType != null && !industryType.isEmpty()) {
-            sortedCompanies = companyService.sortedCompaniesByIndustryType(industryType);
-        } else if ("locationType".equals(companyType) && industryType != null && !locationType.isEmpty()) {
-            sortedCompanies = companyService.sortedCompaniesByLocationType(locationType);
-        } else {
-            sortedCompanies = companyService.sortedCompanies(companyType);
+        switch (companyType) {
+            case "unitType":
+                if (unitType != null && !unitType.isEmpty()) {
+                    if (industryType != null && !industryType.isEmpty()) {
+                        sortedCompanies = companyService.sortedCompaniesByUnitAndIndustry(unitType, industryType);
+                    } else {
+                        sortedCompanies = companyService.sortedCompaniesByUnit(unitType);
+                    }
+                } else {
+                    sortedCompanies = companyService.getAllCompanies();
+                }
+                break;
+
+            case "locationType":
+                if (locationType != null && !locationType.isEmpty()) {
+                    sortedCompanies = companyService.sortedCompaniesByLocationType(locationType);
+                } else {
+                    sortedCompanies = companyService.getAllCompanies();
+                }
+                break;
+
+            default:
+                sortedCompanies = companyService.sortedCompanies(companyType);
+                break;
         }
 
         model.addAttribute("allCompanies", sortedCompanies);
+        model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allIndustries", IndustryType.values());
         model.addAttribute("allLocations", LocationType.values());
 
-        return "companies"; // Връщаме шаблона с обновения списък
+        return "companies";
     }
+
 
     // add new company
     @GetMapping("/add-company")
     public String viewAddCompanyForm(Model model) {
+        model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allLocations", LocationType.values());
         model.addAttribute("allIndustries", IndustryType.values());
 
@@ -100,6 +124,7 @@ public class CompanyController {
             RedirectAttributes rAtt, Model model) {
 
         if (bindingResult.hasErrors()) {
+            rAtt.addFlashAttribute("allUnits", UnitType.values());
             rAtt.addFlashAttribute("allLocations", LocationType.values());
             rAtt.addFlashAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
@@ -109,6 +134,7 @@ public class CompanyController {
         }
 
         if (companyService.isExistCompany(addCompanyDTO.getName())) {
+            rAtt.addFlashAttribute("allUnits", UnitType.values());
             rAtt.addFlashAttribute("allLocations", LocationType.values());
             rAtt.addFlashAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
@@ -135,6 +161,7 @@ public class CompanyController {
         CompanyDTO companyDTO = companyService.findCompanyById(id);
 
         model.addAttribute("companyDTO", companyDTO);
+        model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allLocations", LocationType.values());
         model.addAttribute("allIndustries", IndustryType.values());
         model.addAttribute("contactsPersons", companyDTO.getContactPerson());
@@ -153,6 +180,7 @@ public class CompanyController {
 
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("companyDTO", companyDTO);
+            model.addAttribute("allUnits", UnitType.values());
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
             model.addAttribute("contactsPersons", companyDTO.getContactPerson());
@@ -165,6 +193,7 @@ public class CompanyController {
 
         if (isChangedCompanyName && companyService.isExistCompany(companyDTO.getName())) {
             model.addAttribute("companyDTO", companyDTO);
+            model.addAttribute("allUnits", UnitType.values());
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
             model.addAttribute("contactsPersons", companyDTO.getContactPerson());

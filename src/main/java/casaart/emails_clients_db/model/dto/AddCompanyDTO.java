@@ -28,6 +28,9 @@ public class AddCompanyDTO {
     private String locationType;
 
     @NotEmpty
+    private List<String> units;
+
+    @NotEmpty
     private List<String> industries;
 
     public String getName() {
@@ -68,6 +71,14 @@ public class AddCompanyDTO {
 
     public void setLocationType(String locationType) {
         this.locationType = locationType;
+    }
+
+    public List<String> getUnits() {
+        return units;
+    }
+
+    public void setUnits(List<String> units) {
+        this.units = units;
     }
 
     public List<String> getIndustries() {
