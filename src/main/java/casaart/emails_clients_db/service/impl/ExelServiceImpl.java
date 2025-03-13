@@ -1,10 +1,14 @@
 package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.entity.Client;
+import casaart.emails_clients_db.model.entity.Company;
+import casaart.emails_clients_db.model.entity.ContactPerson;
+import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LoyaltyLevel;
 import casaart.emails_clients_db.model.enums.Nationality;
 import casaart.emails_clients_db.model.enums.SourceType;
 import casaart.emails_clients_db.repository.ClientRepository;
+import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.UserRepository;
 import casaart.emails_clients_db.service.ExelService;
 import casaart.emails_clients_db.service.UserHelperService;
@@ -26,14 +30,16 @@ import java.util.stream.Collectors;
 public class ExelServiceImpl implements ExelService {
     private final ClientRepository clientRepository;
     private final UserRepository userRepository;
+    private final CompanyRepository companyRepository;
 
     private final ModelMapper mapper;
 
     private final UserHelperService userHelperService;
 
-    public ExelServiceImpl(ClientRepository clientRepository, UserRepository userRepository, ModelMapper mapper, UserHelperService userHelperService) {
+    public ExelServiceImpl(ClientRepository clientRepository, UserRepository userRepository, CompanyRepository companyRepository, ModelMapper mapper, UserHelperService userHelperService) {
         this.clientRepository = clientRepository;
         this.userRepository = userRepository;
+        this.companyRepository = companyRepository;
         this.mapper = mapper;
         this.userHelperService = userHelperService;
     }
@@ -98,6 +104,59 @@ public class ExelServiceImpl implements ExelService {
             }
             System.out.println("SUCCESSFULLY EXPORTED --< " + clients.size() + " >-- clients IN " + filePath);
 
+        } catch (IOException e) {
+            System.err.println("ERROR WRITING Excel file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // export companies to exel
+    @Override
+    public void exportCompaniesToExcel(String filePath) {
+        List<Company> companies = companyRepository.findAll();
+
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Companies");
+
+            // Заглавен ред
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {"Name", "Address", "Phone Number", "Email", "Location Type", "Industry Types", "Company Manager", "Contact Persons"};
+
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerStyle.setFont(headerFont);
+
+            for (int i = 0; i < headers.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+                cell.setCellStyle(headerStyle);
+            }
+
+            // Попълване на данните
+            int rowNum = 1;
+            for (Company company : companies) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(company.getName() != null ? company.getName() : "");
+                row.createCell(1).setCellValue(company.getAddress() != null ? company.getAddress() : "");
+                row.createCell(2).setCellValue(company.getPhoneNumber() != null ? company.getPhoneNumber() : "");
+                row.createCell(3).setCellValue(company.getEmail() != null ? company.getEmail() : "");
+                row.createCell(4).setCellValue(company.getLocationType() != null ? company.getLocationType().toString() : "");
+                row.createCell(5).setCellValue(company.getIndustryTypes() != null ? company.getIndustryTypes().stream().map(IndustryType::toString).collect(Collectors.joining(", ")) : "");
+                row.createCell(6).setCellValue(company.getCompanyManager() != null ? company.getCompanyManager().getFullName() : "");
+                row.createCell(7).setCellValue(company.getContactPersons() != null ? company.getContactPersons().stream().map(ContactPerson::getFullName).collect(Collectors.joining(", ")) : "");
+            }
+
+            // Автоматично нагласяне на ширината на колоните
+            for (int i = 0; i < headers.length; i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+            // Запис в файл
+            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+                workbook.write(fileOut);
+            }
+            System.out.println("SUCCESSFULLY EXPORTED --< " + companies.size() + " >-- companies IN " + filePath);
         } catch (IOException e) {
             System.err.println("ERROR WRITING Excel file: " + e.getMessage());
             e.printStackTrace();

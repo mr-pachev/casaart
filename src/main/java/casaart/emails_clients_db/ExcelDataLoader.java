@@ -18,10 +18,11 @@ public class ExcelDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        String filePathImport = "C:\\Users\\user\\Documents\\IP\\demo.xlsx"; // Път до локалния Excel файл
-        String filePathExport = "C:\\Users\\user\\Documents\\IP\\BACKUP_CLIENTS.xlsx"; // Път до локалния Excel файл
+        String filePathImportClients = "C:\\Users\\user\\Documents\\IP\\demo.xlsx"; // Път до локалния Excel файл
+        String filePathExportClients = "C:\\Users\\user\\Documents\\IP\\BACKUP_CLIENTS.xlsx"; // Път до локалния Excel файл
+        String filePathExportCompanies = "C:\\Users\\user\\Documents\\IP\\BACKUP_COMPANIES.xlsx"; // Път до локалния Excel файл
 
-//        EDIT
+//        EDIT CLIENTS
 //        editDataBaseService.removeDuplicateClients();
 //        editDataBaseService.removeDuplicateClientsSameEmail();
 //        editDataBaseService.removedClientsWithFalseEmail();
@@ -29,14 +30,19 @@ public class ExcelDataLoader implements CommandLineRunner {
 //        editDataBaseService.normalizeEmailsForCompanies();
 //        editDataBaseService.updateAllClientNames();
 
-//        IMPORT
-//        System.out.println("START UPDATING/IMPORT clients FROM " + filePathImport);
-//        exelService.updateOrAddLoyaltyLevel(filePathImport);
+//        IMPORT CLIENTS
+//        System.out.println("START UPDATING/IMPORT clients FROM " + filePathImportClients);
+//        exelService.updateOrAddLoyaltyLevel(filePathImportClients);
 //        System.out.println("UPDATING/IMPORT IS FINISHED!");
 
-//        EXPORT
-        System.out.println("EXPORT OF clients TO " + filePathExport);
-        exelService.exportClientsToExcel(filePathExport);
+//        EXPORT CLIENTS
+//        System.out.println("EXPORT OF clients TO " + filePathExportClients);
+//        exelService.exportClientsToExcel(filePathExportClients);
+//        System.out.println("EXPORT is FINISHED!");
+
+//        EXPORT COMPANIES
+        System.out.println("EXPORT OF companies TO " + filePathExportCompanies);
+        exelService.exportCompaniesToExcel(filePathExportCompanies);
         System.out.println("EXPORT is FINISHED!");
     }
 }

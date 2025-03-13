@@ -1,9 +1,9 @@
 package casaart.emails_clients_db.model.enums;
 
 public enum Rating {
-    TWO,
-    THREE,
-    FOUR,
+    SIX,
     FIVE,
-    SIX
+    FOUR,
+    THREE,
+    TWO
 }
