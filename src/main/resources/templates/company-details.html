@@ -35,12 +35,15 @@
                 </div>
                 <div class="form-group">
                     <label th:for="units">Звено</label>
+                    <small class="form-text text-muted" style="font-size: 0.8rem; font-weight: normal;">
+                        (Задръж Ctrl и направи няколко селекта)
+                    </small>
                     <select class="form-control"
                             id="units"
                             name="units"
                             th:field="*{units}"
                             th:errorclass="is-invalid"
-                            multiple> <!-- Позволява избор на няколко стойности -->
+                            multiple>
                         <option th:each="unit : ${allUnits}"
                                 th:value="${unit}"
                                 th:text="${unit}">
@@ -50,14 +53,18 @@
                         Избери поне едно звено.
                     </p>
                 </div>
+
                 <div class="form-group">
                     <label th:for="industries">Вид дейност</label>
+                    <small class="form-text text-muted" style="font-size: 0.8rem; font-weight: normal;">
+                        (Задръж Ctrl и направи няколко селекта)
+                    </small>
                     <select class="form-control"
                             id="industries"
                             name="industries"
                             th:field="*{industries}"
                             th:errorclass="is-invalid"
-                            multiple> <!-- Позволява избор на няколко стойности -->
+                            multiple>
                         <option th:each="industry : ${allIndustries}"
                                 th:value="${industry}"
                                 th:text="${industry}"
@@ -68,6 +75,7 @@
                         Избери поне една дейност.
                     </p>
                 </div>
+
                 <div class="form-group">
                     <label th:for="address">Адрес</label>
                     <input type="text"
