@@ -102,7 +102,7 @@
 
             if (selectedUnit && unitIndustries[selectedUnit]) {
                 industrySelect.style.display = "inline-block";
-                industrySelect.innerHTML = '<option value="">-- Изберете продукт/услуга --</option>';
+                industrySelect.innerHTML = '<option value="">-- Изберете продукти/услуги --</option>';
 
                 unitIndustries[selectedUnit].forEach(industry => {
                     let option = document.createElement("option");
@@ -127,7 +127,7 @@
             <th>Лице за контакт</th>
             <th>Управител</th>
             <th>Звено</th>
-            <th>Бранш</th>
+            <th>Услуги/продукти</th>
             <th>Действия</th>
         </tr>
         </thead>
@@ -184,7 +184,7 @@
             <td>
                 <ul>
                     <li th:each="industry : ${company.industries}"
-                        th:text="${industry}">Бранш
+                        th:text="${industry}">Услуги/продукти
                     </li>
                 </ul>
             </td>

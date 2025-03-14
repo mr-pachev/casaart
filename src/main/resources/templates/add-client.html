@@ -27,17 +27,17 @@
                         Името трябва да се състои от 2 до 15 букви.
                     </p>
                 </div>
-                <div class="form-group">
-                    <label for="middleName">Презиме</label>
-                    <input type="text"
-                           id="middleName"
-                           name="middleName"
-                           th:field="*{middleName}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Презимето трябва да съдържа до 15 букви.
-                    </p>
-                </div>
+<!--                <div class="form-group">-->
+<!--                    <label for="middleName">Презиме</label>-->
+<!--                    <input type="text"-->
+<!--                           id="middleName"-->
+<!--                           name="middleName"-->
+<!--                           th:field="*{middleName}"-->
+<!--                           th:errorclass="is-invalid">-->
+<!--                    <p class="invalid-feedback errors alert alert-danger">-->
+<!--                        Презимето трябва да съдържа до 15 букви.-->
+<!--                    </p>-->
+<!--                </div>-->
                 <div class="form-group">
                     <label for="lastName">Фамилия</label>
                     <input type="text"
@@ -78,6 +78,9 @@
                 </div>
                 <div class="form-group">
                     <label th:for="sourceTypes">Източник данни</label>
+                    <small class="form-text text-muted" style="font-size: 0.8rem; font-weight: normal;">
+                        (Задръж <b>Ctrl</b> и направи няколко селекта)
+                    </small>
                     <select class="form-control"
                             id="sourceTypes"
                             name="sourceTypes"
