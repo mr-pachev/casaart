@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddCompanyDTO {
@@ -31,7 +32,7 @@ public class AddCompanyDTO {
     private List<String> units;
 
     @NotEmpty
-    private List<String> industries;
+    private List<String> industries = new ArrayList<>();;
 
     public String getName() {
         return name;

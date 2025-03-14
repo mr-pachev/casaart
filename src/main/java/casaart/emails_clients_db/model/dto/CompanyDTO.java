@@ -36,7 +36,7 @@ public class CompanyDTO {
 
     private String companyManager;
 
-    private List<String> industries;
+    private List<String> industries = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -118,3 +118,4 @@ public class CompanyDTO {
         this.industries = industries;
     }
 }
+
