@@ -178,11 +178,19 @@ public class CompanyServiceImpl implements CompanyService {
         company.setEmail(companyDTO.getEmail());
         company.setLocationType(LocationType.valueOf(companyDTO.getLocationType()));
 
-        List<IndustryType> industries = companyDTO.getIndustries().stream()
+        List<IndustryType> industryTypes = companyDTO.getIndustries().stream()
                 .map(IndustryType::valueOf)
                 .collect(Collectors.toList());
 
-        company.setIndustryTypes(industries);
+        List<UnitType> unitTypes = new ArrayList<>();
+
+        for (String unit : companyDTO.getUnits()) {
+            unitTypes.add(UnitType.valueOf(unit));
+        }
+
+        company.setIndustryTypes(industryTypes);
+        company.setUnitTypes(unitTypes);
+
         companyRepository.save(company);
     }
 
