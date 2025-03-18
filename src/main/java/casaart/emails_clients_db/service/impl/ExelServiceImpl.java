@@ -276,6 +276,23 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
+    // export unmatched emails to exel
+    @Override
+    public void exportUnmatchedEmailsToExcel(List<String> emails, String outputFilePath) {
+        try (Workbook workbook = new XSSFWorkbook(); FileOutputStream fos = new FileOutputStream(outputFilePath)) {
+            Sheet sheet = workbook.createSheet("Unmatched Emails");
+
+            int rowNum = 0;
+            for (String email : emails) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(email);
+            }
+
+            workbook.write(fos);
+        } catch (IOException e) {
+            System.err.println("Error writing Excel file: " + e.getMessage());
+        }
+    }
 
     // update or add loyaltyLevel on clients
     @Override
@@ -465,7 +482,7 @@ public class ExelServiceImpl implements ExelService {
                 }
             }
 
-            exportToExcel(unmatchedEmails, outputFilePath);
+            exportUnmatchedEmailsToExcel(unmatchedEmails, outputFilePath);
             System.out.println("SUCCESSFULLY EXPORTED ---< " + unmatchedEmails.size() + " >-- UNMATCHED EMAILS.");
         } catch (IOException e) {
             System.err.println("ERROR READING EXCEL FILE: " + e.getMessage());
@@ -560,22 +577,5 @@ public class ExelServiceImpl implements ExelService {
         }
 
         return phoneNumber;
-    }
-
-
-    void exportToExcel(List<String> emails, String outputFilePath) {
-        try (Workbook workbook = new XSSFWorkbook(); FileOutputStream fos = new FileOutputStream(outputFilePath)) {
-            Sheet sheet = workbook.createSheet("Unmatched Emails");
-
-            int rowNum = 0;
-            for (String email : emails) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(email);
-            }
-
-            workbook.write(fos);
-        } catch (IOException e) {
-            System.err.println("Error writing Excel file: " + e.getMessage());
-        }
     }
 }

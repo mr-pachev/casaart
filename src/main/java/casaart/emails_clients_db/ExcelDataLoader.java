@@ -5,7 +5,7 @@ import casaart.emails_clients_db.service.ExelService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class ExcelDataLoader implements CommandLineRunner {
 
     final ExelService exelService;
@@ -19,11 +19,11 @@ public class ExcelDataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
         String filePathImportClients = "C:\\Users\\user\\Documents\\IP\\demo.xlsx"; // Път до локалния Excel файл
+        String filePathImportEmails = "C:\\Users\\user\\Documents\\IP\\IMPORT_EMAILS.xlsx"; // Път до локалния Excel файл
         String filePathExportClients = "C:\\Users\\user\\Documents\\IP\\BACKUP_CLIENTS.xlsx"; // Път до локалния Excel файл
         String filePathExportCompanies = "C:\\Users\\user\\Documents\\IP\\BACKUP_COMPANIES.xlsx"; // Път до локалния Excel файл
         String filePathExportCompanyManager = "C:\\Users\\user\\Documents\\IP\\BACKUP_COMPANY_MANAGERS.xlsx"; // Път до локалния Excel файл
         String filePathExportContactPerson = "C:\\Users\\user\\Documents\\IP\\BACKUP_CONTACT_PERSONS.xlsx"; // Път до локалния Excel файл
-        String filePathImportEmails = "C:\\Users\\user\\Documents\\IP\\IMPORT_EMAILS.xlsx"; // Път до локалния Excel файл
         String filePathExportEmails = "C:\\Users\\user\\Documents\\IP\\NEW_EMAILS.xlsx"; // Път до локалния Excel файл
 
 //        EDIT CLIENTS
@@ -59,6 +59,6 @@ public class ExcelDataLoader implements CommandLineRunner {
 //        exelService.exportContactPersonsToExcel(filePathExportContactPerson);
 //        System.out.println("EXPORT is FINISHED!");
 
-        exelService.matchEmailsFromExel(filePathImportEmails, filePathExportEmails);
+//        exelService.matchEmailsFromExel(filePathImportEmails, filePathExportEmails);
     }
 }

@@ -16,6 +16,9 @@ public interface ExelService {
     // export contactPersons to exel
     void exportContactPersonsToExcel(String filePath);
 
+    // export unmatched emails to exel
+    void exportUnmatchedEmailsToExcel(List<String> emails, String outputFilePath);
+
     // update or add loyaltyLevel on clients
     void updateOrAddLoyaltyLevel(String filePath);
 
