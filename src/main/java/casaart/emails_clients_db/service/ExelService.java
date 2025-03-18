@@ -1,5 +1,7 @@
 package casaart.emails_clients_db.service;
 
+import java.util.List;
+
 public interface ExelService {
 
     // export clients to exel
@@ -16,4 +18,7 @@ public interface ExelService {
 
     // update or add loyaltyLevel on clients
     void updateOrAddLoyaltyLevel(String filePath);
+
+    //match emails from exel
+    void matchEmailsFromExel(String inputFilePath, String outputFilePath);
 }

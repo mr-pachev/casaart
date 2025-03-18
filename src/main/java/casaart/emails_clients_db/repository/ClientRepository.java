@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
@@ -34,6 +35,9 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findAllByRatingQualityPrice(Rating ratingQualityPrice);
     List<Client> findAllByRatingPoliteness(Rating ratingPoliteness);
     List<Client> findAllByRatingCleanTidy(Rating ratingCleanTidy);
+
+    @Query("SELECT c.email FROM Client c")
+    Set<String> findAllEmails();
 
     // Изтрива всички дубликати, оставяйки само един запис за всеки email
     @Modifying

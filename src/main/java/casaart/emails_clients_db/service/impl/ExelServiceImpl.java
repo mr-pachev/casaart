@@ -444,6 +444,34 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
+    // match emails from exel
+    @Override
+    public void matchEmailsFromExel(String inputFilePath, String outputFilePath) {
+        Set<String> existingEmails = clientRepository.findAllEmails(); // Връща Set<String> с всички имейли
+        List<String> unmatchedEmails = new ArrayList<>();
+
+        try (FileInputStream fis = new FileInputStream(new File(inputFilePath));
+             Workbook workbook = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = workbook.getSheetAt(0);
+            for (Row row : sheet) {
+                if (row.getRowNum() == 0) continue; // Пропускаме заглавния ред
+
+                Cell emailCell = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                String email = emailCell.toString().trim();
+
+                if (!email.isEmpty() && !existingEmails.contains(email)) {
+                    unmatchedEmails.add(email);
+                }
+            }
+
+            exportToExcel(unmatchedEmails, outputFilePath);
+            System.out.println("SUCCESSFULLY EXPORTED ---< " + unmatchedEmails.size() + " >-- UNMATCHED EMAILS.");
+        } catch (IOException e) {
+            System.err.println("ERROR READING EXCEL FILE: " + e.getMessage());
+        }
+    }
+
     // Метод за извличане на стойност от клетка като String
     private String getCellValueAsString(Cell cell) {
         if (cell == null) return "";
@@ -513,7 +541,6 @@ public class ExelServiceImpl implements ExelService {
         return formattedName.toString().trim();
     }
 
-
     // Обработка на телефонния номер на клиент
     String formatPhoneNumber(String phoneNumber) {
         if (phoneNumber == null || phoneNumber.isEmpty()) {
@@ -533,5 +560,22 @@ public class ExelServiceImpl implements ExelService {
         }
 
         return phoneNumber;
+    }
+
+
+    void exportToExcel(List<String> emails, String outputFilePath) {
+        try (Workbook workbook = new XSSFWorkbook(); FileOutputStream fos = new FileOutputStream(outputFilePath)) {
+            Sheet sheet = workbook.createSheet("Unmatched Emails");
+
+            int rowNum = 0;
+            for (String email : emails) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(email);
+            }
+
+            workbook.write(fos);
+        } catch (IOException e) {
+            System.err.println("Error writing Excel file: " + e.getMessage());
+        }
     }
 }
