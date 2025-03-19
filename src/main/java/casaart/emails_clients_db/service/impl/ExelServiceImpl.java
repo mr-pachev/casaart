@@ -329,6 +329,7 @@ public class ExelServiceImpl implements ExelService {
                 String email = getCellValueAsString(emailCell);
                 String nationalityStr = getCellValueAsString(nationalityCell);
 
+                // Филтър за пропускане на редове
                 if (firstName.isEmpty() || email.isEmpty()) continue;
 
                 // Обработка на датата за настаняване
@@ -364,6 +365,7 @@ public class ExelServiceImpl implements ExelService {
                     }
                 }
 
+                // Проверка дали съществува въведения клиент в базата данни
                 Client existingClient = clientRepository
                         .findByFirstNameAndLastNameAndEmail(firstName, lastName, email)
                         .orElse(null);
@@ -372,7 +374,7 @@ public class ExelServiceImpl implements ExelService {
                 if (existingClient != null) {
                     counterUpdated++;
 
-                    // Обновяване само на липсващи данни
+                    // Настройка на дата настаняване
                     if (accommodationDate != null) {
 
                         // Проверка има ли въведена дата на настаняване
@@ -382,32 +384,49 @@ public class ExelServiceImpl implements ExelService {
                         } else if (!existingClient.getAccommodationDate().equals(accommodationDate)) {
                             existingClient.setCounterStay(existingClient.getCounterStay() + 1);
 
+                            // Автоматична настройка ниво лоялност
                             if (existingClient.getCounterStay() >= 20) {
                                 existingClient.setLoyaltyLevel(LoyaltyLevel.LEVEL_3);
                             } else if (existingClient.getCounterStay() >= 10) {
                                 existingClient.setLoyaltyLevel(LoyaltyLevel.LEVEL_2);
                             }
                         }
+
                         existingClient.setAccommodationDate(accommodationDate);
                     }
 
+                    // Настройка на лоялност
                     if (existingClient.getLoyaltyLevel() == null && !loyaltyLevel.isEmpty()) {
                         existingClient.setLoyaltyLevel(LoyaltyLevel.valueOf(loyaltyLevel));
                     }
 
+                    // Настройка телефонен номер
                     if (existingClient.getPhoneNumber() == null && !phoneNumber.isEmpty()) {
                         existingClient.setPhoneNumber(phoneNumber);
                     }
 
+                    // Настройка националност
                     if (nationality != null) {
                         existingClient.setNationality(nationality);
+
                     }else if(existingClient.getNationality() == null){
                         existingClient.setNationality(Nationality.BG);
                     }
 
+                    // Настройка имена
                     existingClient.setFirstName(firstName);
                     existingClient.setMiddleName(!middleName.isEmpty() ? middleName : null);
                     existingClient.setLastName(lastName);
+
+                    // Настройка на изтобник клиент
+                    SourceType importSourceType = SourceType.valueOf(sourceType);
+                    if (!existingClient.getSourceTypes().contains(importSourceType)){
+                        List<SourceType> updatedSourceTypes = existingClient.getSourceTypes();
+
+                        updatedSourceTypes.add(importSourceType);
+
+                        existingClient.setSourceTypes(updatedSourceTypes);
+                    }
 
                     clientRepository.save(existingClient);
 
@@ -437,6 +456,7 @@ public class ExelServiceImpl implements ExelService {
                     newClient.setMiddleName(!middleName.isEmpty() ? middleName : null);
                     newClient.setLastName(lastName);
 
+                    // Проверка дали клиента съществува няколко пъти в екселската таблица
                     boolean existsInList = newClients.stream().anyMatch(c ->
                             Objects.equals(c.getFirstName(), newClient.getFirstName()) &&
                                     Objects.equals(c.getLastName(), newClient.getLastName()) ||
