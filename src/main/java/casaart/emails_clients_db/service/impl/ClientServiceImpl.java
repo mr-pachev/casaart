@@ -297,6 +297,8 @@ public class ClientServiceImpl implements ClientService {
         }
         clientDTO.setRating(rating);
 
+        clientDTO.setComment(client.getComment());
+
         return clientDTO;
     }
 
