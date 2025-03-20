@@ -32,7 +32,10 @@ public class AddCompanyDTO {
     private List<String> units;
 
     @NotEmpty
-    private List<String> industries = new ArrayList<>();;
+    private List<String> industries = new ArrayList<>();
+
+    @NotBlank
+    private String companyType;
 
     public String getName() {
         return name;
@@ -88,5 +91,13 @@ public class AddCompanyDTO {
 
     public void setIndustries(List<String> industries) {
         this.industries = industries;
+    }
+
+    public String getCompanyType() {
+        return companyType;
+    }
+
+    public void setCompanyType(String companyType) {
+        this.companyType = companyType;
     }
 }

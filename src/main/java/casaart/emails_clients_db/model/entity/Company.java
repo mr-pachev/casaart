@@ -1,5 +1,6 @@
 package casaart.emails_clients_db.model.entity;
 
+import casaart.emails_clients_db.model.enums.CompanyType;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
 import casaart.emails_clients_db.model.enums.UnitType;
@@ -46,6 +47,9 @@ public class Company extends BaseEntity{
     @Enumerated(EnumType.STRING)
     @Column(length = 50)
     private List<IndustryType> industryTypes;
+
+    @Enumerated(EnumType.STRING)
+    private CompanyType companyType;
 
     public String getName() {
         return name;
@@ -117,6 +121,14 @@ public class Company extends BaseEntity{
 
     public void setIndustryTypes(List<IndustryType> industryTypes) {
         this.industryTypes = industryTypes;
+    }
+
+    public CompanyType getCompanyType() {
+        return companyType;
+    }
+
+    public void setCompanyType(CompanyType companyType) {
+        this.companyType = companyType;
     }
 }
 

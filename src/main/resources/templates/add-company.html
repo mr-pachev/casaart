@@ -30,6 +30,23 @@
                     </p>
                 </div>
                 <div class="form-group">
+                    <label th:for="companyType">Тип компания</label>
+                    <select class="form-control"
+                            id="companyType"
+                            name="companyType"
+                            th:field="*{companyType}"
+                            th:errorclass="is-invalid">
+                        <option value="">-- Избери --</option>
+                        <option th:each="type: ${allCompanyTypes}"
+                                th:value="${type}"
+                                th:text="${type}">Тип компания
+                        </option>
+                    </select>
+                    <p class="invalid-feedback errors alert alert-danger">
+                        Избери тип взаймоотношения.
+                    </p>
+                </div>
+                <div class="form-group">
                     <label th:for="units">Звено</label>
                     <small class="form-text text-muted" style="font-size: 0.8rem; font-weight: normal;">
                         (Задръж <b>Ctrl</b> и направи няколко селекта)

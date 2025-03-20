@@ -3,6 +3,7 @@ package casaart.emails_clients_db.web;
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
+import casaart.emails_clients_db.model.enums.CompanyType;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
 import casaart.emails_clients_db.model.enums.UnitType;
@@ -16,7 +17,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.lang.model.type.UnionType;
 import java.util.List;
 
 @Controller
@@ -54,6 +54,7 @@ public class CompanyController {
         model.addAttribute("allCompanies", companyDTOS);
         model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allIndustries", IndustryType.values());
+        model.addAttribute("allCompanyTypes", CompanyType.values());
         model.addAttribute("allLocations", LocationType.values());
 
         return "companies";
@@ -97,6 +98,7 @@ public class CompanyController {
         model.addAttribute("allCompanies", sortedCompanies);
         model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allIndustries", IndustryType.values());
+        model.addAttribute("allCompanyTypes", CompanyType.values());
         model.addAttribute("allLocations", LocationType.values());
 
         return "companies";
@@ -109,6 +111,7 @@ public class CompanyController {
         model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allLocations", LocationType.values());
         model.addAttribute("allIndustries", IndustryType.values());
+        model.addAttribute("allCompanyTypes", CompanyType.values());
 
         if (!model.containsAttribute("isExistCompany")) {
             model.addAttribute("isExistCompany", false);
@@ -127,6 +130,7 @@ public class CompanyController {
             rAtt.addFlashAttribute("allUnits", UnitType.values());
             rAtt.addFlashAttribute("allLocations", LocationType.values());
             rAtt.addFlashAttribute("allIndustries", IndustryType.values());
+            rAtt.addFlashAttribute("allCompanyTypes", CompanyType.values());
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCompanyDTO", bindingResult);
 
@@ -137,6 +141,7 @@ public class CompanyController {
             rAtt.addFlashAttribute("allUnits", UnitType.values());
             rAtt.addFlashAttribute("allLocations", LocationType.values());
             rAtt.addFlashAttribute("allIndustries", IndustryType.values());
+            rAtt.addFlashAttribute("allCompanyTypes", CompanyType.values());
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
             rAtt.addFlashAttribute("isExistCompany", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCompanyDTO", bindingResult);
@@ -164,6 +169,7 @@ public class CompanyController {
         model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allLocations", LocationType.values());
         model.addAttribute("allIndustries", IndustryType.values());
+        model.addAttribute("allCompanyTypes", CompanyType.values());
         model.addAttribute("contactsPersons", companyDTO.getContactPerson());
 
         return "company-details";
@@ -183,6 +189,7 @@ public class CompanyController {
             model.addAttribute("allUnits", UnitType.values());
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
+            model.addAttribute("allCompanyTypes", CompanyType.values());
             model.addAttribute("contactsPersons", companyDTO.getContactPerson());
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
 
@@ -196,6 +203,7 @@ public class CompanyController {
             model.addAttribute("allUnits", UnitType.values());
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
+            model.addAttribute("allCompanyTypes", CompanyType.values());
             model.addAttribute("contactsPersons", companyDTO.getContactPerson());
             model.addAttribute("isExistCompany", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.companyDTO", bindingResult);

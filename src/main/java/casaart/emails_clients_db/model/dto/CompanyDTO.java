@@ -38,6 +38,9 @@ public class CompanyDTO {
 
     private List<String> industries = new ArrayList<>();
 
+    @NotBlank
+    private String companyType;
+
     public long getId() {
         return id;
     }
@@ -116,6 +119,14 @@ public class CompanyDTO {
 
     public void setIndustries(List<String> industries) {
         this.industries = industries;
+    }
+
+    public String getCompanyType() {
+        return companyType;
+    }
+
+    public void setCompanyType(String companyType) {
+        this.companyType = companyType;
     }
 }
 

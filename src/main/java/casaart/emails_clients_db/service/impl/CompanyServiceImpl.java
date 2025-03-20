@@ -6,6 +6,7 @@ import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Company;
 import casaart.emails_clients_db.model.entity.CompanyManager;
 import casaart.emails_clients_db.model.entity.ContactPerson;
+import casaart.emails_clients_db.model.enums.CompanyType;
 import casaart.emails_clients_db.model.enums.IndustryType;
 import casaart.emails_clients_db.model.enums.LocationType;
 import casaart.emails_clients_db.model.enums.UnitType;
@@ -177,6 +178,7 @@ public class CompanyServiceImpl implements CompanyService {
         company.setPhoneNumber(companyDTO.getPhoneNumber());
         company.setEmail(companyDTO.getEmail());
         company.setLocationType(LocationType.valueOf(companyDTO.getLocationType()));
+        company.setCompanyType(CompanyType.valueOf(companyDTO.getCompanyType()));
 
         List<IndustryType> industryTypes = companyDTO.getIndustries().stream()
                 .map(IndustryType::valueOf)
@@ -229,6 +231,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setPhoneNumber(company.getPhoneNumber());
         companyDTO.setEmail(company.getEmail());
         companyDTO.setLocationType(company.getLocationType().name());
+        companyDTO.setCompanyType(company.getCompanyType().name());
 
         List<String> contactPersons = company.getContactPersons().stream()
                 .map(ContactPerson::getFullName)
