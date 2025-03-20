@@ -29,7 +29,6 @@ public class CompanyDTO {
     @NotBlank
     private String locationType;
 
-    @NotEmpty
     private List<String> units;
 
     private List<String> contactPerson = new ArrayList<>();
@@ -37,6 +36,8 @@ public class CompanyDTO {
     private String companyManager;
 
     private List<String> industries = new ArrayList<>();
+
+    private List<String> partnerTypes = new ArrayList<>();
 
     @NotBlank
     private String companyType;
@@ -119,6 +120,14 @@ public class CompanyDTO {
 
     public void setIndustries(List<String> industries) {
         this.industries = industries;
+    }
+
+    public List<String> getPartnerTypes() {
+        return partnerTypes;
+    }
+
+    public void setPartnerTypes(List<String> partnerTypes) {
+        this.partnerTypes = partnerTypes;
     }
 
     public String getCompanyType() {

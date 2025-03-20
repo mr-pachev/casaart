@@ -23,9 +23,11 @@
         <span>Списък с доставчици:</span>
         <span class="count" th:text="${allCompanies.size()}"></span>
     </h1>
-    <div class="buttons">
-        <a th:href="@{/add-company}" class="register">Добави</a>
-    </div>
+    <form th:method="GET" th:action="@{/add-company}" style="display: inline;" class="buttons">
+        <input type="hidden" id="companyType" name="companyType" value="ДОСТАВЧИК">
+
+        <button type="submit">Запази</button>
+    </form>
     <div class="buttons">
         <form th:method="POST"
               th:action="@{/sort-companies}" style="display: inline;">

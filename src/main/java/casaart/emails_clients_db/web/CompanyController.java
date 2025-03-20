@@ -3,10 +3,7 @@ package casaart.emails_clients_db.web;
 import casaart.emails_clients_db.model.dto.AddCompanyDTO;
 import casaart.emails_clients_db.model.dto.CompanyDTO;
 import casaart.emails_clients_db.model.dto.PersonDTO;
-import casaart.emails_clients_db.model.enums.CompanyType;
-import casaart.emails_clients_db.model.enums.IndustryType;
-import casaart.emails_clients_db.model.enums.LocationType;
-import casaart.emails_clients_db.model.enums.UnitType;
+import casaart.emails_clients_db.model.enums.*;
 import casaart.emails_clients_db.service.CompanyManagerService;
 import casaart.emails_clients_db.service.CompanyService;
 import casaart.emails_clients_db.service.ContactPersonService;
@@ -121,14 +118,22 @@ public class CompanyController {
 
     // add new company
     @GetMapping("/add-company")
-    public String viewAddCompanyForm(Model model) {
+    public String viewAddCompanyForm(@RequestParam("companyType") String companyType, Model model) {
         model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allLocations", LocationType.values());
         model.addAttribute("allIndustries", IndustryType.values());
         model.addAttribute("allCompanyTypes", CompanyType.values());
+        model.addAttribute("allPartnerTypes", PartnerType.values());
 
         if (!model.containsAttribute("isExistCompany")) {
             model.addAttribute("isExistCompany", false);
+        }
+
+        // Логика за обработка на партньор или доставчик
+        if ("ПАРТНЬОР".equals(companyType)) {
+            System.out.println("Добавяме партньор");
+        } else if ("ДОСТАВЧИК".equals(companyType)) {
+            System.out.println("Добавяме доставчик");
         }
 
         return "add-company";
@@ -145,6 +150,7 @@ public class CompanyController {
             rAtt.addFlashAttribute("allLocations", LocationType.values());
             rAtt.addFlashAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("allCompanyTypes", CompanyType.values());
+            rAtt.addFlashAttribute("allPartnerTypes", PartnerType.values());
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCompanyDTO", bindingResult);
 
@@ -156,6 +162,7 @@ public class CompanyController {
             rAtt.addFlashAttribute("allLocations", LocationType.values());
             rAtt.addFlashAttribute("allIndustries", IndustryType.values());
             rAtt.addFlashAttribute("allCompanyTypes", CompanyType.values());
+            rAtt.addFlashAttribute("allPartnerTypes", PartnerType.values());
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
             rAtt.addFlashAttribute("isExistCompany", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCompanyDTO", bindingResult);
