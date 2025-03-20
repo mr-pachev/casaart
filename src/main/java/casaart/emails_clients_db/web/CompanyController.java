@@ -46,10 +46,10 @@ public class CompanyController {
         return new PersonDTO();
     }
 
-    // view all companies
-    @GetMapping("/companies")
+    // view all partners
+    @GetMapping("/partners")
     public String getAllCompanies(Model model) {
-        List<CompanyDTO> companyDTOS = companyService.getAllCompanies();
+        List<CompanyDTO> companyDTOS = companyService.getAllPartners();
 
         model.addAttribute("allCompanies", companyDTOS);
         model.addAttribute("allUnits", UnitType.values());
@@ -57,7 +57,21 @@ public class CompanyController {
         model.addAttribute("allCompanyTypes", CompanyType.values());
         model.addAttribute("allLocations", LocationType.values());
 
-        return "companies";
+        return "partners";
+    }
+
+    // view all suppliers
+    @GetMapping("/suppliers")
+    public String getAllSuppliers(Model model) {
+        List<CompanyDTO> companyDTOS = companyService.getAllSuppliers();
+
+        model.addAttribute("allCompanies", companyDTOS);
+        model.addAttribute("allUnits", UnitType.values());
+        model.addAttribute("allIndustries", IndustryType.values());
+        model.addAttribute("allCompanyTypes", CompanyType.values());
+        model.addAttribute("allLocations", LocationType.values());
+
+        return "suppliers";
     }
 
     // view all sorted companies
@@ -78,7 +92,7 @@ public class CompanyController {
                         sortedCompanies = companyService.sortedCompaniesByUnit(unitType);
                     }
                 } else {
-                    sortedCompanies = companyService.getAllCompanies();
+//                    sortedCompanies = companyService.getAllCompanies();
                 }
                 break;
 
@@ -86,7 +100,7 @@ public class CompanyController {
                 if (locationType != null && !locationType.isEmpty()) {
                     sortedCompanies = companyService.sortedCompaniesByLocationType(locationType);
                 } else {
-                    sortedCompanies = companyService.getAllCompanies();
+//                    sortedCompanies = companyService.getAllCompanies();
                 }
                 break;
 
@@ -95,7 +109,7 @@ public class CompanyController {
                 break;
         }
 
-        model.addAttribute("allCompanies", sortedCompanies);
+//        model.addAttribute("allCompanies", sortedCompanies);
         model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allIndustries", IndustryType.values());
         model.addAttribute("allCompanyTypes", CompanyType.values());
@@ -151,7 +165,11 @@ public class CompanyController {
 
         companyService.addCompany(addCompanyDTO);
 
-        return "redirect:/companies";
+        if (addCompanyDTO.getCompanyType().equals("ПАРТНЬОР")){
+            return "redirect:/partners";
+        }
+
+        return "redirect:/suppliers";
     }
 
     // edit current company
@@ -212,16 +230,25 @@ public class CompanyController {
         }
 
         companyService.editCompany(companyDTO);
-        return "redirect:/companies";
+
+        if (companyDTO.getCompanyType().equals("ПАРТНЬОР")){
+            return "redirect:/partners";
+        }
+
+        return "redirect:/suppliers";
     }
 
 
     // delete company by id
     @PostMapping("/delete-company/{id}")
     public String removeCompany(@PathVariable("id") Long id) {
+        CompanyDTO companyDTO = companyService.findCompanyById(id);
 
         companyService.removeCompany(id);
 
-        return "redirect:/companies";
+        if (companyDTO.getCompanyType().equals("ПАРТНЬОР")){
+            return "redirect:/partners";
+        }
+        return "redirect:/suppliers";
     }
 }

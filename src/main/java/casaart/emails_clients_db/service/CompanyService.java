@@ -9,8 +9,11 @@ import java.util.List;
 
 public interface CompanyService {
 
-    // get all companies
-    List<CompanyDTO> getAllCompanies();
+    // get all partners
+    List<CompanyDTO> getAllPartners();
+
+    // get all suppliers
+    List<CompanyDTO> getAllSuppliers();
 
     // get sorted companies
     List<CompanyDTO> sortedCompanies(String companyType);

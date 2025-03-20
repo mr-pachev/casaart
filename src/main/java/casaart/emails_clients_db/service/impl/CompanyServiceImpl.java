@@ -36,10 +36,24 @@ public class CompanyServiceImpl implements CompanyService {
         this.mapper = mapper;
     }
 
-    // get all companies
+    // get all partners
     @Override
-    public List<CompanyDTO> getAllCompanies() {
-        List<Company> allCompanies = companyRepository.findAllByOrderByIdDesc();
+    public List<CompanyDTO> getAllPartners() {
+        List<Company> allCompanies = companyRepository.findAllPartnersOrderedByIdDesc();
+        List<CompanyDTO> companyDTOS = new ArrayList<>();
+
+        for (Company company : allCompanies) {
+            CompanyDTO companyDTO = mapCompanyToCompanyDTO(company);
+            companyDTOS.add(companyDTO);
+        }
+
+        return companyDTOS;
+    }
+
+    // get all suppliers
+    @Override
+    public List<CompanyDTO> getAllSuppliers() {
+        List<Company> allCompanies = companyRepository.findAllSuppliersOrderedByIdDesc();
         List<CompanyDTO> companyDTOS = new ArrayList<>();
 
         for (Company company : allCompanies) {
@@ -61,7 +75,7 @@ public class CompanyServiceImpl implements CompanyService {
             companyList = companyRepository.findAllByOrderByNameAsc();
 
         } else if (input.equals("allCompanies")) {
-            companyList = companyRepository.findAllByOrderByIdDesc();
+//            companyList = companyRepository.findAllByOrderByIdDesc();
 
         } else if (input.contains("@")) {
             companyList = companyRepository.findByEmailStartingWithIgnoreCase(input);
@@ -81,7 +95,7 @@ public class CompanyServiceImpl implements CompanyService {
             }
 
             if (companyList.isEmpty()) {
-                companyList = companyRepository.findAllByOrderByIdDesc();
+//                companyList = companyRepository.findAllByOrderByIdDesc();
             }
 
         }

@@ -27,7 +27,8 @@
         <a th:href="@{/add-company}" class="register">Добави</a>
     </div>
     <div class="buttons">
-        <form th:method="POST" th:action="@{/sort-companies}" style="display: inline;">
+        <form th:method="POST"
+              th:action="@{/sort-companies}" style="display: inline;">
             <!-- Основен селект -->
             <select name="companyType" class="source-type-select" id="mainSelect" onchange="toggleUnitSelect()">
                 <option value="allCompanies">-- подреди по --</option>
