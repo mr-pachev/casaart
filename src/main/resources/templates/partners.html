@@ -94,6 +94,7 @@
             <!--            <th>Звено</th>-->
             <!--            <th>Услуги/продукти</th>-->
             <th>Действия</th>
+            <th>Тип партньор</th>
         </tr>
         </thead>
         <tbody>
@@ -153,6 +154,13 @@
             <!--                    </li>-->
             <!--                </ul>-->
             <!--            </td>-->
+            <td>
+                <ul>
+                    <li th:each="type : ${company.partnerTypes}"
+                        th:text="${type}">Тип партньор
+                    </li>
+                </ul>
+            </td>
             <td>
                 <div class="action-buttons">
                     <form th:method="GET" th:action="@{/company-details/{id}(id=${company.id})}">
