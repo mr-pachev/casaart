@@ -74,8 +74,8 @@ public class CompanyServiceImpl implements CompanyService {
         if (input.equals("name")) {
             companyList = companyRepository.findAllByOrderByNameAsc();
 
-        } else if (input.equals("allCompanies")) {
-//            companyList = companyRepository.findAllByOrderByIdDesc();
+        } else if (input.equals("allSuppliers")) {
+            companyList = companyRepository.findAllSuppliersOrderedByIdDesc();
 
         } else if (input.contains("@")) {
             companyList = companyRepository.findByEmailStartingWithIgnoreCase(input);
@@ -95,7 +95,7 @@ public class CompanyServiceImpl implements CompanyService {
             }
 
             if (companyList.isEmpty()) {
-//                companyList = companyRepository.findAllByOrderByIdDesc();
+                companyList = companyRepository.findAllSuppliersOrderedByIdDesc();
             }
 
         }

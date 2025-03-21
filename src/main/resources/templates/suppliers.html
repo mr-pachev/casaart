@@ -21,7 +21,7 @@
 <main>
     <h1>
         <span>Списък с доставчици:</span>
-        <span class="count" th:text="${allCompanies.size()}"></span>
+        <span class="count" th:text="${allSuppliers.size()}"></span>
     </h1>
     <div class="buttons">
         <form th:method="GET" th:action="@{/add-company}" style="display: inline;">
@@ -35,8 +35,8 @@
               th:action="@{/sort-companies}" style="display: inline;">
             <!-- Основен селект -->
             <select name="companyType" class="source-type-select" id="mainSelect" onchange="toggleUnitSelect()">
-                <option value="allCompanies">-- подреди по --</option>
-                <option value="allCompanies">Всички партньори</option>
+                <option value="allSuppliers">-- подреди по --</option>
+                <option value="allSuppliers">Всички партньори</option>
                 <option value="name">Име</option>
                 <option value="unitType">Звено</option>
                 <option value="locationType">Район на дейност</option>
@@ -138,7 +138,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="company :${allCompanies}">
+        <tr th:each="company :${allSuppliers}">
             <td th:text="${company.name}">Име</td>
             <td th:text="${company.address}">Адрес</td>
             <td th:text="${company.email}">Имейл адрес</td>

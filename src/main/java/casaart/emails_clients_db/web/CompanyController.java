@@ -62,7 +62,7 @@ public class CompanyController {
     public String getAllSuppliers(Model model) {
         List<CompanyDTO> companyDTOS = companyService.getAllSuppliers();
 
-        model.addAttribute("allCompanies", companyDTOS);
+        model.addAttribute("allSuppliers", companyDTOS);
         model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allIndustries", IndustryType.values());
         model.addAttribute("allCompanyTypes", CompanyType.values());
@@ -73,46 +73,46 @@ public class CompanyController {
 
     // view all sorted companies
     @PostMapping("/sort-companies")
-    public String sortCompanies(@RequestParam("companyType") String companyType,
+    public String sortSuppliers(@RequestParam("companyType") String companyType,
                                 @RequestParam(value = "unitType", required = false) String unitType,
                                 @RequestParam(value = "industryType", required = false) String industryType,
                                 @RequestParam(value = "locationType", required = false) String locationType,
                                 Model model) {
-        List<CompanyDTO> sortedCompanies;
+        List<CompanyDTO> sortedSuppliers;
 
         switch (companyType) {
             case "unitType":
                 if (unitType != null && !unitType.isEmpty()) {
                     if (industryType != null && !industryType.isEmpty()) {
-                        sortedCompanies = companyService.sortedCompaniesByUnitAndIndustry(unitType, industryType);
+                        sortedSuppliers = companyService.sortedCompaniesByUnitAndIndustry(unitType, industryType);
                     } else {
-                        sortedCompanies = companyService.sortedCompaniesByUnit(unitType);
+                        sortedSuppliers = companyService.sortedCompaniesByUnit(unitType);
                     }
                 } else {
-//                    sortedCompanies = companyService.getAllCompanies();
+                    sortedSuppliers = companyService.getAllSuppliers();
                 }
                 break;
 
             case "locationType":
                 if (locationType != null && !locationType.isEmpty()) {
-                    sortedCompanies = companyService.sortedCompaniesByLocationType(locationType);
+                    sortedSuppliers = companyService.sortedCompaniesByLocationType(locationType);
                 } else {
-//                    sortedCompanies = companyService.getAllCompanies();
+                    sortedSuppliers = companyService.getAllSuppliers();
                 }
                 break;
 
             default:
-                sortedCompanies = companyService.sortedCompanies(companyType);
+                sortedSuppliers = companyService.sortedCompanies(companyType);
                 break;
         }
 
-//        model.addAttribute("allCompanies", sortedCompanies);
+        model.addAttribute("allSuppliers", sortedSuppliers);
         model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allIndustries", IndustryType.values());
         model.addAttribute("allCompanyTypes", CompanyType.values());
         model.addAttribute("allLocations", LocationType.values());
 
-        return "companies";
+        return "suppliers";
     }
 
 
