@@ -252,6 +252,11 @@ public class CompanyServiceImpl implements CompanyService {
 
             companyDTO.setUnits(null);
             companyDTO.setIndustries(null);
+
+        }else if(company.getCompanyType().equals(CompanyType.ПАРТНЬОР) && companyDTO.getCompanyType().equals("ДОСТАВЧИК")){
+            company.setPartnerTypes(null);
+
+            companyDTO.setPartnerTypes(null);
         }
 
         company.setName(companyDTO.getName());
