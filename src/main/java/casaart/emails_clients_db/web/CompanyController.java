@@ -131,9 +131,7 @@ public class CompanyController {
 
         // Логика за обработка на партньор или доставчик
         if ("ПАРТНЬОР".equals(companyType)) {
-            System.out.println("Добавяме партньор");
-        } else if ("ДОСТАВЧИК".equals(companyType)) {
-            System.out.println("Добавяме доставчик");
+            return "add-partner";
         }
 
         return "add-company";

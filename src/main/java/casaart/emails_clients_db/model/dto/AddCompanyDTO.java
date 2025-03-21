@@ -28,8 +28,7 @@ public class AddCompanyDTO {
     @NotBlank
     private String locationType;
 
-    @NotEmpty
-    private List<String> units;
+    private List<String> units = new ArrayList<>();;
 
     private List<String> industries = new ArrayList<>();
 

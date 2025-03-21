@@ -20,7 +20,7 @@ public class CompanyDTO {
     private String address;
 
     @NotBlank
-    @Size(min=10, max = 10)
+    @Size(min = 10, max = 10)
     private String phoneNumber;
 
     @Email
@@ -29,7 +29,7 @@ public class CompanyDTO {
     @NotBlank
     private String locationType;
 
-    private List<String> units;
+    private List<String> units = new ArrayList<>();;
 
     private List<String> contactPerson = new ArrayList<>();
 
@@ -39,7 +39,6 @@ public class CompanyDTO {
 
     private List<String> partnerTypes = new ArrayList<>();
 
-    @NotBlank
     private String companyType;
 
     public long getId() {
