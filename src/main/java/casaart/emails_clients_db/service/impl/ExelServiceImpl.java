@@ -175,7 +175,7 @@ public class ExelServiceImpl implements ExelService {
 
             // Заглавен ред
             Row headerRow = sheet.createRow(0);
-            String[] headers = {"First Name", "Middle Name", "Last Name", "Email", "Phone Number", "Company", "First Call", "First Email", "Second Call", "Second Email"};
+            String[] headers = {"First Name", "Middle Name", "Last Name", "Email", "Phone Number", "Company", "First Call", "Send Email", "Send Letter", "Second Call", "Presence"};
 
             CellStyle headerStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
@@ -199,9 +199,10 @@ public class ExelServiceImpl implements ExelService {
                 row.createCell(4).setCellValue(manager.getPhoneNumber() != null ? manager.getPhoneNumber() : "");
                 row.createCell(5).setCellValue(manager.getCompany() != null ? manager.getCompany().getName() : "");
                 row.createCell(6).setCellValue(manager.getFirstCall() != null ? manager.getFirstCall().toString() : "");
-                row.createCell(7).setCellValue(manager.getFirstEmail() != null ? manager.getFirstEmail().toString() : "");
-                row.createCell(8).setCellValue(manager.getSecondCall() != null ? manager.getSecondCall().toString() : "");
-                row.createCell(9).setCellValue(manager.getSecondEmail() != null ? manager.getSecondEmail().toString() : "");
+                row.createCell(7).setCellValue(manager.getSendEmail() != null ? manager.getSendEmail().toString() : "");
+                row.createCell(8).setCellValue(manager.getSendLetter() != null ? manager.getSendLetter().toString() : "");
+                row.createCell(9).setCellValue(manager.getSecondCall() != null ? manager.getSecondCall().toString() : "");
+                row.createCell(10).setCellValue(manager.getPresence() != null ? manager.getPresence().toString() : "");
             }
 
             // Автоматично нагласяне на ширината на колоните
@@ -230,7 +231,7 @@ public class ExelServiceImpl implements ExelService {
 
             // Заглавен ред
             Row headerRow = sheet.createRow(0);
-            String[] headers = {"First Name", "Middle Name", "Last Name", "Email", "Phone Number", "Company", "First Call", "First Email", "Second Call", "Second Email"};
+            String[] headers = {"First Name", "Middle Name", "Last Name", "Email", "Phone Number", "Company", "First Call", "Send Email", "Send Letter", "Second Call", "Presence"};
 
             CellStyle headerStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
@@ -254,9 +255,10 @@ public class ExelServiceImpl implements ExelService {
                 row.createCell(4).setCellValue(person.getPhoneNumber() != null ? person.getPhoneNumber() : "");
                 row.createCell(5).setCellValue(person.getCompany() != null ? person.getCompany().getName() : "");
                 row.createCell(6).setCellValue(person.getFirstCall() != null ? person.getFirstCall().toString() : "");
-                row.createCell(7).setCellValue(person.getFirstEmail() != null ? person.getFirstEmail().toString() : "");
-                row.createCell(8).setCellValue(person.getSecondCall() != null ? person.getSecondCall().toString() : "");
-                row.createCell(9).setCellValue(person.getSecondEmail() != null ? person.getSecondEmail().toString() : "");
+                row.createCell(7).setCellValue(person.getSendEmail() != null ? person.getSendEmail().toString() : "");
+                row.createCell(8).setCellValue(person.getSendLetter() != null ? person.getSendLetter().toString() : "");
+                row.createCell(9).setCellValue(person.getSecondCall() != null ? person.getSecondCall().toString() : "");
+                row.createCell(10).setCellValue(person.getPresence() != null ? person.getPresence().toString() : "");
             }
 
             // Автоматично нагласяне на ширината на колоните

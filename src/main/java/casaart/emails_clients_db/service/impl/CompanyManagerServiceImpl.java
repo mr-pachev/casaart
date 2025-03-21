@@ -50,19 +50,22 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         } else if ("allCompanyManagersByName".equals(type)) {
             companyManagerList = companyManagerRepository.findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
 
-        } else if ("allCompanyManagersByFirstEmail".equals(type)) {
-            companyManagerList = companyManagerRepository.findAllByOrderByFirstEmailDesc();
-
         } else if ("allCompanyManagersByFirstCall".equals(type)) {
             companyManagerList = companyManagerRepository.findAllByOrderByFirstCallDesc();
 
-        } else if ("allCompanyManagersBySecondEmail".equals(type)) {
-            companyManagerList = companyManagerRepository.findAllByOrderBySecondEmailDesc();
+        } else if ("allCompanyManagersBySendEmail".equals(type)) {
+            companyManagerList = companyManagerRepository.findAllByOrderBySendEmailDesc();
+
+        }  else if ("allCompanyManagersBySendLetter".equals(type)) {
+            companyManagerList = companyManagerRepository.findAllByOrderBySendLetterDesc();
 
         } else if ("allCompanyManagersBySecondCall".equals(type)) {
             companyManagerList = companyManagerRepository.findAllByOrderBySecondCallDesc();
 
-        } else if(type.contains("@")){
+        } else if ("allCompanyManagersByPresence".equals(type)) {
+            companyManagerList = companyManagerRepository.findAllByOrderByPresenceDesc();
+
+        }else if(type.contains("@")){
             companyManagerList = companyManagerRepository.findByEmailStartingWithIgnoreCase(type);
 
         } else if(inputArr.length == 1){

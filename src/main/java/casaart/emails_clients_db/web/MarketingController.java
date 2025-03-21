@@ -30,6 +30,8 @@ public class MarketingController {
         this.companyService = companyService;
     }
 
+    /* ----- MANAGER ----- */
+
     // register first call for company manager
     @GetMapping("/first-call-manager/{id}")
     public String registerFirstCallManager(@PathVariable("id") Long id, Model model) {
@@ -80,13 +82,7 @@ public class MarketingController {
         return "current-company-manager";
     }
 
-    // register first email for contact person
-    @PostMapping("/first-email-contact-person/{id}")
-    public String registerFirstEmailContactPerson(@PathVariable("id") Long id) {
-        marketingService.registerFirstEmailContactPerson(id);
-
-        return "redirect:/marketing/current-contact-persons/" + id;
-    }
+    /* ----- CONTACT PERSON ----- */
 
     // register first call for contact person
     @PostMapping("/first-call-contact-person/{id}")
@@ -96,10 +92,18 @@ public class MarketingController {
         return "redirect:/marketing/current-contact-persons/" + id;
     }
 
-    // register second email for contact person
-    @PostMapping("/second-email-contact-person/{id}")
-    public String registerSecondEmailContactPerson(@PathVariable("id") Long id) {
-        marketingService.registerSecondEmailContactPerson(id);
+    // register send email for contact person
+    @PostMapping("/send-email-contact-person/{id}")
+    public String registerSendEmailContactPerson(@PathVariable("id") Long id) {
+        marketingService.registerSendEmailContactPerson(id);
+
+        return "redirect:/marketing/current-contact-persons/" + id;
+    }
+
+    // register send letter for contact person
+    @PostMapping("/send-letter-contact-person/{id}")
+    public String registerSendLetterContactPerson(@PathVariable("id") Long id) {
+        marketingService.registerSendLetterContactPerson(id);
 
         return "redirect:/marketing/current-contact-persons/" + id;
     }
@@ -108,6 +112,14 @@ public class MarketingController {
     @PostMapping("/second-call-contact-person/{id}")
     public String registerSecondCallContactPerson(@PathVariable("id") Long id) {
         marketingService.registerSecondCallContactPerson(id);
+
+        return "redirect:/marketing/current-contact-persons/" + id;
+    }
+
+    // register presence for contact person
+    @PostMapping("/presence-contact-person/{id}")
+    public String registerPresenceContactPerson(@PathVariable("id") Long id) {
+        marketingService.registerPresenceContactPerson(id);
 
         return "redirect:/marketing/current-contact-persons/" + id;
     }

@@ -30,11 +30,11 @@
                 <option value="allContactPersons">-- подреди по --</option>
                 <option value="allContactPersons">Всички контактни лица</option>
                 <option value="allContactPersonsByName">Име</option>
-                <option value="allContactPersonsByFirstEmail">Първо обаждане</option>
-                <option value="allContactPersonsByFirstCall">Изпращане имейл</option>
-                <option value="allContactPersonsBySecondEmail">Изпращане писмо</option>
+                <option value="allContactPersonsByFirstCall">Първо обаждане</option>
+                <option value="allContactPersonsBySendEmail">Изпратен имейл</option>
+                <option value="allContactPersonsBySendLetter">Изпратено писмо</option>
                 <option value="allContactPersonsBySecondCall">Второ обаждане</option>
-                <option value="allContactPersonsBySecondCall">Присъствие</option>
+                <option value="allContactPersonsByPresence">Присъствие</option>
             </select>
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
@@ -50,8 +50,8 @@
             <th>Телефонен номер</th>
             <th>Компания</th>
             <th>Първо обаждане</th>
-            <th>Изпращане имейл</th>
-            <th>Изпращане писмо</th>
+            <th>Изпратен имейл</th>
+            <th>Изпратено писмо</th>
             <th>Второ обаждане</th>
             <th>Присъствие</th>
             <th>Действия</th>
@@ -68,18 +68,6 @@
             <td>
                 <ul>
                     <li>
-                        <span th:text="${person.firstEmail}"></span>
-                    </li>
-                    <li>
-                        <form th:method="POST" th:action="@{/first-email-contact-person/{id}(id=${person.id})}">
-                            <button type="submit" class="reg-button">Регистрирай</button>
-                        </form>
-                    </li>
-                </ul>
-            </td>
-            <td>
-                <ul>
-                    <li>
                         <span th:text="${person.firstCall}"></span>
                     </li>
                     <li>
@@ -92,10 +80,22 @@
             <td>
                 <ul>
                     <li>
-                        <span th:text="${person.secondEmail}"></span>
+                        <span th:text="${person.sendEmail}"></span>
                     </li>
                     <li>
-                        <form th:method="POST" th:action="@{/second-email-contact-person/{id}(id=${person.id})}">
+                        <form th:method="POST" th:action="@{/send-email-contact-person/{id}(id=${person.id})}">
+                            <button type="submit" class="reg-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${person.sendLetter}"></span>
+                    </li>
+                    <li>
+                        <form th:method="POST" th:action="@{/send-letter-contact-person/{id}(id=${person.id})}">
                             <button type="submit" class="reg-button">Регистрирай</button>
                         </form>
                     </li>
@@ -119,7 +119,7 @@
                         <span th:text="${person.presence}"></span>
                     </li>
                     <li>
-                        <form th:method="POST" th:action="@{/second-call-contact-person/{id}(id=${person.id})}">
+                        <form th:method="POST" th:action="@{/presence-contact-person/{id}(id=${person.id})}">
                             <button type="submit" class="reg-button">Регистрирай</button>
                         </form>
                     </li>

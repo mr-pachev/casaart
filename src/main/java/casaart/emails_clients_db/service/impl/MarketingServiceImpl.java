@@ -23,6 +23,8 @@ public class MarketingServiceImpl implements MarketingService {
         this.clientRepository = clientRepository;
     }
 
+    /* ----- MANAGER ----- */
+
     // register first call for company manager
     @Override
     public void registerFirstCallManager(long id) {
@@ -66,14 +68,7 @@ public class MarketingServiceImpl implements MarketingService {
         companyManager.setPresence(LocalDate.now());
     }
 
-    // register first email for contact person
-    @Override
-    public void registerFirstEmailContactPerson(long id) {
-        ContactPerson contactPerson = contactPersonRepository.findById(id).get();
-        contactPerson.setFirstEmail(LocalDate.now());
-
-        contactPersonRepository.save(contactPerson);
-    }
+    /* ----- CONTACT PERSON ----- */
 
     // register first call for contact person
     @Override
@@ -84,11 +79,20 @@ public class MarketingServiceImpl implements MarketingService {
         contactPersonRepository.save(contactPerson);
     }
 
-    // register second email for contact person
+    // register send email for contact person
     @Override
-    public void registerSecondEmailContactPerson(long id) {
+    public void registerSendEmailContactPerson(long id) {
         ContactPerson contactPerson = contactPersonRepository.findById(id).get();
-        contactPerson.setSecondEmail(LocalDate.now());
+        contactPerson.setSendEmail(LocalDate.now());
+
+        contactPersonRepository.save(contactPerson);
+    }
+
+    // register send letter for contact person
+    @Override
+    public void registerSendLetterContactPerson(long id) {
+        ContactPerson contactPerson = contactPersonRepository.findById(id).get();
+        contactPerson.setSendLetter(LocalDate.now());
 
         contactPersonRepository.save(contactPerson);
     }
@@ -100,6 +104,13 @@ public class MarketingServiceImpl implements MarketingService {
         contactPerson.setSecondCall(LocalDate.now());
 
         contactPersonRepository.save(contactPerson);
+    }
+
+    // register presence for contact person
+    @Override
+    public void registerPresenceContactPerson(long id) {
+        ContactPerson contactPerson = contactPersonRepository.findById(id).get();
+        contactPerson.setPresence(LocalDate.now());
     }
 
     // register first email for client

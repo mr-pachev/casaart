@@ -15,10 +15,11 @@ public interface ContactPersonRepository extends JpaRepository<ContactPerson, Lo
     List<ContactPerson> findAllByCompanyId(long id);
     List<ContactPerson> findAllByOrderByIdDesc();
     List<ContactPerson> findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
-    List<ContactPerson> findAllByOrderByFirstEmailDesc();
     List<ContactPerson> findAllByOrderByFirstCallDesc();
-    List<ContactPerson> findAllByOrderBySecondEmailDesc();
+    List<ContactPerson> findAllByOrderBySendEmailDesc();
+    List<ContactPerson> findAllByOrderBySendLetterDesc();
     List<ContactPerson> findAllByOrderBySecondCallDesc();
+    List<ContactPerson> findAllByOrderByPresenceDesc();
     List<ContactPerson> findAllByFirstName(String firstName);
     List<ContactPerson> findAllByFirstNameAndLastName(String firstName, String lastName);
     List<ContactPerson> findByEmailStartingWithIgnoreCase(String email);

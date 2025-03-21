@@ -2,6 +2,8 @@ package casaart.emails_clients_db.service;
 
 public interface MarketingService {
 
+    /* ----- MANAGER ----- */
+
     // register first call for company manager
     void registerFirstCallManager(long id);
 
@@ -17,17 +19,22 @@ public interface MarketingService {
     // register presence for manager
     void registerPresenceManager(long id);
 
-    // register first email for contact person
-    void registerFirstEmailContactPerson(long id);
+    /* ----- CONTACT PERSON ----- */
 
     // register first call for contact person
     void registerFirstCallContactPerson(long id);
 
-    // register second email for contact person
-    void registerSecondEmailContactPerson(long id);
+    // register send email for contact person
+    void registerSendEmailContactPerson(long id);
+
+    // register send letter for contact person
+    void registerSendLetterContactPerson(long id);
 
     // register second call for contact person
     void registerSecondCallContactPerson(long id);
+
+    // register presence for contact person
+    void registerPresenceContactPerson(long id);
 
     // register first email for client
     void registerFirstEmailClient(long id);

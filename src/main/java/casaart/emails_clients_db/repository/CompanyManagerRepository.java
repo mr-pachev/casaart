@@ -17,10 +17,11 @@ public interface CompanyManagerRepository extends JpaRepository<CompanyManager, 
    CompanyManager findByCompanyId(long id);
    List<CompanyManager> findAllByOrderByIdDesc();
    List<CompanyManager> findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
-   List<CompanyManager> findAllByOrderByFirstEmailDesc();
    List<CompanyManager> findAllByOrderByFirstCallDesc();
-   List<CompanyManager> findAllByOrderBySecondEmailDesc();
+   List<CompanyManager> findAllByOrderBySendEmailDesc();
+   List<CompanyManager> findAllByOrderBySendLetterDesc();
    List<CompanyManager> findAllByOrderBySecondCallDesc();
+   List<CompanyManager> findAllByOrderByPresenceDesc();
    List<CompanyManager> findAllByFirstName(String firstName);
    List<CompanyManager> findAllByFirstNameAndLastName(String firstName, String lastName);
    List<CompanyManager> findByEmailStartingWithIgnoreCase(String email);

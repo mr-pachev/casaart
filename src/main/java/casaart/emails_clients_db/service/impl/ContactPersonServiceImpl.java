@@ -52,19 +52,22 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         } else if ("allContactPersonsByName".equals(type)) {
             contactPersonList = contactPersonRepository.findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
 
-        } else if ("allContactPersonsByFirstEmail".equals(type)) {
-            contactPersonList = contactPersonRepository.findAllByOrderByFirstEmailDesc();
-
-        } else if ("allContactPersonsByFirstCall".equals(type)) {
+        }  else if ("allContactPersonsByFirstCall".equals(type)) {
             contactPersonList = contactPersonRepository.findAllByOrderByFirstCallDesc();
 
-        } else if ("allContactPersonsBySecondEmail".equals(type)) {
-            contactPersonList = contactPersonRepository.findAllByOrderBySecondEmailDesc();
+        } else if ("allContactPersonsBySendEmail".equals(type)) {
+            contactPersonList = contactPersonRepository.findAllByOrderBySendEmailDesc();
+
+        }else if ("allContactPersonsBySendLetter".equals(type)) {
+            contactPersonList = contactPersonRepository.findAllByOrderBySendLetterDesc();
 
         } else if ("allContactPersonsBySecondCall".equals(type)) {
             contactPersonList = contactPersonRepository.findAllByOrderBySecondCallDesc();
 
-        } else if(type.contains("@")){
+        } else if ("allContactPersonsByPresence".equals(type)) {
+            contactPersonList = contactPersonRepository.findAllByOrderByPresenceDesc();
+
+        }else if(type.contains("@")){
             contactPersonList = contactPersonRepository.findByEmailStartingWithIgnoreCase(type);
 
         } else if(inputArr.length == 1){
