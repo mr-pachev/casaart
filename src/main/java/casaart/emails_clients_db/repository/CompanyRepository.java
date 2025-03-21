@@ -1,12 +1,10 @@
 package casaart.emails_clients_db.repository;
 
 import casaart.emails_clients_db.model.entity.Company;
-import casaart.emails_clients_db.model.enums.CompanyType;
-import casaart.emails_clients_db.model.enums.IndustryType;
-import casaart.emails_clients_db.model.enums.LocationType;
-import casaart.emails_clients_db.model.enums.UnitType;
+import casaart.emails_clients_db.model.enums.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,8 +23,21 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
     List<Company> findByUnitTypes(UnitType unitType);
     List<Company> findByUnitTypesAndIndustryTypes(UnitType unitType, IndustryType industryType);
-    List<Company> findByLocationType(LocationType locationType);
-    List<Company> findAllByOrderByNameAsc();
+
+    @Query("SELECT c FROM Company c WHERE c.companyType = 'ДОСТАВЧИК' AND c.locationType = :locationType ORDER BY c.name ASC")
+    List<Company> findSuppliersByLocationType(@Param("locationType") LocationType locationType);
+
+    @Query("SELECT c FROM Company c WHERE c.companyType = 'ПАРТНЬОР' AND c.locationType = :locationType ORDER BY c.name ASC")
+    List<Company> findPartnersByLocationType(@Param("locationType") LocationType locationType);
+
+    List<Company> findByPartnerTypes(PartnerType partnerType);
+
+    @Query("SELECT c FROM Company c WHERE c.companyType = 'ПАРТНЬОР' ORDER BY c.name ASC")
+    List<Company> findAllPartnersOrderedByNameAsc();
+
+    @Query("SELECT c FROM Company c WHERE c.companyType = 'ДОСТАВЧИК' ORDER BY c.name ASC")
+    List<Company> findAllSuppliersOrderedByNameAsc();
+
     List<Company> findByNameStartingWithIgnoreCase(String name);
     List<Company> findByEmailStartingWithIgnoreCase(String email);
     }

@@ -15,17 +15,26 @@ public interface CompanyService {
     // get all suppliers
     List<CompanyDTO> getAllSuppliers();
 
-    // get sorted companies
-    List<CompanyDTO> sortedCompanies(String companyType);
+    // get sorted suppliers
+    List<CompanyDTO> sortedSuppliers(String sortBy);
 
-    // get sorted companies by unitType
+    // get sorted partners
+    List<CompanyDTO> sortedPartners(String sortBy);
+
+    // get sorted suppliers by unitType
     List<CompanyDTO> sortedCompaniesByUnit(String unitType);
 
-    // get sorted companies by unitType and industryType
+    // get sorted suppliers by unitType and industryType
     List<CompanyDTO> sortedCompaniesByUnitAndIndustry(String unitType, String industryType);
 
-    // get sorted companies by locationType
-    List<CompanyDTO> sortedCompaniesByLocationType(String locationType);
+    // get sorted suppliers by locationType
+    List<CompanyDTO> sortedSuppliersByLocationType(String locationType);
+
+    // get sorted partners by locationType
+    List<CompanyDTO> sortedPartnersByLocationType(String locationType);
+
+    // get sorted partners by partnerType
+    List<CompanyDTO> sortedPartnersByPartnerType(String partnerType);
 
     // checking is exist company
     boolean isExistCompany(String name);

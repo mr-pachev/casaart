@@ -48,10 +48,8 @@ public class CompanyController {
     public String getAllCompanies(Model model) {
         List<CompanyDTO> companyDTOS = companyService.getAllPartners();
 
-        model.addAttribute("allCompanies", companyDTOS);
-        model.addAttribute("allUnits", UnitType.values());
-        model.addAttribute("allIndustries", IndustryType.values());
-        model.addAttribute("allCompanyTypes", CompanyType.values());
+        model.addAttribute("allPartners", companyDTOS);
+        model.addAttribute("allPartnerTypes", PartnerType.values());
         model.addAttribute("allLocations", LocationType.values());
 
         return "partners";
@@ -73,14 +71,14 @@ public class CompanyController {
 
     // view all sorted suppliers
     @PostMapping("/sort-suppliers")
-    public String sortSuppliers(@RequestParam("companyType") String companyType,
+    public String sortSuppliers(@RequestParam("sortBy") String sortBy,
                                 @RequestParam(value = "unitType", required = false) String unitType,
                                 @RequestParam(value = "industryType", required = false) String industryType,
                                 @RequestParam(value = "locationType", required = false) String locationType,
                                 Model model) {
         List<CompanyDTO> sortedSuppliers;
 
-        switch (companyType) {
+        switch (sortBy) {
             case "unitType":
                 if (unitType != null && !unitType.isEmpty()) {
                     if (industryType != null && !industryType.isEmpty()) {
@@ -88,6 +86,7 @@ public class CompanyController {
                     } else {
                         sortedSuppliers = companyService.sortedCompaniesByUnit(unitType);
                     }
+
                 } else {
                     sortedSuppliers = companyService.getAllSuppliers();
                 }
@@ -95,14 +94,14 @@ public class CompanyController {
 
             case "locationType":
                 if (locationType != null && !locationType.isEmpty()) {
-                    sortedSuppliers = companyService.sortedCompaniesByLocationType(locationType);
+                    sortedSuppliers = companyService.sortedSuppliersByLocationType(locationType);
                 } else {
                     sortedSuppliers = companyService.getAllSuppliers();
                 }
                 break;
 
             default:
-                sortedSuppliers = companyService.sortedCompanies(companyType);
+                sortedSuppliers = companyService.sortedSuppliers(sortBy);
                 break;
         }
 
@@ -115,6 +114,42 @@ public class CompanyController {
         return "suppliers";
     }
 
+    // view all sorted partners
+    @PostMapping("/sort-partners")
+    public String sortPartners(@RequestParam(value = "sortBy", required = false) String sortBy,
+                               @RequestParam(value = "partnerTypes", required = false) String partnerType,
+                               @RequestParam(value = "locationType", required = false) String locationType,
+                               Model model) {
+        List<CompanyDTO> sortedPartners;
+
+        switch (sortBy) {
+            case "partnerTypes":
+                if (partnerType != null && !partnerType.isEmpty()) {
+                    sortedPartners = companyService.sortedPartnersByPartnerType(partnerType);
+                } else {
+                    sortedPartners = companyService.getAllPartners();
+                }
+                break;
+
+            case "locationType":
+                if (locationType != null && !locationType.isEmpty()) {
+                    sortedPartners = companyService.sortedPartnersByLocationType(locationType);
+                } else {
+                    sortedPartners = companyService.getAllPartners();
+                }
+                break;
+
+            default:
+                sortedPartners = companyService.sortedPartners(sortBy);
+                break;
+        }
+
+        model.addAttribute("allPartners", sortedPartners);
+        model.addAttribute("allPartnerTypes", PartnerType.values());
+        model.addAttribute("allLocations", LocationType.values());
+
+        return "partners";
+    }
 
     // add new company
     @GetMapping("/add-company")
@@ -192,7 +227,7 @@ public class CompanyController {
         model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allLocations", LocationType.values());
         model.addAttribute("allIndustries", IndustryType.values());
-        model.addAttribute("allCompanyTypes", CompanyType.values());
+        model.addAttribute("allPartnerTypes", PartnerType.values());
         model.addAttribute("contactsPersons", companyDTO.getContactPerson());
 
         // Логика за обработка на партньор или доставчик
@@ -217,7 +252,7 @@ public class CompanyController {
             model.addAttribute("allUnits", UnitType.values());
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
-            model.addAttribute("allCompanyTypes", CompanyType.values());
+            model.addAttribute("allPartnerTypes", PartnerType.values());
             model.addAttribute("contactsPersons", companyDTO.getContactPerson());
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
 
@@ -231,7 +266,7 @@ public class CompanyController {
             model.addAttribute("allUnits", UnitType.values());
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
-            model.addAttribute("allCompanyTypes", CompanyType.values());
+            model.addAttribute("allPartnerTypes", PartnerType.values());
             model.addAttribute("contactsPersons", companyDTO.getContactPerson());
             model.addAttribute("isExistCompany", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.companyDTO", bindingResult);

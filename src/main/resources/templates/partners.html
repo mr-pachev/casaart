@@ -11,8 +11,8 @@
 <div th:replace="~{fragments/navigation}"></div>
 
 <div style="text-align: right; margin: 10px 20px;">
-    <form th:method="POST" th:action="@{/sort-companies}" style="display: inline;">
-        <input type="text" name="companyType" placeholder="Търси по име" class="source-type-select"
+    <form th:method="POST" th:action="@{/sort-partners}" style="display: inline;">
+        <input type="text" name="sortBy" placeholder="Търси по име" class="source-type-select"
                style="width: 300px;">
         <button type="submit" class="sort-button">Търси</button>
     </form>
@@ -21,7 +21,7 @@
 <main>
     <h1>
         <span>Списък с партньори:</span>
-        <span class="count" th:text="${allCompanies.size()}"></span>
+        <span class="count" th:text="${allPartners.size()}"></span>
     </h1>
     <div class="buttons">
         <form th:method="GET" th:action="@{/add-company}" style="display: inline;" class="buttons">
@@ -32,36 +32,26 @@
     </div>
     <div class="buttons">
         <form th:method="POST"
-              th:action="@{/sort-companies}" style="display: inline;">
+              th:action="@{/sort-partners}" style="display: inline;">
             <!-- Основен селект -->
-            <select name="companyType" class="source-type-select" id="mainSelect" onchange="toggleUnitSelect()">
-                <option value="allCompanies">-- подреди по --</option>
-                <option value="allCompanies">Всички партньори</option>
+            <select name="sortBy" class="source-type-select" id="mainSelect">
+                <<option value="allPartners">-- подреди по --</option>
+                <option value="allPartners">Всички доставчици</option>
                 <option value="name">Име</option>
-                <option value="unitType">Звено</option>
+                <option value="partnerTypes">Тип партньор</option>
                 <option value="locationType">Район на дейност</option>
             </select>
 
-            <!-- Под-селекция за звената (скрита по подразбиране) -->
-            <select name="unitType" class="source-type-select" id="unitSelect" style="display: none;"
-                    onchange="toggleIndustrySelect()">
-                <option value="">-- Изберете звено --</option>
-                <option th:each="unit : ${allUnits}"
-                        th:value="${unit}"
-                        th:text="${unit}"></option>
+            <!-- Падащо меню за избор на тип партньор (скрито по подразбиране) -->
+            <select name="partnerTypes" id="partnerTypeSelect" class="source-type-select" style="display: none;">
+                <option value="">-- Изберете тип --</option>
+                <option th:each="type : ${allPartnerTypes}" th:value="${type}" th:text="${type}"></option>
             </select>
 
-            <!-- Под-селекция за продукти/услуги (скрита по подразбиране) -->
-            <select name="industryType" class="source-type-select" id="industrySelect" style="display: none;">
-                <option value="">-- Изберете продукт/услуга --</option>
-            </select>
-
-            <!-- Под-селекция за район на дейност (скрита по подразбиране) -->
-            <select name="locationType" class="location-type-select" id="locationSelect" style="display: none;">
-                <option value="">-- Изберете източник --</option>
-                <option th:each="location : ${allLocations}"
-                        th:value="${location}"
-                        th:text="${location}"></option>
+            <!-- Падащо меню за избор на район на дейност (скрито по подразбиране) -->
+            <select name="locationType" id="locationTypeSelect" class="source-type-select" style="display: none;">
+                <option value="">-- Изберете район --</option>
+                <option th:each="location : ${allLocations}" th:value="${location}" th:text="${location}"></option>
             </select>
 
             <button type="submit" class="sort-button">Сортирай</button>
@@ -70,56 +60,25 @@
 
     <!-- JavaScript за управление на селекциите -->
     <script>
-        // Данни за продукти/услуги спрямо звеното
-        const unitIndustries = {
-            'КУХНЯ': ['ИНВЕНТАР', 'ХРАНИ', 'ПРЕПАРАТИ', 'ОБОРУДВАНЕ', 'ПОДДРЪЖКА'],
-            'БАР': ['НАПИТКИ', 'ВИНАРИ', 'ПРЕПАРАТИ', 'ОБОРУДВАНЕ', 'ПОДДРЪЖКА'],
-            'ХОТЕЛ': ['КОНСУМАТИВИ_СТАИ', 'ОФИС_КОНСУМАТИВИ', 'ПРЕПАРАТИ', ПОДДРЪЖКА, 'IT', 'ТВ', 'АРТИСТИ', 'ФОТОГРАФИ', 'СПЕДИТОРИ', 'ФИНАНСИ'],
-            'ИНТЕРИОР': ['СТРОИТЕЛИ', 'МАЗИЛКИ', 'ОБОРУДВАНЕ', 'ТРАНСПОРТ'],
-            'АКСЕСОАРИ': ['ИНВЕНТАР', 'СПЕДИТОРИ']
-        };
+        function toggleSelects() {
+            var mainSelect = document.getElementById("mainSelect");
+            var partnerTypeSelect = document.getElementById("partnerTypeSelect");
+            var locationTypeSelect = document.getElementById("locationTypeSelect");
 
-        function toggleUnitSelect() {
-            let mainSelect = document.getElementById("mainSelect");
-            let unitSelect = document.getElementById("unitSelect");
-            let locationSelect = document.getElementById("locationSelect");
-            let industrySelect = document.getElementById("industrySelect");
+            // Скриваме всички допълнителни селекти
+            partnerTypeSelect.style.display = "none";
+            locationTypeSelect.style.display = "none";
 
-            if (mainSelect.value === "unitType") {
-                unitSelect.style.display = "inline-block";
-            } else {
-                unitSelect.style.display = "none";
-                unitSelect.selectedIndex = 0;
-                industrySelect.style.display = "none";
-            }
-
-            if (mainSelect.value === "locationType") {
-                locationSelect.style.display = "inline-block";
-            } else {
-                locationSelect.style.display = "none";
-                locationSelect.selectedIndex = 0;
+            // Показваме съответния селект само ако изборът е "Тип партньор" или "Район на дейност"
+            if (mainSelect.value === "partnerTypes") {
+                partnerTypeSelect.style.display = "inline-block";
+            } else if (mainSelect.value === "locationType") {
+                locationTypeSelect.style.display = "inline-block";
             }
         }
 
-        function toggleIndustrySelect() {
-            let unitSelect = document.getElementById("unitSelect");
-            let industrySelect = document.getElementById("industrySelect");
-            let selectedUnit = unitSelect.value;
-
-            if (selectedUnit && unitIndustries[selectedUnit]) {
-                industrySelect.style.display = "inline-block";
-                industrySelect.innerHTML = '<option value="">-- Изберете продукти/услуги --</option>';
-
-                unitIndustries[selectedUnit].forEach(industry => {
-                    let option = document.createElement("option");
-                    option.value = industry;
-                    option.textContent = industry;
-                    industrySelect.appendChild(option);
-                });
-            } else {
-                industrySelect.style.display = "none";
-            }
-        }
+        // Свързване на функцията със събитието "change"
+        document.getElementById("mainSelect").addEventListener("change", toggleSelects);
     </script>
 
     <table id="category-table">
@@ -132,13 +91,13 @@
             <th>Локация</th>
             <th>Лице за контакт</th>
             <th>Управител</th>
-<!--            <th>Звено</th>-->
-<!--            <th>Услуги/продукти</th>-->
+            <!--            <th>Звено</th>-->
+            <!--            <th>Услуги/продукти</th>-->
             <th>Действия</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="company :${allCompanies}">
+        <tr th:each="company :${allPartners}">
             <td th:text="${company.name}">Име</td>
             <td th:text="${company.address}">Адрес</td>
             <td th:text="${company.email}">Имейл адрес</td>
@@ -180,20 +139,20 @@
                     </form>
                 </div>
             </td>
-<!--            <td>-->
-<!--                <ul>-->
-<!--                    <li th:each="unit : ${company.units}"-->
-<!--                        th:text="${unit}">Звено-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--                <ul>-->
-<!--                    <li th:each="industry : ${company.industries}"-->
-<!--                        th:text="${industry}">Услуги/продукти-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </td>-->
+            <!--            <td>-->
+            <!--                <ul>-->
+            <!--                    <li th:each="unit : ${company.units}"-->
+            <!--                        th:text="${unit}">Звено-->
+            <!--                    </li>-->
+            <!--                </ul>-->
+            <!--            </td>-->
+            <!--            <td>-->
+            <!--                <ul>-->
+            <!--                    <li th:each="industry : ${company.industries}"-->
+            <!--                        th:text="${industry}">Услуги/продукти-->
+            <!--                    </li>-->
+            <!--                </ul>-->
+            <!--            </td>-->
             <td>
                 <div class="action-buttons">
                     <form th:method="GET" th:action="@{/company-details/{id}(id=${company.id})}">

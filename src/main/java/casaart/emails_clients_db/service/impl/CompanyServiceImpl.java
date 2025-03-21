@@ -6,10 +6,7 @@ import casaart.emails_clients_db.model.dto.PersonDTO;
 import casaart.emails_clients_db.model.entity.Company;
 import casaart.emails_clients_db.model.entity.CompanyManager;
 import casaart.emails_clients_db.model.entity.ContactPerson;
-import casaart.emails_clients_db.model.enums.CompanyType;
-import casaart.emails_clients_db.model.enums.IndustryType;
-import casaart.emails_clients_db.model.enums.LocationType;
-import casaart.emails_clients_db.model.enums.UnitType;
+import casaart.emails_clients_db.model.enums.*;
 import casaart.emails_clients_db.repository.CompanyManagerRepository;
 import casaart.emails_clients_db.repository.CompanyRepository;
 import casaart.emails_clients_db.repository.ContactPersonRepository;
@@ -64,15 +61,15 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDTOS;
     }
 
-    // get sorted companies
+    // get sorted suppliers
     @Override
-    public List<CompanyDTO> sortedCompanies(String companyType) {
-        String input = companyType.trim().replaceAll("\\s+", " "); // Премахване на излишни интервали
+    public List<CompanyDTO> sortedSuppliers(String sortBy) {
+        String input = sortBy.trim().replaceAll("\\s+", " "); // Премахване на излишни интервали
 
         List<Company> companyList = new ArrayList<>();
 
         if (input.equals("name")) {
-            companyList = companyRepository.findAllByOrderByNameAsc();
+            companyList = companyRepository.findAllSuppliersOrderedByNameAsc();
 
         } else if (input.equals("allSuppliers")) {
             companyList = companyRepository.findAllSuppliersOrderedByIdDesc();
@@ -104,7 +101,47 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDTOS;
     }
 
-    // get sorted companies by unitType
+    // get sorted partners
+    @Override
+    public List<CompanyDTO> sortedPartners(String sortBy) {
+        String input = sortBy.trim().replaceAll("\\s+", " "); // Премахване на излишни интервали
+
+        List<Company> companyList = new ArrayList<>();
+
+        if (input.equals("name")) {
+            companyList = companyRepository.findAllPartnersOrderedByNameAsc();
+
+        } else if (input.equals("allPartners")) {
+            companyList = companyRepository.findAllPartnersOrderedByIdDesc();
+
+        } else if (input.contains("@")) {
+            companyList = companyRepository.findByEmailStartingWithIgnoreCase(input);
+
+        } else {
+            // Разделяне на входния низ на думи (разделители: интервал или тире)
+            String[] words = input.split("[-\s]+");
+
+            for (String word : words) {
+                List<Company> matchedCompanies = companyRepository.findByNameStartingWithIgnoreCase(word);
+
+                for (Company company : matchedCompanies) {
+                    if (!companyList.contains(company)) {
+                        companyList.add(company);
+                    }
+                }
+            }
+
+            if (companyList.isEmpty()) {
+                companyList = companyRepository.findAllPartnersOrderedByIdDesc();
+            }
+
+        }
+
+        List<CompanyDTO> companyDTOS = companyListMapToCompanyDTOS(companyList);
+        return companyDTOS;
+    }
+
+    // get sorted suppliers by unitType
     @Override
     public List<CompanyDTO> sortedCompaniesByUnit(String unitType) {
         UnitType unit = UnitType.valueOf(unitType);
@@ -115,7 +152,7 @@ public class CompanyServiceImpl implements CompanyService {
                 .collect(Collectors.toList());
     }
 
-    // get sorted companies by industryType
+    // get sorted suppliers by industryType
     @Override
     public List<CompanyDTO> sortedCompaniesByUnitAndIndustry(String unitType, String industryType) {
         UnitType unit = UnitType.valueOf(unitType);
@@ -127,14 +164,36 @@ public class CompanyServiceImpl implements CompanyService {
                 .collect(Collectors.toList());
     }
 
-    // get sorted companies by locationType
+    // get sorted suppliers by locationType
     @Override
-    public List<CompanyDTO> sortedCompaniesByLocationType(String location) {
-        LocationType locationType = LocationType.valueOf(location);
+    public List<CompanyDTO> sortedSuppliersByLocationType(String locationType) {
+        LocationType supplierLocationType = LocationType.valueOf(locationType);
 
-        return companyRepository.findByLocationType(locationType)
+        return companyRepository.findSuppliersByLocationType(supplierLocationType)
                 .stream()
-                .map(company -> mapCompanyToCompanyDTO(company)) // Преобразуване в DTO директно в ламбда израза
+                .map(this::mapCompanyToCompanyDTO) // Преобразуване в DTO директно в ламбда израза
+                .collect(Collectors.toList());
+    }
+
+    // get sorted partners by locationType
+    @Override
+    public List<CompanyDTO> sortedPartnersByLocationType(String locationType) {
+        LocationType partnerLocationType = LocationType.valueOf(locationType);
+
+        return companyRepository.findPartnersByLocationType(partnerLocationType)
+                .stream()
+                .map(this::mapCompanyToCompanyDTO) // Преобразуване в DTO директно в ламбда израза
+                .collect(Collectors.toList());
+    }
+
+    // get sorted partners by partnerType
+    @Override
+    public List<CompanyDTO> sortedPartnersByPartnerType(String partnerType) {
+        PartnerType partner = PartnerType.valueOf(partnerType);
+
+        return companyRepository.findByPartnerTypes(partner)
+                .stream()
+                .map(this::mapCompanyToCompanyDTO) // Преобразуване в DTO директно в ламбда израза
                 .collect(Collectors.toList());
     }
 
@@ -215,6 +274,16 @@ public class CompanyServiceImpl implements CompanyService {
             company.setUnitTypes(unitTypes);
         }
 
+        if (companyDTO.getPartnerTypes() != null) {
+            List<PartnerType> partnerTypes = new ArrayList<>();
+
+            for (String type : companyDTO.getPartnerTypes()) {
+                partnerTypes.add(PartnerType.valueOf(type));
+            }
+
+            company.setPartnerTypes(partnerTypes);
+        }
+
         companyRepository.save(company);
     }
 
@@ -266,6 +335,10 @@ public class CompanyServiceImpl implements CompanyService {
             companyDTO.setCompanyManager(companyManager.getFullName());
         }
 
+        List<String> partnersTypes = company.getPartnerTypes().stream()
+                .map(Enum::name)
+                .collect(Collectors.toList());
+
         List<String> units = company.getUnitTypes().stream()
                 .map(Enum::name)
                 .collect(Collectors.toList());
@@ -274,6 +347,7 @@ public class CompanyServiceImpl implements CompanyService {
                 .map(Enum::name)
                 .collect(Collectors.toList());
 
+        companyDTO.setPartnerTypes(partnersTypes);
         companyDTO.setUnits(units);
         companyDTO.setIndustries(industries);
 
