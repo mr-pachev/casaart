@@ -162,26 +162,34 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         contactPerson.setEmail(personDTO.getEmail());
         contactPerson.setPhoneNumber(personDTO.getPhoneNumber());
 
-        if (personDTO.getFirstEmail() != null) {
-            contactPerson.setFirstEmail(personDTO.getFirstEmail());
-        }else {
-            contactPerson.setFirstEmail(null);
-        }
-
         if (personDTO.getFirstCall() != null) {
             contactPerson.setFirstCall(personDTO.getFirstCall());
         }else {
-            contactPerson.setFirstCall(personDTO.getFirstCall());
+            contactPerson.setFirstCall(null);
         }
 
-        if (personDTO.getSecondEmail() != null) {
-            contactPerson.setSecondEmail(personDTO.getSecondEmail());
+        if (personDTO.getSendEmail() != null) {
+            contactPerson.setSendEmail(personDTO.getSendEmail());
+        }else {
+            contactPerson.setSendEmail(null);
+        }
+
+        if (personDTO.getSendLetter() != null) {
+            contactPerson.setSendLetter(personDTO.getSendLetter());
+        }else {
+            contactPerson.setSendLetter(null);
         }
 
         if (personDTO.getSecondCall() != null) {
             contactPerson.setSecondCall(personDTO.getSecondCall());
         }else {
-            contactPerson.setSecondEmail(personDTO.getSecondEmail());
+            contactPerson.setSecondCall(null);
+        }
+
+        if (personDTO.getPresence() != null) {
+            contactPerson.setPresence(personDTO.getPresence());
+        }else {
+            contactPerson.setPresence(null);
         }
 
         return contactPerson;

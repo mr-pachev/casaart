@@ -1,5 +1,6 @@
 package casaart.emails_clients_db.model.dto;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -30,13 +31,15 @@ public class PersonDTO {
 
     private String company;
 
-    private LocalDate firstEmail;
-
     private LocalDate firstCall;
 
-    private LocalDate secondEmail;
+    private LocalDate sendEmail;
+
+    private LocalDate sendLetter;
 
     private LocalDate secondCall;
+
+    private LocalDate presence;
 
     public String getFullName() {
         StringBuilder sb = new StringBuilder();
@@ -106,14 +109,6 @@ public class PersonDTO {
         this.company = company;
     }
 
-    public LocalDate getFirstEmail() {
-        return firstEmail;
-    }
-
-    public void setFirstEmail(LocalDate firstEmail) {
-        this.firstEmail = firstEmail;
-    }
-
     public LocalDate getFirstCall() {
         return firstCall;
     }
@@ -122,12 +117,20 @@ public class PersonDTO {
         this.firstCall = firstCall;
     }
 
-    public LocalDate getSecondEmail() {
-        return secondEmail;
+    public LocalDate getSendEmail() {
+        return sendEmail;
     }
 
-    public void setSecondEmail(LocalDate secondEmail) {
-        this.secondEmail = secondEmail;
+    public void setSendEmail(LocalDate sendEmail) {
+        this.sendEmail = sendEmail;
+    }
+
+    public LocalDate getSendLetter() {
+        return sendLetter;
+    }
+
+    public void setSendLetter(LocalDate sendLetter) {
+        this.sendLetter = sendLetter;
     }
 
     public LocalDate getSecondCall() {
@@ -136,5 +139,13 @@ public class PersonDTO {
 
     public void setSecondCall(LocalDate secondCall) {
         this.secondCall = secondCall;
+    }
+
+    public LocalDate getPresence() {
+        return presence;
+    }
+
+    public void setPresence(LocalDate presence) {
+        this.presence = presence;
     }
 }

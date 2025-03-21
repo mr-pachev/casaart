@@ -30,16 +30,6 @@ public class MarketingController {
         this.companyService = companyService;
     }
 
-    // register first email for company manager
-    @GetMapping("/first-email-manager/{id}")
-    public String registerFirstEmailManager(@PathVariable("id") Long id, Model model) {
-
-        marketingService.registerFirstEmailManager(id);
-        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
-        model.addAttribute("personDTO", personDTO);
-        return "current-company-manager";
-    }
-
     // register first call for company manager
     @GetMapping("/first-call-manager/{id}")
     public String registerFirstCallManager(@PathVariable("id") Long id, Model model) {
@@ -50,21 +40,41 @@ public class MarketingController {
         return "current-company-manager";
     }
 
-    // register second email for company manager
-    @GetMapping("/second-email-manager/{id}")
-    public String registerSecondEmailManager(@PathVariable("id") Long id, Model model) {
+    // register send email for company manager
+    @GetMapping("/send-email-manager/{id}")
+    public String registerFirstEmailManager(@PathVariable("id") Long id, Model model) {
 
-        marketingService.registerSecondEmailManager(id);
+        marketingService.registerSendEmailManager(id);
         PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
         model.addAttribute("personDTO", personDTO);
         return "current-company-manager";
     }
 
-    // register second call for company manager
+    // register send letter for company manager
+    @GetMapping("/send-letter-manager/{id}")
+    public String registerSendLetterManager(@PathVariable("id") Long id, Model model) {
+
+        marketingService.registerSendLetterManager(id);
+        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        model.addAttribute("personDTO", personDTO);
+        return "current-company-manager";
+    }
+
+    // register second call for manager
     @GetMapping("/second-call-manager/{id}")
     public String registerSecondCallManager(@PathVariable("id") Long id, Model model) {
 
         marketingService.registerSecondCallManager(id);
+        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        model.addAttribute("personDTO", personDTO);
+        return "current-company-manager";
+    }
+
+    // register presence for manager
+    @GetMapping("/presence-manager/{id}")
+    public String registerPresenceManager(@PathVariable("id") Long id, Model model) {
+
+        marketingService.registerPresenceManager(id);
         PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
         model.addAttribute("personDTO", personDTO);
         return "current-company-manager";

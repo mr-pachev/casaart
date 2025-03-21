@@ -29,14 +29,17 @@ public class CompanyManager extends BaseEntity{
     @Column(name = "first_call")
     private LocalDate firstCall;
 
-    @Column(name = "first_email")
-    private LocalDate firstEmail;
+    @Column(name = "send_email")
+    private LocalDate sendEmail;
+
+    @Column(name = "send_letter")
+    private LocalDate sendLetter;
 
     @Column(name = "second_call")
     private LocalDate secondCall;
 
-    @Column(name = "second_email")
-    private LocalDate secondEmail;
+    @Column
+    private LocalDate presence;
 
 
     public String getFullName() {
@@ -106,20 +109,20 @@ public class CompanyManager extends BaseEntity{
         this.firstCall = firstCall;
     }
 
-    public LocalDate getFirstEmail() {
-        return firstEmail;
+    public LocalDate getSendEmail() {
+        return sendEmail;
     }
 
-    public void setFirstEmail(LocalDate firstEmail) {
-        this.firstEmail = firstEmail;
+    public void setSendEmail(LocalDate sendEmail) {
+        this.sendEmail = sendEmail;
     }
 
-    public LocalDate getSecondEmail() {
-        return secondEmail;
+    public LocalDate getSendLetter() {
+        return sendLetter;
     }
 
-    public void setSecondEmail(LocalDate secondEmail) {
-        this.secondEmail = secondEmail;
+    public void setSendLetter(LocalDate sendLetter) {
+        this.sendLetter = sendLetter;
     }
 
     public LocalDate getSecondCall() {
@@ -128,5 +131,13 @@ public class CompanyManager extends BaseEntity{
 
     public void setSecondCall(LocalDate secondCall) {
         this.secondCall = secondCall;
+    }
+
+    public LocalDate getPresence() {
+        return presence;
+    }
+
+    public void setPresence(LocalDate presence) {
+        this.presence = presence;
     }
 }

@@ -34,6 +34,7 @@
                 <option value="allCompanyManagersByFirstCall">Изпращане имейл</option>
                 <option value="allCompanyManagersBySecondEmail">Изпращане писмо</option>
                 <option value="allCompanyManagersBySecondCall">Второ обаждане</option>
+                <option value="allCompanyManagersBySecondCall">Присъствие</option>
             </select>
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
@@ -52,6 +53,7 @@
             <th>Изпращане имейл</th>
             <th>Изпращане писмо</th>
             <th>Второ обаждане</th>
+            <th>Присъствие</th>
             <th>Действия</th>
         </tr>
         </thead>
@@ -63,18 +65,6 @@
             <td th:text="${manager.email}">Имейл адрес</td>
             <td th:text="${manager.phoneNumber}">Телефонен номер</td>
             <td th:text="${manager.company}">Компания</td>
-            <td>
-                <ul>
-                    <li>
-                        <span th:text="${manager.firstEmail}"></span>
-                    </li>
-                    <li>
-                        <form th:method="GET" th:action="@{/first-email-manager/{id}(id=${manager.id})}">
-                            <button type="submit" class="reg-button">Регистрирай</button>
-                        </form>
-                    </li>
-                </ul>
-            </td>
             <td>
                 <ul>
                     <li>
@@ -90,10 +80,22 @@
             <td>
                 <ul>
                     <li>
-                        <span th:text="${manager.secondEmail}"></span>
+                        <span th:text="${manager.sendEmail}"></span>
                     </li>
                     <li>
-                        <form th:method="GET" th:action="@{/second-email-manager/{id}(id=${manager.id})}">
+                        <form th:method="GET" th:action="@{/send-email-manager/{id}(id=${manager.id})}">
+                            <button type="submit" class="reg-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${manager.sendLetter}"></span>
+                    </li>
+                    <li>
+                        <form th:method="GET" th:action="@{/send-letter-manager/{id}(id=${manager.id})}">
                             <button type="submit" class="reg-button">Регистрирай</button>
                         </form>
                     </li>
@@ -106,6 +108,18 @@
                     </li>
                     <li>
                         <form th:method="GET" th:action="@{/second-call-manager/{id}(id=${manager.id})}">
+                            <button type="submit" class="reg-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${manager.presence}"></span>
+                    </li>
+                    <li>
+                        <form th:method="POST" th:action="@{/presence-manager/{id}(id=${manager.id})}">
                             <button type="submit" class="reg-button">Регистрирай</button>
                         </form>
                     </li>

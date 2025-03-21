@@ -23,15 +23,6 @@ public class MarketingServiceImpl implements MarketingService {
         this.clientRepository = clientRepository;
     }
 
-    // register first email for company manager
-    @Override
-    public void registerFirstEmailManager(long id) {
-        CompanyManager companyManager = companyManagerRepository.findById(id);
-        companyManager.setFirstEmail(LocalDate.now());
-
-        companyManagerRepository.save(companyManager);
-    }
-
     // register first call for company manager
     @Override
     public void registerFirstCallManager(long id) {
@@ -41,22 +32,38 @@ public class MarketingServiceImpl implements MarketingService {
         companyManagerRepository.save(companyManager);
     }
 
-    // register second email for company manager
+    // register send email for company manager
     @Override
-    public void registerSecondEmailManager(long id) {
+    public void registerSendEmailManager(long id) {
         CompanyManager companyManager = companyManagerRepository.findById(id);
-        companyManager.setSecondEmail(LocalDate.now());
+        companyManager.setSendEmail(LocalDate.now());
 
         companyManagerRepository.save(companyManager);
     }
 
-    // register second call for company manager
+    // register send letter for company manager
+    @Override
+    public void registerSendLetterManager(long id) {
+        CompanyManager companyManager = companyManagerRepository.findById(id);
+        companyManager.setSendLetter(LocalDate.now());
+
+        companyManagerRepository.save(companyManager);
+    }
+
+    // register second call for manager
     @Override
     public void registerSecondCallManager(long id) {
         CompanyManager companyManager = companyManagerRepository.findById(id);
         companyManager.setSecondCall(LocalDate.now());
 
         companyManagerRepository.save(companyManager);
+    }
+
+    // register presence for manager
+    @Override
+    public void registerPresenceManager(long id) {
+        CompanyManager companyManager = companyManagerRepository.findById(id);
+        companyManager.setPresence(LocalDate.now());
     }
 
     // register first email for contact person

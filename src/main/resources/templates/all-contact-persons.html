@@ -34,6 +34,7 @@
                 <option value="allContactPersonsByFirstCall">Изпращане имейл</option>
                 <option value="allContactPersonsBySecondEmail">Изпращане писмо</option>
                 <option value="allContactPersonsBySecondCall">Второ обаждане</option>
+                <option value="allContactPersonsBySecondCall">Присъствие</option>
             </select>
             <button type="submit" class="sort-button">Сортирай</button>
         </form>
@@ -52,6 +53,7 @@
             <th>Изпращане имейл</th>
             <th>Изпращане писмо</th>
             <th>Второ обаждане</th>
+            <th>Присъствие</th>
             <th>Действия</th>
         </tr>
         </thead>
@@ -103,6 +105,18 @@
                 <ul>
                     <li>
                         <span th:text="${person.secondCall}"></span>
+                    </li>
+                    <li>
+                        <form th:method="POST" th:action="@{/second-call-contact-person/{id}(id=${person.id})}">
+                            <button type="submit" class="reg-button">Регистрирай</button>
+                        </form>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>
+                        <span th:text="${person.presence}"></span>
                     </li>
                     <li>
                         <form th:method="POST" th:action="@{/second-call-contact-person/{id}(id=${person.id})}">
