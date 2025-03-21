@@ -192,20 +192,28 @@ public class CompanyServiceImpl implements CompanyService {
         company.setPhoneNumber(companyDTO.getPhoneNumber());
         company.setEmail(companyDTO.getEmail());
         company.setLocationType(LocationType.valueOf(companyDTO.getLocationType()));
-        company.setCompanyType(CompanyType.valueOf(companyDTO.getCompanyType()));
 
-        List<IndustryType> industryTypes = companyDTO.getIndustries().stream()
-                .map(IndustryType::valueOf)
-                .collect(Collectors.toList());
-
-        List<UnitType> unitTypes = new ArrayList<>();
-
-        for (String unit : companyDTO.getUnits()) {
-            unitTypes.add(UnitType.valueOf(unit));
+        if (companyDTO.getCompanyType() != null) {
+            company.setCompanyType(CompanyType.valueOf(companyDTO.getCompanyType()));
         }
 
-        company.setIndustryTypes(industryTypes);
-        company.setUnitTypes(unitTypes);
+        if (companyDTO.getIndustries() != null) {
+            List<IndustryType> industryTypes = companyDTO.getIndustries().stream()
+                    .map(IndustryType::valueOf)
+                    .collect(Collectors.toList());
+
+            company.setIndustryTypes(industryTypes);
+        }
+
+        if (companyDTO.getUnits() != null) {
+            List<UnitType> unitTypes = new ArrayList<>();
+
+            for (String unit : companyDTO.getUnits()) {
+                unitTypes.add(UnitType.valueOf(unit));
+            }
+
+            company.setUnitTypes(unitTypes);
+        }
 
         companyRepository.save(company);
     }

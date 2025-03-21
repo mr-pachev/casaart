@@ -195,6 +195,11 @@ public class CompanyController {
         model.addAttribute("allCompanyTypes", CompanyType.values());
         model.addAttribute("contactsPersons", companyDTO.getContactPerson());
 
+        // Логика за обработка на партньор или доставчик
+        if (companyDTO.getCompanyType().equals("ПАРТНЬОР")) {
+            return "partner-details";
+        }
+
         return "company-details";
     }
 
@@ -236,7 +241,7 @@ public class CompanyController {
 
         companyService.editCompany(companyDTO);
 
-        if (companyDTO.getCompanyType().equals("ПАРТНЬОР")){
+        if (companyService.findCompanyById(id).getCompanyType().equals("ПАРТНЬОР")){
             return "redirect:/partners";
         }
 

@@ -132,8 +132,8 @@
             <th>Локация</th>
             <th>Лице за контакт</th>
             <th>Управител</th>
-            <th>Звено</th>
-            <th>Услуги/продукти</th>
+<!--            <th>Звено</th>-->
+<!--            <th>Услуги/продукти</th>-->
             <th>Действия</th>
         </tr>
         </thead>
@@ -180,20 +180,20 @@
                     </form>
                 </div>
             </td>
-            <td>
-                <ul>
-                    <li th:each="unit : ${company.units}"
-                        th:text="${unit}">Звено
-                    </li>
-                </ul>
-            </td>
-            <td>
-                <ul>
-                    <li th:each="industry : ${company.industries}"
-                        th:text="${industry}">Услуги/продукти
-                    </li>
-                </ul>
-            </td>
+<!--            <td>-->
+<!--                <ul>-->
+<!--                    <li th:each="unit : ${company.units}"-->
+<!--                        th:text="${unit}">Звено-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--                <ul>-->
+<!--                    <li th:each="industry : ${company.industries}"-->
+<!--                        th:text="${industry}">Услуги/продукти-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </td>-->
             <td>
                 <div class="action-buttons">
                     <form th:method="GET" th:action="@{/company-details/{id}(id=${company.id})}">
