@@ -23,11 +23,13 @@
         <span>Списък с партньори:</span>
         <span class="count" th:text="${allCompanies.size()}"></span>
     </h1>
-    <form th:method="GET" th:action="@{/add-company}" style="display: inline;" class="buttons">
-        <input type="hidden" id="companyType" name="companyType" value="ПАРТНЬОР">
+    <div class="buttons">
+        <form th:method="GET" th:action="@{/add-company}" style="display: inline;" class="buttons">
+            <input type="hidden" id="companyType" name="companyType" value="ПАРТНЬОР">
 
-        <button type="submit">Запази</button>
-    </form>
+            <button type="submit" class="register">Запази</button>
+        </form>
+    </div>
     <div class="buttons">
         <form th:method="POST"
               th:action="@{/sort-companies}" style="display: inline;">
@@ -41,7 +43,8 @@
             </select>
 
             <!-- Под-селекция за звената (скрита по подразбиране) -->
-            <select name="unitType" class="source-type-select" id="unitSelect" style="display: none;" onchange="toggleIndustrySelect()">
+            <select name="unitType" class="source-type-select" id="unitSelect" style="display: none;"
+                    onchange="toggleIndustrySelect()">
                 <option value="">-- Изберете звено --</option>
                 <option th:each="unit : ${allUnits}"
                         th:value="${unit}"
