@@ -246,6 +246,14 @@ public class CompanyServiceImpl implements CompanyService {
     public void editCompany(CompanyDTO companyDTO) {
         Company company = companyRepository.findById(companyDTO.getId()).get();
 
+        if(company.getCompanyType().equals(CompanyType.ДОСТАВЧИК) && companyDTO.getCompanyType().equals("ПАРТНЬОР")){
+            company.setUnitTypes(null);
+            company.setIndustryTypes(null);
+
+            companyDTO.setUnits(null);
+            companyDTO.setIndustries(null);
+        }
+
         company.setName(companyDTO.getName());
         company.setAddress(companyDTO.getAddress());
         company.setPhoneNumber(companyDTO.getPhoneNumber());

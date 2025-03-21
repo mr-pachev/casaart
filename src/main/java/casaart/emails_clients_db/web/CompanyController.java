@@ -228,6 +228,7 @@ public class CompanyController {
         model.addAttribute("allLocations", LocationType.values());
         model.addAttribute("allIndustries", IndustryType.values());
         model.addAttribute("allPartnerTypes", PartnerType.values());
+        model.addAttribute("allCompanyTypes", CompanyType.values());
         model.addAttribute("contactsPersons", companyDTO.getContactPerson());
 
         // Логика за обработка на партньор или доставчик
@@ -253,6 +254,7 @@ public class CompanyController {
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
             model.addAttribute("allPartnerTypes", PartnerType.values());
+            model.addAttribute("allCompanyTypes", CompanyType.values());
             model.addAttribute("contactsPersons", companyDTO.getContactPerson());
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.providerDTO", bindingResult);
 
@@ -267,6 +269,7 @@ public class CompanyController {
             model.addAttribute("allLocations", LocationType.values());
             model.addAttribute("allIndustries", IndustryType.values());
             model.addAttribute("allPartnerTypes", PartnerType.values());
+            model.addAttribute("allCompanyTypes", CompanyType.values());
             model.addAttribute("contactsPersons", companyDTO.getContactPerson());
             model.addAttribute("isExistCompany", true);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.companyDTO", bindingResult);

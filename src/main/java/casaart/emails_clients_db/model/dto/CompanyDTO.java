@@ -39,6 +39,7 @@ public class CompanyDTO {
 
     private List<String> partnerTypes = new ArrayList<>();
 
+    @NotBlank
     private String companyType;
 
     public long getId() {
