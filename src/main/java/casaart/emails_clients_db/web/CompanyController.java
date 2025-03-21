@@ -71,8 +71,8 @@ public class CompanyController {
         return "suppliers";
     }
 
-    // view all sorted companies
-    @PostMapping("/sort-companies")
+    // view all sorted suppliers
+    @PostMapping("/sort-suppliers")
     public String sortSuppliers(@RequestParam("companyType") String companyType,
                                 @RequestParam(value = "unitType", required = false) String unitType,
                                 @RequestParam(value = "industryType", required = false) String industryType,

@@ -11,7 +11,7 @@
 <div th:replace="~{fragments/navigation}"></div>
 
 <div style="text-align: right; margin: 10px 20px;">
-    <form th:method="POST" th:action="@{/sort-companies}" style="display: inline;">
+    <form th:method="POST" th:action="@{/sort-suppliers}" style="display: inline;">
         <input type="text" name="companyType" placeholder="Търси по име" class="source-type-select"
                style="width: 300px;">
         <button type="submit" class="sort-button">Търси</button>
@@ -32,7 +32,7 @@
     </div>
     <div class="buttons">
         <form th:method="POST"
-              th:action="@{/sort-companies}" style="display: inline;">
+              th:action="@{/sort-suppliers}" style="display: inline;">
             <!-- Основен селект -->
             <select name="companyType" class="source-type-select" id="mainSelect" onchange="toggleUnitSelect()">
                 <option value="allSuppliers">-- подреди по --</option>
@@ -74,7 +74,7 @@
         const unitIndustries = {
             'КУХНЯ': ['ИНВЕНТАР', 'ХРАНИ', 'ПРЕПАРАТИ', 'ОБОРУДВАНЕ', 'ПОДДРЪЖКА'],
             'БАР': ['НАПИТКИ', 'ВИНАРИ', 'ПРЕПАРАТИ', 'ОБОРУДВАНЕ', 'ПОДДРЪЖКА'],
-            'ХОТЕЛ': ['КОНСУМАТИВИ_СТАИ', 'ОФИС_КОНСУМАТИВИ', 'ПРЕПАРАТИ', ПОДДРЪЖКА, 'IT', 'ТВ', 'АРТИСТИ', 'ФОТОГРАФИ', 'СПЕДИТОРИ', 'ФИНАНСИ'],
+            'ХОТЕЛ': ['КОНСУМАТИВИ_СТАИ', 'ОФИС_КОНСУМАТИВИ', 'ПРЕПАРАТИ', 'ПОДДРЪЖКА', 'IT', 'ТВ', 'АРТИСТИ', 'ФОТОГРАФИ', 'СПЕДИТОРИ', 'ФИНАНСИ'],
             'ИНТЕРИОР': ['СТРОИТЕЛИ', 'МАЗИЛКИ', 'ОБОРУДВАНЕ', 'ТРАНСПОРТ'],
             'АКСЕСОАРИ': ['ИНВЕНТАР', 'СПЕДИТОРИ']
         };
