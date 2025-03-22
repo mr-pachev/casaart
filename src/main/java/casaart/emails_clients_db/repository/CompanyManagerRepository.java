@@ -13,7 +13,7 @@ public interface CompanyManagerRepository extends JpaRepository<CompanyManager, 
                                                                      String lastName,
                                                                      String phoneNumber);
 
-   CompanyManager findById(long id);
+   Optional<CompanyManager> findById(long id);
    CompanyManager findByCompanyId(long id);
    List<CompanyManager> findAllByOrderByIdDesc();
    List<CompanyManager> findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();

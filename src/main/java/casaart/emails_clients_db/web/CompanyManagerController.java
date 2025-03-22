@@ -96,9 +96,10 @@ public class CompanyManagerController {
         }
 
         personDTO.setCompany(companyDTO.getName());
+
         companyManagerService.addCompanyManager(personDTO, id);
 
-        return "redirect:/companies";
+        return "redirect:/current-company-manager/" + id;
     }
 
     // edit company manager
@@ -143,6 +144,10 @@ public class CompanyManagerController {
 
         companyManagerService.removeCompanyManager(id);
 
-        return "redirect:/companies";
+        if (companyService.findCompanyById(id).getCompanyType().equals("ПАРТНЬОР")){
+            return "redirect:/partners";
+        }
+
+        return "redirect:/suppliers";
     }
 }

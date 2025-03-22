@@ -28,7 +28,7 @@ public class MarketingServiceImpl implements MarketingService {
     // register first call for company manager
     @Override
     public void registerFirstCallManager(long id) {
-        CompanyManager companyManager = companyManagerRepository.findById(id);
+        CompanyManager companyManager = companyManagerRepository.findById(id).get();
         companyManager.setFirstCall(LocalDate.now());
 
         companyManagerRepository.save(companyManager);
@@ -37,7 +37,7 @@ public class MarketingServiceImpl implements MarketingService {
     // register send email for company manager
     @Override
     public void registerSendEmailManager(long id) {
-        CompanyManager companyManager = companyManagerRepository.findById(id);
+        CompanyManager companyManager = companyManagerRepository.findById(id).get();
         companyManager.setSendEmail(LocalDate.now());
 
         companyManagerRepository.save(companyManager);
@@ -46,7 +46,7 @@ public class MarketingServiceImpl implements MarketingService {
     // register send letter for company manager
     @Override
     public void registerSendLetterManager(long id) {
-        CompanyManager companyManager = companyManagerRepository.findById(id);
+        CompanyManager companyManager = companyManagerRepository.findById(id).get();
         companyManager.setSendLetter(LocalDate.now());
 
         companyManagerRepository.save(companyManager);
@@ -55,7 +55,7 @@ public class MarketingServiceImpl implements MarketingService {
     // register second call for manager
     @Override
     public void registerSecondCallManager(long id) {
-        CompanyManager companyManager = companyManagerRepository.findById(id);
+        CompanyManager companyManager = companyManagerRepository.findById(id).get();
         companyManager.setSecondCall(LocalDate.now());
 
         companyManagerRepository.save(companyManager);
@@ -64,8 +64,10 @@ public class MarketingServiceImpl implements MarketingService {
     // register presence for manager
     @Override
     public void registerPresenceManager(long id) {
-        CompanyManager companyManager = companyManagerRepository.findById(id);
+        CompanyManager companyManager = companyManagerRepository.findById(id).get();
         companyManager.setPresence(LocalDate.now());
+
+        companyManagerRepository.save(companyManager);
     }
 
     /* ----- CONTACT PERSON ----- */

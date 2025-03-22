@@ -56,7 +56,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         } else if ("allCompanyManagersBySendEmail".equals(type)) {
             companyManagerList = companyManagerRepository.findAllByOrderBySendEmailDesc();
 
-        }  else if ("allCompanyManagersBySendLetter".equals(type)) {
+        } else if ("allCompanyManagersBySendLetter".equals(type)) {
             companyManagerList = companyManagerRepository.findAllByOrderBySendLetterDesc();
 
         } else if ("allCompanyManagersBySecondCall".equals(type)) {
@@ -65,13 +65,13 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         } else if ("allCompanyManagersByPresence".equals(type)) {
             companyManagerList = companyManagerRepository.findAllByOrderByPresenceDesc();
 
-        }else if(type.contains("@")){
+        } else if (type.contains("@")) {
             companyManagerList = companyManagerRepository.findByEmailStartingWithIgnoreCase(type);
 
-        } else if(inputArr.length == 1){
+        } else if (inputArr.length == 1) {
             companyManagerList = companyManagerRepository.findAllByFirstName(inputArr[0]);
 
-        }else if(inputArr.length == 2){
+        } else if (inputArr.length == 2) {
             companyManagerList = companyManagerRepository.findAllByFirstNameAndLastName(inputArr[0], inputArr[1]);
 
         }
@@ -92,12 +92,9 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     // find company manager by id
     @Override
     public PersonDTO findCompanyManagerById(long id) {
-        CompanyManager companyManager = companyManagerRepository.findById(id);
+        CompanyManager companyManager = companyManagerRepository.findById(id).get();
 
-        PersonDTO personDTO = mapper.map(companyManager, PersonDTO.class);
-        personDTO.setCompany(companyManager.getCompany().getName());
-
-        return personDTO;
+        return companyManagerMapToPersonDTO(companyManager);
     }
 
     // find company manager by company id
@@ -105,10 +102,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     public PersonDTO findCompanyManagerByCompany(long id) {
         CompanyManager companyManager = companyManagerRepository.findByCompanyId(id);
 
-        PersonDTO personDTO = mapper.map(companyManager, PersonDTO.class);
-        personDTO.setCompany(companyManager.getCompany().getName());
-
-        return personDTO;
+        return companyManagerMapToPersonDTO(companyManager);
     }
 
     // add company manager
@@ -136,11 +130,11 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
             contactPersonRepository.deleteById(contactPerson.getId());
         }
 
-        CompanyManager manager = mapper.map(personDTO, CompanyManager.class);
+        CompanyManager manager = personDTOMapToCompanyManager(personDTO);
 
-        manager.setId(null);
-        manager.setCompany(company);
-        companyManagerRepository.save(manager);
+//        manager.setId(null);
+//        manager.setCompany(company);
+//        companyManagerRepository.save(manager);
 
         company.setCompanyManager(manager);
         companyRepository.save(company);
@@ -178,7 +172,16 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
 
     // PersonDTO map to CompanyManager
     CompanyManager personDTOMapToCompanyManager(PersonDTO personDTO) {
-        CompanyManager companyManager = companyManagerRepository.findById(personDTO.getId());
+        CompanyManager companyManager = new CompanyManager();
+        Company company = companyRepository.findByName(personDTO.getCompany()).get();
+
+        // Проверка дали съществува управител или създаваме нов
+        if (companyManagerRepository.findById(personDTO.getId()).isPresent()) {
+            companyManager = companyManagerRepository.findById(personDTO.getId()).get();
+        }
+
+        // Настройка полетата на управителя
+        companyManager.setId(null);
 
         companyManager.setFirstName(personDTO.getFirstName());
 
@@ -189,37 +192,61 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         companyManager.setEmail(personDTO.getEmail());
         companyManager.setPhoneNumber(personDTO.getPhoneNumber());
 
-        if(personDTO.getFirstCall() != null){
+        companyManager.setCompany(company);
+
+        if (personDTO.getFirstCall() != null) {
             companyManager.setFirstCall(personDTO.getFirstCall());
-        }else {
+        } else {
             companyManager.setFirstCall(null);
         }
 
-        if(personDTO.getSendEmail() != null){
+        if (personDTO.getSendEmail() != null) {
             companyManager.setFirstCall(personDTO.getSendEmail());
-        }else {
+        } else {
             companyManager.setSendEmail(null);
         }
 
-        if(personDTO.getSendLetter() != null){
+        if (personDTO.getSendLetter() != null) {
             companyManager.setSendLetter(personDTO.getSendLetter());
-        }else {
+        } else {
             companyManager.setSendLetter(null);
         }
 
-        if(personDTO.getSecondCall() != null){
+        if (personDTO.getSecondCall() != null) {
             companyManager.setSecondCall(personDTO.getSecondCall());
-        }else {
+        } else {
             companyManager.setSecondCall(null);
         }
 
-        if(personDTO.getPresence() != null){
+        if (personDTO.getPresence() != null) {
             companyManager.setPresence(personDTO.getPresence());
-        }else {
+        } else {
             companyManager.setPresence(null);
         }
 
+        companyManagerRepository.save(companyManager);
+
         return companyManager;
+    }
+
+    // CompanyManager map to PersonDTO
+    PersonDTO companyManagerMapToPersonDTO(CompanyManager companyManager){
+        PersonDTO personDTO = new PersonDTO();
+
+        personDTO.setId(companyManager.getId());
+        personDTO.setFirstName(companyManager.getFirstName());
+        personDTO.setMiddleName(companyManager.getMiddleName());
+        personDTO.setLastName(companyManager.getLastName());
+        personDTO.setEmail(companyManager.getEmail());
+        personDTO.setPhoneNumber(companyManager.getPhoneNumber());
+        personDTO.setCompany(companyManager.getCompany().getName());
+        personDTO.setFirstCall(companyManager.getFirstCall());
+        personDTO.setSendEmail(companyManager.getSendEmail());
+        personDTO.setSendLetter(companyManager.getSendLetter());
+        personDTO.setSecondCall(companyManager.getSecondCall());
+        personDTO.setPresence(companyManager.getPresence());
+
+        return personDTO;
     }
 
     // List<CompanyManager> map to List<PersonDTO>
