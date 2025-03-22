@@ -33,7 +33,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     // get all company managers
     @Override
     public List<PersonDTO> allCompanyManagers() {
-        List<CompanyManager> companyManagerList = companyManagerRepository.findAllByOrderByIdDesc();
+        List<CompanyManager> companyManagerList = companyManagerRepository.findAllCompanyManagersForPartnersOrderedByIdDesc();
 
         return companyManagersListMapToPersonDTOS(companyManagerList);
     }
@@ -45,25 +45,25 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         List<CompanyManager> companyManagerList = new ArrayList<>();
 
         if ("allCompanyManagers".equals(type)) {
-            companyManagerList = companyManagerRepository.findAllByOrderByIdDesc();
+            companyManagerList = companyManagerRepository.findAllCompanyManagersForPartnersOrderedByIdDesc();
 
         } else if ("allCompanyManagersByName".equals(type)) {
-            companyManagerList = companyManagerRepository.findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
+            companyManagerList = companyManagerRepository.findAllPartnersOrderByFirstNameAscMiddleNameAscLastNameAsc();
 
         } else if ("allCompanyManagersByFirstCall".equals(type)) {
-            companyManagerList = companyManagerRepository.findAllByOrderByFirstCallDesc();
+            companyManagerList = companyManagerRepository.findAllPartnersOrderByFirstCallDesc();
 
         } else if ("allCompanyManagersBySendEmail".equals(type)) {
-            companyManagerList = companyManagerRepository.findAllByOrderBySendEmailDesc();
+            companyManagerList = companyManagerRepository.findAllPartnersOrderBySendEmailDesc();
 
         } else if ("allCompanyManagersBySendLetter".equals(type)) {
-            companyManagerList = companyManagerRepository.findAllByOrderBySendLetterDesc();
+            companyManagerList = companyManagerRepository.findAllPartnersOrderBySendLetterDesc();
 
         } else if ("allCompanyManagersBySecondCall".equals(type)) {
-            companyManagerList = companyManagerRepository.findAllByOrderBySecondCallDesc();
+            companyManagerList = companyManagerRepository.findAllPartnersOrderBySecondCallDesc();
 
         } else if ("allCompanyManagersByPresence".equals(type)) {
-            companyManagerList = companyManagerRepository.findAllByOrderByPresenceDesc();
+            companyManagerList = companyManagerRepository.findAllPartnersOrderByPresenceDesc();
 
         } else if (type.contains("@")) {
             companyManagerList = companyManagerRepository.findByEmailStartingWithIgnoreCase(type);
@@ -107,7 +107,6 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
 
     // add company manager
     @Override
-    @Transactional
     public void addCompanyManager(PersonDTO personDTO, long companyId) {
         Company company = companyRepository.findById(companyId).get();
 
@@ -132,10 +131,6 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
 
         CompanyManager manager = personDTOMapToCompanyManager(personDTO);
 
-//        manager.setId(null);
-//        manager.setCompany(company);
-//        companyManagerRepository.save(manager);
-
         company.setCompanyManager(manager);
         companyRepository.save(company);
     }
@@ -144,8 +139,6 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     @Override
     public void editCompanyManager(PersonDTO personDTO) {
         CompanyManager companyManager = personDTOMapToCompanyManager(personDTO);
-
-        companyManagerRepository.save(companyManager);
     }
 
     // delete company manager
@@ -171,60 +164,38 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     }
 
     // PersonDTO map to CompanyManager
-    CompanyManager personDTOMapToCompanyManager(PersonDTO personDTO) {
+    @Transactional
+    public CompanyManager personDTOMapToCompanyManager(PersonDTO personDTO) {
         CompanyManager companyManager = new CompanyManager();
+
+        // Изчистване името на фирмата от запетайки
+        personDTO.setCompany(personDTO.getCompany().trim().replaceAll(",", ""));
+
         Company company = companyRepository.findByName(personDTO.getCompany()).get();
 
-        // Проверка дали съществува управител или създаваме нов
+        // Проверка дали ще се променя управителя или ще се създава нов
         if (companyManagerRepository.findById(personDTO.getId()).isPresent()) {
             companyManager = companyManagerRepository.findById(personDTO.getId()).get();
         }
 
-        // Настройка полетата на управителя
         companyManager.setId(null);
-
         companyManager.setFirstName(personDTO.getFirstName());
-
-        if (personDTO.getMiddleName() != null) {
-            companyManager.setMiddleName(personDTO.getMiddleName());
-        }
+        companyManager.setMiddleName(personDTO.getMiddleName());
         companyManager.setLastName(personDTO.getLastName());
         companyManager.setEmail(personDTO.getEmail());
         companyManager.setPhoneNumber(personDTO.getPhoneNumber());
 
         companyManager.setCompany(company);
+        company.setCompanyManager(companyManager); // Връщаме връзката обратно
 
-        if (personDTO.getFirstCall() != null) {
-            companyManager.setFirstCall(personDTO.getFirstCall());
-        } else {
-            companyManager.setFirstCall(null);
-        }
+        companyManager.setFirstCall(personDTO.getFirstCall());
+        companyManager.setSendEmail(personDTO.getSendEmail());
+        companyManager.setSendLetter(personDTO.getSendLetter());
+        companyManager.setSecondCall(personDTO.getSecondCall());
+        companyManager.setPresence(personDTO.getPresence());
 
-        if (personDTO.getSendEmail() != null) {
-            companyManager.setFirstCall(personDTO.getSendEmail());
-        } else {
-            companyManager.setSendEmail(null);
-        }
-
-        if (personDTO.getSendLetter() != null) {
-            companyManager.setSendLetter(personDTO.getSendLetter());
-        } else {
-            companyManager.setSendLetter(null);
-        }
-
-        if (personDTO.getSecondCall() != null) {
-            companyManager.setSecondCall(personDTO.getSecondCall());
-        } else {
-            companyManager.setSecondCall(null);
-        }
-
-        if (personDTO.getPresence() != null) {
-            companyManager.setPresence(personDTO.getPresence());
-        } else {
-            companyManager.setPresence(null);
-        }
-
-        companyManagerRepository.save(companyManager);
+        companyManager = companyManagerRepository.save(companyManager);
+        companyRepository.save(company); // Запазваме и компанията
 
         return companyManager;
     }

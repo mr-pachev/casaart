@@ -23,7 +23,7 @@ public class CompanyManager extends BaseEntity{
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "companyManager", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "companyManager")
     private Company company;
 
     @Column(name = "first_call")

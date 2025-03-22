@@ -133,7 +133,7 @@ public class CompanyManagerController {
 
         companyManagerService.editCompanyManager(personDTO);
 
-        CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany().trim().replaceAll(",+$", ""));
+        CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany());
 
         return "redirect:/current-company-manager/" + findCompany.getId();
     }

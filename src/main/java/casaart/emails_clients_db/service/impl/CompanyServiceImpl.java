@@ -214,6 +214,8 @@ public class CompanyServiceImpl implements CompanyService {
     // find company by name
     @Override
     public CompanyDTO findCompanyByName(String name) {
+        name = name.trim().replaceAll(",", "");
+
         CompanyDTO companyDTO = mapCompanyToCompanyDTO(companyRepository.findByName(name).get());
         return companyDTO;
     }
