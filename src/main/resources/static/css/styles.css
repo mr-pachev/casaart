@@ -122,7 +122,6 @@ table td {
     background-color: #0f0805;
 }
 
-
 .reg-button {
     background-color: #5c3725;
     color: white; /* Бял текст */
@@ -396,4 +395,13 @@ footer {
     padding: 20px 0;
     /*background-color: #f1f1f1;*/
     width: 100%;
+}
+
+/* Ограничаване на размера на изображението в таблицата */
+.product-image {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 0 auto;
 }

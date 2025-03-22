@@ -62,9 +62,9 @@
             <td th:text="${#numbers.formatDecimal(product.providerPrice, 2, 2)}">Цена доставчик</td>
             <td th:text="${#numbers.formatDecimal(product.clientPrice, 2, 2)}">Цена клиент</td>
             <td>
-                <img th:src="@{${product.imagePath}}" alt="Image in Table"
-                     style="max-width: 100%; height: auto;"/>
+                <img th:src="@{${product.imagePath}}" alt="Image in Table" class="product-image"/>
             </td>
+
             <td th:text="${product.providerProductCode}">Продуктав код доставчик</td>
             <td th:text="${product.provider}">Доставчик</td>
             <td th:text="${product.dimensions}">Размери</td>

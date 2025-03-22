@@ -118,7 +118,7 @@
                 <div th:unless="${company.contactPerson != null and !company.contactPerson.isEmpty()}">
                     <form th:method="POST" th:action="@{/add-contact-person-with-com-id/{id}(id=${company.id})}"
                           style="display: inline;">
-                        <button type="submit" class="register">Добави</button>
+                        <button type="submit" class="reg-button">Добави</button>
                     </form>
                 </div>
             </td>
@@ -136,7 +136,7 @@
                 <div th:unless="${company.companyManager != null}">
                     <form th:method="POST" th:action="@{/add-company-manager-with-com-id/{id}(id=${company.id})}"
                           style="display: inline;">
-                        <button type="submit" class="register">Добави</button>
+                        <button type="submit" class="reg-button">Добави</button>
                     </form>
                 </div>
             </td>
