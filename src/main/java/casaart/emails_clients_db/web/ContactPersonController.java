@@ -52,7 +52,7 @@ public class ContactPersonController {
         return "/all-contact-persons";
     }
 
-    //view all sorted contact persons
+    // view all sorted contact persons
     @PostMapping("/sort-contact-persons")
     public String sortContactPersons(@RequestParam("type") String type, Model model) {
         List<PersonDTO> allContactPersons = contactPersonService.sortedContactPersonsByType(type);
@@ -62,7 +62,7 @@ public class ContactPersonController {
         return "all-contact-persons"; // Връщаме същия шаблон с актуализиран списък
     }
 
-    //view contact persons by company id
+    // view contact persons by company id
     @PostMapping("/current-contact-persons/{id}")
     public String referenceToViewContactPersonsForm(@PathVariable("id") Long id) {
 

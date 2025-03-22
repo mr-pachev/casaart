@@ -111,6 +111,8 @@ public class MarketingServiceImpl implements MarketingService {
     public void registerPresenceContactPerson(long id) {
         ContactPerson contactPerson = contactPersonRepository.findById(id).get();
         contactPerson.setPresence(LocalDate.now());
+
+        contactPersonRepository.save(contactPerson);
     }
 
     // register first email for client

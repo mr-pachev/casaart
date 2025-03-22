@@ -92,20 +92,24 @@
                            readonly>
                 </div>
                 <div class="form-group">
-                    <label for="firstEmail" class="form-label">Дата на първи имейл</label>
-                    <input type="date" class="form-control" id="firstEmail" name="firstEmail" th:value="${personDTO.firstEmail}">
-                </div>
-                <div class="form-group">
-                    <label for="firstCall" class="form-label">Дата на първо обаждане</label>
+                    <label for="firstCall" class="form-label">Първо обаждане</label>
                     <input type="date" class="form-control" id="firstCall" name="firstCall" th:value="${personDTO.firstCall}">
                 </div>
                 <div class="form-group">
-                    <label for="secondEmail" class="form-label">Дата на втори имейл</label>
-                    <input type="date" class="form-control" id="secondEmail" name="secondEmail" th:value="${personDTO.secondEmail}">
+                    <label for="sendEmail" class="form-label">Първи имейл</label>
+                    <input type="date" class="form-control" id="sendEmail" name="sendEmail" th:value="${personDTO.sendEmail}">
                 </div>
                 <div class="form-group">
-                    <label for="secondCall" class="form-label">Дата на второ обаждане</label>
+                    <label for="sendLetter" class="form-label">Първо писмо</label>
+                    <input type="date" class="form-control" id="sendLetter" name="sendLetter" th:value="${personDTO.sendLetter}">
+                </div>
+                <div class="form-group">
+                    <label for="secondCall" class="form-label">Второ обаждане</label>
                     <input type="date" class="form-control" id="secondCall" name="secondCall" th:value="${personDTO.secondCall}">
+                </div>
+                <div class="form-group">
+                    <label for="presence" class="form-label">Присъствие</label>
+                    <input type="date" class="form-control" id="presence" name="presence" th:value="${personDTO.presence}">
                 </div>
                 <button type="submit" class="btn btn-success">Запази</button>
             </form>

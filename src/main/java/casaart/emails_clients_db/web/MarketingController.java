@@ -116,7 +116,7 @@ public class MarketingController {
         return "redirect:/marketing/current-contact-persons/" + id;
     }
 
-    // register presence for contact person
+    // register presence for contact presence
     @PostMapping("/presence-contact-person/{id}")
     public String registerPresenceContactPerson(@PathVariable("id") Long id) {
         marketingService.registerPresenceContactPerson(id);
@@ -137,6 +137,8 @@ public class MarketingController {
 
         return "current-contact-persons";
     }
+
+    /* ----- CLIENT ----- */
 
     // register first email for client
     @GetMapping("/first-email-client/{id}")
