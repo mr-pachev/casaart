@@ -11,7 +11,6 @@ import casaart.emails_clients_db.service.CompanyManagerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,31 +107,44 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     // add company manager
     @Override
     public void addCompanyManager(PersonDTO personDTO, long companyId) {
-        Company company = companyRepository.findById(companyId).get();
+        // Намери компанията
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new EntityNotFoundException("Company with id " + companyId + " not found"));
 
+        // Проверка дали ContactPerson съществува в списъка с контактни лица на компанията
         boolean isManagerInContactList = company.getContactPersons().stream()
                 .anyMatch(person -> person.getFullName().equals(personDTO.getFullName()));
 
-        if (isManagerInContactList) {
-            company.getContactPersons().removeIf(person -> person.getFullName().equals(personDTO.getFullName()));
-        }
-
-        companyRepository.save(company);
+        ContactPerson contactPerson = null;
 
         if (isManagerInContactList) {
-            ContactPerson contactPerson = contactPersonRepository.findByFirstNameAndLastNameAndPhoneNumber(personDTO.getFirstName(),
+            // Намери ContactPerson
+            contactPerson = contactPersonRepository.findByFirstNameAndLastNameAndPhoneNumber(
+                    personDTO.getFirstName(),
                     personDTO.getLastName(),
-                    personDTO.getPhoneNumber()).get();
-            contactPerson.setCompany(null);
-            contactPersonRepository.save(contactPerson);
+                    personDTO.getPhoneNumber()).orElse(null);
 
-            contactPersonRepository.deleteById(contactPerson.getId());
+            // Ако ContactPerson съществува, премахваме го от списъка с контактни лица на компанията
+            if (contactPerson != null) {
+                company.getContactPersons().remove(contactPerson);
+            }
+
+            companyRepository.save(company);
         }
 
+        // Създаване на новия CompanyManager
         CompanyManager manager = personDTOMapToCompanyManager(personDTO);
 
+        // Задаване на нов управител за компанията
         company.setCompanyManager(manager);
         companyRepository.save(company);
+
+        // Ако ContactPerson съществува, премахни връзката с компанията и го изтрий
+        if (contactPerson != null) {
+            contactPerson.setCompany(null);
+            contactPersonRepository.save(contactPerson); // Запази преди изтриване, за да избегнем грешки
+            contactPersonRepository.deleteById(contactPerson.getId());
+        }
     }
 
     // edit company manager
@@ -164,7 +176,6 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
     }
 
     // PersonDTO map to CompanyManager
-    @Transactional
     public CompanyManager personDTOMapToCompanyManager(PersonDTO personDTO) {
         CompanyManager companyManager = new CompanyManager();
 
