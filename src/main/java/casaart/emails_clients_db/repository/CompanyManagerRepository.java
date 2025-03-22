@@ -17,10 +17,10 @@ public interface CompanyManagerRepository extends JpaRepository<CompanyManager, 
    Optional<CompanyManager> findById(long id);
    CompanyManager findByCompanyId(long id);
 
+   // sort options
    @Query("SELECT c.companyManager FROM Company c WHERE c.companyType = 'ПАРТНЬОР' ORDER BY c.id DESC")
    List<CompanyManager> findAllCompanyManagersForPartnersOrderedByIdDesc();
 
-   // sort options
    @Query("SELECT cm FROM CompanyManager cm WHERE cm.company.companyType = 'ПАРТНЬОР' ORDER BY cm.firstName ASC, cm.middleName ASC, cm.lastName ASC")
    List<CompanyManager> findAllPartnersOrderByFirstNameAscMiddleNameAscLastNameAsc();
 

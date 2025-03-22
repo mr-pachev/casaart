@@ -28,7 +28,7 @@ public class ContactPersonServiceImpl implements ContactPersonService {
     // all contact persons
     @Override
     public List<PersonDTO> allContactPersons() {
-        List<ContactPerson> contactPersonList = contactPersonRepository.findAll();
+        List<ContactPerson> contactPersonList = contactPersonRepository.findAllPartnersContactPersonsOrderByIdDesc();
         List<PersonDTO> personDTOS = new ArrayList<>();
 
         for (ContactPerson person : contactPersonList) {
@@ -47,25 +47,25 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         List<ContactPerson> contactPersonList = new ArrayList<>();
 
         if ("allContactPersons".equals(type)) {
-            contactPersonList = contactPersonRepository.findAllByOrderByIdDesc();
+            contactPersonList = contactPersonRepository.findAllPartnersContactPersonsOrderByIdDesc();
 
         } else if ("allContactPersonsByName".equals(type)) {
-            contactPersonList = contactPersonRepository.findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
+            contactPersonList = contactPersonRepository.findAllPartnersContactPersonsOrderByFirstNameAscMiddleNameAscLastNameAsc();
 
         }  else if ("allContactPersonsByFirstCall".equals(type)) {
-            contactPersonList = contactPersonRepository.findAllByOrderByFirstCallDesc();
+            contactPersonList = contactPersonRepository.findAllPartnersContactPersonsOrderByFirstCallDesc();
 
         } else if ("allContactPersonsBySendEmail".equals(type)) {
-            contactPersonList = contactPersonRepository.findAllByOrderBySendEmailDesc();
+            contactPersonList = contactPersonRepository.findAllPartnersContactPersonsOrderBySendEmailDesc();
 
         }else if ("allContactPersonsBySendLetter".equals(type)) {
-            contactPersonList = contactPersonRepository.findAllByOrderBySendLetterDesc();
+            contactPersonList = contactPersonRepository.findAllPartnersContactPersonsOrderBySendLetterDesc();
 
         } else if ("allContactPersonsBySecondCall".equals(type)) {
-            contactPersonList = contactPersonRepository.findAllByOrderBySecondCallDesc();
+            contactPersonList = contactPersonRepository.findAllPartnersContactPersonsOrderBySecondCallDesc();
 
         } else if ("allContactPersonsByPresence".equals(type)) {
-            contactPersonList = contactPersonRepository.findAllByOrderByPresenceDesc();
+            contactPersonList = contactPersonRepository.findAllPartnersContactPersonsOrderByPresenceDesc();
 
         }else if(type.contains("@")){
             contactPersonList = contactPersonRepository.findByEmailStartingWithIgnoreCase(type);
