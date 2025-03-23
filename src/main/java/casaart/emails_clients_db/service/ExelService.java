@@ -1,6 +1,7 @@
 package casaart.emails_clients_db.service;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ExelService {
 
@@ -16,12 +17,12 @@ public interface ExelService {
     // export contactPersons to exel
     void exportContactPersonsToExcel(String filePath);
 
-    // export unmatched emails to exel
-    void exportUnmatchedEmailsToExcel(List<String> emails, String outputFilePath);
-
     // update or add loyaltyLevel on clients
     void updateOrAddLoyaltyLevel(String filePath);
 
-    //match emails from exel
-    void matchEmailsFromExel(String inputFilePath, String outputFilePath);
+    // export duplicated emails to Excel
+    void exportDuplicatedEmailsToExcel(Set<String> duplicatedEmails, String outputFilePath);
+
+    // find duplicated emails from Excel
+    void findDuplicatedEmailsFromExcel(String inputFilePath, String outputFilePath);
 }

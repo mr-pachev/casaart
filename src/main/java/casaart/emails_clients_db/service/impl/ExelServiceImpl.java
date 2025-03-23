@@ -278,24 +278,6 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
-    // export unmatched emails to exel
-    @Override
-    public void exportUnmatchedEmailsToExcel(List<String> emails, String outputFilePath) {
-        try (Workbook workbook = new XSSFWorkbook(); FileOutputStream fos = new FileOutputStream(outputFilePath)) {
-            Sheet sheet = workbook.createSheet("Unmatched Emails");
-
-            int rowNum = 0;
-            for (String email : emails) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(email);
-            }
-
-            workbook.write(fos);
-        } catch (IOException e) {
-            System.err.println("Error writing Excel file: " + e.getMessage());
-        }
-    }
-
     // update or add loyaltyLevel on clients
     @Override
     public void updateOrAddLoyaltyLevel(String filePath) {
@@ -483,11 +465,29 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
-    // match emails from exel
+    // export duplicated emails to Excel
     @Override
-    public void matchEmailsFromExel(String inputFilePath, String outputFilePath) {
-        Set<String> existingEmails = clientRepository.findAllEmails(); // Връща Set<String> с всички имейли
-        List<String> unmatchedEmails = new ArrayList<>();
+    public void exportDuplicatedEmailsToExcel(Set<String> duplicatedEmails, String outputFilePath) {
+        try (Workbook workbook = new XSSFWorkbook(); FileOutputStream fos = new FileOutputStream(outputFilePath)) {
+            Sheet sheet = workbook.createSheet("Duplicated Emails");
+
+            int rowNum = 0;
+            for (String email : duplicatedEmails) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(email);
+            }
+
+            workbook.write(fos);
+            System.out.println("SUCCESSFULLY EXPORTED ---< " + duplicatedEmails.size() + " >-- DUPLICATED EMAILS.");
+        } catch (IOException e) {
+            System.err.println("Error writing Excel file: " + e.getMessage());
+        }
+    }
+
+    // find duplicated emails from Excel
+    @Override
+    public void findDuplicatedEmailsFromExcel(String inputFilePath, String outputFilePath) {
+        Map<String, Integer> emailCountMap = new HashMap<>();
 
         try (FileInputStream fis = new FileInputStream(new File(inputFilePath));
              Workbook workbook = new XSSFWorkbook(fis)) {
@@ -499,13 +499,18 @@ public class ExelServiceImpl implements ExelService {
                 Cell emailCell = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
                 String email = emailCell.toString().trim();
 
-                if (!email.isEmpty() && !existingEmails.contains(email)) {
-                    unmatchedEmails.add(email);
+                if (!email.isEmpty()) {
+                    emailCountMap.put(email, emailCountMap.getOrDefault(email, 0) + 1);
                 }
             }
 
-            exportUnmatchedEmailsToExcel(unmatchedEmails, outputFilePath);
-            System.out.println("SUCCESSFULLY EXPORTED ---< " + unmatchedEmails.size() + " >-- UNMATCHED EMAILS.");
+            // Филтрираме само имейлите, които се повтарят поне два пъти
+            Set<String> duplicatedEmails = emailCountMap.entrySet().stream()
+                    .filter(entry -> entry.getValue() >= 2)
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toSet());
+
+            exportDuplicatedEmailsToExcel(duplicatedEmails, outputFilePath);
         } catch (IOException e) {
             System.err.println("ERROR READING EXCEL FILE: " + e.getMessage());
         }

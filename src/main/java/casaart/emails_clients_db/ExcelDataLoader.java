@@ -59,6 +59,6 @@ public class ExcelDataLoader implements CommandLineRunner {
 //        exelService.exportContactPersonsToExcel(filePathExportContactPerson);
 //        System.out.println("EXPORT is FINISHED!");
 
-//        exelService.matchEmailsFromExel(filePathImportEmails, filePathExportEmails);
+//        exelService.findDuplicatedEmailsFromExcel(filePathImportEmails, filePathExportEmails);
     }
 }
