@@ -15,7 +15,7 @@ public class AddCompanyDTO {
     private String name;
 
     @NotBlank
-    @Size(min = 5)
+    @Size(min = 5, max = 255)
     private String address;
 
     @NotBlank

@@ -165,8 +165,6 @@ public class CompanyController {
             model.addAttribute("isExistCompany", false);
         }
 
-        model.addAttribute("addCompanyDTO", new AddCompanyDTO()); // За да не е null в Thymeleaf
-
         if ("ПАРТНЬОР".equals(companyType)) {
             return "add-partner";
         }
@@ -189,13 +187,23 @@ public class CompanyController {
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCompanyDTO", bindingResult);
 
-            return "redirect:/add-company?companyType=" + addCompanyDTO.getCompanyType();
+            rAtt.addAttribute("companyType", addCompanyDTO.getCompanyType());
+
+            return "redirect:/add-company";
         }
 
         if (companyService.isExistCompany(addCompanyDTO.getName())) {
             rAtt.addFlashAttribute("isExistCompany", true);
+            rAtt.addFlashAttribute("allUnits", UnitType.values());
+            rAtt.addFlashAttribute("allLocations", LocationType.values());
+            rAtt.addFlashAttribute("allIndustries", IndustryType.values());
+            rAtt.addFlashAttribute("allCompanyTypes", CompanyType.values());
+            rAtt.addFlashAttribute("allPartnerTypes", PartnerType.values());
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
-            return "redirect:/add-company?companyType=" + addCompanyDTO.getCompanyType();
+
+            rAtt.addAttribute("companyType", addCompanyDTO.getCompanyType());
+
+            return "redirect:/add-company";
         }
 
         companyService.addCompany(addCompanyDTO);

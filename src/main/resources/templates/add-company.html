@@ -14,10 +14,10 @@
         <div class="add-form">
             <form th:action="@{/add-company}"
                   th:object="${addCompanyDTO}"
-                  method="post">
+                  th:method="post">
 
                 <div class="form-group">
-                    <label for="name">Име</label>
+                    <label th:for="name">Име</label>
                     <input type="text"
                            id="name"
                            name="name"
@@ -28,11 +28,11 @@
                         Името трябва да се състои от 2 до 50 букви.
                     </p>
                     <p class="errors alert alert-danger" th:if="${isExistCompany}">
-                        Съществува партньор с това име.
+                        Съществува доставчик с това име.
                     </p>
                 </div>
 
-                <input type="hidden" name="companyType" th:value="*{companyType}">
+                <input type="hidden" name="companyType" th:value="${addCompanyDTO.companyType != null ? addCompanyDTO.companyType : 'ДОСТАВЧИК'}">
 
                 <!--                <div class="form-group">-->
                 <!--                    <label th:for="partnerTypes">Тип партньор</label>-->
@@ -55,7 +55,7 @@
                 <!--                    </p>-->
                 <!--                </div>-->
                 <div class="form-group">
-                    <label for="units">Звено</label>
+                    <label th:for="units">Звено</label>
                     <select class="form-control"
                             id="units"
                             name="units"
@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="industries">Вид дейност</label>
+                    <label th:for="industries">Вид дейност</label>
                     <select class="form-control"
                             id="industries"
                             name="industries"
@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="address">Адрес</label>
+                    <label th:for="address">Адрес</label>
                     <input type="text"
                            id="address"
                            name="address"
@@ -97,7 +97,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="phoneNumber">Телефон</label>
+                    <label th:for="phoneNumber">Телефон</label>
                     <input type="text"
                            id="phoneNumber"
                            name="phoneNumber"
@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Имейл адрес</label>
+                    <label th:for="email">Имейл адрес</label>
                     <input type="email"
                            id="email"
                            name="email"
@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="locationType">Обхват на дейност</label>
+                    <label th:for="locationType">Обхват на дейност</label>
                     <select class="form-control"
                             id="locationType"
                             name="locationType"
