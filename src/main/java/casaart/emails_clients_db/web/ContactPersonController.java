@@ -74,8 +74,11 @@ public class ContactPersonController {
         List<PersonDTO> contactPersonsDTOS = contactPersonService.currentContactPersonsByCompanyId(id);
         CompanyDTO companyDTO = companyService.findCompanyById(id);
 
+        boolean isPartner = companyDTO.getCompanyType().equals("ПАРТНЬОР");
+
         model.addAttribute("contactPersons", contactPersonsDTOS);
         model.addAttribute("companyDTO", companyDTO);
+        model.addAttribute("isPartner", isPartner);
 
         return "current-contact-persons";
     }
@@ -150,8 +153,12 @@ public class ContactPersonController {
     @GetMapping("/contact-person-details/{id}")
     public String fillEditCompanyManagerForm(@PathVariable("id") Long id, Model model) {
         PersonDTO personDTO = contactPersonService.getContactPersonById(id);
+        String companyType = companyService.findCompanyByName(personDTO().getCompany()).getCompanyType();
+
+        boolean isPartner = companyType.equals("ПАРТНЬОР");
 
         model.addAttribute(personDTO);
+        model.addAttribute("isPartner", isPartner);
 
         return "contact-person-details";
     }
@@ -162,8 +169,13 @@ public class ContactPersonController {
                                      RedirectAttributes rAtt,
                                      Model model) {
 
+        String companyType = companyService.findCompanyByName(personDTO().getCompany()).getCompanyType();
+
+        boolean isPartner = companyType.equals("ПАРТНЬОР");
+
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute(personDTO);
+            model.addAttribute("isPartner", isPartner);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
 
             return "contact-person-details";
@@ -178,6 +190,7 @@ public class ContactPersonController {
         if (isExist && isChangedName) {
             model.addAttribute("isExistContactPerson", true);
             rAtt.addFlashAttribute(personDTO);
+            model.addAttribute("isPartner", isPartner);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
 
             return "contact-person-details";
@@ -186,6 +199,7 @@ public class ContactPersonController {
         if (isExistPersonLikeManager) {
             model.addAttribute("isExistLikeManager", true);
             rAtt.addFlashAttribute(personDTO);
+            model.addAttribute("isPartner", isPartner);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
 
             return "contact-person-details";

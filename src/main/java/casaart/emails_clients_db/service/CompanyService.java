@@ -42,6 +42,9 @@ public interface CompanyService {
     // find company by id
     CompanyDTO findCompanyById(long id);
 
+    // find company by company manager id
+    CompanyDTO findByCompanyManagerId(long id);
+
     // find company by name
     CompanyDTO findCompanyByName(String name);
 

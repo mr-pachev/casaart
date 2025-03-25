@@ -57,8 +57,12 @@ public class CompanyManagerController {
     @GetMapping("/current-company-manager/{id}")
     public String viewCurrentManagerForm(@PathVariable("id") Long id, Model model) {
         PersonDTO personDTO = companyManagerService.findCompanyManagerByCompany(id);
+        CompanyDTO companyDTO = companyService.findCompanyById(id);
+
+        boolean isPartner = companyDTO.getCompanyType().equals("ПАРТНЬОР");
 
         model.addAttribute(personDTO);
+        model.addAttribute("isPartner", isPartner);
 
         return "current-company-manager";
     }
@@ -73,6 +77,7 @@ public class CompanyManagerController {
     @GetMapping("/add-company-manager/{id}")
     public String showAddCompanyManagerForm(@PathVariable("id") Long id, Model model) {
         CompanyDTO companyDTO = companyService.findCompanyById(id);
+
         model.addAttribute("companyDTO", companyDTO);
 
         return "add-company-manager";
@@ -112,8 +117,12 @@ public class CompanyManagerController {
     @GetMapping("/company-manager-details/{id}")
     public String fillEditCompanyManagerForm(@PathVariable("id") Long id, Model model) {
         PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        CompanyDTO companyDTO = companyService.findCompanyByName(personDTO.getCompany());
+
+        boolean isPartner = companyDTO.getCompanyType().equals("ПАРТНЬОР");
 
         model.addAttribute(personDTO);
+        model.addAttribute("isPartner", isPartner);
 
         return "company-manager-details";
     }
@@ -124,8 +133,13 @@ public class CompanyManagerController {
                                      RedirectAttributes rAtt,
                                      Model model) {
 
+        CompanyDTO companyDTO = companyService.findCompanyByName(personDTO.getCompany());
+
+        boolean isPartner = companyDTO.getCompanyType().equals("ПАРТНЬОР");
+
         if (bindingResult.hasErrors()) {
             model.addAttribute(personDTO);
+            model.addAttribute("isPartner", isPartner);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.personDTO", bindingResult);
 
             return "company-manager-details";
@@ -142,9 +156,11 @@ public class CompanyManagerController {
     @PostMapping("/delete-company-manager/{id}")
     public String removeCompanyManager(@PathVariable("id") Long id) {
 
+        CompanyDTO companyDTO = companyService.findByCompanyManagerId(id);
+
         companyManagerService.removeCompanyManager(id);
 
-        if (companyService.findCompanyById(id).getCompanyType().equals("ПАРТНЬОР")){
+        if (companyDTO.getCompanyType().equals("ПАРТНЬОР")){
             return "redirect:/partners";
         }
 
