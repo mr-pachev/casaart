@@ -154,6 +154,7 @@ public class CompanyController {
     // add new company
     @GetMapping("/add-company")
     public String viewAddCompanyForm(@RequestParam("companyType") String companyType, Model model) {
+
         model.addAttribute("allUnits", UnitType.values());
         model.addAttribute("allLocations", LocationType.values());
         model.addAttribute("allIndustries", IndustryType.values());
@@ -164,7 +165,8 @@ public class CompanyController {
             model.addAttribute("isExistCompany", false);
         }
 
-        // Логика за обработка на партньор или доставчик
+        model.addAttribute("addCompanyDTO", new AddCompanyDTO()); // За да не е null в Thymeleaf
+
         if ("ПАРТНЬОР".equals(companyType)) {
             return "add-partner";
         }
@@ -174,9 +176,9 @@ public class CompanyController {
 
     @PostMapping("/add-company")
     public String addCompany(
-            @Valid AddCompanyDTO addCompanyDTO,
+            @Valid @ModelAttribute("addCompanyDTO") AddCompanyDTO addCompanyDTO,
             BindingResult bindingResult,
-            RedirectAttributes rAtt, Model model) {
+            RedirectAttributes rAtt) {
 
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("allUnits", UnitType.values());
@@ -187,25 +189,18 @@ public class CompanyController {
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCompanyDTO", bindingResult);
 
-            return "redirect:/add-company";
+            return "redirect:/add-company?companyType=" + addCompanyDTO.getCompanyType();
         }
 
         if (companyService.isExistCompany(addCompanyDTO.getName())) {
-            rAtt.addFlashAttribute("allUnits", UnitType.values());
-            rAtt.addFlashAttribute("allLocations", LocationType.values());
-            rAtt.addFlashAttribute("allIndustries", IndustryType.values());
-            rAtt.addFlashAttribute("allCompanyTypes", CompanyType.values());
-            rAtt.addFlashAttribute("allPartnerTypes", PartnerType.values());
-            rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
             rAtt.addFlashAttribute("isExistCompany", true);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCompanyDTO", bindingResult);
-
-            return "redirect:/add-company";
+            rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
+            return "redirect:/add-company?companyType=" + addCompanyDTO.getCompanyType();
         }
 
         companyService.addCompany(addCompanyDTO);
 
-        if (addCompanyDTO.getCompanyType().equals("ПАРТНЬОР")){
+        if ("ПАРТНЬОР".equals(addCompanyDTO.getCompanyType())) {
             return "redirect:/partners";
         }
 

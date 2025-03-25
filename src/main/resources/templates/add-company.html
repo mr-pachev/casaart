@@ -14,13 +14,15 @@
         <div class="add-form">
             <form th:action="@{/add-company}"
                   th:object="${addCompanyDTO}"
-                  th:method="POST">
+                  method="post">
+
                 <div class="form-group">
-                    <label th:for="name">Име</label>
+                    <label for="name">Име</label>
                     <input type="text"
                            id="name"
                            name="name"
                            th:field="*{name}"
+                           class="form-control"
                            th:errorclass="is-invalid">
                     <p class="invalid-feedback errors alert alert-danger">
                         Името трябва да се състои от 2 до 50 букви.
@@ -29,125 +31,120 @@
                         Съществува партньор с това име.
                     </p>
                 </div>
-                <input type="hidden" name="companyType" th:value='ДОСТАВЧИК'>
-<!--                <div class="form-group">-->
-<!--                    <label th:for="partnerTypes">Тип партньор</label>-->
-<!--                    <small class="form-text text-muted" style="font-size: 0.8rem; font-weight: normal;">-->
-<!--                        (Задръж <b>Ctrl</b> и направи няколко селекта)-->
-<!--                    </small>-->
-<!--                    <select class="form-control"-->
-<!--                            id="partnerTypes"-->
-<!--                            name="partnerTypes"-->
-<!--                            th:field="*{partnerTypes}"-->
-<!--                            th:errorclass="is-invalid"-->
-<!--                            multiple>-->
-<!--                        <option th:each="type : ${allPartnerTypes}"-->
-<!--                                th:value="${type}"-->
-<!--                                th:text="${type}">-->
-<!--                        </option>-->
-<!--                    </select>-->
-<!--                    <p class="invalid-feedback errors alert alert-danger">-->
-<!--                        Избери поне един тип.-->
-<!--                    </p>-->
-<!--                </div>-->
+
+                <input type="hidden" name="companyType" th:value="*{companyType}">
+
+                <!--                <div class="form-group">-->
+                <!--                    <label th:for="partnerTypes">Тип партньор</label>-->
+                <!--                    <small class="form-text text-muted" style="font-size: 0.8rem; font-weight: normal;">-->
+                <!--                        (Задръж <b>Ctrl</b> и направи няколко селекта)-->
+                <!--                    </small>-->
+                <!--                    <select class="form-control"-->
+                <!--                            id="partnerTypes"-->
+                <!--                            name="partnerTypes"-->
+                <!--                            th:field="*{partnerTypes}"-->
+                <!--                            th:errorclass="is-invalid"-->
+                <!--                            multiple>-->
+                <!--                        <option th:each="type : ${allPartnerTypes}"-->
+                <!--                                th:value="${type}"-->
+                <!--                                th:text="${type}">-->
+                <!--                        </option>-->
+                <!--                    </select>-->
+                <!--                    <p class="invalid-feedback errors alert alert-danger">-->
+                <!--                        Избери поне един тип.-->
+                <!--                    </p>-->
+                <!--                </div>-->
                 <div class="form-group">
-                    <label th:for="units">Звено</label>
-                    <small class="form-text text-muted" style="font-size: 0.8rem; font-weight: normal;">
-                        (Задръж <b>Ctrl</b> и направи няколко селекта)
-                    </small>
+                    <label for="units">Звено</label>
                     <select class="form-control"
                             id="units"
                             name="units"
                             th:field="*{units}"
-                            th:errorclass="is-invalid"
                             multiple>
                         <option th:each="unit : ${allUnits}"
                                 th:value="${unit}"
                                 th:text="${unit}">
                         </option>
                     </select>
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Избери поне едно звено.
-                    </p>
                 </div>
 
                 <div class="form-group">
-                    <label th:for="industries">Вид дейност</label>
-                    <small class="form-text text-muted" style="font-size: 0.8rem; font-weight: normal;">
-                        (Задръж <b>Ctrl</b> и направи няколко селекта)
-                    </small>
+                    <label for="industries">Вид дейност</label>
                     <select class="form-control"
                             id="industries"
                             name="industries"
                             th:field="*{industries}"
-                            th:errorclass="is-invalid"
                             multiple>
                         <option th:each="industry : ${allIndustries}"
                                 th:value="${industry}"
                                 th:text="${industry}"
-                                th:selected="${companyDTO.industries.contains(industry)}">
+                                th:selected="${addCompanyDTO != null and addCompanyDTO.industries != null and addCompanyDTO.industries.contains(industry)}">
                         </option>
                     </select>
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Избери поне една дейност.
-                    </p>
                 </div>
+
                 <div class="form-group">
-                    <label th:for="address">Адрес</label>
-                    <input type="address"
+                    <label for="address">Адрес</label>
+                    <input type="text"
                            id="address"
                            name="address"
                            th:field="*{address}"
+                           class="form-control"
                            th:errorclass="is-invalid">
                     <p class="invalid-feedback errors alert alert-danger">
                         Въведете адрес.
                     </p>
                 </div>
+
                 <div class="form-group">
-                    <label th:for="phoneNumber">Телефон</label>
-                    <input type="phoneNumber"
+                    <label for="phoneNumber">Телефон</label>
+                    <input type="text"
                            id="phoneNumber"
                            name="phoneNumber"
                            th:field="*{phoneNumber}"
+                           class="form-control"
                            th:errorclass="is-invalid"
                            placeholder="088XXXXXXX">
                     <p class="invalid-feedback errors alert alert-danger">
-                        Въведи телефонен номер.
+                        Мобилния номер трябва да се състои от 10 цифри.
                     </p>
                 </div>
+
                 <div class="form-group">
-                    <label th:for="email">Имейл адрес</label>
+                    <label for="email">Имейл адрес</label>
                     <input type="email"
                            id="email"
                            name="email"
                            th:field="*{email}"
+                           class="form-control"
                            th:errorclass="is-invalid">
                     <p class="invalid-feedback errors alert alert-danger">
-                        Въведи имейл адрес.
+                        Въведете имейл.
                     </p>
                 </div>
+
                 <div class="form-group">
-                    <label th:for="locationType">Обхват на дейност</label>
+                    <label for="locationType">Обхват на дейност</label>
                     <select class="form-control"
                             id="locationType"
                             name="locationType"
                             th:field="*{locationType}"
                             th:errorclass="is-invalid">
                         <option value="">-- Избери --</option>
-                        <option th:each="located: ${allLocations}"
+                        <option th:each="located : ${allLocations}"
                                 th:value="${located}"
-                                th:text="${located}">Регион
+                                th:text="${located}">
                         </option>
                     </select>
                     <p class="invalid-feedback errors alert alert-danger">
-                        Избери регион.
+                        Избери обхват на дейност.
                     </p>
                 </div>
+
                 <button type="submit" class="btn btn-success">Добави</button>
             </form>
         </div>
     </div>
-
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>
