@@ -153,9 +153,9 @@ public class ContactPersonController {
     @GetMapping("/contact-person-details/{id}")
     public String fillEditCompanyManagerForm(@PathVariable("id") Long id, Model model) {
         PersonDTO personDTO = contactPersonService.getContactPersonById(id);
-        String companyType = companyService.findCompanyByName(personDTO().getCompany()).getCompanyType();
+        CompanyDTO companyDTO = companyService.findCompanyByName(personDTO.getCompany());
 
-        boolean isPartner = companyType.equals("ПАРТНЬОР");
+        boolean isPartner = companyDTO.getCompanyType().equals("ПАРТНЬОР");
 
         model.addAttribute(personDTO);
         model.addAttribute("isPartner", isPartner);
@@ -207,7 +207,7 @@ public class ContactPersonController {
 
         contactPersonService.editContactPerson(personDTO);
 
-        CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany().trim().replaceAll(",+$", ""));
+        CompanyDTO findCompany = companyService.findCompanyByName(personDTO.getCompany());
 
         return "redirect:/current-contact-persons/" + findCompany.getId();
     }
