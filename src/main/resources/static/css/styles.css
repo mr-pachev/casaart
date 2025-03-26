@@ -135,8 +135,8 @@ table td {
 .edit-button, .delete-button {
     display: inline-block;
     margin: 0;
-    padding: 6px 12px;
-    font-size: 14px;
+    padding: 2px 8px;
+    font-size: 13px;
     border-radius: 5px;
     text-decoration: none;
     border: none;
