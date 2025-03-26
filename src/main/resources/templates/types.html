@@ -13,7 +13,7 @@
 <main>
     <h1>Списък с типове</h1>
     <div class="buttons">
-        <a th:href="@{/add-type}" class="register">Добави</a>
+        <a th:href="@{/add-type}" class="input-button">Добави</a>
     </div>
     <table id="category-table">
         <thead>
@@ -32,7 +32,7 @@
             <td th:text="${type.category}">Категория</td>
             <td th:text="${type.getProducts().size()}">Продукти</td>
             <td>
-                <div class="action-buttons">
+                <div class="action-button">
                     <form th:method="POST" th:action="@{/type-details/{id}(id=${type.id})}">
                         <input class="edit-button" type="submit" th:value="Промяна"/>
                     </form>

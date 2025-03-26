@@ -41,7 +41,7 @@
             <td th:text="${personDTO.letterSent}">Дата на изпратено писмо</td>
             <td th:text="${personDTO.secondCall}">Дата на второ обаждане</td>
             <td>
-                <div class="action-buttons">
+                <div class="action-button">
                     <form th:method="POST"
                           th:action="@{/company-manager-details/{id}(id=${personDTO.id})}">
                         <button type="submit" class="edit-button">Промяна</button>

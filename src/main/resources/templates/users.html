@@ -33,7 +33,7 @@
             <td th:text="${user.lastName}">Фамилия</td>
             <td th:text="${user.located}">Месторабота</td>
             <td  sec:authorize="hasRole('Admin')">
-                <div class="action-buttons">
+                <div class="action-button">
                     <form th:method="POST" th:action="@{/user-details/{id}(id=${user.id})}">
                         <input class="edit-button" type="submit" th:value="Промяна"/>
                     </form>

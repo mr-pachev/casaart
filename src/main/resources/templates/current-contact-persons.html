@@ -16,7 +16,7 @@
     <div class="buttons">
         <form th:method="POST"
               th:action="@{/add-contact-person-with-com-id/{id}(id=${companyDTO.id})}">
-            <button type="submit" class="register">Добави</button>
+            <button type="submit" class="input-button">Добави</button>
         </form>
     </div>
     <table id="category-table">
@@ -105,7 +105,7 @@
                 </ul>
             </td>
             <td>
-                <div class="action-buttons">
+                <div class="action-button">
                     <form th:method="POST"
                           th:action="@{/contact-person-details/{id}(id=${person.id})}">
                         <button type="submit" class="edit-button">Промяна</button>

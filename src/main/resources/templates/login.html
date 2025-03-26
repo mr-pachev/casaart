@@ -11,7 +11,7 @@
 <main>
     <h1>Вход в системата</h1>
     <p class="description">Моля, въведете вашите данни за достъп, за да влезете в системата.</p>
-    <form class="login-form"
+    <form class="input-form"
           th:action="@{/login}"
           th:object="${loginUserDTO}"
           th:method="POST" >
@@ -37,8 +37,8 @@
                    aria-describedby="usernameHelpInline">
         </div>
         <div class="buttons">
-            <button type="submit" class="login">Вход</button>
-            <a th:href="@{/registration}" class="register">Регистрация</a>
+            <button type="submit" class="login-button">Вход</button>
+            <a th:href="@{/registration}" class="input-button">Регистрация</a>
         </div>
     </form>
 </main>

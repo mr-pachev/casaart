@@ -13,7 +13,7 @@
 <main>
     <h1>Списък с категории</h1>
     <div class="buttons">
-        <a th:href="@{/add-category}" class="register">Добави</a>
+        <a th:href="@{/add-category}" class="input-button">Добави</a>
     </div>
     <table id="category-table">
         <thead>
@@ -29,7 +29,7 @@
             <td th:text="${category.name}">Име</td>
             <td th:text="${category.code}">Код</td>
             <td th:text="${category.types.size()}">Типове</td>
-            <td class="action-buttons">
+            <td class="action-button">
                 <form th:method="POST" th:action="@{/category-details/{id}(id=${category.id})}">
                     <input class="edit-button" type="submit" th:value="Промяна"/>
                 </form>

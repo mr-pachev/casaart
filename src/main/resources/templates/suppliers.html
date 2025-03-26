@@ -28,7 +28,7 @@
 
             <input type="hidden" id="companyType" name="companyType" value="ДОСТАВЧИК">
 
-            <button type="submit" class="register">Добави</button>
+            <button type="submit" class="input-button">Добави</button>
         </form>
     </div>
     <div class="buttons">
@@ -196,7 +196,7 @@
                 </ul>
             </td>
             <td>
-                <div class="action-buttons">
+                <div class="action-button">
                     <form th:method="GET" th:action="@{/company-details/{id}(id=${company.id})}">
                         <input class="edit-button" type="submit" th:value="Промяна"/>
                     </form>

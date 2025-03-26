@@ -8,7 +8,7 @@ html, body {
     background-color: #f9f9f9;
 }
 
-header, main, footer, .login-form, .navbar {
+header, main, footer, .input-form, .navbar {
     margin: 0 auto;
     text-align: center;
     width: 100%;
@@ -54,11 +54,7 @@ main {
     transition: background-color 0.3s ease;
 }
 
-.register:hover {
-    background-color: #1e8d3e;
-}
-
-.register {
+.input-button {
     background-color: #279C38;
     color: white;
     padding: 8px 18px;
@@ -69,7 +65,11 @@ main {
     transition: background-color 0.3s ease;
 }
 
-.login {
+.input-button:hover {
+    background-color: #1e8d3e;
+}
+
+.login-button {
     background-color: #009CDE;
     color: white;
     padding: 8px 18px;
@@ -80,7 +80,7 @@ main {
     transition: background-color 0.3s ease;
 }
 
-.login:hover {
+.login-button:hover {
     background-color: #148bbf;
 }
 
@@ -100,7 +100,7 @@ table td {
 }
 
 /* Бутони за действия */
-.action-buttons {
+.action-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -333,7 +333,7 @@ ul {
 }
 
 /* Форма за вход */
-.login-form {
+.input-form {
     display: inline-block;
     width: 20%;
     margin: 0 auto;

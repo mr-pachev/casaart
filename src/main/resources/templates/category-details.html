@@ -66,7 +66,7 @@
                         <td th:text="${type.name}"></td>
                         <td th:text="${type.products.size()}"></td>
                         <td>
-                            <div class="action-buttons">
+                            <div class="action-button">
                                 <form th:method="POST" th:action="@{/type-details/{id}(id=${type.id})}">
                                     <input class="edit-button" type="submit" th:value="Промяна"/>
                                 </form>

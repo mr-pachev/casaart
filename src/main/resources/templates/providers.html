@@ -13,7 +13,7 @@
 <main>
     <h1>Списък с доставчици</h1>
     <div class="buttons">
-        <a th:href="@{/add-provider}" class="register">Добави</a>
+        <a th:href="@{/add-provider}" class="input-button">Добави</a>
     </div>
     <table id="category-table">
         <thead>
@@ -30,7 +30,7 @@
             <td th:text="${provider.description}">Описание</td>
             <td th:text="${provider.getProducts().size()}">Продукти</td>
             <td>
-                <div class="action-buttons">
+                <div class="action-button">
                     <form th:method="POST" th:action="@{/provider-details/{id}(id=${provider.id})}">
                         <input class="edit-button" type="submit" th:value="Промяна"/>
                     </form>

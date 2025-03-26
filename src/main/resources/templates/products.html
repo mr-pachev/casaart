@@ -19,7 +19,7 @@
 <main>
     <h1>Списък с продукти</h1>
     <div class="buttons">
-        <a th:href="@{/add-product}" class="register">Добави</a>
+        <a th:href="@{/add-product}" class="input-button">Добави</a>
     </div>
     <div class="buttons">
         <form th:method="POST" th:action="@{/sort-products}" style="display: inline;">
@@ -72,7 +72,7 @@
             <td th:text="${product.type}">Тип</td>
             <td th:text="${product.sn.size()}">Количество</td>
             <td>
-                <div class="action-buttons">
+                <div class="action-button">
                     <form th:method="POST" th:action="@{/product-details/{id}(id=${product.id})}">
                         <input class="edit-button" type="submit" th:value="Промяна"/>
                     </form>

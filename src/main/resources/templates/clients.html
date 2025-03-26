@@ -24,7 +24,7 @@
         <span class="count" th:text="${allClients.size()}"></span>
     </h1>
     <div class="buttons">
-        <a th:href="@{/add-client}" class="register">Добави</a>
+        <a th:href="@{/add-client}" class="input-button">Добави</a>
     </div>
     <div class="buttons">
         <form th:method="POST" th:action="@{/sort-clients}" style="display: inline;">
@@ -212,7 +212,7 @@
 <!--                </ul>-->
 <!--            </td>-->
             <td>
-                <div class="action-buttons">
+                <div class="action-button">
                     <form th:method="POST" th:action="@{/client-details/{id}(id=${client.id})}">
                         <input class="edit-button" type="submit" th:value="Промяна"/>
                     </form>
