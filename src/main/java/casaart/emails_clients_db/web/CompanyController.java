@@ -174,6 +174,7 @@ public class CompanyController {
 
     @PostMapping("/add-company")
     public String addCompany(
+            @RequestParam("companyType") String companyType,
             @Valid @ModelAttribute("addCompanyDTO") AddCompanyDTO addCompanyDTO,
             BindingResult bindingResult,
             RedirectAttributes rAtt) {
@@ -187,7 +188,7 @@ public class CompanyController {
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addCompanyDTO", bindingResult);
 
-            rAtt.addAttribute("companyType", addCompanyDTO.getCompanyType());
+            rAtt.addAttribute("companyType", companyType);
 
             return "redirect:/add-company";
         }
@@ -201,7 +202,7 @@ public class CompanyController {
             rAtt.addFlashAttribute("allPartnerTypes", PartnerType.values());
             rAtt.addFlashAttribute("addCompanyDTO", addCompanyDTO);
 
-            rAtt.addAttribute("companyType", addCompanyDTO.getCompanyType());
+            rAtt.addAttribute("companyType", companyType);
 
             return "redirect:/add-company";
         }
