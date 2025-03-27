@@ -273,6 +273,7 @@ public class CompanyServiceImpl implements CompanyService {
         company.setAddress(companyDTO.getAddress());
         company.setPhoneNumber(companyDTO.getPhoneNumber());
         company.setEmail(companyDTO.getEmail());
+        company.setUrl(companyDTO.getUrl());
         company.setLocationType(LocationType.valueOf(companyDTO.getLocationType()));
 
         if (companyDTO.getCompanyType() != null) {
@@ -344,6 +345,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyDTO.setAddress(company.getAddress());
         companyDTO.setPhoneNumber(company.getPhoneNumber());
         companyDTO.setEmail(company.getEmail());
+        companyDTO.setUrl(company.getUrl());
         companyDTO.setLocationType(company.getLocationType().name());
         companyDTO.setCompanyType(company.getCompanyType().name());
 

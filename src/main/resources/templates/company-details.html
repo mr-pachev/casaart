@@ -128,6 +128,13 @@
                     </p>
                 </div>
                 <div class="form-group">
+                    <label th:for="url">URL</label>
+                    <input type="url"
+                           id="url"
+                           name="url"
+                           th:field="*{url}">
+                </div>
+                <div class="form-group">
                     <label th:for="locationType">Обхват на дейност</label>
                     <select class="form-control"
                             id="locationType"

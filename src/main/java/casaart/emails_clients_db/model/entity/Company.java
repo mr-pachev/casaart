@@ -3,7 +3,6 @@ package casaart.emails_clients_db.model.entity;
 import casaart.emails_clients_db.model.enums.*;
 import jakarta.persistence.*;
 
-import javax.lang.model.type.UnionType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +21,9 @@ public class Company extends BaseEntity{
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "url")
+    private String url;
 
     @Enumerated(EnumType.STRING)
     private LocationType locationType;
@@ -84,6 +86,14 @@ public class Company extends BaseEntity{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public LocationType getLocationType() {
