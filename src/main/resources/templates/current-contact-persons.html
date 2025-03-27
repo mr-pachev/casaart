@@ -27,7 +27,7 @@
             <th>Фамилия</th>
             <th>Емейл адрес</th>
             <th>Телефонен номер</th>
-            <th>Компания</th>
+<!--            <th>Компания</th>-->
             <th th:if="${isPartner}">Първо обаждане</th>
             <th th:if="${isPartner}">Изпратен имейл</th>
             <th th:if="${isPartner}">Изпратено писмо</th>
@@ -43,7 +43,7 @@
             <td th:text="${person.lastName}">Фамилия</td>
             <td th:text="${person.email}">Имейл адрес</td>
             <td th:text="${person.phoneNumber}">Телефонен номер</td>
-            <td th:text="${person.company}">Компания</td>
+<!--            <td th:text="${person.company}">Компания</td>-->
             <td th:if="${isPartner}">
                 <ul>
                     <li>
