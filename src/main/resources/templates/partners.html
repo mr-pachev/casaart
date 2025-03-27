@@ -86,6 +86,7 @@
         <tr>
             <th>Име</th>
             <th>Адрес</th>
+            <th>URL</th>
             <th>Емейл адрес</th>
             <th>Телефонен номер</th>
             <th>Локация</th>
@@ -101,6 +102,12 @@
         <tr th:each="company :${allPartners}">
             <td th:text="${company.name}">Име</td>
             <td th:text="${company.address}">Адрес</td>
+            <td>
+                <a th:if="${company.url != null and !company.url.isEmpty()}"
+                   th:attr="href=${company.url}" target="_blank" class="view-button">
+                    Link
+                </a>
+            </td>
             <td th:text="${company.email}">Имейл адрес</td>
             <td th:text="${company.phoneNumber}">Телефонен номер</td>
             <td th:text="${company.locationType}">Локация</td>
