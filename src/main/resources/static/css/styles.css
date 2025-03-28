@@ -166,7 +166,7 @@ table td {
 
 .view-button {
     background-color: #F0E61F;
-    color: white; /* Бял текст */
+    color: #5c3725; /* Бял текст */
     font-size: 11px; /* Размер на текста */
     border: none; /* Без рамка */
     border-radius: 5px; /* Заоблени ъгли */
@@ -176,7 +176,7 @@ table td {
 
 .view-button:hover {
     background-color: #cfc61d;
-    color: white;
+    color: #5c3725;
 }
 
 .container-form {
