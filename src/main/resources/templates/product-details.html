@@ -10,7 +10,7 @@
 <div th:replace="~{fragments/navigation}"></div>
 <main>
     <h1>Промяна продукт</h1>
-    <div class="details-form">
+    <div class="input-form">
         <form th:action="@{/product-details}"
               th:object="${productDTO}"
               th:method="POST"
@@ -19,7 +19,7 @@
             <!--Sends product id with a POST request-->
             <input type="hidden" th:field="*{id}"/>
 
-            <div class="form-group">
+            <div class="form-field">
                 <label for="name">Име</label>
                 <input type="text" th:placeholder="${productDTO.name}"
                        id="name"
@@ -33,7 +33,7 @@
                     Съществува продукт с това име.
                 </p>
             </div>
-            <div class="form-group">
+            <div class="form-field">
                 <label for="providerPrice">Цена доставчик</label>
                 <input type="number" th:placeholder="${productDTO.providerPrice}"
                        id="providerPrice"
@@ -46,7 +46,7 @@
                     Въведи цена.
                 </p>
             </div>
-            <div class="form-group">
+            <div class="form-field">
                 <label for="clientPrice">Цена клиент</label>
                 <input type="number" th:placeholder="${productDTO.clientPrice}"
                        id="clientPrice"
@@ -65,10 +65,10 @@
             <!-- Скрито поле за imagePath -->
             <input type="hidden" name="imagePath" th:field="*{imagePath}"/>
 
-            <div class="form-group" th:if="${productDTO.imagePath != null}">
+            <div class="form-field" th:if="${productDTO.imagePath != null}">
                 <img th:src="@{${productDTO.imagePath}}" alt="Image Preview" style="max-width: 200px;">
             </div>
-            <div class="form-group">
+            <div class="form-field">
                 <label for="productCode">Код</label>
                 <input type="text" th:placeholder="${productDTO.productCode}"
                        id="productCode"
@@ -82,7 +82,7 @@
                     Съществува продукт с този код.
                 </p>
             </div>
-            <div class="form-group">
+            <div class="form-field">
                 <label for="providerProductCode">Код доставчик</label>
                 <input type="text" th:placeholder="${productDTO.providerProductCode}"
                        id="providerProductCode"
@@ -93,7 +93,7 @@
                     Кода трябва да се състои от 2 до 10 букви.
                 </p>
             </div>
-            <div class="form-group">
+            <div class="form-field">
                 <label for="provider">Доставчик</label>
                 <select class="form-control" th:placeholder="${productDTO.provider}"
                         id="provider"
@@ -110,14 +110,14 @@
                     Избери доставчик.
                 </p>
             </div>
-            <div class="form-group">
+            <div class="form-field">
                 <label for="productCode">Размери</label>
                 <input type="text" th:placeholder="${productDTO.dimensions}"
                        id="dimensions"
                        name="dimensions"
                        th:field="*{dimensions}">
             </div>
-            <div class="form-group">
+            <div class="form-field">
                 <label for="categories">Категории</label>
                 <select class="form-control" th:placeholder="${productDTO.category}"
                         id="categories"
@@ -134,7 +134,7 @@
                     Избери категория.
                 </p>
             </div>
-            <div class="form-group">
+            <div class="form-field">
                 <label for="type">Тип</label>
                 <select class="form-control" th:placeholder="${productDTO.type}"
                         id="type"
@@ -153,7 +153,7 @@
             </div>
 
             <!-- Поле за въвеждане на бройки -->
-            <div class="form-group">
+            <div class="form-field">
                 <label for="pcs">Добави бройки</label>
                 <input type="number" id="pcs"
                        name="pcs"
@@ -164,7 +164,7 @@
         </form>
         <br>
         <!-- Таблица със сериините номера -->
-        <div class="form-group">
+        <div class="form-field">
         <table>
             <thead>
             <tr>
