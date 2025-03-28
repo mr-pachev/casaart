@@ -1,407 +1,441 @@
-/* Общи стилове */
+/* Общи стилове - Задава базови настройки за цялата страница */
 html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    background-color: #f9f9f9;
+    height: 100%; /* Задава височина 100% - позволява на страницата да заема цялата височина на екрана */
+    margin: 0; /* Премахва вътрешните отстъпи около страницата */
+    padding: 0; /* Премахва външното запълване около страницата */
+    display: flex; /* Използва flexbox за подреждане на елементите */
+    flex-direction: column; /* Подрежда елементите вертикално */
+    background-color: #f9f9f9; /* Задава светлосив фон за цялата страница */
 }
 
+/* Центриране и оразмеряване на основни секции */
 header, main, footer, .input-form, .navbar {
-    margin: 0 auto;
-    text-align: center;
-    width: 100%;
+    margin: 0 auto; /* Центрира елементите хоризонтално */
+    text-align: center; /* Центрира текста вътре в елементите */
+    width: 100%; /* Заема пълната широчина */
 }
 
-/* Хедър */
+/* Хедър - стилове за горната част на страницата */
 header {
-    background-color: #fff;
-    padding: 20px 0;
-    border-bottom: 2px solid #ddd;
+    background-color: #fff; /* Бял фон за хедъра */
+    padding: 20px 0; /* Вертикално вътрешно отстояние */
+    border-bottom: 2px solid #ddd; /* Сива долна граница */
 }
 
+/* Логото в хедъра */
 header img {
-    height: 80px;
+    height: 80px; /* Фиксирана височина за логото */
 }
 
-/* Основна секция */
+/* Основна секция - съдържание */
 main {
-    flex: 1; /* Разширява се, за да заеме цялото налично пространство между header и footer */
-    padding: 50px 20px;
+    flex: 1; /* Позволява на main да се разширява и заема останалото пространство */
+    padding: 50px 20px; /* Вътрешно отстояние */
 }
 
+/* Описателен текст */
 .description {
-    font-size: 18px;
-    margin-bottom: 30px;
-    color: #391e13;
+    font-size: 18px; /* Размер на шрифта */
+    margin-bottom: 30px; /* Долно отстояние */
+    color: #391e13; /* Тъмнокафяв цвят на текста */
 }
 
-/* Бутони */
+/* Бутони - общи стилове */
 .buttons {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 20px; /* Горно отстояние */
+    margin-bottom: 20px; /* Долно отстояние */
 }
 
 .buttons a {
-    display: inline-block;
-    text-decoration: none;
-    font-size: 15px;
-    margin: 0 10px;
-    padding: 8px 18px;
-    border-radius: 5px;
-    color: white;
-    transition: background-color 0.3s ease;
+    display: inline-block; /* Позволява задаване на padding и height */
+    text-decoration: none; /* Премахва подчертаване */
+    font-size: 15px; /* Размер на шрифта */
+    margin: 0 10px; /* Хоризонтално отстояние между бутоните */
+    padding: 8px 18px; /* Вътрешно отстояние */
+    border-radius: 5px; /* Заоблени ъгли */
+    color: white; /* Бял цвят на текста */
+    transition: background-color 0.3s ease; /* Плавна смяна на фона при hover */
 }
 
+/* Зелен бутон за въвеждане */
 .input-button {
-    background-color: #279C38;
-    color: white;
-    padding: 8px 18px;
-    font-size: 15px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    background-color: #279C38; /* Зелен фон */
+    color: white; /* Бял текст */
+    padding: 8px 18px; /* Вътрешно отстояние */
+    font-size: 15px; /* Размер на шрифта */
+    border-radius: 5px; /* Заоблени ъгли */
+    border: none; /* Без рамка */
+    cursor: pointer; /* Курсорът става ръка при hover */
+    transition: background-color 0.3s ease; /* Плавна смяна на фона */
 }
 
 .input-button:hover {
-    background-color: #1e8d3e;
+    background-color: #1e8d3e; /* По-тъмен зелен при hover */
 }
 
+/* Син бутон за вход */
 .login-button {
-    background-color: #009CDE;
-    color: white;
-    padding: 8px 18px;
-    font-size: 15px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    background-color: #009CDE; /* Син фон */
+    color: white; /* Бял текст */
+    padding: 8px 18px; /* Вътрешно отстояние */
+    font-size: 15px; /* Размер на шрифта */
+    border-radius: 5px; /* Заоблени ъгли */
+    border: none; /* Без рамка */
+    cursor: pointer; /* Курсорът става ръка при hover */
+    transition: background-color 0.3s ease; /* Плавна смяна на фона */
 }
 
 .login-button:hover {
-    background-color: #148bbf;
+    background-color: #148bbf; /* По-тъмен син при hover */
 }
 
-/*count section*/
+/* Брояч - стил за допълнителна информация */
 .count {
-    font-size: 0.8em;
-    color: gray;
-    margin-left: 5px;
+    font-size: 0.8em; /* По-малък размер на шрифта */
+    color: gray; /* Сив цвят */
+    margin-left: 5px; /* Ляво отстояние */
 }
 
-/* Центриране на съдържанието в клетките */
+/* Центриране на съдържанието в таблица */
 table td {
-    vertical-align: middle;
-    text-align: center;
-    padding: 10px;
-    height: 100%;
+    vertical-align: middle; /* Вертикално центриране */
+    text-align: center; /* Хоризонтално центриране */
+    padding: 10px; /* Вътрешно отстояние */
+    height: 100%; /* Заема пълната височина */
 }
 
-/* Бутони за действия */
+/* Контейнер за действия с центриране */
 .action-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    height: 100%;
+    display: flex; /* Използва flexbox */
+    justify-content: center; /* Центрира хоризонтално */
+    align-items: center; /* Центрира вертикално */
+    gap: 10px; /* Разстояние между елементите */
+    height: 100%; /* Заема пълната височина */
 }
 
+/* Бутон за сортиране */
 .sort-button {
-    background-color: #5c3725;
+    background-color: #5c3725; /* Кафяв фон */
     color: white; /* Бял текст */
-    font-size: 16px; /* Размер на текста */
+    font-size: 16px; /* Размер на шрифта */
     border: none; /* Без рамка */
     border-radius: 5px; /* Заоблени ъгли */
-    padding: 3px 10px; /* Вътрешен отстъп */
-    cursor: pointer; /* Показалец за кликване */
+    padding: 3px 10px; /* Вътрешно отстояние */
+    cursor: pointer; /* Курсорът става ръка */
 }
 
 .sort-button:hover, .reg-button:hover {
-    background-color: #0f0805;
+    background-color: #0f0805; /* По-тъмен при hover */
 }
 
+/* Продължение на CSS коментарите */
+
+/* Регистрационен бутон */
 .reg-button {
-    background-color: #5c3725;
-    color: white; /* Бял текст */
-    font-size: 11px; /* Размер на текста */
-    border: none; /* Без рамка */
-    border-radius: 5px; /* Заоблени ъгли */
-    padding: 2px 10px; /* Вътрешен отстъп */
-    cursor: pointer; /* Показалец за кликване */
+    background-color: #5c3725; /* Кафяв фон, съответстващ на основната цветова схема */
+    color: white; /* Бял цвят на текста за максимална четливост */
+    font-size: 11px; /* По-малък размер на шрифта за по-деликатен вид */
+    border: none; /* Премахване на Border за по-модерен вид */
+    border-radius: 5px; /* Леко заоблени ъгли за по-меко визуално възприемане */
+    padding: 2px 10px; /* Минимално вътрешно отстояние */
+    cursor: pointer; /* Индикация, че бутонът е интерактивен */
 }
 
+/* Бутони за редактиране и изтриване */
 .edit-button, .delete-button {
-    display: inline-block;
-    margin: 0;
-    padding: 2px 8px;
-    font-size: 13px;
-    border-radius: 5px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    display: inline-block; /* Позволява задаване на padding и inline подреждане */
+    margin: 0; /* Премахване на външно отстояние */
+    padding: 2px 8px; /* Минимално вътрешно отстояние */
+    font-size: 13px; /* Среден размер на шрифта */
+    border-radius: 5px; /* Заоблени ъгли */
+    text-decoration: none; /* Премахване на подчертаване */
+    border: none; /* Без рамка */
+    cursor: pointer; /* Индикация за интерактивност */
+    transition: background-color 0.3s ease; /* Плавна промяна на фона */
 }
 
+/* Бутон за редактиране - оранжев */
 .edit-button {
-    background-color: #FF671F;
-    color: white;
+    background-color: #FF671F; /* Оранжев цвят за визуално отличаване */
+    color: white; /* Бял текст за контраст */
 }
 
 .edit-button:hover {
-    background-color: #d9601f;
-    color: white;
+    background-color: #d9601f; /* По-тъмен оттенък при hover */
+    color: white; /* Запазване на бял текст */
 }
 
+/* Бутон за изтриване - червен */
 .delete-button {
-    background-color: #fc0707;
-    color: white;
+    background-color: #fc0707; /* Червен цвят за действия, свързани с изтриване */
+    color: white; /* Бял текст за максимална четливост */
 }
 
 .delete-button:hover {
-    background-color: #d90429;
-    color: white;
+    background-color: #d90429; /* По-тъмен нюанс на червеното при hover */
+    color: white; /* Запазване на бял текст */
 }
 
+/* Бутон за преглед */
 .view-button {
-    background-color: #F0E61F;
-    color: #5c3725; /* Бял текст */
-    font-size: 11px; /* Размер на текста */
-    border: none; /* Без рамка */
+    background-color: #F0E61F; /* Жълт цвят за визуално отличаване */
+    color: #5c3725; /* Кафяв текст за контраст с жълтия фон */
+    font-size: 11px; /* Малък размер на шрифта */
+    border: none; /* Премахване на Border */
     border-radius: 5px; /* Заоблени ъгли */
-    padding: 2px 10px; /* Вътрешен отстъп */
-    cursor: pointer; /* Показалец за кликване */
+    padding: 2px 10px; /* Вътрешно отстояние */
+    cursor: pointer; /* Индикация за интерактивност */
 }
 
 .view-button:hover {
-    background-color: #cfc61d;
-    color: #5c3725;
+    background-color: #cfc61d; /* Леко по-тъмен нюанс при hover */
+    color: #5c3725; /* Запазване на кафявия цвят на текста */
 }
 
+/* Контейнер за формуляри */
 .container-form {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
+    flex: 1; /* Разширяване за заемане на останалото пространство */
+    min-height: 0; /* Предотвратяване на прекалено разрастване */
+    display: flex; /* Флексбокс подреждане */
+    flex-direction: column; /* Подреждане на елементите вертикално */
+    padding: 20px; /* Вътрешно отстояние */
 }
 
+/* Група за продажби */
 .sale-form-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; /* Флексбокс подреждане */
+    align-items: center; /* Центриране на елементите вертикално */
+    gap: 10px; /* Разстояние между елементите */
 }
 
 .sale-form-group input {
-    flex: 1;
-    margin-right: 0;
+    flex: 1; /* Заема останалото пространство */
+    margin-right: 0; /* Премахване на дясно външно отстояние */
 }
 
+/* Бутон за добавяне */
 .form-group .add-button {
-    background-color: #279C38;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    background-color: #279C38; /* Зелен цвят */
+    color: white; /* Бял текст */
+    padding: 12px 20px; /* По-голямо вътрешно отстояние */
+    border: none; /* Без рамка */
+    border-radius: 5px; /* Заоблени ъгли */
+    cursor: pointer; /* Индикация за интерактивност */
+    transition: background-color 0.3s ease; /* Плавна промяна на фона */
 }
 
 .form-group .add-button:hover {
-    background-color: #1e8d3e;
+    background-color: #1e8d3e; /* По-тъмен зелен при hover */
 }
 
+/* Бутон за продажба */
 .sell-button {
-    background-color: #009CDE;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    background-color: #009CDE; /* Син цвят */
+    color: white; /* Бял текст */
+    padding: 12px 20px; /* Голямо вътрешно отстояние */
+    border: none; /* Без рамка */
+    border-radius: 5px; /* Заоблени ъгли */
+    cursor: pointer; /* Индикация за интерактивност */
+    transition: background-color 0.3s ease; /* Плавна промяна на фона */
 }
 
 .sell-button:hover {
-    background-color: #148bbf;
+    background-color: #148bbf; /* По-тъмен син при hover */
 }
 
+/* Елемент за сериен номер */
 .serial-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
+    display: flex; /* Флексбокс подреждане */
+    align-items: center; /* Центриране на елементите вертикално */
+    justify-content: center; /* Центриране на елементите хоризонтално */
+    gap: 10px; /* Разстояние между елементите */
+    margin-bottom: 10px; /* Долно външно отстояние */
 }
 
 .serial-item span {
-    font-size: 16px;
-    color: #391e13;
+    font-size: 16px; /* Размер на шрифта */
+    color: #391e13; /* Тъмнокафяв цвят на текста */
 }
 
+/* Бутон за премахване */
 .remove-button {
-    background-color: #fc0707;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    background-color: #fc0707; /* Червен цвят */
+    color: white; /* Бял текст */
+    padding: 5px 10px; /* Вътрешно отстояние */
+    border: none; /* Без рамка */
+    border-radius: 5px; /* Заоблени ъгли */
+    cursor: pointer; /* Индикация за интерактивност */
+    transition: background-color 0.3s ease; /* Плавна промяна на фона */
 }
 
 .remove-button:hover {
-    background-color: #d90429;
+    background-color: #d90429; /* По-тъмен червен при hover */
 }
 
-/* Навигация */
+/* Навигационно меню */
 .navbar {
-    background-color: #FF671F;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background-color: #FF671F; /* Оранжев фон за навигацията */
+    padding: 10px 20px; /* Вътрешно отстояние */
+    display: flex; /* Флексбокс подреждане */
+    justify-content: space-between; /* Максимално разстояние между елементите */
+    align-items: center; /* Центриране на елементите вертикално */
 }
 
+/* Поздравителен текст в навигацията */
 .navbar .welcome {
-    font-size: 18px;
-    color: white;
+    font-size: 18px; /* Размер на шрифта */
+    color: white; /* Бял цвят на текста */
 }
 
+/* Навигационни връзки */
 .navbar .nav-links {
-    display: flex;
-    align-items: center;
+    display: flex; /* Флексбокс подреждане */
+    align-items: center; /* Центриране на елементите вертикално */
 }
 
+/* Стилове за връзки и бутон за изход */
 .navbar .nav-links a, .navbar .nav-links .logout-button {
-    text-decoration: none;
-    font-size: 18px;
-    color: white;
-    margin-left: 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: color 0.3s ease;
+    text-decoration: none; /* Премахване на подчертаване */
+    font-size: 18px; /* Размер на шрифта */
+    color: white; /* Бял цвят на текста */
+    margin-left: 20px; /* Ляво външно отстояние */
+    background: none; /* Премахване на фон */
+    border: none; /* Без рамка */
+    cursor: pointer; /* Курсор като ръка */
+    transition: color 0.3s ease; /* Плавна промяна на цвета */
 }
 
+/* Ефект при hover на навигационни връзки */
 .navbar .nav-links a:hover, .navbar .nav-links .logout-button:hover {
-    color: #F0E61F;
+    color: #F0E61F; /* Жълт цвят при hover */
 }
 
-/* Заглавие */
+/* Заглавия */
 h1 {
-    margin-bottom: 30px;
-    color: #391e13;
+    margin-bottom: 30px; /* Долно външно отстояние */
+    color: #391e13; /* Тъмнокафяв цвят */
 }
 
-/* Таблица */
+/* Таблица - основни стилове */
 table {
-    display: inline-block;
-    width: auto;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+    display: inline-block; /* Вградено блоково display */
+    width: auto; /* Автоматична широчина */
+    border-collapse: collapse; /* Сливане на границите на клетките */
+    margin-bottom: 20px; /* Долно външно отстояние */
 }
 
+/* Клетки в таблицата */
 table th, table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-    color: #391e13;
+    border: 1px solid #ddd; /* Светлосива рамка */
+    padding: 10px; /* Вътрешно отстояние */
+    text-align: center; /* Центриране на текста */
+    color: #391e13; /* Тъмнокафяв цвят на текста */
 }
 
+/* Данни в таблицата */
 table td {
-    font-size: 14px; /* По-малък шрифт за данните */
+    font-size: 14px; /* По-малък размер на шрифта */
 }
 
+/* Заглавия на таблицата */
 table th {
-    background-color: #009CDE;
-    color: white;
-    font-size: 14px; /* По-голям шрифт за заглавията */
+    background-color: #009CDE; /* Син фон */
+    color: white; /* Бял текст */
+    font-size: 14px; /* Размер на шрифта */
 }
 
+/* Алтернативни редове с различен фон */
 table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2; /* Светлосив фон за четни редове */
 }
 
+/* Ефект при hover върху редове */
 table tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f1f1f1; /* Леко по-тъмен сив при hover */
 }
 
+/* Списъци без маркери */
 ul {
-    list-style-type: none; /* Премахва маркерите */
-    margin: 0;
-    padding: 0;
+    list-style-type: none; /* Премахване на точки/маркери */
+    margin: 0; /* Премахване на външно отстояние */
+    padding: 0; /* Премахване на вътрешно отстояние */
 }
 
 /* Форма за вход */
 .input-form {
-    display: inline-block;
-    width: 20%;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block; /* Вградено блоково display */
+    width: 20%; /* Фиксирана широчина */
+    margin: 0 auto; /* Центриране хоризонтално */
+    background-color: #fff; /* Бял фон */
+    padding: 20px; /* Вътрешно отстояние */
+    border-radius: 8px; /* Заоблени ъгли */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лека сянка */
 }
 
+/* Групи във формата */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Долно външно отстояние между групите */
 }
 
+/* Етикети във формата */
 .form-group label {
-    display: block;
-    font-size: 18px;
-    margin-bottom: 8px;
-    color: #391e13;
+    display: block; /* Блоково показване */
+    font-size: 18px; /* Размер на шрифта */
+    margin-bottom: 8px; /* Долно външно отстояние */
+    color: #391e13; /* Тъмнокафяв цвят */
 }
 
+/* Входни полета */
 .form-group input {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Пълна широчина */
+    padding: 10px; /* Вътрешно отстояние */
+    font-size: 14px; /* Размер на шрифта */
+    border: 1px solid #ddd; /* Светлосива рамка */
+    border-radius: 5px; /* Заоблени ъгли */
+    outline: none; /* Премахване на default outline */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавни преходи */
 }
 
+/* Фокус върху входни полета */
 .form-group input:focus {
-    border-color: #009CDE;
-    box-shadow: 0 0 5px rgba(23, 167, 224, 0.5);
+    border-color: #009CDE; /* Син цвят на рамката */
+    box-shadow: 0 0 5px rgba(23, 167, 224, 0.5); /* Лека светеща сянка */
 }
 
+/* Форма за добавяне */
 .add-form {
-    display: inline-block;
-    width: 25%;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block; /* Вградено блоково показване */
+    width: 25%; /* Широчина на формата */
+    margin: 0 auto; /* Центриране хоризонтално */
+    background-color: #fff; /* Бял фон */
+    padding: 20px; /* Вътрешно отстояние */
+    border-radius: 8px; /* Заоблени ъгли */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лека сянка за дълбочина */
 }
 
+/* Форма за детайли */
 .details-form {
-    display: inline-block;
-    width: 30%;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block; /* Вградено блоково показване */
+    width: 30%; /* По-широка форма за повече детайли */
+    margin: 0 auto; /* Центриране хоризонтално */
+    background-color: #fff; /* Бял фон */
+    padding: 20px; /* Вътрешно отстояние */
+    border-radius: 8px; /* Заоблени ъгли */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лека сянка за визуална дълбочина */
 }
 
 /* Футър */
 footer {
-    margin-top: auto;
-    padding: 20px 0;
-    /*background-color: #f1f1f1;*/
-    width: 100%;
+    margin-top: auto; /* Автоматично отместване към долната част */
+    padding: 20px 0; /* Вертикално вътрешно отстояние */
+    width: 100%; /* Пълна широчина */
 }
 
-/* Ограничаване на размера на изображението в таблицата */
+/* Изображения в таблица */
 .product-image {
-    max-width: 150px;
-    max-height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin: 0 auto;
+    max-width: 150px; /* Максимална широчина */
+    max-height: 150px; /* Максимална височина */
+    object-fit: cover; /* Покрива областта без изкривяване */
+    border-radius: 8px; /* Заоблени ъгли */
+    margin: 0 auto; /* Центриране */
 }
