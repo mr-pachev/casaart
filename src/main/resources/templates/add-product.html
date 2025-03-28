@@ -9,7 +9,6 @@
 <body>
 <div th:replace="~{fragments/navigation}"></div>
 <main>
-
     <div class="container-form">
         <h1>Нов продукт</h1>
         <div class="add-form">
@@ -17,7 +16,7 @@
                   th:object="${addProductDTO}"
                   th:method="POST"
                   enctype="multipart/form-data">
-                <div class="form-group">
+                <div class="form-field">
                     <label for="name">Име</label>
                     <input type="text"
                            id="name"
@@ -31,7 +30,7 @@
                         Съществува продукт с това име.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="providerPrice">Цена доставчик</label>
                     <input type="number"
                            id="providerPrice"
@@ -44,7 +43,7 @@
                         Въведи цена.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="clientPrice">Цена клиент</label>
                     <input type="number"
                            id="clientPrice"
@@ -62,7 +61,7 @@
                 <div th:if="${addProductDTO.imagePath != null}">
                     <img th:src="@{${addProductDTO.imagePath}}" alt="Image Preview" style="max-width: 200px;">
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="productCode">Код</label>
                     <input type="text"
                            id="productCode"
@@ -76,7 +75,7 @@
                         Съществува продукт с този код.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="providerProductCode">Код доставчик</label>
                     <input type="text"
                            id="providerProductCode"
@@ -87,7 +86,7 @@
                         Кода трябва да се състои от 2 до 10 букви.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="provider">Доставчик</label>
                     <select class="form-control"
                             id="provider"
@@ -104,14 +103,14 @@
                         Избери доставчик.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="productCode">Размери</label>
                     <input type="text"
                            id="dimensions"
                            name="dimensions"
                            th:field="*{dimensions}">
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="categories">Категории</label>
                     <select class="form-control"
                             id="categories"
@@ -128,7 +127,7 @@
                         Избери категория.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="type">Тип</label>
                     <select class="form-control"
                             id="type"
@@ -145,7 +144,7 @@
                         Избери тип.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="pcs">Количество</label>
                     <input type="number"
                            id="pcs"

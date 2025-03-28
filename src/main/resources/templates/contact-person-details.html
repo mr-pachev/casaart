@@ -27,7 +27,7 @@
                     <p class="d-block">Лицето е добавено, като управител</p>
                 </div>
 
-                <div class="form-group">
+                <div class="form-field">
                     <label for="firstName">Име</label>
                     <input type="text"
                            id="firstName"
@@ -38,7 +38,7 @@
                         Името трябва да се състои от 2 до 30 букви.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="middleName">Презиме</label>
                     <input type="text"
                            id="middleName"
@@ -49,7 +49,7 @@
                         Презимето трябва да съдържа до 30 букви.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="lastName">Фамилия</label>
                     <input type="text"
                            id="lastName"
@@ -60,7 +60,7 @@
                         Фамилята трябва да се състои от 2 до 30 букви.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label th:for="email">Емейл</label>
                     <input type="email"
                            id="email"
@@ -71,7 +71,7 @@
                         Няма попълнен имейл.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label th:for="phoneNumber">Мобилен номер</label>
                     <input type="text"
                            id="phoneNumber"
@@ -84,30 +84,30 @@
                         Мобилния номер трябва да се състои от 10 цифри.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label th:for="company">Фирма</label>
                     <input type="text" th:placeholder="*{company}"
                            id="company"
                            name="company"
                            readonly>
                 </div>
-                <div class="form-group" th:if="${isPartner}">
+                <div class="form-field" th:if="${isPartner}">
                     <label for="firstCall" class="form-label">Първо обаждане</label>
                     <input type="date" class="form-control" id="firstCall" name="firstCall" th:value="${personDTO.firstCall}">
                 </div>
-                <div class="form-group" th:if="${isPartner}">
+                <div class="form-field" th:if="${isPartner}">
                     <label for="sendEmail" class="form-label">Първи имейл</label>
                     <input type="date" class="form-control" id="sendEmail" name="sendEmail" th:value="${personDTO.sendEmail}">
                 </div>
-                <div class="form-group" th:if="${isPartner}">
+                <div class="form-field" th:if="${isPartner}">
                     <label for="sendLetter" class="form-label">Първо писмо</label>
                     <input type="date" class="form-control" id="sendLetter" name="sendLetter" th:value="${personDTO.sendLetter}">
                 </div>
-                <div class="form-group" th:if="${isPartner}">
+                <div class="form-field" th:if="${isPartner}">
                     <label for="secondCall" class="form-label">Второ обаждане</label>
                     <input type="date" class="form-control" id="secondCall" name="secondCall" th:value="${personDTO.secondCall}">
                 </div>
-                <div class="form-group" th:if="${isPartner}">
+                <div class="form-field" th:if="${isPartner}">
                     <label for="presence" class="form-label">Присъствие</label>
                     <input type="date" class="form-control" id="presence" name="presence" th:value="${personDTO.presence}">
                 </div>

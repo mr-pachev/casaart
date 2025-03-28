@@ -9,14 +9,13 @@
 <body>
 <div th:replace="~{fragments/navigation}"></div>
 <main>
-
     <div class="container-form">
         <h1>Нова категория</h1>
         <div class="input-form">
             <form th:action="@{/add-category}"
                   th:object="${addCategoryDTO}"
                   th:method="POST">
-                <div class="form-group">
+                <div class="form-field">
                     <label for="name">Име</label>
                     <input type="text"
                            id="name"
@@ -30,7 +29,7 @@
                         Съществува категория с това име.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="code">Код</label>
                     <input type="text"
                            id="code"

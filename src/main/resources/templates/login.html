@@ -18,7 +18,7 @@
         <div class="bg-danger text-center" th:if="${showErrorMessage}">
             <p class="d-block">Грешно потребителско име или парола</p>
         </div>
-        <div class="form-group">
+        <div class="form-field">
             <label for="username">Потребителско име:</label>
             <input type="text"
                    th:field="*{username}"
@@ -27,7 +27,7 @@
                    placeholder="Въведете потребителско име"
                    aria-describedby="usernameHelpInline">
         </div>
-        <div class="form-group">
+        <div class="form-field">
             <label for="password">Парола:</label>
             <input type="password"
                    th:field="*{password}"

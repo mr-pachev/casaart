@@ -98,12 +98,12 @@ h1 {
 }
 
 /* Групи във формата */
-.form-group {
+.form-field {
     margin-bottom: 20px; /* Долно външно отстояние между групите */
 }
 
 /* Етикети във формата */
-.form-group label {
+.form-field label {
     display: block; /* Блоково показване */
     font-size: 18px; /* Размер на шрифта */
     margin-bottom: 8px; /* Долно външно отстояние */
@@ -111,7 +111,7 @@ h1 {
 }
 
 /* Входни полета */
-.form-group input {
+.form-field input {
     width: 100%; /* Пълна широчина */
     padding: 10px; /* Вътрешно отстояние */
     font-size: 14px; /* Размер на шрифта */
@@ -122,7 +122,7 @@ h1 {
 }
 
 /* Фокус върху входни полета */
-.form-group input:focus {
+.form-field input:focus {
     border-color: #009CDE; /* Син цвят на рамката */
     box-shadow: 0 0 5px rgba(23, 167, 224, 0.5); /* Лека светеща сянка */
 }
@@ -335,19 +335,19 @@ ul {
 }
 
 /* Група за продажби */
-.sale-form-group {
+.sale-form-field {
     display: flex; /* Флексбокс подреждане */
     align-items: center; /* Центриране на елементите вертикално */
     gap: 10px; /* Разстояние между елементите */
 }
 
-.sale-form-group input {
+.sale-form-field input {
     flex: 1; /* Заема останалото пространство */
     margin-right: 0; /* Премахване на дясно външно отстояние */
 }
 
 /* Бутон за добавяне */
-.form-group .add-button {
+.form-field .add-button {
     background-color: #279C38; /* Зелен цвят */
     color: white; /* Бял текст */
     padding: 12px 20px; /* По-голямо вътрешно отстояние */
@@ -357,7 +357,7 @@ ul {
     transition: background-color 0.3s ease; /* Плавна промяна на фона */
 }
 
-.form-group .add-button:hover {
+.form-field .add-button:hover {
     background-color: #1e8d3e; /* По-тъмен зелен при hover */
 }
 
