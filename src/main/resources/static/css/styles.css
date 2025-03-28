@@ -9,7 +9,7 @@ html, body {
 }
 
 /* Центриране и оразмеряване на основни секции */
-header, main, footer, .input-form, .navbar {
+header, main, footer, .navbar {
     margin: 0 auto; /* Центрира елементите хоризонтално */
     text-align: center; /* Центрира текста вътре в елементите */
     width: 100%; /* Заема пълната широчина */
@@ -86,7 +86,7 @@ h1 {
     padding: 20px; /* Вътрешно отстояние */
 }
 
-/* Форма за вход */
+/* Форма за вход на потребител, тип и категория */
 .input-form {
     display: inline-block; /* Вградено блоково display */
     width: 20%; /* Фиксирана широчина */
@@ -136,6 +136,7 @@ h1 {
     padding: 20px; /* Вътрешно отстояние */
     border-radius: 8px; /* Заоблени ъгли */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лека сянка за дълбочина */
+    margin-bottom: 20px; /* Може да се увеличи при нужда */
 }
 
 /* Форма за детайли */
@@ -245,6 +246,7 @@ ul {
 
 .login-button:hover {
     background-color: #148bbf; /* По-тъмен син при hover */
+    text-decoration: none; /* Премахва подчертаването при hover */
 }
 
 /* Контейнер за действия с центриране */
@@ -330,7 +332,7 @@ ul {
 
 .view-button:hover {
     background-color: #cfc61d; /* Леко по-тъмен нюанс при hover */
-     text-decoration: none; /* Премахва подчертаването при hover */
+    text-decoration: none; /* Премахва подчертаването при hover */
     color: #5c3725; /* Запазване на кафявия цвят на текста */
 }
 
