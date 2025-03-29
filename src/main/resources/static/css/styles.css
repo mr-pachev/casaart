@@ -199,6 +199,23 @@ ul {
     padding: 0; /* Премахване на вътрешно отстояние */
 }
 
+/* Поле на падащите менюта */
+.source-type-select {
+    width: 300px; /* Ширина на полето */
+    padding: 10px; /* Вътрешен отстъп за по-добър изглед */
+    font-size: 16px; /* Размер на шрифта */
+    border: 1px solid #ccc; /* Сива рамка */
+    border-radius: 5px; /* Закръгляне на ъглите */
+    outline: none; /* Премахване на синия контур при фокус */
+    transition: all 0.3s ease-in-out; /* Плавна анимация при фокус */
+}
+
+.source-type-select:focus {
+    border-color: #007bff; /* Промяна на цвета при фокус */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Лек блясък при фокус */
+}
+
+
 /* Бутони - общи стилове */
 .buttons {
     margin-top: 20px; /* Горно отстояние */
@@ -232,7 +249,7 @@ ul {
     background-color: #1e8d3e; /* По-тъмен зелен при hover */
 }
 
-/* Син бутон за вход */
+/* Бутон за вход */
 .login-button {
     background-color: #009CDE; /* Син фон */
     color: white; /* Бял текст */
@@ -249,7 +266,7 @@ ul {
     text-decoration: none; /* Премахва подчертаването при hover */
 }
 
-/* Контейнер за действия с центриране */
+/* Бутоните за промяна и премахване */
 .action-button {
     display: flex; /* Използва flexbox */
     justify-content: center; /* Центрира хоризонтално */

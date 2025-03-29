@@ -52,7 +52,7 @@
             </select>
 
             <!-- Под-селекция за ниво на лоялност (скрита по подразбиране) -->
-            <select name="loyaltyLevel" class="loyalty-level-select" id="loyaltySelect" style="display: none;">
+            <select name="loyaltyLevel" class="source-type-select" id="loyaltySelect" style="display: none;">
                 <option value="">-- Изберете ниво лоялност --</option>
                 <option th:each="loyaltyLevel : ${allLoyaltyLevel}"
                         th:value="${loyaltyLevel}"
@@ -60,7 +60,7 @@
             </select>
 
             <!-- Под-селекция за националност (скрита по подразбиране) -->
-            <select name="nationality" class="nationality-select" id="nationalitySelect" style="display: none;">
+            <select name="nationality" class="source-type-select" id="nationalitySelect" style="display: none;">
                 <option value="">-- Изберете националност --</option>
                 <option th:each="nat : ${allNationality}"
                         th:value="${nat}"
@@ -68,7 +68,7 @@
             </select>
 
             <!-- Селект за тип на рейтинга (скрит по подразбиране) -->
-            <select name="ratingType" class="rating-type-select" id="ratingTypeSelect" style="display: none;">
+            <select name="ratingType" class="source-type-select" id="ratingTypeSelect" style="display: none;">
                 <option value="">-- Изберете тип оценка --</option>
                 <option value="ratingFood">Храна</option>
                 <option value="ratingQualityPrice">Качество/Цена</option>
@@ -77,7 +77,7 @@
             </select>
 
             <!-- Под-селекция за рейтинг (скрита по подразбиране) -->
-            <select name="rating" class="rating-select" id="ratingSelect" style="display: none;">
+            <select name="rating" class="source-type-select" id="ratingSelect" style="display: none;">
                 <option value="">-- Оценете --</option>
                 <option th:each="rating : ${allRating}"
                         th:value="${rating}"
