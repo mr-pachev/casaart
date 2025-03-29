@@ -152,10 +152,12 @@ h1 {
 
 /* Таблица - основни стилове */
 table {
-    display: inline-block; /* Вградено блоково display */
-    width: auto; /* Автоматична широчина */
-    border-collapse: collapse; /* Сливане на границите на клетките */
-    margin-bottom: 20px; /* Долно външно отстояние */
+      display: inline-block;
+        width: auto;
+        border-spacing: 0; /* Няма разстояние между клетките */
+        border-radius: 5px; /* Заоблени ъгли */
+        overflow: hidden; /* За да се отрази ефектът */
+        margin-bottom: 20px;
 }
 
 /* Клетки в таблицата */
