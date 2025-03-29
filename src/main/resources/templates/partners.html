@@ -35,7 +35,7 @@
               th:action="@{/sort-partners}" style="display: inline;">
             <!-- Основен селект -->
             <select name="sortBy" class="source-type-select" id="mainSelect">
-                <<option value="allPartners">-- подреди по --</option>
+                <<option value="allPartners">подреди по</option>
                 <option value="allPartners">Всички доставчици</option>
                 <option value="name">Име</option>
                 <option value="partnerTypes">Тип партньор</option>
@@ -44,13 +44,13 @@
 
             <!-- Падащо меню за избор на тип партньор (скрито по подразбиране) -->
             <select name="partnerTypes" id="partnerTypeSelect" class="source-type-select" style="display: none;">
-                <option value="">-- Изберете тип --</option>
+                <option value="">изберете тип</option>
                 <option th:each="type : ${allPartnerTypes}" th:value="${type}" th:text="${type}"></option>
             </select>
 
             <!-- Падащо меню за избор на район на дейност (скрито по подразбиране) -->
             <select name="locationType" id="locationTypeSelect" class="source-type-select" style="display: none;">
-                <option value="">-- Изберете район --</option>
+                <option value="">изберете район</option>
                 <option th:each="location : ${allLocations}" th:value="${location}" th:text="${location}"></option>
             </select>
 

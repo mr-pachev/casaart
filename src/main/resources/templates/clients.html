@@ -30,7 +30,7 @@
         <form th:method="POST" th:action="@{/sort-clients}" style="display: inline;">
             <!-- Основен селект -->
             <select name="type" class="source-type-select" id="mainSelect" onchange="toggleSelects()">
-                <option value="allClients">-- подреди по --</option>
+                <option value="allClients">подреди по</option>
                 <option value="allClients">Всички клиенти</option>
                 <option value="allClientsByName">Име</option>
 <!--                <option value="allClientsByFirstEmail">Дата на първи имейл</option>-->
@@ -45,7 +45,7 @@
 
             <!-- Под-селекция за източниците (скрита по подразбиране) -->
             <select name="sourceType" class="source-type-select" id="industrySelect" style="display: none;">
-                <option value="">-- Изберете източник --</option>
+                <option value="">изберете източник</option>
                 <option th:each="sourceType : ${allSourceType}"
                         th:value="${sourceType}"
                         th:text="${sourceType}"></option>
@@ -53,7 +53,7 @@
 
             <!-- Под-селекция за ниво на лоялност (скрита по подразбиране) -->
             <select name="loyaltyLevel" class="source-type-select" id="loyaltySelect" style="display: none;">
-                <option value="">-- Изберете ниво лоялност --</option>
+                <option value="">изберете ниво лоялност</option>
                 <option th:each="loyaltyLevel : ${allLoyaltyLevel}"
                         th:value="${loyaltyLevel}"
                         th:text="${loyaltyLevel}"></option>
@@ -61,7 +61,7 @@
 
             <!-- Под-селекция за националност (скрита по подразбиране) -->
             <select name="nationality" class="source-type-select" id="nationalitySelect" style="display: none;">
-                <option value="">-- Изберете националност --</option>
+                <option value="">изберете националност</option>
                 <option th:each="nat : ${allNationality}"
                         th:value="${nat}"
                         th:text="${nat}"></option>
@@ -69,7 +69,7 @@
 
             <!-- Селект за тип на рейтинга (скрит по подразбиране) -->
             <select name="ratingType" class="source-type-select" id="ratingTypeSelect" style="display: none;">
-                <option value="">-- Изберете тип оценка --</option>
+                <option value="">изберете тип оценка</option>
                 <option value="ratingFood">Храна</option>
                 <option value="ratingQualityPrice">Качество/Цена</option>
                 <option value="ratingPoliteness">Учтивост</option>
@@ -78,7 +78,7 @@
 
             <!-- Под-селекция за рейтинг (скрита по подразбиране) -->
             <select name="rating" class="source-type-select" id="ratingSelect" style="display: none;">
-                <option value="">-- Оценете --</option>
+                <option value="">оценка</option>
                 <option th:each="rating : ${allRating}"
                         th:value="${rating}"
                         th:text="${rating}"></option>

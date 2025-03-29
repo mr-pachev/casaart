@@ -39,7 +39,7 @@
 
             <!-- Основен селект -->
             <select name="sortBy" class="source-type-select" id="mainSelect" onchange="toggleUnitSelect()">
-                <option value="allSuppliers">-- подреди по --</option>
+                <option value="allSuppliers">подреди по</option>
                 <option value="allSuppliers">Всички доставчици</option>
                 <option value="name">Име</option>
                 <option value="unitType">Звено</option>
@@ -49,7 +49,7 @@
             <!-- Под-селекция за звената (скрита по подразбиране) -->
             <select name="unitType" class="source-type-select" id="unitSelect" style="display: none;"
                     onchange="toggleIndustrySelect()">
-                <option value="">-- Изберете звено --</option>
+                <option value="">изберете звено</option>
                 <option th:each="unit : ${allUnits}"
                         th:value="${unit}"
                         th:text="${unit}"></option>
@@ -57,12 +57,12 @@
 
             <!-- Под-селекция за продукти/услуги (скрита по подразбиране) -->
             <select name="industryType" class="source-type-select" id="industrySelect" style="display: none;">
-                <option value="">-- Изберете продукт/услуга --</option>
+                <option value="">изберете продукт/услуга</option>
             </select>
 
             <!-- Под-селекция за район на дейност (скрита по подразбиране) -->
             <select name="locationType" class="location-type-select" id="locationSelect" style="display: none;">
-                <option value="">-- Изберете район на дейност --</option>
+                <option value="">изберете район на дейност</option>
                 <option th:each="location : ${allLocations}"
                         th:value="${location}"
                         th:text="${location}"></option>
@@ -118,7 +118,7 @@
 
             if (selectedUnit && unitIndustries[selectedUnit]) {
                 industrySelect.style.display = "inline-block";
-                industrySelect.innerHTML = '<option value="">-- Изберете продукти/услуги --</option>';
+                industrySelect.innerHTML = '<option value="">изберете продукти/услуги</option>';
 
                 unitIndustries[selectedUnit].forEach(industry => {
                     let option = document.createElement("option");
@@ -207,7 +207,7 @@
             <td>
                 <ul>
                     <li th:each="industry : ${company.industries}"
-                        th:text="${industry}">Услуги/продукти
+                        th:text="${industry}">Продукти/услуги
                     </li>
                 </ul>
             </td>
