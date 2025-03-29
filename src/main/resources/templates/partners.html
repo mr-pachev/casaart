@@ -89,7 +89,7 @@
             <th>URL</th>
             <th>Емейл адрес</th>
             <th>Телефонен номер</th>
-            <th>Локация</th>
+            <th>Обхват</th>
             <th>Лице за контакт</th>
             <th>Управител</th>
             <!--            <th>Звено</th>-->
@@ -110,7 +110,7 @@
             </td>
             <td th:text="${company.email}">Имейл адрес</td>
             <td th:text="${company.phoneNumber}">Телефонен номер</td>
-            <td th:text="${company.locationType}">Локация</td>
+            <td th:text="${company.locationType}">Обхват</td>
             <td>
                 <ul th:if="${company.contactPerson != null and !company.contactPerson.isEmpty()}">
                     <li th:each="contact : ${company.getContactPerson()}">
