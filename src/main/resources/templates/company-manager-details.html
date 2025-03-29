@@ -85,23 +85,23 @@
                            name="company"
                            readonly>
                 </div>
-                <div class="form-group" th:if="${isPartner}">
+                <div class="form-field" th:if="${isPartner}">
                     <label for="firstCall" class="form-label">Първо обаждане</label>
                     <input type="date" class="form-control" id="firstCall" name="firstCall" th:value="${personDTO.firstCall}">
                 </div>
-                <div class="form-group" th:if="${isPartner}">
+                <div class="form-field" th:if="${isPartner}">
                     <label for="sendEmail" class="form-label">Изпратен имейл</label>
                     <input type="date" class="form-control" id="sendEmail" name="sendEmail" th:value="${personDTO.sendEmail}">
                 </div>
-                <div class="form-group" th:if="${isPartner}">
+                <div class="form-field" th:if="${isPartner}">
                     <label for="sendLetter" class="form-label">Изпратено писмо</label>
                     <input type="date" class="form-control" id="sendLetter" name="sendLetter" th:value="${personDTO.sendLetter}">
                 </div>
-                <div class="form-group" th:if="${isPartner}">
+                <div class="form-field" th:if="${isPartner}">
                     <label for="secondCall" class="form-label">Второ обаждане</label>
                     <input type="date" class="form-control" id="secondCall" name="secondCall" th:value="${personDTO.secondCall}">
                 </div>
-                <div class="form-group" th:if="${isPartner}">
+                <div class="form-field" th:if="${isPartner}">
                     <label for="presence" class="form-label">Присъствие</label>
                     <input type="date" class="form-control" id="presence" name="secondCall" th:value="${personDTO.presence}">
                 </div>

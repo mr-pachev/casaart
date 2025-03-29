@@ -28,7 +28,7 @@
                 <input type="hidden" th:field="${companyDTO.id}"/>
                 <input type="hidden" th:field="${companyDTO.name}"/>
 
-                <div class="form-group">
+                <div class="form-field">
                     <label for="firstName">Име</label>
                     <input type="text"
                            id="firstName"
@@ -39,7 +39,7 @@
                         Името трябва да се състои от 2 до 30 букви.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="middleName">Презиме</label>
                     <input type="text"
                            id="middleName"
@@ -50,7 +50,7 @@
                         Презимето трябва да съдържа до 30 букви.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="lastName">Фамилия</label>
                     <input type="text"
                            id="lastName"
@@ -61,7 +61,7 @@
                         Фамилята трябва да се състои от 2 до 30 букви.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label th:for="email">Емейл</label>
                     <input type="email"
                            id="email"
@@ -72,7 +72,7 @@
                         Няма попълнен имейл.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label th:for="phoneNumber">Мобилен номер</label>
                     <input type="text"
                            id="phoneNumber"
@@ -85,7 +85,7 @@
                         Мобилния номер трябва да се състои от 10 цифри.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label th:for="company">Фирма</label>
                     <input type="text" th:placeholder="${companyDTO.name}"
                            id="company"

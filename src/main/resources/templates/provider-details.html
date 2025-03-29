@@ -20,7 +20,7 @@
                 <!--Sends type id with a POST request-->
                 <input type="hidden" th:field="*{id}"/>
 
-                <div class="form-group">
+                <div class="form-field">
                     <label for="name">Име</label>
                     <input type="text" th:placeholder="${providerDTO.name}"
                            id="name"
@@ -34,7 +34,7 @@
                         Съществува доставчик с това име.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="description">Описание</label>
                     <input type="text" th:placeholder="${providerDTO.description}"
                            id="description"
@@ -45,7 +45,7 @@
                         Описанието трябва да се състои от 4 до 255 букви.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="contacts">Контакти</label>
                     <input type="text" th:placeholder="${providerDTO.contacts}"
                            id="contacts"
@@ -60,7 +60,7 @@
             </form>
             <br>
             <!-- Таблица с продукти -->
-            <div class="form-group">
+            <div class="form-field">
                 <label>Продукти</label>
                 <table>
                     <thead>

@@ -31,7 +31,7 @@
                         Името трябва да се състои от 2 до 15 букви.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="middleName">Презиме</label>
                     <input type="text" th:placeholder="${clientDTO.middleName}"
                            id="middleName"
@@ -42,7 +42,7 @@
                         Презимето трябва да съдържа до 15 букви.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="lastName">Фамилия</label>
                     <input type="text" th:placeholder="${clientDTO.lastName}"
                            id="lastName"
@@ -53,7 +53,7 @@
                         Фамилята трябва да се състои от 2 до 15 букви.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="email">Емейл</label>
                     <input type="email" th:placeholder="${clientDTO.email}"
                            id="email"
@@ -67,7 +67,7 @@
                         Съществува клиент с този имейл.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="phoneNumber">Мобилен номер</label>
                     <input type="text" th:placeholder="${clientDTO.phoneNumber}"
                            id="phoneNumber"
@@ -80,7 +80,7 @@
                         Мобилния номер трябва да се състои от 10 цифри.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label th:for="sourceTypes">Източник данни</label>
                     <small class="form-text text-muted" style="font-size: 0.8rem; font-weight: normal;">
                         (Задръж <b>Ctrl</b> и направи няколко селекта)
@@ -101,7 +101,7 @@
                         Избери източник.
                     </p>
                 </div>
-                <div class="form-group" th:if="${#lists.contains(clientDTO.sourceTypes, 'HOTEL')}">
+                <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'HOTEL')}">
                     <label for="loyaltyLevel">Ниво лоялност</label>
                     <select class="form-control" th:placeholder="${clientDTO.loyaltyLevel}"
                             id="loyaltyLevel"
@@ -118,7 +118,7 @@
                         Избери ниво на лоялност.
                     </p>
                 </div>
-                <div class="form-group" >
+                <div class="form-field" >
                     <label for="nationality">Националност</label>
                     <select class="form-control" th:placeholder="${clientDTO.nationality}"
                             id="nationality"
@@ -135,7 +135,7 @@
                         Избери националност.
                     </p>
                 </div>
-                <div class="form-group" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
+                <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
                     <label for="ratingFood">Оценка храна</label>
                     <select class="form-control" th:placeholder="${clientDTO.ratingFood}"
                             id="ratingFood"
@@ -152,7 +152,7 @@
                         Избери оценка.
                     </p>
                 </div>
-                <div class="form-group" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
+                <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
                     <label for="ratingQualityPrice">Оценка качество-цена</label>
                     <select class="form-control" th:placeholder="${clientDTO.ratingQualityPrice}"
                             id="ratingQualityPrice"
@@ -169,7 +169,7 @@
                         Избери оценка.
                     </p>
                 </div>
-                <div class="form-group" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
+                <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
                     <label for="ratingPoliteness">Оценка учтивост</label>
                     <select class="form-control" th:placeholder="${clientDTO.ratingPoliteness}"
                             id="ratingPoliteness"
@@ -186,7 +186,7 @@
                         Избери оценка.
                     </p>
                 </div>
-                <div class="form-group" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
+                <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
                     <label for="ratingCleanTidy">Оценка чистота</label>
                     <select class="form-control" th:placeholder="${clientDTO.ratingCleanTidy}"
                             id="ratingCleanTidy"
@@ -203,7 +203,7 @@
                         Избери оценка.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label for="comment">Коментар</label>
                     <input type="text" th:placeholder="${clientDTO.comment}"
                            id="comment"
@@ -211,23 +211,23 @@
                            class="form-control"
                            th:field="*{comment}">
                 </div>
-                <div class="form-group" th:if="${#lists.contains(clientDTO.sourceTypes, 'HOTEL')}">
+                <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'HOTEL')}">
                     <label for="accommodationDate" class="form-label">Дата настаняване</label>
                     <input type="date" class="form-control" id="accommodationDate" name="accommodationDate" th:value="${clientDTO.accommodationDate}">
                 </div>
-<!--                <div class="form-group">-->
+<!--                <div class="form-field">-->
 <!--                    <label for="firstEmail" class="form-label">Дата на първи имейл</label>-->
 <!--                    <input type="date" class="form-control" id="firstEmail" name="firstEmail" th:value="${clientDTO.firstEmail}">-->
 <!--                </div>-->
-<!--                <div class="form-group">-->
+<!--                <div class="form-field">-->
 <!--                    <label for="firstCall" class="form-label">Дата на първо обаждане</label>-->
 <!--                    <input type="date" class="form-control" id="firstCall" name="firstCall" th:value="${clientDTO.firstCall}">-->
 <!--                </div>-->
-<!--                <div class="form-group">-->
+<!--                <div class="form-field">-->
 <!--                    <label for="secondEmail" class="form-label">Дата на втори имейл</label>-->
 <!--                    <input type="date" class="form-control" id="secondEmail" name="secondEmail" th:value="${clientDTO.secondEmail}">-->
 <!--                </div>-->
-<!--                <div class="form-group">-->
+<!--                <div class="form-field">-->
 <!--                    <label for="secondCall" class="form-label">Дата на второ обаждане</label>-->
 <!--                    <input type="date" class="form-control" id="secondCall" name="secondCall" th:value="${clientDTO.secondCall}">-->
 <!--                </div>-->

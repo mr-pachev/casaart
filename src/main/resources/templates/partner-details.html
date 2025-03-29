@@ -114,7 +114,7 @@
 <!--                    </p>-->
 <!--                </div>-->
 
-                <div class="form-group">
+                <div class="form-field">
                     <label th:for="address">Адрес</label>
                     <input type="text"
                            id="address"
@@ -125,7 +125,7 @@
                         Въведете адрес.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label th:for="phoneNumber">Телефон</label>
                     <input type="text"
                            id="phoneNumber"
@@ -137,7 +137,7 @@
                         Телефонния номер трябва да съдържа 10 цифри.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label th:for="email">Имейл адрес</label>
                     <input type="email"
                            id="email"
@@ -148,14 +148,14 @@
                         Въведи имейл адрес.
                     </p>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label th:for="url">URL</label>
                     <input type="url"
                            id="url"
                            name="url"
                            th:field="*{url}">
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label th:for="locationType">Обхват на дейност</label>
                     <select class="form-control"
                             id="locationType"
@@ -173,7 +173,7 @@
                         Избери регион.
                     </p>
                 </div>
-                <div class="form-group" th:if="${companyDTO.companyManager} != null">
+                <div class="form-field" th:if="${companyDTO.companyManager} != null">
                     <label for="companyManager">Управител</label>
                     <input type="text" th:placeholder="*{companyManager}"
                            id="companyManager"
