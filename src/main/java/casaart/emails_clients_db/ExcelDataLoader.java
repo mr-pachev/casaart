@@ -5,6 +5,9 @@ import casaart.emails_clients_db.service.ExelService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 //@Component
 public class ExcelDataLoader implements CommandLineRunner {
 
@@ -18,9 +21,13 @@ public class ExcelDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        // добавяне на текущата дата към filePathExportClients
+        String basePath = "C:\\Users\\user\\Documents\\IP\\BACKUP_CLIENTS";
+        String formattedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyy"));
+
         String filePathImportClients = "C:\\Users\\user\\Documents\\IP\\demo.xlsx"; // Път до локалния Excel файл
         String filePathImportEmails = "C:\\Users\\user\\Documents\\IP\\IMPORT_EMAILS.xlsx"; // Път до локалния Excel файл
-        String filePathExportClients = "C:\\Users\\user\\Documents\\IP\\BACKUP_CLIENTS.xlsx"; // Път до локалния Excel файл
+        String filePathExportClients = basePath + "_" + formattedDate + ".xlsx"; // Път до локалния Excel файл
         String filePathExportCompanies = "C:\\Users\\user\\Documents\\IP\\BACKUP_COMPANIES.xlsx"; // Път до локалния Excel файл
         String filePathExportCompanyManager = "C:\\Users\\user\\Documents\\IP\\BACKUP_COMPANY_MANAGERS.xlsx"; // Път до локалния Excel файл
         String filePathExportContactPerson = "C:\\Users\\user\\Documents\\IP\\BACKUP_CONTACT_PERSONS.xlsx"; // Път до локалния Excel файл
