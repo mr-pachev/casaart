@@ -37,13 +37,13 @@ public class ExcelDataLoader implements CommandLineRunner {
         String basePathCompanies = "C:\\Users\\user\\Documents\\IP\\BACKUP_COMPANIES.xlsx";
         String formattedDateCompanies = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyy"));
 
-        String filePathImportClients = "C:\\Users\\user\\Documents\\IP\\demo.xlsx"; // Път до локалния Excel файл
-        String filePathImportEmails = "C:\\Users\\user\\Documents\\IP\\IMPORT_EMAILS.xlsx"; // Път до локалния Excel файл BACKUP_CLIENTS
-        String filePathExportClients = basePath + "_" + formattedDate + ".xlsx"; // Път до локалния Excel файл
+        String filePathImportClients = "C:\\Users\\user\\Documents\\IP\\demo.xlsx"; // Път до локалния Excel файл demo
+        String filePathImportEmailsFromMailChimp = "C:\\Users\\user\\Documents\\IP\\IMPORT_EMAILS_FROM_MAILCHIMP.xlsx"; // Път до локалния Excel IMPORT_EMAILS_FROM_MAILCHIMP
+        String filePathExportClients = basePath + "_" + formattedDate + ".xlsx"; // Път до локалния Excel файл BACKUP_CLIENTS
         String filePathExportCompanies = basePathCompanies + "_" + formattedDateCompanies + ".xlsx"; // Път до локалния Excel файл BACKUP_COMPANIES
         String filePathExportCompanyManager = basePathCompanyManager + "_" + formattedDateCompanyManager + ".xlsx"; // Път до локалния Excel файл BACKUP_COMPANY_MANAGERS
         String filePathExportContactPerson = basePathContactPersons + "_" + formattedDateContactPersons + ".xlsx"; // Път до локалния Excel файл BACKUP_CONTACT_PERSONS
-        String filePathExportEmails = "C:\\Users\\user\\Documents\\IP\\NEW_EMAILS.xlsx"; // Път до локалния Excel файл
+        String filePathExportNoMatchedEmails = "C:\\Users\\user\\Documents\\IP\\NEW_EMAILS.xlsx"; // Път до локалния Excel файл NEW_EMAILS
 
 //        EDIT CLIENTS
 //        editDataBaseService.removeDuplicateClients();
@@ -78,6 +78,6 @@ public class ExcelDataLoader implements CommandLineRunner {
 //        exelService.exportContactPersonsToExcel(filePathExportContactPerson);
 //        System.out.println("EXPORT is FINISHED!");
 
-//        exelService.findDuplicatedEmailsFromExcel(filePathImportEmails, filePathExportEmails);
+//        exelService.findDuplicatedEmailsFromExcel(filePathImportEmailsFromMailChimp, filePathExportNoMatchedEmails);
     }
 }
