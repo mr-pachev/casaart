@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -123,7 +124,8 @@ public class ExelServiceImpl implements ExelService {
 
             // Заглавен ред
             Row headerRow = sheet.createRow(0);
-            String[] headers = {"Name", "Address", "Phone Number", "Email", "Location Type", "Industry Types", "Company Manager", "Contact Persons"};
+            String[] headers = {"Name", "Address", "Phone Number", "Email", "URL", "Location Type", "Company Type",
+                    "Industry Types", "Unit Types", "Partner Types", "Company Manager", "Contact Persons"};
 
             CellStyle headerStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
@@ -144,10 +146,14 @@ public class ExelServiceImpl implements ExelService {
                 row.createCell(1).setCellValue(company.getAddress() != null ? company.getAddress() : "");
                 row.createCell(2).setCellValue(company.getPhoneNumber() != null ? company.getPhoneNumber() : "");
                 row.createCell(3).setCellValue(company.getEmail() != null ? company.getEmail() : "");
-                row.createCell(4).setCellValue(company.getLocationType() != null ? company.getLocationType().toString() : "");
-                row.createCell(5).setCellValue(company.getIndustryTypes() != null ? company.getIndustryTypes().stream().map(IndustryType::toString).collect(Collectors.joining(", ")) : "");
-                row.createCell(6).setCellValue(company.getCompanyManager() != null ? company.getCompanyManager().getFullName() : "");
-                row.createCell(7).setCellValue(company.getContactPersons() != null ? company.getContactPersons().stream().map(ContactPerson::getFullName).collect(Collectors.joining(", ")) : "");
+                row.createCell(4).setCellValue(company.getUrl() != null ? company.getUrl() : "");
+                row.createCell(5).setCellValue(company.getLocationType() != null ? company.getLocationType().toString() : "");
+                row.createCell(6).setCellValue(company.getCompanyType() != null ? company.getCompanyType().toString() : "");
+                row.createCell(7).setCellValue(company.getIndustryTypes() != null ? company.getIndustryTypes().stream().map(Enum::toString).collect(Collectors.joining(", ")) : "");
+                row.createCell(8).setCellValue(company.getUnitTypes() != null ? company.getUnitTypes().stream().map(Enum::toString).collect(Collectors.joining(", ")) : "");
+                row.createCell(9).setCellValue(company.getPartnerTypes() != null ? company.getPartnerTypes().stream().map(Enum::toString).collect(Collectors.joining(", ")) : "");
+                row.createCell(10).setCellValue(company.getCompanyManager() != null ? company.getCompanyManager().getFullName() : "");
+                row.createCell(11).setCellValue(company.getContactPersons() != null ? company.getContactPersons().stream().map(ContactPerson::getFullName).collect(Collectors.joining(", ")) : "");
             }
 
             // Автоматично нагласяне на ширината на колоните
@@ -170,13 +176,14 @@ public class ExelServiceImpl implements ExelService {
     @Override
     public void exportCompanyManagersToExcel(String filePath) {
         List<CompanyManager> managers = companyManagerRepository.findAll();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Company Managers");
 
             // Заглавен ред
-            Row headerRow = sheet.createRow(0);
             String[] headers = {"First Name", "Middle Name", "Last Name", "Email", "Phone Number", "Company", "First Call", "Send Email", "Send Letter", "Second Call", "Presence"};
-
+            Row headerRow = sheet.createRow(0);
             CellStyle headerStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
             headerFont.setBold(true);
@@ -198,11 +205,11 @@ public class ExelServiceImpl implements ExelService {
                 row.createCell(3).setCellValue(manager.getEmail() != null ? manager.getEmail() : "");
                 row.createCell(4).setCellValue(manager.getPhoneNumber() != null ? manager.getPhoneNumber() : "");
                 row.createCell(5).setCellValue(manager.getCompany() != null ? manager.getCompany().getName() : "");
-                row.createCell(6).setCellValue(manager.getFirstCall() != null ? manager.getFirstCall().toString() : "");
-                row.createCell(7).setCellValue(manager.getSendEmail() != null ? manager.getSendEmail().toString() : "");
-                row.createCell(8).setCellValue(manager.getSendLetter() != null ? manager.getSendLetter().toString() : "");
-                row.createCell(9).setCellValue(manager.getSecondCall() != null ? manager.getSecondCall().toString() : "");
-                row.createCell(10).setCellValue(manager.getPresence() != null ? manager.getPresence().toString() : "");
+                row.createCell(6).setCellValue(manager.getFirstCall() != null ? manager.getFirstCall().format(formatter) : "");
+                row.createCell(7).setCellValue(manager.getSendEmail() != null ? manager.getSendEmail().format(formatter) : "");
+                row.createCell(8).setCellValue(manager.getSendLetter() != null ? manager.getSendLetter().format(formatter) : "");
+                row.createCell(9).setCellValue(manager.getSecondCall() != null ? manager.getSecondCall().format(formatter) : "");
+                row.createCell(10).setCellValue(manager.getPresence() != null ? manager.getPresence().format(formatter) : "");
             }
 
             // Автоматично нагласяне на ширината на колоните
@@ -214,6 +221,7 @@ public class ExelServiceImpl implements ExelService {
             try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
                 workbook.write(fileOut);
             }
+
             System.out.println("SUCCESSFULLY EXPORTED --< " + managers.size() + " >-- company managers IN " + filePath);
 
         } catch (IOException e) {
@@ -226,12 +234,15 @@ public class ExelServiceImpl implements ExelService {
     @Override
     public void exportContactPersonsToExcel(String filePath) {
         List<ContactPerson> contactPersons = contactPersonRepository.findAll();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Contact Persons");
 
             // Заглавен ред
             Row headerRow = sheet.createRow(0);
-            String[] headers = {"First Name", "Middle Name", "Last Name", "Email", "Phone Number", "Company", "First Call", "Send Email", "Send Letter", "Second Call", "Presence"};
+            String[] headers = {"First Name", "Middle Name", "Last Name", "Email", "Phone Number", "Company",
+                    "First Call", "Send Email", "Send Letter", "Second Call", "Presence"};
 
             CellStyle headerStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
@@ -254,11 +265,11 @@ public class ExelServiceImpl implements ExelService {
                 row.createCell(3).setCellValue(person.getEmail() != null ? person.getEmail() : "");
                 row.createCell(4).setCellValue(person.getPhoneNumber() != null ? person.getPhoneNumber() : "");
                 row.createCell(5).setCellValue(person.getCompany() != null ? person.getCompany().getName() : "");
-                row.createCell(6).setCellValue(person.getFirstCall() != null ? person.getFirstCall().toString() : "");
-                row.createCell(7).setCellValue(person.getSendEmail() != null ? person.getSendEmail().toString() : "");
-                row.createCell(8).setCellValue(person.getSendLetter() != null ? person.getSendLetter().toString() : "");
-                row.createCell(9).setCellValue(person.getSecondCall() != null ? person.getSecondCall().toString() : "");
-                row.createCell(10).setCellValue(person.getPresence() != null ? person.getPresence().toString() : "");
+                row.createCell(6).setCellValue(person.getFirstCall() != null ? person.getFirstCall().format(dateFormatter) : "");
+                row.createCell(7).setCellValue(person.getSendEmail() != null ? person.getSendEmail().format(dateFormatter) : "");
+                row.createCell(8).setCellValue(person.getSendLetter() != null ? person.getSendLetter().format(dateFormatter) : "");
+                row.createCell(9).setCellValue(person.getSecondCall() != null ? person.getSecondCall().format(dateFormatter) : "");
+                row.createCell(10).setCellValue(person.getPresence() != null ? person.getPresence().format(dateFormatter) : "");
             }
 
             // Автоматично нагласяне на ширината на колоните
@@ -271,7 +282,6 @@ public class ExelServiceImpl implements ExelService {
                 workbook.write(fileOut);
             }
             System.out.println("SUCCESSFULLY EXPORTED --< " + contactPersons.size() + " >-- contact persons IN " + filePath);
-
         } catch (IOException e) {
             System.err.println("ERROR WRITING Excel file: " + e.getMessage());
             e.printStackTrace();
@@ -465,6 +475,7 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
+    /* matching emails from mailchimp - 1/2 */
     // export duplicated emails to Excel
     @Override
     public void exportDuplicatedEmailsToExcel(Set<String> duplicatedEmails, String outputFilePath) {
@@ -484,6 +495,7 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
+    /* matching emails from mailchimp - 2/2 */
     // find duplicated emails from Excel
     @Override
     public void findDuplicatedEmailsFromExcel(String inputFilePath, String outputFilePath) {

@@ -25,12 +25,24 @@ public class ExcelDataLoader implements CommandLineRunner {
         String basePath = "C:\\Users\\user\\Documents\\IP\\BACKUP_CLIENTS";
         String formattedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyy"));
 
+        // добавяне на текущата дата към filePathExportCompanyManager
+        String basePathCompanyManager = "C:\\Users\\user\\Documents\\IP\\BACKUP_COMPANY_MANAGERS";
+        String formattedDateCompanyManager = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyy"));
+
+        // добавяне на текущата дата към filePathExportContactPerson
+        String basePathContactPersons = "C:\\Users\\user\\Documents\\IP\\BACKUP_CONTACT_PERSONS.xlsx";
+        String formattedDateContactPersons = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyy"));
+
+        // добавяне на текущата дата към filePathExportCompanies
+        String basePathCompanies = "C:\\Users\\user\\Documents\\IP\\BACKUP_COMPANIES.xlsx";
+        String formattedDateCompanies = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyy"));
+
         String filePathImportClients = "C:\\Users\\user\\Documents\\IP\\demo.xlsx"; // Път до локалния Excel файл
-        String filePathImportEmails = "C:\\Users\\user\\Documents\\IP\\IMPORT_EMAILS.xlsx"; // Път до локалния Excel файл
+        String filePathImportEmails = "C:\\Users\\user\\Documents\\IP\\IMPORT_EMAILS.xlsx"; // Път до локалния Excel файл BACKUP_CLIENTS
         String filePathExportClients = basePath + "_" + formattedDate + ".xlsx"; // Път до локалния Excel файл
-        String filePathExportCompanies = "C:\\Users\\user\\Documents\\IP\\BACKUP_COMPANIES.xlsx"; // Път до локалния Excel файл
-        String filePathExportCompanyManager = "C:\\Users\\user\\Documents\\IP\\BACKUP_COMPANY_MANAGERS.xlsx"; // Път до локалния Excel файл
-        String filePathExportContactPerson = "C:\\Users\\user\\Documents\\IP\\BACKUP_CONTACT_PERSONS.xlsx"; // Път до локалния Excel файл
+        String filePathExportCompanies = basePathCompanies + "_" + formattedDateCompanies + ".xlsx"; // Път до локалния Excel файл BACKUP_COMPANIES
+        String filePathExportCompanyManager = basePathCompanyManager + "_" + formattedDateCompanyManager + ".xlsx"; // Път до локалния Excel файл BACKUP_COMPANY_MANAGERS
+        String filePathExportContactPerson = basePathContactPersons + "_" + formattedDateContactPersons + ".xlsx"; // Път до локалния Excel файл BACKUP_CONTACT_PERSONS
         String filePathExportEmails = "C:\\Users\\user\\Documents\\IP\\NEW_EMAILS.xlsx"; // Път до локалния Excel файл
 
 //        EDIT CLIENTS
@@ -58,7 +70,7 @@ public class ExcelDataLoader implements CommandLineRunner {
 
 //        EXPORT COMPANY MANAGERS
 //        System.out.println("EXPORT OF companyManagers TO " + filePathExportCompanyManager);
-//        exelService.exportCompanyManagerToExcel(filePathExportCompanyManager);
+//        exelService.exportCompanyManagersToExcel(filePathExportCompanyManager);
 //        System.out.println("EXPORT is FINISHED!");
 
 //        EXPORT CONTACT PERSONS
