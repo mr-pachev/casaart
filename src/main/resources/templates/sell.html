@@ -10,42 +10,41 @@
 <body>
 <div th:replace="~{fragments/navigation}" class="navbar"></div>
 <main>
-    <div class="container-form">
-        <h1>Продажба</h1>
-        <form th:action="@{/sell}" method="post" class="details-form">
-            <div class="form-field sale-form-field">
-                <label for="serialInput">Сериен номер:</label>
-                <input type="text" id="serialInput" name="serialInput">
-                <button type="submit" name="action" value="add" class="add-button">Добави</button>
-            </div>
-            <p class="errors alert alert-danger" th:if="${isNotExist}">
-                Несъществуващ сериен номер.
-            </p>
-            <p class="errors alert alert-danger" th:if="${isExistInList}">
-                Вече е въведен този сериен номер.
-            </p>
-            <ul>
-                <li th:each="serial, iter : ${serialNumbers}" class="serial-item">
-                    <span th:text="${serial}"></span>
-                    <input type="hidden" name="serialNumbers" th:value="${serial}" />
-                    <button type="submit" name="action" value="remove" class="remove-button"
-                            th:formaction="@{/sell(remove=${iter.index})}">Премахни</button>
-                </li>
-            </ul>
-            <div class="action-button">
-                <button type="submit" name="action" value="sell" class="sell-button">Продай</button>
-            </div>
-            <p class="errors alert alert-danger" th:if="${isEmpty}">
-                Въведи сериен номер.
-            </p>
-            <p class="success alert alert-success" th:if="${isSelled}">
-                Извършена е продажба!
-            </p>
-            <p class="errors alert alert-danger" th:if="${isInsertedList}">
-                Вече е въведен този сериен номер.
-            </p>
-        </form>
-    </div>
+    <h1>Продажба</h1>
+    <form th:action="@{/sell}" method="post" class="details-form">
+        <div class="form-field sale-form-field">
+            <label for="serialInput">Сериен номер:</label>
+            <input type="text" id="serialInput" name="serialInput">
+            <button type="submit" name="action" value="add" class="add-button">Добави</button>
+        </div>
+        <p class="errors alert alert-danger" th:if="${isNotExist}">
+            Несъществуващ сериен номер.
+        </p>
+        <p class="errors alert alert-danger" th:if="${isExistInList}">
+            Вече е въведен този сериен номер.
+        </p>
+        <ul>
+            <li th:each="serial, iter : ${serialNumbers}" class="serial-item">
+                <span th:text="${serial}"></span>
+                <input type="hidden" name="serialNumbers" th:value="${serial}"/>
+                <button type="submit" name="action" value="remove" class="remove-button"
+                        th:formaction="@{/sell(remove=${iter.index})}">Премахни
+                </button>
+            </li>
+        </ul>
+        <div class="action-button">
+            <button type="submit" name="action" value="sell" class="sell-button">Продай</button>
+        </div>
+        <p class="errors alert alert-danger" th:if="${isEmpty}">
+            Въведи сериен номер.
+        </p>
+        <p class="success alert alert-success" th:if="${isSelled}">
+            Извършена е продажба!
+        </p>
+        <p class="errors alert alert-danger" th:if="${isInsertedList}">
+            Вече е въведен този сериен номер.
+        </p>
+    </form>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>

@@ -33,10 +33,10 @@
                 <option value="allClients">подреди по</option>
                 <option value="allClients">Всички клиенти</option>
                 <option value="allClientsByName">Име</option>
-<!--                <option value="allClientsByFirstEmail">Дата на първи имейл</option>-->
-<!--                <option value="allClientsByFirstCall">Дата на първо обаждане</option>-->
-<!--                <option value="allClientsBySecondEmail">Дата на втори имейл</option>-->
-<!--                <option value="allClientsBySecondCall">Добавен на второ обаждане</option>-->
+                <!--                <option value="allClientsByFirstEmail">Дата на първи имейл</option>-->
+                <!--                <option value="allClientsByFirstCall">Дата на първо обаждане</option>-->
+                <!--                <option value="allClientsBySecondEmail">Дата на втори имейл</option>-->
+                <!--                <option value="allClientsBySecondCall">Добавен на второ обаждане</option>-->
                 <option value="sourceType">Източник</option>
                 <option value="loyaltyLevel">Ниво лоялност</option>
                 <option value="nationality">Националност</option>
@@ -128,29 +128,28 @@
         document.getElementById("mainSelect").addEventListener("change", toggleSelects);
     </script>
 
-
     <table id="clients-table">
         <thead>
         <tr>
             <th>Име</th>
-<!--            <th>Презиме</th>-->
+            <!--            <th>Презиме</th>-->
             <th>Фамилия</th>
             <th>Имейл</th>
             <th>Телефон</th>
             <th>Тип източник</th>
             <th>Ниво лоялност</th>
             <th>Националност</th>
-<!--            <th>Дата на първи имейл</th>-->
-<!--            <th>Дата на първо обаждане</th>-->
-<!--            <th>Дата на втори имейл</th>-->
-<!--            <th>Дата на втора обаждане</th>-->
+            <!--            <th>Дата на първи имейл</th>-->
+            <!--            <th>Дата на първо обаждане</th>-->
+            <!--            <th>Дата на втори имейл</th>-->
+            <!--            <th>Дата на втора обаждане</th>-->
             <th>Действия</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="client :${allClients}">
             <td th:text="${client.firstName}">Име</td>
-<!--            <td th:text="${client.middleName}">Презиме</td>-->
+            <!--            <td th:text="${client.middleName}">Презиме</td>-->
             <td th:text="${client.lastName}">Фамилия</td>
             <td th:text="${client.email}">Емейл</td>
             <td th:text="${client.phoneNumber}">Телефонен номер</td>
@@ -163,54 +162,54 @@
             </td>
             <td th:text="${client.loyaltyLevel}">Ниво лоялност</td>
             <td th:text="${client.nationality}">Националност</td>
-<!--            <td>-->
-<!--                <ul>-->
-<!--                    <li>-->
-<!--                        <span th:text="${client.firstEmail}"></span>-->
-<!--                    </li>-->
-<!--                    <li>-->
-<!--                        <form th:method="GET" th:action="@{/first-email-client/{id}(id=${client.id})}">-->
-<!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
-<!--                        </form>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--                <ul>-->
-<!--                    <li>-->
-<!--                        <span th:text="${client.firstCall}"></span>-->
-<!--                    </li>-->
-<!--                    <li>-->
-<!--                        <form th:method="GET" th:action="@{/first-call-client/{id}(id=${client.id})}">-->
-<!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
-<!--                        </form>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--                <ul>-->
-<!--                    <li>-->
-<!--                        <span th:text="${client.secondEmail}"></span>-->
-<!--                    </li>-->
-<!--                    <li>-->
-<!--                        <form th:method="GET" th:action="@{/second-email-client/{id}(id=${client.id})}">-->
-<!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
-<!--                        </form>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </td>-->
-<!--            <td>-->
-<!--                <ul>-->
-<!--                    <li>-->
-<!--                        <span th:text="${client.secondCall}"></span>-->
-<!--                    </li>-->
-<!--                    <li>-->
-<!--                        <form th:method="GET" th:action="@{/second-call-client/{id}(id=${client.id})}">-->
-<!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
-<!--                        </form>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </td>-->
+            <!--            <td>-->
+            <!--                <ul>-->
+            <!--                    <li>-->
+            <!--                        <span th:text="${client.firstEmail}"></span>-->
+            <!--                    </li>-->
+            <!--                    <li>-->
+            <!--                        <form th:method="GET" th:action="@{/first-email-client/{id}(id=${client.id})}">-->
+            <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
+            <!--                        </form>-->
+            <!--                    </li>-->
+            <!--                </ul>-->
+            <!--            </td>-->
+            <!--            <td>-->
+            <!--                <ul>-->
+            <!--                    <li>-->
+            <!--                        <span th:text="${client.firstCall}"></span>-->
+            <!--                    </li>-->
+            <!--                    <li>-->
+            <!--                        <form th:method="GET" th:action="@{/first-call-client/{id}(id=${client.id})}">-->
+            <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
+            <!--                        </form>-->
+            <!--                    </li>-->
+            <!--                </ul>-->
+            <!--            </td>-->
+            <!--            <td>-->
+            <!--                <ul>-->
+            <!--                    <li>-->
+            <!--                        <span th:text="${client.secondEmail}"></span>-->
+            <!--                    </li>-->
+            <!--                    <li>-->
+            <!--                        <form th:method="GET" th:action="@{/second-email-client/{id}(id=${client.id})}">-->
+            <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
+            <!--                        </form>-->
+            <!--                    </li>-->
+            <!--                </ul>-->
+            <!--            </td>-->
+            <!--            <td>-->
+            <!--                <ul>-->
+            <!--                    <li>-->
+            <!--                        <span th:text="${client.secondCall}"></span>-->
+            <!--                    </li>-->
+            <!--                    <li>-->
+            <!--                        <form th:method="GET" th:action="@{/second-call-client/{id}(id=${client.id})}">-->
+            <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
+            <!--                        </form>-->
+            <!--                    </li>-->
+            <!--                </ul>-->
+            <!--            </td>-->
             <td>
                 <div class="action-button">
                     <form th:method="POST" th:action="@{/client-details/{id}(id=${client.id})}">
@@ -225,7 +224,6 @@
         </tr>
         </tbody>
     </table>
-
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>

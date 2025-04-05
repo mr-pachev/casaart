@@ -9,51 +9,49 @@
 <body>
 <div th:replace="~{fragments/navigation}"></div>
 <main>
-    <div class="container-form">
-        <h1>Нов доставчик</h1>
-        <div class="add-form">
-            <form th:action="@{/add-provider}"
-                  th:object="${addProviderDTO}"
-                  th:method="POST">
-                <div class="form-field">
-                    <label for="name">Име</label>
-                    <input type="text"
-                           id="name"
-                           name="name"
-                           th:field="*{name}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Името трябва да се състои от 2 до 30 букви.
-                    </p>
-                    <p class="errors alert alert-danger" th:if="${isExistProvider}">
-                        Съществува доставчик с това име.
-                    </p>
-                </div>
-                <div class="form-field">
-                    <label for="description">Описание</label>
-                    <input type="description"
-                           id="description"
-                           name="description"
-                           th:field="*{description}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Описанието трябва да се състои от 4 до 255 букви.
-                    </p>
-                </div>
-                <div class="form-field">
-                    <label for="contacts">Контакти</label>
-                    <input type="contacts"
-                           id="contacts"
-                           name="contacts"
-                           th:field="*{contacts}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Попълни контакти.
-                    </p>
-                </div>
-                <button type="submit" class="btn btn-success">Добави</button>
-            </form>
-        </div>
+    <h1>Нов доставчик</h1>
+    <div class="add-form">
+        <form th:action="@{/add-provider}"
+              th:object="${addProviderDTO}"
+              th:method="POST">
+            <div class="form-field">
+                <label for="name">Име</label>
+                <input type="text"
+                       id="name"
+                       name="name"
+                       th:field="*{name}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Името трябва да се състои от 2 до 30 букви.
+                </p>
+                <p class="errors alert alert-danger" th:if="${isExistProvider}">
+                    Съществува доставчик с това име.
+                </p>
+            </div>
+            <div class="form-field">
+                <label for="description">Описание</label>
+                <input type="description"
+                       id="description"
+                       name="description"
+                       th:field="*{description}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Описанието трябва да се състои от 4 до 255 букви.
+                </p>
+            </div>
+            <div class="form-field">
+                <label for="contacts">Контакти</label>
+                <input type="contacts"
+                       id="contacts"
+                       name="contacts"
+                       th:field="*{contacts}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Попълни контакти.
+                </p>
+            </div>
+            <button type="submit" class="btn btn-success">Добави</button>
+        </form>
     </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>

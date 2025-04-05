@@ -14,7 +14,7 @@
     <form class="input-form"
           th:action="@{/login}"
           th:object="${loginUserDTO}"
-          th:method="POST" >
+          th:method="POST">
         <div class="bg-danger text-center" th:if="${showErrorMessage}">
             <p class="d-block">Грешно потребителско име или парола</p>
         </div>

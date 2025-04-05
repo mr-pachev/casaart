@@ -33,7 +33,8 @@
                 <form th:method="POST" th:action="@{/category-details/{id}(id=${category.id})}">
                     <input class="edit-button" type="submit" th:value="Промяна"/>
                 </form>
-                <form th:method="POST" th:action="@{/delete-category/{id}(id=${category.id})}" sec:authorize="hasRole('Admin')">
+                <form th:method="POST" th:action="@{/delete-category/{id}(id=${category.id})}"
+                      sec:authorize="hasRole('Admin')">
                     <input class="delete-button" type="submit" th:value="Премахване"/>
                 </form>
             </td>

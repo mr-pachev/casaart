@@ -9,89 +9,86 @@
 <body>
 <div th:replace="~{fragments/navigation}"></div>
 <main>
+    <h1>Промяна доставчик</h1>
+    <div class="details-form">
+        <form th:action="@{/provider-details}"
+              th:object="${providerDTO}"
+              th:method="POST">
 
-    <div class="container-form">
-        <h1>Промяна доставчик</h1>
-        <div class="details-form">
-            <form th:action="@{/provider-details}"
-                  th:object="${providerDTO}"
-                  th:method="POST">
+            <!--Sends type id with a POST request-->
+            <input type="hidden" th:field="*{id}"/>
 
-                <!--Sends type id with a POST request-->
-                <input type="hidden" th:field="*{id}"/>
-
-                <div class="form-field">
-                    <label for="name">Име</label>
-                    <input type="text" th:placeholder="${providerDTO.name}"
-                           id="name"
-                           name="name"
-                           th:field="*{name}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Името трябва да се състои от 2 до 30 букви.
-                    </p>
-                    <p class="errors alert alert-danger" th:if="${isExistProvider}">
-                        Съществува доставчик с това име.
-                    </p>
-                </div>
-                <div class="form-field">
-                    <label for="description">Описание</label>
-                    <input type="text" th:placeholder="${providerDTO.description}"
-                           id="description"
-                           name="description"
-                           th:field="*{description}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Описанието трябва да се състои от 4 до 255 букви.
-                    </p>
-                </div>
-                <div class="form-field">
-                    <label for="contacts">Контакти</label>
-                    <input type="text" th:placeholder="${providerDTO.contacts}"
-                           id="contacts"
-                           name="contacts"
-                           th:field="*{contacts}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Попълни контакти.
-                    </p>
-                </div>
-                <button type="submit" class="btn btn-success">Запази</button>
-            </form>
-            <br>
-            <!-- Таблица с продукти -->
             <div class="form-field">
-                <label>Продукти</label>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Име</th>
-                        <th>Снимка</th>
-                        <th>Действия</th>
-                    </tr>
-                    </thead>
-                    <tbody id="product">
-                    <tr th:each="product : ${providerDTO.getProducts()}">
-                        <td th:text="${product.name}"></td>
-                        <td>
-                            <img th:src="@{${product.imagePath}}" alt="Image in Table"
-                                 style="max-width: 100%; height: auto;"/>
-                        </td>
-                        <td>
-                            <div class="action-button">
-                                <form th:method="POST" th:action="@{/product-details/{id}(id=${product.id})}">
-                                    <input class="edit-button" type="submit" th:value="Промяна"/>
-                                </form>
-                                <form th:method="POST" th:action="@{/delete-product/{id}(id=${product.id})}"
-                                      sec:authorize="hasRole('Admin')">
-                                    <input class="delete-button" type="submit" th:value="Премахване"/>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <label for="name">Име</label>
+                <input type="text" th:placeholder="${providerDTO.name}"
+                       id="name"
+                       name="name"
+                       th:field="*{name}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Името трябва да се състои от 2 до 30 букви.
+                </p>
+                <p class="errors alert alert-danger" th:if="${isExistProvider}">
+                    Съществува доставчик с това име.
+                </p>
             </div>
+            <div class="form-field">
+                <label for="description">Описание</label>
+                <input type="text" th:placeholder="${providerDTO.description}"
+                       id="description"
+                       name="description"
+                       th:field="*{description}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Описанието трябва да се състои от 4 до 255 букви.
+                </p>
+            </div>
+            <div class="form-field">
+                <label for="contacts">Контакти</label>
+                <input type="text" th:placeholder="${providerDTO.contacts}"
+                       id="contacts"
+                       name="contacts"
+                       th:field="*{contacts}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Попълни контакти.
+                </p>
+            </div>
+            <button type="submit" class="btn btn-success">Запази</button>
+        </form>
+        <br>
+        <!-- Таблица с продукти -->
+        <div class="form-field">
+            <label>Продукти</label>
+            <table>
+                <thead>
+                <tr>
+                    <th>Име</th>
+                    <th>Снимка</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody id="product">
+                <tr th:each="product : ${providerDTO.getProducts()}">
+                    <td th:text="${product.name}"></td>
+                    <td>
+                        <img th:src="@{${product.imagePath}}" alt="Image in Table"
+                             style="max-width: 100%; height: auto;"/>
+                    </td>
+                    <td>
+                        <div class="action-button">
+                            <form th:method="POST" th:action="@{/product-details/{id}(id=${product.id})}">
+                                <input class="edit-button" type="submit" th:value="Промяна"/>
+                            </form>
+                            <form th:method="POST" th:action="@{/delete-product/{id}(id=${product.id})}"
+                                  sec:authorize="hasRole('Admin')">
+                                <input class="delete-button" type="submit" th:value="Премахване"/>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </main>

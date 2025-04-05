@@ -165,25 +165,25 @@
         <br>
         <!-- Таблица със сериините номера -->
         <div class="form-field">
-        <table>
-            <thead>
-            <tr>
-                <th>Сериен номер</th>
-                <th>Действие</th>
-            </tr>
-            </thead>
-            <tbody id="snTableBody">
-            <tr th:each="currentSN : ${productDTO.sn}">
-                <td th:text="${currentSN.serialNumber}"></td>
-                <td>
-                    <form th:method="POST"
-                          th:action="@{/delete-sn/{id}/{prodId}(id=${currentSN.id}, prodId=${productDTO.id})}">
-                        <input class="delete-button" type="submit" th:value="Премахване"/>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+            <table>
+                <thead>
+                <tr>
+                    <th>Сериен номер</th>
+                    <th>Действие</th>
+                </tr>
+                </thead>
+                <tbody id="snTableBody">
+                <tr th:each="currentSN : ${productDTO.sn}">
+                    <td th:text="${currentSN.serialNumber}"></td>
+                    <td>
+                        <form th:method="POST"
+                              th:action="@{/delete-sn/{id}/{prodId}(id=${currentSN.id}, prodId=${productDTO.id})}">
+                            <input class="delete-button" type="submit" th:value="Премахване"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
         <!-- Бутон за принтиране -->
         <button type="button" class="edit-button" onclick="printSerialNumbers()">Принтирай сериините номера</button>

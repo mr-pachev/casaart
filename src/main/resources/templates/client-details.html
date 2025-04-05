@@ -9,231 +9,229 @@
 <body>
 <div th:replace="~{fragments/navigation}"></div>
 <main>
+    <h1>Промяна клиент</h1>
+    <div class="add-form">
+        <form th:action="@{/client-details}"
+              th:object="${clientDTO}"
+              th:method="POST">
 
-    <div class="container-form">
-        <h1>Промяна клиент</h1>
-        <div class="add-form">
-            <form th:action="@{/client-details}"
-                  th:object="${clientDTO}"
-                  th:method="POST">
+            <!--Sends client id with a POST request-->
+            <input type="hidden" th:field="*{id}"/>
 
-                <!--Sends client id with a POST request-->
-                <input type="hidden" th:field="*{id}"/>
-
-                <div class="form-field">
-                    <label for="firstName">Име</label>
-                    <input type="text" th:placeholder="${clientDTO.firstName}"
-                           id="firstName"
-                           name="firstName"
-                           th:field="*{firstName}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Името трябва да се състои от 2 до 15 букви.
-                    </p>
-                </div>
-                <div class="form-field">
-                    <label for="middleName">Презиме</label>
-                    <input type="text" th:placeholder="${clientDTO.middleName}"
-                           id="middleName"
-                           name="middleName"
-                           th:field="*{middleName}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Презимето трябва да съдържа до 15 букви.
-                    </p>
-                </div>
-                <div class="form-field">
-                    <label for="lastName">Фамилия</label>
-                    <input type="text" th:placeholder="${clientDTO.lastName}"
-                           id="lastName"
-                           name="lastName"
-                           th:field="*{lastName}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Фамилята трябва да се състои от 2 до 15 букви.
-                    </p>
-                </div>
-                <div class="form-field">
-                    <label for="email">Емейл</label>
-                    <input type="email" th:placeholder="${clientDTO.email}"
-                           id="email"
-                           name="email"
-                           th:field="*{email}"
-                           th:errorclass="is-invalid">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Няма попълнен имейл.
-                    </p>
-                    <p class="errors alert alert-danger" th:if="${isExistEmail}">
-                        Съществува клиент с този имейл.
-                    </p>
-                </div>
-                <div class="form-field">
-                    <label for="phoneNumber">Мобилен номер</label>
-                    <input type="text" th:placeholder="${clientDTO.phoneNumber}"
-                           id="phoneNumber"
-                           name="phoneNumber"
-                           class="form-control"
-                           th:field="*{phoneNumber}"
-                           th:errorclass="is-invalid"
-                           placeholder="088XXXXXXX">
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Мобилния номер трябва да се състои от 10 цифри.
-                    </p>
-                </div>
-                <div class="form-field">
-                    <label th:for="sourceTypes">Източник данни</label>
-                    <small class="form-text text-muted" style="font-size: 0.8rem; font-weight: normal;">
-                        (Задръж <b>Ctrl</b> и направи няколко селекта)
-                    </small>
-                    <select class="form-control"
-                            id="sourceTypes"
-                            name="sourceTypes"
-                            th:field="*{sourceTypes}"
-                            th:errorclass="is-invalid"
-                            multiple> <!-- Позволява избор на няколко стойности -->
-                        <option th:each="source : ${allSourceType}"
-                                th:value="${source}"
-                                th:text="${source}"
-                                th:selected="${clientDTO.sourceTypes.contains(source)}">
-                        </option>
-                    </select>
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Избери източник.
-                    </p>
-                </div>
-                <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'HOTEL')}">
-                    <label for="loyaltyLevel">Ниво лоялност</label>
-                    <select class="form-control" th:placeholder="${clientDTO.loyaltyLevel}"
-                            id="loyaltyLevel"
-                            name="loyaltyLevel"
-                            th:field="*{loyaltyLevel}"
-                            th:errorclass="is-invalid">
-                        <option value="">-- Избери --</option>
-                        <option th:each="level: ${allLoyaltyLevel}"
-                                th:value="${level}"
-                                th:text="${level}">Ниво лоялност
-                        </option>
-                    </select>
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Избери ниво на лоялност.
-                    </p>
-                </div>
-                <div class="form-field" >
-                    <label for="nationality">Националност</label>
-                    <select class="form-control" th:placeholder="${clientDTO.nationality}"
-                            id="nationality"
-                            name="nationality"
-                            th:field="*{nationality}"
-                            th:errorclass="is-invalid">
-                        <option value="">-- Избери --</option>
-                        <option th:each="nat: ${allNationality}"
-                                th:value="${nat}"
-                                th:text="${nat}">Националност
-                        </option>
-                    </select>
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Избери националност.
-                    </p>
-                </div>
-                <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
-                    <label for="ratingFood">Оценка храна</label>
-                    <select class="form-control" th:placeholder="${clientDTO.ratingFood}"
-                            id="ratingFood"
-                            name="ratingFood"
-                            th:field="*{ratingFood}"
-                            th:errorclass="is-invalid">
-                        <option value="">-- Избери --</option>
-                        <option th:each="rating: ${allRating}"
-                                th:value="${rating}"
-                                th:text="${rating}">Оценка храна
-                        </option>
-                    </select>
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Избери оценка.
-                    </p>
-                </div>
-                <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
-                    <label for="ratingQualityPrice">Оценка качество-цена</label>
-                    <select class="form-control" th:placeholder="${clientDTO.ratingQualityPrice}"
-                            id="ratingQualityPrice"
-                            name="ratingQualityPrice"
-                            th:field="*{ratingQualityPrice}"
-                            th:errorclass="is-invalid">
-                        <option value="">-- Избери --</option>
-                        <option th:each="rating: ${allRating}"
-                                th:value="${rating}"
-                                th:text="${rating}">Оценка качество-цена
-                        </option>
-                    </select>
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Избери оценка.
-                    </p>
-                </div>
-                <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
-                    <label for="ratingPoliteness">Оценка учтивост</label>
-                    <select class="form-control" th:placeholder="${clientDTO.ratingPoliteness}"
-                            id="ratingPoliteness"
-                            name="ratingPoliteness"
-                            th:field="*{ratingPoliteness}"
-                            th:errorclass="is-invalid">
-                        <option value="">-- Избери --</option>
-                        <option th:each="rating: ${allRating}"
-                                th:value="${rating}"
-                                th:text="${rating}">Оценка учтивост
-                        </option>
-                    </select>
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Избери оценка.
-                    </p>
-                </div>
-                <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
-                    <label for="ratingCleanTidy">Оценка чистота</label>
-                    <select class="form-control" th:placeholder="${clientDTO.ratingCleanTidy}"
-                            id="ratingCleanTidy"
-                            name="ratingCleanTidy"
-                            th:field="*{ratingCleanTidy}"
-                            th:errorclass="is-invalid">
-                        <option value="">-- Избери --</option>
-                        <option th:each="rating: ${allRating}"
-                                th:value="${rating}"
-                                th:text="${rating}">Оценка чистота
-                        </option>
-                    </select>
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Избери оценка.
-                    </p>
-                </div>
-                <div class="form-field">
-                    <label for="comment">Коментар</label>
-                    <input type="text" th:placeholder="${clientDTO.comment}"
-                           id="comment"
-                           name="comment"
-                           class="form-control"
-                           th:field="*{comment}">
-                </div>
-                <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'HOTEL')}">
-                    <label for="accommodationDate" class="form-label">Дата настаняване</label>
-                    <input type="date" class="form-control" id="accommodationDate" name="accommodationDate" th:value="${clientDTO.accommodationDate}">
-                </div>
-<!--                <div class="form-field">-->
-<!--                    <label for="firstEmail" class="form-label">Дата на първи имейл</label>-->
-<!--                    <input type="date" class="form-control" id="firstEmail" name="firstEmail" th:value="${clientDTO.firstEmail}">-->
-<!--                </div>-->
-<!--                <div class="form-field">-->
-<!--                    <label for="firstCall" class="form-label">Дата на първо обаждане</label>-->
-<!--                    <input type="date" class="form-control" id="firstCall" name="firstCall" th:value="${clientDTO.firstCall}">-->
-<!--                </div>-->
-<!--                <div class="form-field">-->
-<!--                    <label for="secondEmail" class="form-label">Дата на втори имейл</label>-->
-<!--                    <input type="date" class="form-control" id="secondEmail" name="secondEmail" th:value="${clientDTO.secondEmail}">-->
-<!--                </div>-->
-<!--                <div class="form-field">-->
-<!--                    <label for="secondCall" class="form-label">Дата на второ обаждане</label>-->
-<!--                    <input type="date" class="form-control" id="secondCall" name="secondCall" th:value="${clientDTO.secondCall}">-->
-<!--                </div>-->
-                <button type="submit" class="btn btn-success">Запази</button>
-            </form>
-        </div>
+            <div class="form-field">
+                <label for="firstName">Име</label>
+                <input type="text" th:placeholder="${clientDTO.firstName}"
+                       id="firstName"
+                       name="firstName"
+                       th:field="*{firstName}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Името трябва да се състои от 2 до 15 букви.
+                </p>
+            </div>
+            <div class="form-field">
+                <label for="middleName">Презиме</label>
+                <input type="text" th:placeholder="${clientDTO.middleName}"
+                       id="middleName"
+                       name="middleName"
+                       th:field="*{middleName}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Презимето трябва да съдържа до 15 букви.
+                </p>
+            </div>
+            <div class="form-field">
+                <label for="lastName">Фамилия</label>
+                <input type="text" th:placeholder="${clientDTO.lastName}"
+                       id="lastName"
+                       name="lastName"
+                       th:field="*{lastName}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Фамилята трябва да се състои от 2 до 15 букви.
+                </p>
+            </div>
+            <div class="form-field">
+                <label for="email">Емейл</label>
+                <input type="email" th:placeholder="${clientDTO.email}"
+                       id="email"
+                       name="email"
+                       th:field="*{email}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Няма попълнен имейл.
+                </p>
+                <p class="errors alert alert-danger" th:if="${isExistEmail}">
+                    Съществува клиент с този имейл.
+                </p>
+            </div>
+            <div class="form-field">
+                <label for="phoneNumber">Мобилен номер</label>
+                <input type="text" th:placeholder="${clientDTO.phoneNumber}"
+                       id="phoneNumber"
+                       name="phoneNumber"
+                       class="form-control"
+                       th:field="*{phoneNumber}"
+                       th:errorclass="is-invalid"
+                       placeholder="088XXXXXXX">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Мобилния номер трябва да се състои от 10 цифри.
+                </p>
+            </div>
+            <div class="form-field">
+                <label th:for="sourceTypes">Източник данни</label>
+                <small class="form-text text-muted" style="font-size: 0.8rem; font-weight: normal;">
+                    (Задръж <b>Ctrl</b> и направи няколко селекта)
+                </small>
+                <select class="form-control"
+                        id="sourceTypes"
+                        name="sourceTypes"
+                        th:field="*{sourceTypes}"
+                        th:errorclass="is-invalid"
+                        multiple> <!-- Позволява избор на няколко стойности -->
+                    <option th:each="source : ${allSourceType}"
+                            th:value="${source}"
+                            th:text="${source}"
+                            th:selected="${clientDTO.sourceTypes.contains(source)}">
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Избери източник.
+                </p>
+            </div>
+            <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'HOTEL')}">
+                <label for="loyaltyLevel">Ниво лоялност</label>
+                <select class="form-control" th:placeholder="${clientDTO.loyaltyLevel}"
+                        id="loyaltyLevel"
+                        name="loyaltyLevel"
+                        th:field="*{loyaltyLevel}"
+                        th:errorclass="is-invalid">
+                    <option value="">-- Избери --</option>
+                    <option th:each="level: ${allLoyaltyLevel}"
+                            th:value="${level}"
+                            th:text="${level}">Ниво лоялност
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Избери ниво на лоялност.
+                </p>
+            </div>
+            <div class="form-field">
+                <label for="nationality">Националност</label>
+                <select class="form-control" th:placeholder="${clientDTO.nationality}"
+                        id="nationality"
+                        name="nationality"
+                        th:field="*{nationality}"
+                        th:errorclass="is-invalid">
+                    <option value="">-- Избери --</option>
+                    <option th:each="nat: ${allNationality}"
+                            th:value="${nat}"
+                            th:text="${nat}">Националност
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Избери националност.
+                </p>
+            </div>
+            <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
+                <label for="ratingFood">Оценка храна</label>
+                <select class="form-control" th:placeholder="${clientDTO.ratingFood}"
+                        id="ratingFood"
+                        name="ratingFood"
+                        th:field="*{ratingFood}"
+                        th:errorclass="is-invalid">
+                    <option value="">-- Избери --</option>
+                    <option th:each="rating: ${allRating}"
+                            th:value="${rating}"
+                            th:text="${rating}">Оценка храна
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Избери оценка.
+                </p>
+            </div>
+            <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
+                <label for="ratingQualityPrice">Оценка качество-цена</label>
+                <select class="form-control" th:placeholder="${clientDTO.ratingQualityPrice}"
+                        id="ratingQualityPrice"
+                        name="ratingQualityPrice"
+                        th:field="*{ratingQualityPrice}"
+                        th:errorclass="is-invalid">
+                    <option value="">-- Избери --</option>
+                    <option th:each="rating: ${allRating}"
+                            th:value="${rating}"
+                            th:text="${rating}">Оценка качество-цена
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Избери оценка.
+                </p>
+            </div>
+            <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
+                <label for="ratingPoliteness">Оценка учтивост</label>
+                <select class="form-control" th:placeholder="${clientDTO.ratingPoliteness}"
+                        id="ratingPoliteness"
+                        name="ratingPoliteness"
+                        th:field="*{ratingPoliteness}"
+                        th:errorclass="is-invalid">
+                    <option value="">-- Избери --</option>
+                    <option th:each="rating: ${allRating}"
+                            th:value="${rating}"
+                            th:text="${rating}">Оценка учтивост
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Избери оценка.
+                </p>
+            </div>
+            <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
+                <label for="ratingCleanTidy">Оценка чистота</label>
+                <select class="form-control" th:placeholder="${clientDTO.ratingCleanTidy}"
+                        id="ratingCleanTidy"
+                        name="ratingCleanTidy"
+                        th:field="*{ratingCleanTidy}"
+                        th:errorclass="is-invalid">
+                    <option value="">-- Избери --</option>
+                    <option th:each="rating: ${allRating}"
+                            th:value="${rating}"
+                            th:text="${rating}">Оценка чистота
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Избери оценка.
+                </p>
+            </div>
+            <div class="form-field">
+                <label for="comment">Коментар</label>
+                <input type="text" th:placeholder="${clientDTO.comment}"
+                       id="comment"
+                       name="comment"
+                       class="form-control"
+                       th:field="*{comment}">
+            </div>
+            <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'HOTEL')}">
+                <label for="accommodationDate" class="form-label">Дата настаняване</label>
+                <input type="date" class="form-control" id="accommodationDate" name="accommodationDate"
+                       th:value="${clientDTO.accommodationDate}">
+            </div>
+            <!--                <div class="form-field">-->
+            <!--                    <label for="firstEmail" class="form-label">Дата на първи имейл</label>-->
+            <!--                    <input type="date" class="form-control" id="firstEmail" name="firstEmail" th:value="${clientDTO.firstEmail}">-->
+            <!--                </div>-->
+            <!--                <div class="form-field">-->
+            <!--                    <label for="firstCall" class="form-label">Дата на първо обаждане</label>-->
+            <!--                    <input type="date" class="form-control" id="firstCall" name="firstCall" th:value="${clientDTO.firstCall}">-->
+            <!--                </div>-->
+            <!--                <div class="form-field">-->
+            <!--                    <label for="secondEmail" class="form-label">Дата на втори имейл</label>-->
+            <!--                    <input type="date" class="form-control" id="secondEmail" name="secondEmail" th:value="${clientDTO.secondEmail}">-->
+            <!--                </div>-->
+            <!--                <div class="form-field">-->
+            <!--                    <label for="secondCall" class="form-label">Дата на второ обаждане</label>-->
+            <!--                    <input type="date" class="form-control" id="secondCall" name="secondCall" th:value="${clientDTO.secondCall}">-->
+            <!--                </div>-->
+            <button type="submit" class="btn btn-success">Запази</button>
+        </form>
     </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
