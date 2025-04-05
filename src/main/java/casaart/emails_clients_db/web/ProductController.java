@@ -50,7 +50,7 @@ public class ProductController {
     @Value("${upload.path}")
     private String uploadPath;
 
-    //view all products
+    // view all products
     @GetMapping("/products")
     public String getAllProducts(Model model) {
         List<ProductDTO> productDTOS = productService.getAllProducts();
@@ -60,7 +60,7 @@ public class ProductController {
         return "products";
     }
 
-    //view all sorted products
+    // view all sorted products
     @PostMapping("/sort-products")
     public String sortClients(@RequestParam("sourceType") String sourceType, Model model) {
         List<ProductDTO> sortedProducts = productService.sortedProducts(sourceType);
@@ -69,7 +69,7 @@ public class ProductController {
         return "products"; // Връщаме същия шаблон с актуализиран списък
     }
 
-    //find by productIdentifier
+    // find by productIdentifier
     @PostMapping("/find-by-product-identifier")
     public String sortProducts(@RequestParam("productIdentifier") String productIdentifier, Model model) {
 
@@ -92,7 +92,7 @@ public class ProductController {
         return "product-details";
     }
 
-    //create new product
+    // create new product
     @GetMapping("/add-product")
     public String viewAddProductForm(Model model) {
         model.addAttribute("allProviders", providerService.allProviders());
@@ -117,56 +117,53 @@ public class ProductController {
             @RequestParam("image") MultipartFile image,
             RedirectAttributes rAtt) {
 
+        // Проверка за дублирано име
+        if (productService.isExistProductName(addProductDTO.getName())) {
+            bindingResult.rejectValue("name", "error.addProductDTO", "Името вече съществува.");
+            rAtt.addFlashAttribute("isExistName", true);
+        }
+
+        // Проверка за дублиран код с тип
+        if (productService.isExistProductCodeWithType(addProductDTO.getType(), addProductDTO.getProductCode())) {
+            bindingResult.rejectValue("productCode", "error.addProductDTO", "Кодът вече съществува за този тип.");
+            rAtt.addFlashAttribute("isExistCode", true);
+        }
+
+        // Ако има грешки — върни се обратно към формата
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("addProductDTO", addProductDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addProductDTO", bindingResult);
-
             return "redirect:/add-product";
         }
 
-        //TODO проверка дали съществува картинка с този път
-        // Записване на файла
+        // Всичко е наред — качи файла
         try {
-            Path uploadDir = Paths.get(uploadPath);
-            if (!Files.exists(uploadDir)) {
-                Files.createDirectories(uploadDir);
+            if (!image.isEmpty()) {
+                Path uploadDir = Paths.get(uploadPath);
+                if (!Files.exists(uploadDir)) {
+                    Files.createDirectories(uploadDir);
+                }
+
+                String fileName = UUID.randomUUID() + "_" + image.getOriginalFilename(); // по-безопасно име
+                Path filePath = uploadDir.resolve(fileName);
+                image.transferTo(filePath.toFile());
+
+                // Запиши пътя към изображението в DTO-то
+                addProductDTO.setImagePath("/uploads/" + fileName);
             }
-
-            String fileName = image.getOriginalFilename();
-            Path filePath = uploadDir.resolve(fileName);
-            image.transferTo(filePath.toFile());
-
-            // Свързване на каченото изображение с DTO
-            addProductDTO.setImagePath("/uploads/" + fileName);
         } catch (IOException e) {
             rAtt.addFlashAttribute("addProductDTO", addProductDTO);
             rAtt.addFlashAttribute("imageError", "Грешка при качване на снимката!");
-
             return "redirect:/add-product";
         }
 
-        if (productService.isExistProductName(addProductDTO.getName())) {
-            rAtt.addFlashAttribute("addProductDTO", addProductDTO);
-            rAtt.addFlashAttribute("isExistName", true);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addProductDTO", bindingResult);
-
-            return "redirect:/add-product";
-        }
-
-        if (productService.isExistProductCodeWithType(addProductDTO.getType(), addProductDTO.getProductCode())) {
-            rAtt.addFlashAttribute("addProductDTO", addProductDTO);
-            rAtt.addFlashAttribute("isExistCode", true);
-            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addProductDTO", bindingResult);
-
-            return "redirect:/add-product";
-        }
-
+        // Всичко е валидно и снимката е качена
         productService.addProduct(addProductDTO);
 
         return "redirect:/products";
     }
 
-    //edit product
+    // edit product
     @PostMapping("/product-details/{id}")
     public String referenceToEditProductForm(@PathVariable("id") Long id) {
 
@@ -262,7 +259,7 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    //delete product by id
+    // delete product by id
     @PostMapping("/delete-product/{id}")
     public String removeProduct(@PathVariable("id") Long id) {
 
@@ -271,7 +268,7 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    //delete serial number by id
+    // delete serial number by id
     @PostMapping("/delete-sn/{id}/{prodId}")
     public String removeSerialNumber(@PathVariable("id") Long id, @PathVariable("prodId") Long prodId) {
 

@@ -8,7 +8,6 @@ import casaart.emails_clients_db.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +31,15 @@ public class ProductServiceImpl implements ProductService {
         this.mapper = mapper;
     }
 
-    //get all products
+    // get all products
     @Override
     public List<ProductDTO> getAllProducts() {
         List<Product> products = productRepository.findAllByOrderByCreatedAtDesc();
 
-        return productListToProductDTOList(products);
+        return productListMapToProductDTOList(products);
     }
 
-
-    //get sorted products
+    // get sorted products
     @Override
     public List<ProductDTO> sortedProducts(String sourceTypeName) {
         List<Product> sortedProductList = new ArrayList<>();
@@ -66,10 +64,10 @@ public class ProductServiceImpl implements ProductService {
             sortedProductList = productRepository.findAllByOrderByCreatedAtDesc();
         }
 
-        return mapToProductDTOList(sortedProductList);
+        return productListMapToProductDTOList(sortedProductList);
     }
 
-    //find by productIdentifier
+    // find by productIdentifier
     @Override
     public ProductDTO findByproductIdentifier(String productIdentifier) {
         Product product = null;
@@ -90,20 +88,20 @@ public class ProductServiceImpl implements ProductService {
         return (product == null) ? new ProductDTO() : productMapToProductDTO(product);
     }
 
-    //checking is exist product by name
+    // checking is exist product by name
     @Override
     public boolean isExistProductName(String name) {
 
         return productRepository.findByName(name).isPresent();
     }
 
-    //checking is exist product by code and type name
+    // checking is exist product by code and type name
     @Override
     public boolean isExistProductCodeWithType(String typeName, String code) {
         return productRepository.findByTypeNameAndProductCode(typeName, code).isPresent();
     }
 
-    //add product
+    // add product
     @Override
     public void addProduct(AddProductDTO addProductDTO) {
         Product product = mapper.map(addProductDTO, Product.class);
@@ -127,7 +125,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
-    //find product by id
+    // find product by id
     @Override
     public ProductDTO findProductById(long id) {
         Product product = productRepository.findById(id).get();
@@ -135,7 +133,7 @@ public class ProductServiceImpl implements ProductService {
         return productMapToProductDTO(product);
     }
 
-    //edit product
+    // edit product
     @Override
     public void editProduct(ProductDTO productDTO) {
         Product product = productRepository.findById(productDTO.getId()).get();
@@ -157,7 +155,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
 
-    //delete product
+    // delete product
     @Override
     public void deleteProduct(long id) {
         Product product = productRepository.findById(id).get();
@@ -170,7 +168,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(id);
     }
 
-    //delete serial number by id
+    // delete serial number by id
     @Override
     public void deleteSerialNumber(long id, long prodId) {
         Product product = productRepository.findById(prodId).get();
@@ -187,7 +185,7 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    //selling products
+    // selling products
     @Override
     public void sellingProducts(List<String> sn) {
 
@@ -208,23 +206,7 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    List<ProductDTO> productListToProductDTOList(List<Product> products) {
-        List<ProductDTO> productDTOS = new ArrayList<>();
-
-        for (Product product : products) {
-            ProductDTO productDTO = mapper.map(product, ProductDTO.class);
-
-            productDTO.setCategory(product.getCategory().getName());
-            productDTO.setType(product.getType().getName());
-            productDTO.setProvider(product.getProvider().getName());
-            productDTO.setPcs(product.getSerialNumbers().size());
-            productDTO.setSn(product.getSerialNumbers());
-
-            productDTOS.add(productDTO);
-        }
-        return productDTOS;
-    }
-
+    // generate and save serial numbers
     private void generateAndSaveSerialNumbers(Product product, int pcs) {
 
         for (int i = 0; i < pcs; i++) {
@@ -241,6 +223,13 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    // find product by serial number
+    public Optional<Product> findProductBySerialNumber(String serialNumber) {
+        return serialNumberRepository.findBySerialNumber(serialNumber)
+                .map(SerialNumber::getProduct);
+    }
+
+    // product map to productDTO
     ProductDTO productMapToProductDTO(Product product) {
         ProductDTO productDTO = mapper.map(product, ProductDTO.class);
 
@@ -251,12 +240,8 @@ public class ProductServiceImpl implements ProductService {
         return productDTO;
     }
 
-    public Optional<Product> findProductBySerialNumber(String serialNumber) {
-        return serialNumberRepository.findBySerialNumber(serialNumber)
-                .map(SerialNumber::getProduct);
-    }
-
-    List<ProductDTO> mapToProductDTOList(List<Product> productList) {
+    // productList map to productDTOList
+    List<ProductDTO> productListMapToProductDTOList(List<Product> productList) {
         List<ProductDTO> allProductDTOS = new ArrayList<>();
 
         for (Product product : productList) {
