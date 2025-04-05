@@ -8,6 +8,7 @@ import casaart.emails_clients_db.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +89,12 @@ public class ProductServiceImpl implements ProductService {
         return (product == null) ? new ProductDTO() : productMapToProductDTO(product);
     }
 
+    // find by imagePath
+    @Override
+    public boolean isExistImage(String imagePath) {
+        return productRepository.findByImagePath(imagePath).isPresent();
+    }
+
     // checking is exist product by name
     @Override
     public boolean isExistProductName(String name) {
@@ -158,13 +165,33 @@ public class ProductServiceImpl implements ProductService {
     // delete product
     @Override
     public void deleteProduct(long id) {
-        Product product = productRepository.findById(id).get();
+        Product product = productRepository.findById(id).orElse(null);
+        if (product == null) return;
 
-        Provider provider = providerRepository.findByName(product.getProvider().getName()).get();
+        // 1. Изтриване на изображението от диска
+        String imagePath = product.getImagePath(); // Пример: "uploads/product123.jpg"
+        if (imagePath != null && !imagePath.isEmpty()) {
 
-        provider.getProducts().removeIf(p -> p.getId().equals(id));
-        providerRepository.save(provider);
+            File imageFile = new File("C:\\" + imagePath);
 
+            System.out.println("Deleting image: " + imageFile.getAbsolutePath());
+
+            if (imageFile.exists() && imageFile.isFile()) {
+                boolean deleted = imageFile.delete();
+                System.out.println("Image deleted: " + deleted);
+            } else {
+                System.out.println("Image file not found or not a file.");
+            }
+        }
+
+        // 2. Премахване на продукта от доставчика
+        Provider provider = providerRepository.findByName(product.getProvider().getName()).orElse(null);
+        if (provider != null) {
+            provider.getProducts().removeIf(p -> p.getId().equals(id));
+            providerRepository.save(provider);
+        }
+
+        // 3. Изтриване от базата
         productRepository.deleteById(id);
     }
 
@@ -239,6 +266,9 @@ public class ProductServiceImpl implements ProductService {
         productDTO.setSn(product.getSerialNumbers());
         return productDTO;
     }
+
+    // addProductDTO map to product
+
 
     // productList map to productDTOList
     List<ProductDTO> productListMapToProductDTOList(List<Product> productList) {

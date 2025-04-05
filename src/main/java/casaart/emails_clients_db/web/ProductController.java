@@ -107,6 +107,10 @@ public class ProductController {
             model.addAttribute("isExistCode", false);
         }
 
+        if (!model.containsAttribute("isExistImagePath")) {
+            model.addAttribute("isExistImagePath", false);
+        }
+
         return "add-product";
     }
 
@@ -121,12 +125,14 @@ public class ProductController {
         if (productService.isExistProductName(addProductDTO.getName())) {
             bindingResult.rejectValue("name", "error.addProductDTO", "Името вече съществува.");
             rAtt.addFlashAttribute("isExistName", true);
+            return "redirect:/add-product";
         }
 
         // Проверка за дублиран код с тип
         if (productService.isExistProductCodeWithType(addProductDTO.getType(), addProductDTO.getProductCode())) {
             bindingResult.rejectValue("productCode", "error.addProductDTO", "Кодът вече съществува за този тип.");
             rAtt.addFlashAttribute("isExistCode", true);
+            return "redirect:/add-product";
         }
 
         // Ако има грешки — върни се обратно към формата
@@ -144,7 +150,7 @@ public class ProductController {
                     Files.createDirectories(uploadDir);
                 }
 
-                String fileName = UUID.randomUUID() + "_" + image.getOriginalFilename(); // по-безопасно име
+                String fileName = image.getOriginalFilename();
                 Path filePath = uploadDir.resolve(fileName);
                 image.transferTo(filePath.toFile());
 
@@ -154,6 +160,14 @@ public class ProductController {
         } catch (IOException e) {
             rAtt.addFlashAttribute("addProductDTO", addProductDTO);
             rAtt.addFlashAttribute("imageError", "Грешка при качване на снимката!");
+            return "redirect:/add-product";
+        }
+
+        // Проверка за вече качено същото изображение
+        if (productService.isExistImage(addProductDTO.getImagePath())) {
+            rAtt.addFlashAttribute("addProductDTO", addProductDTO);
+            rAtt.addFlashAttribute("isExistImagePath", true);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.addProductDTO", bindingResult);
             return "redirect:/add-product";
         }
 

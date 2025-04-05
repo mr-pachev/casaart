@@ -32,4 +32,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByOrderByCreatedAtDesc();
 
     List<Product> findAllByOrderByUpdatedAtDesc();
+
+    // Търсене по пълен imagePath (примерно: /uploads/abc.jpg)
+    Optional<Product> findByImagePath(String imagePath);
 }

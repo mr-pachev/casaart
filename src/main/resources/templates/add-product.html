@@ -58,7 +58,7 @@
 
                 <!-- Стилен бутон -->
                 <label for="image" class="reg-button">Избери снимка</label>
-                <span id="file-name">Няма избрана снимка</span>
+                <span id="file-name"></span>
 
                 <!-- Истинският input -->
                 <input type="file" id="image" name="image" accept="image/*" required style="display: none;">
@@ -70,9 +70,11 @@
             </div>
 
             <!-- Ако вече има запазена снимка от предишно качване -->
-            <div th:if="${addProductDTO.imagePath != null}">
-                <p>Съществуваща снимка:</p>
+            <div th:if="${isExistImagePath}">
                 <img th:src="@{${addProductDTO.imagePath}}" alt="Image Preview" style="max-width: 200px;">
+                <p class="error-message">
+                    Вече съществува това изображение
+                </p>
             </div>
 
             <script>

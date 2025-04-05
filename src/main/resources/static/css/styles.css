@@ -431,6 +431,18 @@ ul {
     color: #391e13; /* Тъмнокафяв цвят на текста */
 }
 
+/* Съобщение за грешка*/
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 0.75rem 1.25rem;
+    margin-top: 0.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    display: block;
+}
+
 /* Изображения в таблица */
 .product-image {
     max-width: 150px; /* Максимална широчина */
