@@ -267,9 +267,6 @@ public class ProductServiceImpl implements ProductService {
         return productDTO;
     }
 
-    // addProductDTO map to product
-
-
     // productList map to productDTOList
     List<ProductDTO> productListMapToProductDTOList(List<Product> productList) {
         List<ProductDTO> allProductDTOS = new ArrayList<>();
