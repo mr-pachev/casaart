@@ -468,6 +468,11 @@ footer {
     font-size: 14px;
   }
 
+/* Залепва нав-бара и футъра */
+ /* main {
+    overflow-x: hidden;
+  } */
+
   h1 {
     font-size: 20px;
   }
@@ -475,6 +480,19 @@ footer {
   /* Форма за вход на потребител, тип и категория */
   .input-form {
      width: 100%; /* Фиксирана широчина */
-   }
+  }
 
+    table {
+      transform: scale(0.4); /* Или колкото е нужно да се събере */
+      transform-origin: top left;
+      width: max-content;
+    }
+
+    body, html {
+      overflow-x: hidden;
+    }
+
+    main {
+      padding: 10px;
+    }
 }
