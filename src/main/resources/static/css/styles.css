@@ -1,36 +1,35 @@
-/* Общи стилове - Задава базови настройки за цялата страница */
+/* Общи стилове */
 html, body {
-    height: 100%; /* Задава височина 100% - позволява на страницата да заема цялата височина на екрана */
-    margin: 0; /* Премахва вътрешните отстъпи около страницата */
-    padding: 0; /* Премахва външното запълване около страницата */
-    display: flex; /* Използва flexbox за подреждане на елементите */
-    flex-direction: column; /* Подрежда елементите вертикално */
-    background-color: #f9f9f9; /* Задава светлосив фон за цялата страница */
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
 }
 
-/* Центриране и оразмеряване на основни секции */
+/* Основни секции */
 header, main, footer {
-    margin: 0 auto; /* Центрира елементите хоризонтално */
-    text-align: center; /* Центрира текста вътре в елементите */
-    width: 100%; /* Заема пълната широчина */
+    text-align: center;
+    width: 100%;
 }
 
-/* Хедър - стилове за горната част на страницата */
+/* Хедър */
 header {
-    background-color: #fff; /* Бял фон за хедъра */
-    padding: 20px 0; /* Вертикално вътрешно отстояние */
-    border-bottom: 2px solid #ddd; /* Сива долна граница */
+    background-color: #fff;
+    padding: 20px 0;
+    border-bottom: 2px solid #ddd;
 }
 
-/* Логото в хедъра */
 header img {
-    height: 80px; /* Фиксирана височина за логото */
+    height: 80px;
 }
 
-/* Основна секция - съдържание */
+/* Основна част */
 main {
-    flex: 1; /* Позволява на main да се разширява и заема останалото пространство */
-    padding: 50px 20px; /* Вътрешно отстояние */
+    flex: 1;
+    padding: 50px 20px;
 }
 
 /* Навигационно меню */
@@ -482,17 +481,17 @@ footer {
      width: 100%; /* Фиксирана широчина */
   }
 
-    table {
-      transform: scale(0.4); /* Или колкото е нужно да се събере */
-      transform-origin: top left;
-      width: max-content;
-    }
+  table {
+     transform: scale(0.4); /* Или колкото е нужно да се събере */
+     transform-origin: top left;
+     width: max-content;
+  }
 
-    body, html {
-      overflow-x: hidden;
-    }
+  body, html {
+    overflow-x: hidden;
+  }
 
-    main {
-      padding: 10px;
-    }
+  main {
+    padding: 10px;
+  }
 }
