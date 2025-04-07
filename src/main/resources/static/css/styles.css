@@ -51,8 +51,8 @@ main {
 .navbar .nav-links {
     display: flex; /* Флексбокс подреждане */
     align-items: center; /* Центриране на елементите вертикално */
-    margin-left: auto; /* 👈 Това избутва линковете вдясно */
-        flex-wrap: nowrap; /* 👈 Това гарантира, че няма да се прехвърлят на нов ред */
+    margin-left: auto; /* Това избутва линковете вдясно */
+    flex-wrap: nowrap; /* Това гарантира, че няма да се прехвърлят на нов ред */
 }
 
 /* Стилове за връзки и бутон за изход */
@@ -534,6 +534,35 @@ footer {
 
     .sort-button, .buttons a {
         font-size: 12px;
+    }
+
+    /* навигация */
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .navbar .welcome {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .navbar .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .navbar .nav-links a,
+    .navbar .nav-links .logout-button {
+        font-size: 16px;
+        margin-left: 0;
+        margin-bottom: 8px;
+        width: 100%;
+        text-align: left;
+        padding: 6px 0;
     }
 }
 
