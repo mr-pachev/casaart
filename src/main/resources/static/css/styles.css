@@ -462,36 +462,44 @@ footer {
 
 /* responsive */
 @media screen and (max-width: 480px) {
-  body {
-    padding: 10px;
-    font-size: 14px;
-  }
+    body, html {
+        overflow-x: hidden;
+    }
 
-/* Залепва нав-бара и футъра */
+    body {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+ /* Залепва нав-бара и футъра */
  /* main {
     overflow-x: hidden;
   } */
 
-  h1 {
-    font-size: 20px;
-  }
+    h1 {
+      font-size: 20px;
+    }
 
   /* Форма за вход на потребител, тип и категория */
   .input-form {
      width: 100%; /* Фиксирана широчина */
   }
 
-  table {
-     transform: scale(0.4); /* Или колкото е нужно да се събере */
-     transform-origin: top left;
-     width: max-content;
-  }
+  /* Минимизиране на таблицата */
+    .table-wrapper {
+        overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+    }
 
-  body, html {
-    overflow-x: hidden;
-  }
+    table {
+        transform: scale(0.25); /* Регулирай според нуждата – за 320px около 0.25–0.35 */
+        transform-origin: top left;
+        width: max-content;
+    }
 
-  main {
-    padding: 10px;
-  }
 }
