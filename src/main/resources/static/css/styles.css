@@ -78,6 +78,12 @@ h1 {
     color: #391e13; /* Тъмнокафяв цвят */
 }
 
+/* Ред и за търсене */
+.search-container {
+    text-align: right;
+    margin: 10px 20px;
+}
+
 /* Форма за вход на потребител, тип и категория */
 .input-form {
     display: inline-block; /* Вградено блоково display */
@@ -473,33 +479,58 @@ footer {
 
     main {
         padding: 10px;
+      /*overflow-x: hidden; Залепва нав-бара и футъра */
     }
-
- /* Залепва нав-бара и футъра */
- /* main {
-    overflow-x: hidden;
-  } */
 
     h1 {
       font-size: 20px;
     }
 
-  /* Форма за вход на потребител, тип и категория */
-  .input-form {
-     width: 100%; /* Фиксирана широчина */
-  }
+    /* Форма за вход на потребител, тип и категория */
+    .input-form, .add-form, .details-form, .form-field {
+       width: 100%; /* Фиксирана широчина */
+    }
 
-  /* Минимизиране на таблицата */
+    /* Минимизиране на таблицата */
     .table-wrapper {
-        overflow: hidden;
+        overflow-x: auto;  /* Добавя хоризонтален скрол при нужда */
         width: 100%;
         max-width: 100%;
     }
 
     table {
-        transform: scale(0.25); /* Регулирай според нуждата – за 320px около 0.25–0.35 */
+        transform: none; /* Премахва изкуственото мащабиране */
         transform-origin: top left;
-        width: max-content;
+        width: max-content; /* Таблицата си остава с реалния си размер */
     }
 
+    /* Поле за търсене */
+    .search-container {
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .search-container form {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+        width: 100%;
+    }
+
+    .search-container input[type="text"] {
+        width: 100%;
+        max-width: 300px;
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .search-container button {
+        width: 100%;
+        max-width: 150px;
+        padding: 8px;
+        font-size: 14px;
+    }
 }
+
+
