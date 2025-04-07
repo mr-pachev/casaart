@@ -10,7 +10,7 @@
 <body>
 <div th:replace="~{fragments/navigation}"></div>
 
-<div style="text-align: right; margin: 10px 20px;">
+<div class="search-container">
     <form th:method="POST" th:action="@{/sort-clients}" style="display: inline;">
         <input type="text" name="type" placeholder="Търси клиент" class="source-type-select"
                style="width: 300px;">
@@ -126,104 +126,107 @@
 
         // Свързване на функцията със селекта
         document.getElementById("mainSelect").addEventListener("change", toggleSelects);
+
     </script>
 
-    <table id="clients-table">
-        <thead>
-        <tr>
-            <th>Име</th>
-            <!--            <th>Презиме</th>-->
-            <th>Фамилия</th>
-            <th>Имейл</th>
-            <th>Телефон</th>
-            <th>Тип източник</th>
-            <th>Ниво лоялност</th>
-            <th>Националност</th>
-            <!--            <th>Дата на първи имейл</th>-->
-            <!--            <th>Дата на първо обаждане</th>-->
-            <!--            <th>Дата на втори имейл</th>-->
-            <!--            <th>Дата на втора обаждане</th>-->
-            <th>Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="client :${allClients}">
-            <td th:text="${client.firstName}">Име</td>
-            <!--            <td th:text="${client.middleName}">Презиме</td>-->
-            <td th:text="${client.lastName}">Фамилия</td>
-            <td th:text="${client.email}">Емейл</td>
-            <td th:text="${client.phoneNumber}">Телефонен номер</td>
-            <td>
-                <ul>
-                    <li th:each="source : ${client.sourceTypes}"
-                        th:text="${source}">Източник
-                    </li>
-                </ul>
-            </td>
-            <td th:text="${client.loyaltyLevel}">Ниво лоялност</td>
-            <td th:text="${client.nationality}">Националност</td>
-            <!--            <td>-->
-            <!--                <ul>-->
-            <!--                    <li>-->
-            <!--                        <span th:text="${client.firstEmail}"></span>-->
-            <!--                    </li>-->
-            <!--                    <li>-->
-            <!--                        <form th:method="GET" th:action="@{/first-email-client/{id}(id=${client.id})}">-->
-            <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
-            <!--                        </form>-->
-            <!--                    </li>-->
-            <!--                </ul>-->
-            <!--            </td>-->
-            <!--            <td>-->
-            <!--                <ul>-->
-            <!--                    <li>-->
-            <!--                        <span th:text="${client.firstCall}"></span>-->
-            <!--                    </li>-->
-            <!--                    <li>-->
-            <!--                        <form th:method="GET" th:action="@{/first-call-client/{id}(id=${client.id})}">-->
-            <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
-            <!--                        </form>-->
-            <!--                    </li>-->
-            <!--                </ul>-->
-            <!--            </td>-->
-            <!--            <td>-->
-            <!--                <ul>-->
-            <!--                    <li>-->
-            <!--                        <span th:text="${client.secondEmail}"></span>-->
-            <!--                    </li>-->
-            <!--                    <li>-->
-            <!--                        <form th:method="GET" th:action="@{/second-email-client/{id}(id=${client.id})}">-->
-            <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
-            <!--                        </form>-->
-            <!--                    </li>-->
-            <!--                </ul>-->
-            <!--            </td>-->
-            <!--            <td>-->
-            <!--                <ul>-->
-            <!--                    <li>-->
-            <!--                        <span th:text="${client.secondCall}"></span>-->
-            <!--                    </li>-->
-            <!--                    <li>-->
-            <!--                        <form th:method="GET" th:action="@{/second-call-client/{id}(id=${client.id})}">-->
-            <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
-            <!--                        </form>-->
-            <!--                    </li>-->
-            <!--                </ul>-->
-            <!--            </td>-->
-            <td>
-                <div class="action-button">
-                    <form th:method="POST" th:action="@{/client-details/{id}(id=${client.id})}">
-                        <input class="edit-button" type="submit" th:value="Промяна"/>
-                    </form>
-                    <form th:method="POST" th:action="@{/delete-client/{id}(id=${client.id})}"
-                          sec:authorize="hasRole('Admin')">
-                        <input class="delete-button" type="submit" th:value="Премахване"/>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table id="clients-table">
+            <thead>
+            <tr>
+                <th>Име</th>
+                <!--            <th>Презиме</th>-->
+                <th>Фамилия</th>
+                <th>Имейл</th>
+                <th>Телефон</th>
+                <th>Тип източник</th>
+                <th>Ниво лоялност</th>
+                <th>Националност</th>
+                <!--            <th>Дата на първи имейл</th>-->
+                <!--            <th>Дата на първо обаждане</th>-->
+                <!--            <th>Дата на втори имейл</th>-->
+                <!--            <th>Дата на втора обаждане</th>-->
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="client :${allClients}">
+                <td th:text="${client.firstName}">Име</td>
+                <!--            <td th:text="${client.middleName}">Презиме</td>-->
+                <td th:text="${client.lastName}">Фамилия</td>
+                <td th:text="${client.email}">Емейл</td>
+                <td th:text="${client.phoneNumber}">Телефонен номер</td>
+                <td>
+                    <ul>
+                        <li th:each="source : ${client.sourceTypes}"
+                            th:text="${source}">Източник
+                        </li>
+                    </ul>
+                </td>
+                <td th:text="${client.loyaltyLevel}">Ниво лоялност</td>
+                <td th:text="${client.nationality}">Националност</td>
+                <!--            <td>-->
+                <!--                <ul>-->
+                <!--                    <li>-->
+                <!--                        <span th:text="${client.firstEmail}"></span>-->
+                <!--                    </li>-->
+                <!--                    <li>-->
+                <!--                        <form th:method="GET" th:action="@{/first-email-client/{id}(id=${client.id})}">-->
+                <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
+                <!--                        </form>-->
+                <!--                    </li>-->
+                <!--                </ul>-->
+                <!--            </td>-->
+                <!--            <td>-->
+                <!--                <ul>-->
+                <!--                    <li>-->
+                <!--                        <span th:text="${client.firstCall}"></span>-->
+                <!--                    </li>-->
+                <!--                    <li>-->
+                <!--                        <form th:method="GET" th:action="@{/first-call-client/{id}(id=${client.id})}">-->
+                <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
+                <!--                        </form>-->
+                <!--                    </li>-->
+                <!--                </ul>-->
+                <!--            </td>-->
+                <!--            <td>-->
+                <!--                <ul>-->
+                <!--                    <li>-->
+                <!--                        <span th:text="${client.secondEmail}"></span>-->
+                <!--                    </li>-->
+                <!--                    <li>-->
+                <!--                        <form th:method="GET" th:action="@{/second-email-client/{id}(id=${client.id})}">-->
+                <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
+                <!--                        </form>-->
+                <!--                    </li>-->
+                <!--                </ul>-->
+                <!--            </td>-->
+                <!--            <td>-->
+                <!--                <ul>-->
+                <!--                    <li>-->
+                <!--                        <span th:text="${client.secondCall}"></span>-->
+                <!--                    </li>-->
+                <!--                    <li>-->
+                <!--                        <form th:method="GET" th:action="@{/second-call-client/{id}(id=${client.id})}">-->
+                <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
+                <!--                        </form>-->
+                <!--                    </li>-->
+                <!--                </ul>-->
+                <!--            </td>-->
+                <td>
+                    <div class="action-button">
+                        <form th:method="POST" th:action="@{/client-details/{id}(id=${client.id})}">
+                            <input class="edit-button" type="submit" th:value="Промяна"/>
+                        </form>
+                        <form th:method="POST" th:action="@{/delete-client/{id}(id=${client.id})}"
+                              sec:authorize="hasRole('Admin')">
+                            <input class="delete-button" type="submit" th:value="Премахване"/>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>

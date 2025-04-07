@@ -527,9 +527,13 @@ footer {
 
     .search-container button {
         width: 100%;
-        max-width: 150px;
-        padding: 8px;
-        font-size: 14px;
+        max-width: 75px;
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .sort-button, .buttons a {
+        font-size: 12px;
     }
 }
 
