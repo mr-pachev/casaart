@@ -81,108 +81,109 @@
         // Свързване на функцията със събитието "change"
         document.getElementById("mainSelect").addEventListener("change", toggleSelects);
     </script>
-
-    <table id="category-table">
-        <thead>
-        <tr>
-            <th>Име</th>
-            <th>Адрес</th>
-            <th>URL</th>
-            <th>Емейл адрес</th>
-            <th>Телефонен номер</th>
-            <th>Обхват</th>
-            <th>Лице за контакт</th>
-            <th>Управител</th>
-            <!--            <th>Звено</th>-->
-            <!--            <th>Услуги/продукти</th>-->
-            <th>Тип партньор</th>
-            <th>Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="company :${allPartners}">
-            <td th:text="${company.name}">Име</td>
-            <td th:text="${company.address}">Адрес</td>
-            <td>
-                <a th:if="${company.url != null and !company.url.isEmpty()}"
-                   th:attr="href=${company.url}" target="_blank" class="view-button">
-                    Link
-                </a>
-            </td>
-            <td th:text="${company.email}">Имейл адрес</td>
-            <td th:text="${company.phoneNumber}">Телефонен номер</td>
-            <td th:text="${company.locationType}">Обхват</td>
-            <td>
-                <ul th:if="${company.contactPerson != null and !company.contactPerson.isEmpty()}">
-                    <li th:each="contact : ${company.getContactPerson()}">
-                        <span th:text="${contact}"></span>
-                    </li>
-                    <li>
-                        <form th:method="POST" th:action="@{/current-contact-persons/{id}(id=${company.id})}">
-                            <button type="submit" class="view-button">Виж</button>
+    <div class="table-wrapper">
+        <table id="category-table">
+            <thead>
+            <tr>
+                <th>Име</th>
+                <th>Адрес</th>
+                <th>URL</th>
+                <th>Емейл адрес</th>
+                <th>Телефонен номер</th>
+                <th>Обхват</th>
+                <th>Лице за контакт</th>
+                <th>Управител</th>
+                <!--            <th>Звено</th>-->
+                <!--            <th>Услуги/продукти</th>-->
+                <th>Тип партньор</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="company :${allPartners}">
+                <td th:text="${company.name}">Име</td>
+                <td th:text="${company.address}">Адрес</td>
+                <td>
+                    <a th:if="${company.url != null and !company.url.isEmpty()}"
+                       th:attr="href=${company.url}" target="_blank" class="view-button">
+                        Link
+                    </a>
+                </td>
+                <td th:text="${company.email}">Имейл адрес</td>
+                <td th:text="${company.phoneNumber}">Телефонен номер</td>
+                <td th:text="${company.locationType}">Обхват</td>
+                <td>
+                    <ul th:if="${company.contactPerson != null and !company.contactPerson.isEmpty()}">
+                        <li th:each="contact : ${company.getContactPerson()}">
+                            <span th:text="${contact}"></span>
+                        </li>
+                        <li>
+                            <form th:method="POST" th:action="@{/current-contact-persons/{id}(id=${company.id})}">
+                                <button type="submit" class="view-button">Виж</button>
+                            </form>
+                        </li>
+                    </ul>
+                    <div th:unless="${company.contactPerson != null and !company.contactPerson.isEmpty()}">
+                        <form th:method="POST" th:action="@{/add-contact-person-with-com-id/{id}(id=${company.id})}"
+                              style="display: inline;">
+                            <button type="submit" class="reg-button">Добави</button>
                         </form>
-                    </li>
-                </ul>
-                <div th:unless="${company.contactPerson != null and !company.contactPerson.isEmpty()}">
-                    <form th:method="POST" th:action="@{/add-contact-person-with-com-id/{id}(id=${company.id})}"
-                          style="display: inline;">
-                        <button type="submit" class="reg-button">Добави</button>
-                    </form>
-                </div>
-            </td>
-            <td>
-                <ul th:if="${company.companyManager != null}">
-                    <li>
-                        <span th:text="${company.companyManager}"></span>
-                    </li>
-                    <li>
-                        <form th:method="GET" th:action="@{/current-company-manager/{id}(id=${company.id})}">
-                            <button type="submit" class="view-button">Виж</button>
+                    </div>
+                </td>
+                <td>
+                    <ul th:if="${company.companyManager != null}">
+                        <li>
+                            <span th:text="${company.companyManager}"></span>
+                        </li>
+                        <li>
+                            <form th:method="GET" th:action="@{/current-company-manager/{id}(id=${company.id})}">
+                                <button type="submit" class="view-button">Виж</button>
+                            </form>
+                        </li>
+                    </ul>
+                    <div th:unless="${company.companyManager != null}">
+                        <form th:method="POST" th:action="@{/add-company-manager-with-com-id/{id}(id=${company.id})}"
+                              style="display: inline;">
+                            <button type="submit" class="reg-button">Добави</button>
                         </form>
-                    </li>
-                </ul>
-                <div th:unless="${company.companyManager != null}">
-                    <form th:method="POST" th:action="@{/add-company-manager-with-com-id/{id}(id=${company.id})}"
-                          style="display: inline;">
-                        <button type="submit" class="reg-button">Добави</button>
-                    </form>
-                </div>
-            </td>
-            <!--            <td>-->
-            <!--                <ul>-->
-            <!--                    <li th:each="unit : ${company.units}"-->
-            <!--                        th:text="${unit}">Звено-->
-            <!--                    </li>-->
-            <!--                </ul>-->
-            <!--            </td>-->
-            <!--            <td>-->
-            <!--                <ul>-->
-            <!--                    <li th:each="industry : ${company.industries}"-->
-            <!--                        th:text="${industry}">Услуги/продукти-->
-            <!--                    </li>-->
-            <!--                </ul>-->
-            <!--            </td>-->
-            <td>
-                <ul>
-                    <li th:each="type : ${company.partnerTypes}"
-                        th:text="${type}">Тип партньор
-                    </li>
-                </ul>
-            </td>
-            <td>
-                <div class="action-button">
-                    <form th:method="GET" th:action="@{/company-details/{id}(id=${company.id})}">
-                        <input class="edit-button" type="submit" th:value="Промяна"/>
-                    </form>
-                    <form th:method="POST" th:action="@{/delete-company/{id}(id=${company.id})}"
-                          sec:authorize="hasRole('Admin')">
-                        <input class="delete-button" type="submit" th:value="Премахване"/>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                    </div>
+                </td>
+                <!--            <td>-->
+                <!--                <ul>-->
+                <!--                    <li th:each="unit : ${company.units}"-->
+                <!--                        th:text="${unit}">Звено-->
+                <!--                    </li>-->
+                <!--                </ul>-->
+                <!--            </td>-->
+                <!--            <td>-->
+                <!--                <ul>-->
+                <!--                    <li th:each="industry : ${company.industries}"-->
+                <!--                        th:text="${industry}">Услуги/продукти-->
+                <!--                    </li>-->
+                <!--                </ul>-->
+                <!--            </td>-->
+                <td>
+                    <ul>
+                        <li th:each="type : ${company.partnerTypes}"
+                            th:text="${type}">Тип партньор
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <div class="action-button">
+                        <form th:method="GET" th:action="@{/company-details/{id}(id=${company.id})}">
+                            <input class="edit-button" type="submit" th:value="Промяна"/>
+                        </form>
+                        <form th:method="POST" th:action="@{/delete-company/{id}(id=${company.id})}"
+                              sec:authorize="hasRole('Admin')">
+                            <input class="delete-button" type="submit" th:value="Премахване"/>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>

@@ -11,41 +11,42 @@
 <div th:replace="~{fragments/navigation}"></div>
 <main>
     <h1>Списък с потребители</h1>
-
-    <table id="clients-table">
-        <thead>
-        <tr>
-            <th>Никнейм</th>
-            <th>Роля</th>
-            <th>Име</th>
-            <th>Презиме</th>
-            <th>Фамилия</th>
-            <th>Тип източник</th>
-            <th sec:authorize="hasRole('Admin')">Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user :${allUsers}">
-            <td th:text="${user.username}">Никнейм</td>
-            <td th:text="${user.role}">Роля</td>
-            <td th:text="${user.firstName}">Първо име</td>
-            <td th:text="${user.middleName}">Презиме</td>
-            <td th:text="${user.lastName}">Фамилия</td>
-            <td th:text="${user.located}">Месторабота</td>
-            <td sec:authorize="hasRole('Admin')">
-                <div class="action-button">
-                    <form th:method="POST" th:action="@{/user-details/{id}(id=${user.id})}">
-                        <input class="edit-button" type="submit" th:value="Промяна"/>
-                    </form>
-                    <form th:method="POST" th:action="@{/delete-client/{id}(id=${user.id})}"
-                          sec:authorize="hasRole('Admin')">
-                        <input class="delete-button" type="submit" th:value="Премахване"/>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table id="clients-table">
+            <thead>
+            <tr>
+                <th>Никнейм</th>
+                <th>Роля</th>
+                <th>Име</th>
+                <th>Презиме</th>
+                <th>Фамилия</th>
+                <th>Тип източник</th>
+                <th sec:authorize="hasRole('Admin')">Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user :${allUsers}">
+                <td th:text="${user.username}">Никнейм</td>
+                <td th:text="${user.role}">Роля</td>
+                <td th:text="${user.firstName}">Първо име</td>
+                <td th:text="${user.middleName}">Презиме</td>
+                <td th:text="${user.lastName}">Фамилия</td>
+                <td th:text="${user.located}">Месторабота</td>
+                <td sec:authorize="hasRole('Admin')">
+                    <div class="action-button">
+                        <form th:method="POST" th:action="@{/user-details/{id}(id=${user.id})}">
+                            <input class="edit-button" type="submit" th:value="Промяна"/>
+                        </form>
+                        <form th:method="POST" th:action="@{/delete-client/{id}(id=${user.id})}"
+                              sec:authorize="hasRole('Admin')">
+                            <input class="delete-button" type="submit" th:value="Премахване"/>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 

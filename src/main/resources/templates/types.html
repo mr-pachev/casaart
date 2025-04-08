@@ -15,36 +15,38 @@
     <div class="buttons">
         <a th:href="@{/add-type}" class="input-button">Добави</a>
     </div>
-    <table id="category-table">
-        <thead>
-        <tr>
-            <th>Име</th>
-            <th>Код</th>
-            <th>Категория</th>
-            <th>Продукти</th>
-            <th>Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="type :${allTypes}">
-            <td th:text="${type.name}">Име</td>
-            <td th:text="${type.code}">Код</td>
-            <td th:text="${type.category}">Категория</td>
-            <td th:text="${type.getProducts().size()}">Продукти</td>
-            <td>
-                <div class="action-button">
-                    <form th:method="POST" th:action="@{/type-details/{id}(id=${type.id})}">
-                        <input class="edit-button" type="submit" th:value="Промяна"/>
-                    </form>
-                    <form th:method="POST" th:action="@{/delete-type/{id}(id=${type.id})}"
-                          sec:authorize="hasRole('Admin')">
-                        <input class="delete-button" type="submit" th:value="Премахване"/>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table id="category-table">
+            <thead>
+            <tr>
+                <th>Име</th>
+                <th>Код</th>
+                <th>Категория</th>
+                <th>Продукти</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="type :${allTypes}">
+                <td th:text="${type.name}">Име</td>
+                <td th:text="${type.code}">Код</td>
+                <td th:text="${type.category}">Категория</td>
+                <td th:text="${type.getProducts().size()}">Продукти</td>
+                <td>
+                    <div class="action-button">
+                        <form th:method="POST" th:action="@{/type-details/{id}(id=${type.id})}">
+                            <input class="edit-button" type="submit" th:value="Промяна"/>
+                        </form>
+                        <form th:method="POST" th:action="@{/delete-type/{id}(id=${type.id})}"
+                              sec:authorize="hasRole('Admin')">
+                            <input class="delete-button" type="submit" th:value="Премахване"/>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>

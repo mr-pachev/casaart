@@ -15,32 +15,34 @@
     <div class="buttons">
         <a th:href="@{/add-category}" class="input-button">Добави</a>
     </div>
-    <table id="category-table">
-        <thead>
-        <tr>
-            <th>Име</th>
-            <th>Код</th>
-            <th>Типове</th>
-            <th>Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="category :${allCategories}">
-            <td th:text="${category.name}">Име</td>
-            <td th:text="${category.code}">Код</td>
-            <td th:text="${category.types.size()}">Типове</td>
-            <td class="action-button">
-                <form th:method="POST" th:action="@{/category-details/{id}(id=${category.id})}">
-                    <input class="edit-button" type="submit" th:value="Промяна"/>
-                </form>
-                <form th:method="POST" th:action="@{/delete-category/{id}(id=${category.id})}"
-                      sec:authorize="hasRole('Admin')">
-                    <input class="delete-button" type="submit" th:value="Премахване"/>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table id="category-table">
+            <thead>
+            <tr>
+                <th>Име</th>
+                <th>Код</th>
+                <th>Типове</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="category :${allCategories}">
+                <td th:text="${category.name}">Име</td>
+                <td th:text="${category.code}">Код</td>
+                <td th:text="${category.types.size()}">Типове</td>
+                <td class="action-button">
+                    <form th:method="POST" th:action="@{/category-details/{id}(id=${category.id})}">
+                        <input class="edit-button" type="submit" th:value="Промяна"/>
+                    </form>
+                    <form th:method="POST" th:action="@{/delete-category/{id}(id=${category.id})}"
+                          sec:authorize="hasRole('Admin')">
+                        <input class="delete-button" type="submit" th:value="Премахване"/>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>
