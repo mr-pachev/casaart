@@ -23,7 +23,7 @@ header {
 }
 
 header img {
-    height: 80px;
+    height: 120px;
 }
 
 /* Основна част */
@@ -33,43 +33,55 @@ main {
 }
 
 /* Навигационно меню */
-.navbar {
-    background-color: #FF671F; /* Оранжев фон за навигацията */
-    padding: 10px 20px; /* Вътрешно отстояние */
-    display: flex; /* Флексбокс подреждане */
-    justify-content: space-between; /* Максимално разстояние между елементите */
-    align-items: center; /* Центриране на елементите вертикално */
+ .navbar {
+     background-color: #FF671F;
+     padding: 8px 16px; /* по-тънка лента */
+ }
+
+ /* Горно ниво: поздрав и hamburger */
+.nav-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* Поздравителен текст в навигацията */
-.navbar .welcome {
-    font-size: 18px; /* Размер на шрифта */
-    color: white; /* Бял цвят на текста */
+/* Поздравителен текст */
+.welcome {
+    font-size: 18px;
+    color: white;
 }
 
-/* Навигационни връзки */
-.navbar .nav-links {
-    display: flex; /* Флексбокс подреждане */
-    align-items: center; /* Центриране на елементите вертикално */
-    margin-left: auto; /* Това избутва линковете вдясно */
-    flex-wrap: nowrap; /* Това гарантира, че няма да се прехвърлят на нов ред */
+/* Hamburger бутон */
+.hamburger {
+    display: none;
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
 }
 
-/* Стилове за връзки и бутон за изход */
-.navbar .nav-links a, .navbar .nav-links .logout-button {
-    text-decoration: none; /* Премахване на подчертаване */
-    font-size: 18px; /* Размер на шрифта */
-    color: white; /* Бял цвят на текста */
-    margin-left: 20px; /* Ляво външно отстояние */
-    background: none; /* Премахване на фон */
-    border: none; /* Без рамка */
-    cursor: pointer; /* Курсор като ръка */
-    transition: color 0.3s ease; /* Плавна промяна на цвета */
+/* Линковете */
+.nav-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
 }
 
-/* Ефект при hover на навигационни връзки */
-.navbar .nav-links a:hover, .navbar .nav-links .logout-button:hover {
-    color: #F0E61F; /* Жълт цвят при hover */
+.nav-links a, .logout-button {
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    margin-right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover, .logout-button:hover {
+    color: #F0E61F;
 }
 
 /* Заглавия */
@@ -537,33 +549,39 @@ footer {
     }
 
     /* навигация */
-    .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px;
-    }
+    .nav-top {
+            flex-direction: row-reverse; /* ☰ вляво, поздрав вдясно */
+        }
 
-    .navbar .welcome {
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-top: 8px;
+        }
 
-    .navbar .nav-links {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-left: 0;
-        width: 100%;
-    }
+        .nav-links.active {
+            display: flex;
+        }
 
-    .navbar .nav-links a,
-    .navbar .nav-links .logout-button {
-        font-size: 16px;
-        margin-left: 0;
-        margin-bottom: 8px;
-        width: 100%;
-        text-align: left;
-        padding: 6px 0;
-    }
+        .nav-links a, .logout-button {
+            margin: 8px 0;
+            width: 100%;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .hamburger {
+            display: block;
+        }
+
+        .navbar {
+            padding: 6px 12px; /* още по-тънка лента при мобилна */
+        }
+
+        .welcome {
+            font-size: 16px;
+        }
 }
 
 

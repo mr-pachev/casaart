@@ -10,14 +10,25 @@
     <link rel="stylesheet" href="/css/styles.css"/>
     <link rel="icon" type="image/png" sizes="32x32" th:href="@{/favicon/casaart.ico}">
 </head>
+
+<!-- Само логото, остава на бял фон -->
 <header>
     <a th:href="@{/}">
-        <img src="/images/logo.png" alt="CASA ART Logo" style="height: 120px; width: auto;">
+        <img src="/images/logo.png" alt="CASA ART Logo" class="logo">
     </a>
 </header>
+
+<!-- Навигационната лента, която ще е responsive -->
 <div class="navbar" sec:authorize="isAuthenticated()" th:fragment="navigation">
-    <div class="welcome">Здравей, <span th:text="${@userHelperService.getUser().getUsername()}"></span>!</div>
-    <nav class="nav-links">
+
+    <!-- Поздрав и hamburger бутон -->
+    <div class="nav-top">
+        <div class="welcome">Здравей, <span th:text="${@userHelperService.getUser().getUsername()}"></span>!</div>
+        <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+    </div>
+
+    <!-- Линковете -->
+    <nav class="nav-links" id="mobileNav">
         <a sec:authorize="hasRole('Admin')" th:href="@{/sell}">Продажба</a>
         <a sec:authorize="hasRole('Admin')" th:href="@{/providers}">Доставчици аксесоари</a>
         <a sec:authorize="hasRole('Admin')" th:href="@{/products}">Продукти</a>
@@ -35,3 +46,10 @@
         </form>
     </nav>
 </div>
+
+<script>
+    function toggleMobileMenu() {
+        const nav = document.getElementById('mobileNav');
+        nav.classList.toggle('active');
+    }
+</script>
