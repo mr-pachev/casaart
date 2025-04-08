@@ -19,107 +19,109 @@
             <button type="submit" class="input-button">Добави</button>
         </form>
     </div>
-    <table id="category-table">
-        <thead>
-        <tr>
-            <th>Име</th>
-            <th>Презиме</th>
-            <th>Фамилия</th>
-            <th>Емейл адрес</th>
-            <th>Телефонен номер</th>
-<!--            <th>Компания</th>-->
-            <th th:if="${isPartner}">Първо обаждане</th>
-            <th th:if="${isPartner}">Изпратен имейл</th>
-            <th th:if="${isPartner}">Изпратено писмо</th>
-            <th th:if="${isPartner}">Второ обаждане</th>
-            <th th:if="${isPartner}">Присъствие</th>
-            <th>Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="person :${contactPersons}">
-            <td th:text="${person.firstName}">Име</td>
-            <td th:text="${person.middleName}">Презиме</td>
-            <td th:text="${person.lastName}">Фамилия</td>
-            <td th:text="${person.email}">Имейл адрес</td>
-            <td th:text="${person.phoneNumber}">Телефонен номер</td>
-<!--            <td th:text="${person.company}">Компания</td>-->
-            <td th:if="${isPartner}">
-                <ul>
-                    <li>
-                        <span th:text="${person.firstCall}"></span>
-                    </li>
-                    <li>
-                        <form th:method="POST" th:action="@{/first-call-contact-person/{id}(id=${person.id})}">
-                            <button type="submit" class="reg-button">Регистрирай</button>
+    <div class="table-wrapper">
+        <table id="category-table">
+            <thead>
+            <tr>
+                <th>Име</th>
+                <th>Презиме</th>
+                <th>Фамилия</th>
+                <th>Емейл адрес</th>
+                <th>Телефонен номер</th>
+                <!--            <th>Компания</th>-->
+                <th th:if="${isPartner}">Първо обаждане</th>
+                <th th:if="${isPartner}">Изпратен имейл</th>
+                <th th:if="${isPartner}">Изпратено писмо</th>
+                <th th:if="${isPartner}">Второ обаждане</th>
+                <th th:if="${isPartner}">Присъствие</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="person :${contactPersons}">
+                <td th:text="${person.firstName}">Име</td>
+                <td th:text="${person.middleName}">Презиме</td>
+                <td th:text="${person.lastName}">Фамилия</td>
+                <td th:text="${person.email}">Имейл адрес</td>
+                <td th:text="${person.phoneNumber}">Телефонен номер</td>
+                <!--            <td th:text="${person.company}">Компания</td>-->
+                <td th:if="${isPartner}">
+                    <ul>
+                        <li>
+                            <span th:text="${person.firstCall}"></span>
+                        </li>
+                        <li>
+                            <form th:method="POST" th:action="@{/first-call-contact-person/{id}(id=${person.id})}">
+                                <button type="submit" class="reg-button">Регистрирай</button>
+                            </form>
+                        </li>
+                    </ul>
+                </td>
+                <td th:if="${isPartner}">
+                    <ul>
+                        <li>
+                            <span th:text="${person.sendEmail}"></span>
+                        </li>
+                        <li>
+                            <form th:method="POST" th:action="@{/send-email-contact-person/{id}(id=${person.id})}">
+                                <button type="submit" class="reg-button">Регистрирай</button>
+                            </form>
+                        </li>
+                    </ul>
+                </td>
+                <td th:if="${isPartner}">
+                    <ul>
+                        <li>
+                            <span th:text="${person.sendLetter}"></span>
+                        </li>
+                        <li>
+                            <form th:method="POST" th:action="@{/send-letter-contact-person/{id}(id=${person.id})}">
+                                <button type="submit" class="reg-button">Регистрирай</button>
+                            </form>
+                        </li>
+                    </ul>
+                </td>
+                <td th:if="${isPartner}">
+                    <ul>
+                        <li>
+                            <span th:text="${person.secondCall}"></span>
+                        </li>
+                        <li>
+                            <form th:method="POST" th:action="@{/second-call-contact-person/{id}(id=${person.id})}">
+                                <button type="submit" class="reg-button">Регистрирай</button>
+                            </form>
+                        </li>
+                    </ul>
+                </td>
+                <td th:if="${isPartner}">
+                    <ul>
+                        <li>
+                            <span th:text="${person.presence}"></span>
+                        </li>
+                        <li>
+                            <form th:method="POST" th:action="@{/presence-contact-person/{id}(id=${person.id})}">
+                                <button type="submit" class="reg-button">Регистрирай</button>
+                            </form>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <div class="action-button">
+                        <form th:method="POST"
+                              th:action="@{/contact-person-details/{id}(id=${person.id})}">
+                            <button type="submit" class="edit-button">Промяна</button>
                         </form>
-                    </li>
-                </ul>
-            </td>
-            <td th:if="${isPartner}">
-                <ul>
-                    <li>
-                        <span th:text="${person.sendEmail}"></span>
-                    </li>
-                    <li>
-                        <form th:method="POST" th:action="@{/send-email-contact-person/{id}(id=${person.id})}">
-                            <button type="submit" class="reg-button">Регистрирай</button>
+                        <form th:method="POST"
+                              th:action="@{/delete-contact-person/{id}(id=${person.id})}"
+                              sec:authorize="hasRole('Admin')">
+                            <button type="submit" class="delete-button">Премахване</button>
                         </form>
-                    </li>
-                </ul>
-            </td>
-            <td th:if="${isPartner}">
-                <ul>
-                    <li>
-                        <span th:text="${person.sendLetter}"></span>
-                    </li>
-                    <li>
-                        <form th:method="POST" th:action="@{/send-letter-contact-person/{id}(id=${person.id})}">
-                            <button type="submit" class="reg-button">Регистрирай</button>
-                        </form>
-                    </li>
-                </ul>
-            </td>
-            <td th:if="${isPartner}">
-                <ul>
-                    <li>
-                        <span th:text="${person.secondCall}"></span>
-                    </li>
-                    <li>
-                        <form th:method="POST" th:action="@{/second-call-contact-person/{id}(id=${person.id})}">
-                            <button type="submit" class="reg-button">Регистрирай</button>
-                        </form>
-                    </li>
-                </ul>
-            </td>
-            <td th:if="${isPartner}">
-                <ul>
-                    <li>
-                        <span th:text="${person.presence}"></span>
-                    </li>
-                    <li>
-                        <form th:method="POST" th:action="@{/presence-contact-person/{id}(id=${person.id})}">
-                            <button type="submit" class="reg-button">Регистрирай</button>
-                        </form>
-                    </li>
-                </ul>
-            </td>
-            <td>
-                <div class="action-button">
-                    <form th:method="POST"
-                          th:action="@{/contact-person-details/{id}(id=${person.id})}">
-                        <button type="submit" class="edit-button">Промяна</button>
-                    </form>
-                    <form th:method="POST"
-                          th:action="@{/delete-contact-person/{id}(id=${person.id})}"
-                          sec:authorize="hasRole('Admin')">
-                        <button type="submit" class="delete-button">Премахване</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>

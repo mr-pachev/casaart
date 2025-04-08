@@ -12,50 +12,52 @@
 
 <main>
     <h1>Управител</h1>
-    <table id="category-table">
-        <thead>
-        <tr>
-            <th style="width: 10%;">Име</th>
-            <th style="width: 10%;">Презиме</th>
-            <th style="width: 10%;">Фамилия</th>
-            <th style="width: 10%;">Емейл адрес</th>
-            <th style="width: 10%;">Телефонен номер</th>
-            <th style="width: 10%;">Компания</th>
-            <th style="width: 10%;">Дата на първо обаждане</th>
-            <th style="width: 10%;">Дата на изпратен имейл</th>
-            <th style="width: 10%;">Дата на изпратено писмо</th>
-            <th style="width: 10%;">Дата на второ обаждане</th>
-            <th style="width: 10%;">Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td th:text="${personDTO.firstName}">Име</td>
-            <td th:text="${personDTO.middleName}">Презиме</td>
-            <td th:text="${personDTO.lastName}">Фамилия</td>
-            <td th:text="${personDTO.email}">Имейл адрес</td>
-            <td th:text="${personDTO.phoneNumber}">Телефонен номер</td>
-            <td th:text="${personDTO.company}">Компания</td>
-            <td th:text="${personDTO.firstCall}">Дата на първо обаждане</td>
-            <td th:text="${personDTO.sentEmail}">Дата на изпратен имейл</td>
-            <td th:text="${personDTO.letterSent}">Дата на изпратено писмо</td>
-            <td th:text="${personDTO.secondCall}">Дата на второ обаждане</td>
-            <td>
-                <div class="action-button">
-                    <form th:method="POST"
-                          th:action="@{/company-manager-details/{id}(id=${personDTO.id})}">
-                        <button type="submit" class="edit-button">Промяна</button>
-                    </form>
-                    <form th:method="POST"
-                          th:action="@{/delete-company-manager/{id}(id=${personDTO.id})}"
-                          sec:authorize="hasRole('Admin')">
-                        <button type="submit" class="delete-button">Премахване</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table id="category-table">
+            <thead>
+            <tr>
+                <th style="width: 10%;">Име</th>
+                <th style="width: 10%;">Презиме</th>
+                <th style="width: 10%;">Фамилия</th>
+                <th style="width: 10%;">Емейл адрес</th>
+                <th style="width: 10%;">Телефонен номер</th>
+                <th style="width: 10%;">Компания</th>
+                <th style="width: 10%;">Дата на първо обаждане</th>
+                <th style="width: 10%;">Дата на изпратен имейл</th>
+                <th style="width: 10%;">Дата на изпратено писмо</th>
+                <th style="width: 10%;">Дата на второ обаждане</th>
+                <th style="width: 10%;">Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${personDTO.firstName}">Име</td>
+                <td th:text="${personDTO.middleName}">Презиме</td>
+                <td th:text="${personDTO.lastName}">Фамилия</td>
+                <td th:text="${personDTO.email}">Имейл адрес</td>
+                <td th:text="${personDTO.phoneNumber}">Телефонен номер</td>
+                <td th:text="${personDTO.company}">Компания</td>
+                <td th:text="${personDTO.firstCall}">Дата на първо обаждане</td>
+                <td th:text="${personDTO.sentEmail}">Дата на изпратен имейл</td>
+                <td th:text="${personDTO.letterSent}">Дата на изпратено писмо</td>
+                <td th:text="${personDTO.secondCall}">Дата на второ обаждане</td>
+                <td>
+                    <div class="action-button">
+                        <form th:method="POST"
+                              th:action="@{/company-manager-details/{id}(id=${personDTO.id})}">
+                            <button type="submit" class="edit-button">Промяна</button>
+                        </form>
+                        <form th:method="POST"
+                              th:action="@{/delete-company-manager/{id}(id=${personDTO.id})}"
+                              sec:authorize="hasRole('Admin')">
+                            <button type="submit" class="delete-button">Премахване</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>
