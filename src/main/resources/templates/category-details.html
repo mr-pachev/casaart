@@ -50,34 +50,36 @@
         </form>
         <br>
         <!-- Таблица с типове -->
-        <div class="form-field">
-            <label>Типове</label>
-            <table>
-                <thead>
-                <tr>
-                    <th>Тип</th>
-                    <th>Брой продукти</th>
-                    <th>Действие</th>
-                </tr>
-                </thead>
-                <tbody id="types">
-                <tr th:each="type : ${categoryDTO.getTypes()}">
-                    <td th:text="${type.name}"></td>
-                    <td th:text="${type.products.size()}"></td>
-                    <td>
-                        <div class="action-button">
-                            <form th:method="POST" th:action="@{/type-details/{id}(id=${type.id})}">
-                                <input class="edit-button" type="submit" th:value="Промяна"/>
-                            </form>
-                            <form th:method="POST" th:action="@{/delete-type/{id}(id=${type.id})}"
-                                  sec:authorize="hasRole('Admin')">
-                                <input class="delete-button" type="submit" th:value="Премахване"/>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="table-wrapper">
+            <div class="form-field">
+                <label>Типове</label>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Тип</th>
+                        <th>Брой продукти</th>
+                        <th>Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody id="types">
+                    <tr th:each="type : ${categoryDTO.getTypes()}">
+                        <td th:text="${type.name}"></td>
+                        <td th:text="${type.products.size()}"></td>
+                        <td>
+                            <div class="action-button">
+                                <form th:method="POST" th:action="@{/type-details/{id}(id=${type.id})}">
+                                    <input class="edit-button" type="submit" th:value="Промяна"/>
+                                </form>
+                                <form th:method="POST" th:action="@{/delete-type/{id}(id=${type.id})}"
+                                      sec:authorize="hasRole('Admin')">
+                                    <input class="delete-button" type="submit" th:value="Премахване"/>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </main>
