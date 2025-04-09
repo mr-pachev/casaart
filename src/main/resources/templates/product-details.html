@@ -62,12 +62,13 @@
                 <input type="file" id="image" name="image" accept="image/*">
             </div>
 
-            <!-- Скрито поле за imagePath -->
-            <input type="hidden" name="imagePath" th:field="*{imagePath}"/>
-
             <div class="form-field" th:if="${productDTO.imagePath != null}">
                 <img th:src="@{${productDTO.imagePath}}" alt="Image Preview" style="max-width: 200px;">
             </div>
+
+            <!-- Скрито поле за imagePath -->
+            <input type="hidden" name="imagePath" th:field="*{imagePath}"/>
+
             <div class="form-field">
                 <label for="productCode">Код</label>
                 <input type="text" th:placeholder="${productDTO.productCode}"
