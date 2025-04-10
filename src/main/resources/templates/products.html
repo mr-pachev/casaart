@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/styles.css"/>
 </head>
 <body>
-<div th:replace="~{fragments/navigation}"></div>
+<div th:replace="~{fragments/products-nav}"></div>
 <div class="search-container">
     <form th:method="POST" th:action="@{/find-by-product-identifier}" style="display: inline;">
         <input type="text" name="productIdentifier" placeholder="Търси продукт" class="source-type-select"
