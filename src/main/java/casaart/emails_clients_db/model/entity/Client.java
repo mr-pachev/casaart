@@ -4,6 +4,7 @@ import casaart.emails_clients_db.model.enums.*;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -64,6 +65,9 @@ public class Client extends BaseEntity{
 
     @Column(name = "accommodation_date")
     private LocalDate accommodationDate;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
 
     @Column(name = "first_call")
     private LocalDate firstCall;
@@ -206,6 +210,14 @@ public class Client extends BaseEntity{
 
     public void setAccommodationDate(LocalDate accommodationDate) {
         this.accommodationDate = accommodationDate;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public LocalDate getFirstCall() {
