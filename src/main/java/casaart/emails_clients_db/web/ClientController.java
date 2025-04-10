@@ -2,6 +2,7 @@ package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
+import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.model.enums.LoyaltyLevel;
 import casaart.emails_clients_db.model.enums.Nationality;
 import casaart.emails_clients_db.model.enums.Rating;
@@ -50,6 +51,30 @@ public class ClientController {
 
         return "clients";
     }
+
+    // open order folder
+//    @PostMapping("/open-order-folder/{id}")
+//    public String openOrderFolder(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+//        ClientDTO clientDTO = clientService.findClientById(id);
+//
+//        Order order = client.getOrder();
+//
+//        if (order != null && order.getFolderPath() != null) {
+//            try {
+//                File folder = new File(order.getFolderPath());
+//                if (folder.exists() && folder.isDirectory()) {
+//                    Desktop.getDesktop().open(folder);
+//                } else {
+//                    redirectAttributes.addFlashAttribute("error", "Папката не съществува.");
+//                }
+//            } catch (IOException e) {
+//                redirectAttributes.addFlashAttribute("error", "Грешка при отваряне: " + e.getMessage());
+//            }
+//        }
+//
+//
+//        return "redirect:/all-clients";
+//    }
 
     // view all sorted clients
     @PostMapping("/sort-clients")

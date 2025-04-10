@@ -142,7 +142,6 @@ public class ClientServiceImpl implements ClientService {
                 .collect(Collectors.toList());
     }
 
-
     // checking is exist client email
     @Override
     public boolean isExistClientEmail(String email) {
