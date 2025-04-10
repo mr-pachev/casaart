@@ -29,11 +29,6 @@
 
     <!-- Линковете -->
     <nav class="nav-links" id="mobileNav">
-        <a sec:authorize="hasRole('Admin')" th:href="@{/sell}">Продажба</a>
-        <a sec:authorize="hasRole('Admin')" th:href="@{/providers}">Доставчици аксесоари</a>
-        <a sec:authorize="hasRole('Admin')" th:href="@{/products}">Продукти</a>
-        <a sec:authorize="hasRole('Admin')" th:href="@{/types}">Типове</a>
-        <a sec:authorize="hasRole('Admin')" th:href="@{/categories}">Категории</a>
         <a th:href="@{/suppliers}">Доставчици</a>
         <a th:href="@{/partners}">Партньори</a>
         <a th:href="@{/clients}">Клиенти</a>
@@ -41,6 +36,7 @@
         <a th:href="@{/all-company-managers}">Всички управители</a>
         <a th:href="@{/users}">Потребители</a>
         <a th:href="@{/user-details/{id}(id=${@userHelperService.getUser().id})}">Профил</a>
+        <a sec:authorize="hasRole('Admin')" th:href="@{/products}">Продукти</a>
         <form th:action="@{/logout}" method="post" class="logout-form">
             <button type="submit" class="logout-button">Изход</button>
         </form>
