@@ -550,38 +550,57 @@ footer {
 
     /* навигация */
     .nav-top {
-            flex-direction: row-reverse; /* ☰ вляво, поздрав вдясно */
-        }
+        flex-direction: row-reverse; /* ☰ вляво, поздрав вдясно */
+        position: relative; /* нужно за позициониране на падащото меню */
+    }
 
-        .nav-links {
-            display: none;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-top: 8px;
-        }
+    .navbar {
+        padding: 6px 12px;
+        background-color: #FF671F;
+    }
 
-        .nav-links.active {
-            display: flex;
-        }
+    .hamburger {
+        display: block;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 1000;
+    }
 
-        .nav-links a, .logout-button {
-            margin: 8px 0;
-            width: 100%;
-            padding: 8px;
-            text-align: left;
-        }
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: #FF671F;
+        padding: 6px;
+        border-radius: 4px;
+        width: max-content; /* 👈 важно: ширината е колкото най-дългия линк */
+        min-width: 100px;
+        z-index: 999;
+    }
 
-        .hamburger {
-            display: block;
-        }
+    .nav-links.active {
+        display: flex;
+    }
 
-        .navbar {
-            padding: 6px 12px; /* още по-тънка лента при мобилна */
-        }
+    .nav-links a,
+    .logout-button {
+        margin: 4px 0;
+        padding: 8px 12px;
+        text-align: left;
+        width: auto; /* 👈 това е ключово, да не разпъва менюто */
+        white-space: nowrap; /* предотвратява пренасяне на текст */
+        color: white; /* ако искаш текстът да се вижда на оранжево */
+        text-decoration: none;
+    }
 
-        .welcome {
-            font-size: 16px;
-        }
+    .welcome {
+        font-size: 16px;
+        margin-left: 8px;
+    }
 }
 
 

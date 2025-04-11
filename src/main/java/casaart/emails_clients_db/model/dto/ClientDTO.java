@@ -1,5 +1,6 @@
 package casaart.emails_clients_db.model.dto;
 
+import casaart.emails_clients_db.model.entity.Order;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -44,6 +45,8 @@ public class ClientDTO {
     private String modifyFrom;
 
     private LocalDate accommodationDate;
+
+    private List<OrderDTO> orders;
 
     private String comment;
 
@@ -197,6 +200,14 @@ public class ClientDTO {
 
     public void setAccommodationDate(LocalDate accommodationDate) {
         this.accommodationDate = accommodationDate;
+    }
+
+    public List<OrderDTO> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderDTO> orders) {
+        this.orders = orders;
     }
 
     public String getComment() {

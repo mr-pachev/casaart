@@ -2,7 +2,9 @@ package casaart.emails_clients_db.service.impl;
 
 import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
+import casaart.emails_clients_db.model.dto.OrderDTO;
 import casaart.emails_clients_db.model.entity.Client;
+import casaart.emails_clients_db.model.entity.Order;
 import casaart.emails_clients_db.model.entity.User;
 import casaart.emails_clients_db.model.enums.*;
 import casaart.emails_clients_db.repository.ClientRepository;
@@ -238,7 +240,7 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.deleteById(id);
     }
 
-    // ClientDTO map to Client
+    // Client map to ClientDTO
     ClientDTO mapToClientDTO(Client client) {
         if (client == null) {
             return null;
@@ -254,6 +256,17 @@ public class ClientServiceImpl implements ClientService {
         clientDTO.setCounterStay(client.getCounterStay() != null ? client.getCounterStay() : 0);
         clientDTO.setModifyFrom(client.getModifyFrom());
         clientDTO.setAccommodationDate(client.getAccommodationDate());
+
+        // преобразуване на поле поръчки
+        if (client.getOrders() != null) {
+            List<OrderDTO> orders = new ArrayList<>();
+
+            for (Order o : client.getOrders()) {
+                OrderDTO orderDTO = orderMapToOrderDTO(o);
+                orders.add(orderDTO);
+            }
+            clientDTO.setOrders(orders);
+        }
 
         clientDTO.setFirstEmail(client.getFirstEmail());
         clientDTO.setFirstCall(client.getFirstCall());
@@ -312,6 +325,25 @@ public class ClientServiceImpl implements ClientService {
         }
 
         return allClientDTOS;
+    }
+
+    // Order map to OrderDTO
+    OrderDTO orderMapToOrderDTO(Order order) {
+        OrderDTO orderDTO = mapper.map(order, OrderDTO.class);
+        return orderDTO;
+    }
+
+    // List<Order> map to List<OrderDTO>
+    List<OrderDTO> orderListMapToOrderDTOS(List<Order> orderList) {
+        List<OrderDTO> allOrderDTOS = new ArrayList<>();
+
+        for (Order order : orderList) {
+            OrderDTO orderDTO = orderMapToOrderDTO(order);
+
+            allOrderDTOS.add(orderDTO);
+        }
+
+        return allOrderDTOS;
     }
 
     // convert input string

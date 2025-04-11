@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 public class OrderDTO {
 
     @NotBlank
+    @Size(max = 5)
     private String number;
 
     @NotBlank
