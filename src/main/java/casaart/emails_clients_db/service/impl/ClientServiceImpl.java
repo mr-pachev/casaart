@@ -50,10 +50,13 @@ public class ClientServiceImpl implements ClientService {
         } else if ("allClientsByName".equals(type)) {
             clientList = clientRepository.findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
 
+        } else if ("orderYear".equals(type)) {
+            clientList = clientRepository.findAllClientsOrderByLatestOrderYearDesc();
+
         } else if ("allClientsByFirstEmail".equals(type)) {
             clientList = clientRepository.findAllByOrderByFirstEmailDesc();
 
-        } else if ("allClientsByFirstCall".equals(type)) {
+        }else if ("allClientsByFirstCall".equals(type)) {
             clientList = clientRepository.findAllByOrderByFirstCallDesc();
 
         } else if ("allClientsBySecondEmail".equals(type)) {
@@ -61,7 +64,7 @@ public class ClientServiceImpl implements ClientService {
 
         } else if ("allClientsBySecondCall".equals(type)) {
             clientList = clientRepository.findAllByOrderBySecondCallDesc();
-
+        // поле за търсене в шаблона
         } else if (type.contains("@")) {
 
             if (clientRepository.findByEmail(type).isPresent()) {
@@ -140,6 +143,16 @@ public class ClientServiceImpl implements ClientService {
         }
 
         return clients.stream()
+                .map(this::mapToClientDTO) // Преобразуваме в DTO
+                .collect(Collectors.toList());
+    }
+
+    // get sorted clients by order year
+    @Override
+    public List<ClientDTO> sortedClientsOrderYear(String orderYear) {
+
+        return clientRepository.findAllClientsByOrderYear(orderYear)
+                .stream()
                 .map(this::mapToClientDTO) // Преобразуваме в DTO
                 .collect(Collectors.toList());
     }

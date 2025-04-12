@@ -38,6 +38,7 @@
                 <!--                <option value="allClientsBySecondEmail">Дата на втори имейл</option>-->
                 <!--                <option value="allClientsBySecondCall">Добавен на второ обаждане</option>-->
                 <option value="sourceType">Източник</option>
+                <option value="orderYear">Година на поръчка</option>
                 <option value="loyaltyLevel">Ниво лоялност</option>
                 <option value="nationality">Националност</option>
                 <option value="rating">Оценка</option>
@@ -134,17 +135,12 @@
             <thead>
             <tr>
                 <th>Име</th>
-                <!--            <th>Презиме</th>-->
                 <th>Фамилия</th>
                 <th>Имейл</th>
                 <th>Телефон</th>
                 <th>Тип източник</th>
                 <th>Ниво лоялност</th>
                 <th>Националност</th>
-                <!--            <th>Дата на първи имейл</th>-->
-                <!--            <th>Дата на първо обаждане</th>-->
-                <!--            <th>Дата на втори имейл</th>-->
-                <!--            <th>Дата на втора обаждане</th>-->
                 <th>Поръчки</th>
                 <th>Действия</th>
             </tr>
@@ -165,54 +161,6 @@
                 </td>
                 <td th:text="${client.loyaltyLevel}">Ниво лоялност</td>
                 <td th:text="${client.nationality}">Националност</td>
-                <!--            <td>-->
-                <!--                <ul>-->
-                <!--                    <li>-->
-                <!--                        <span th:text="${client.firstEmail}"></span>-->
-                <!--                    </li>-->
-                <!--                    <li>-->
-                <!--                        <form th:method="GET" th:action="@{/first-email-client/{id}(id=${client.id})}">-->
-                <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
-                <!--                        </form>-->
-                <!--                    </li>-->
-                <!--                </ul>-->
-                <!--            </td>-->
-                <!--            <td>-->
-                <!--                <ul>-->
-                <!--                    <li>-->
-                <!--                        <span th:text="${client.firstCall}"></span>-->
-                <!--                    </li>-->
-                <!--                    <li>-->
-                <!--                        <form th:method="GET" th:action="@{/first-call-client/{id}(id=${client.id})}">-->
-                <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
-                <!--                        </form>-->
-                <!--                    </li>-->
-                <!--                </ul>-->
-                <!--            </td>-->
-                <!--            <td>-->
-                <!--                <ul>-->
-                <!--                    <li>-->
-                <!--                        <span th:text="${client.secondEmail}"></span>-->
-                <!--                    </li>-->
-                <!--                    <li>-->
-                <!--                        <form th:method="GET" th:action="@{/second-email-client/{id}(id=${client.id})}">-->
-                <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
-                <!--                        </form>-->
-                <!--                    </li>-->
-                <!--                </ul>-->
-                <!--            </td>-->
-                <!--            <td>-->
-                <!--                <ul>-->
-                <!--                    <li>-->
-                <!--                        <span th:text="${client.secondCall}"></span>-->
-                <!--                    </li>-->
-                <!--                    <li>-->
-                <!--                        <form th:method="GET" th:action="@{/second-call-client/{id}(id=${client.id})}">-->
-                <!--                            <button type="submit" class="reg-button">Регистрирай</button>-->
-                <!--                        </form>-->
-                <!--                    </li>-->
-                <!--                </ul>-->
-                <!--            </td>-->
                 <td>
                     <ul th:if="${client.orders != null and !client.orders.isEmpty()}">
                         <li th:each="order : ${client.getOrders()}">

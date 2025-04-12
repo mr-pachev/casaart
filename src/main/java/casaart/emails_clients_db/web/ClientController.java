@@ -60,6 +60,7 @@ public class ClientController {
                               @RequestParam(value = "nationality", required = false) String nationality,
                               @RequestParam(value = "ratingType", required = false) String ratingType,
                               @RequestParam(value = "rating", required = false) String rating,
+                              @RequestParam(value = "orderYear", required = false) String orderYear,
                               Model model) {
         List<ClientDTO> sortedClients;
 
@@ -75,6 +76,9 @@ public class ClientController {
 
         } else if ("rating".equals(type) && ratingType != null && !ratingType.isEmpty() && rating != null && !rating.isEmpty()) {
             sortedClients = clientService.sortedClientsByRating(ratingType, rating);
+
+        }else if ("orderYear".equals(type) && ratingType != null && !ratingType.isEmpty() && rating != null && !rating.isEmpty()) {
+            sortedClients = clientService.sortedClientsOrderYear(type);
 
         } else {
             sortedClients = clientService.sortedClients(type);
