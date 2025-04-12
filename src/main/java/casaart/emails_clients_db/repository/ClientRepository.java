@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,6 +37,19 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findAllByRatingQualityPrice(Rating ratingQualityPrice);
     List<Client> findAllByRatingPoliteness(Rating ratingPoliteness);
     List<Client> findAllByRatingCleanTidy(Rating ratingCleanTidy);
+
+    @Query("SELECT c FROM Client c " +
+            "JOIN c.orders o " +
+            "GROUP BY c.id " +
+            "ORDER BY MAX(o.year) DESC")
+    List<Client> findAllClientsOrderByLatestOrderYearDesc();
+
+    @Query("SELECT DISTINCT c FROM Client c " +
+            "JOIN c.orders o " +
+            "WHERE o.year = :year")
+    List<Client> findAllClientsByOrderYear(@Param("year") String year);
+
+
 
     @Query("SELECT c.email FROM Client c")
     Set<String> findAllEmails();
