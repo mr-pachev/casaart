@@ -8,11 +8,11 @@ public class OrderDTO {
     long id;
 
     @NotBlank
-    @Size(max = 5)
+    @Size(min = 5, max = 5)
     private String number;
 
     @NotBlank
-    @Size(max = 4)
+    @Size(min = 4, max = 4)
     private String year;
 
     private long clientId;

@@ -52,30 +52,6 @@ public class ClientController {
         return "clients";
     }
 
-    // open order folder
-//    @PostMapping("/open-order-folder/{id}")
-//    public String openOrderFolder(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-//        ClientDTO clientDTO = clientService.findClientById(id);
-//
-//        Order order = client.getOrder();
-//
-//        if (order != null && order.getFolderPath() != null) {
-//            try {
-//                File folder = new File(order.getFolderPath());
-//                if (folder.exists() && folder.isDirectory()) {
-//                    Desktop.getDesktop().open(folder);
-//                } else {
-//                    redirectAttributes.addFlashAttribute("error", "Папката не съществува.");
-//                }
-//            } catch (IOException e) {
-//                redirectAttributes.addFlashAttribute("error", "Грешка при отваряне: " + e.getMessage());
-//            }
-//        }
-//
-//
-//        return "redirect:/all-clients";
-//    }
-
     // view all sorted clients
     @PostMapping("/sort-clients")
     public String sortClients(@RequestParam("type") String type,

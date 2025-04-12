@@ -1,23 +1,30 @@
 package casaart.emails_clients_db.model.dto;
 
-import casaart.emails_clients_db.model.entity.Order;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class ClientDTO {
+
     long id;
+
     @NotBlank
     @Size(min = 2, max = 30)
     private String firstName;
+
     @Size(max = 30)
     private String middleName;
+
     @NotBlank
     @Size(min = 2, max = 30)
     private String lastName;
+
     @NotBlank@Email
     private String email;
+
     @Size(max = 10)
     private String phoneNumber;
 
