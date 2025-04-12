@@ -58,6 +58,18 @@ public class ClientDTO {
 
     private String ratingCleanTidy;
 
+    public String getFullName() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getFirstName()).append(" ");
+
+        if (this.getMiddleName() != null && !this.getMiddleName().isEmpty()) {
+            sb.append(this.getMiddleName()).append(" ");
+        }
+
+        sb.append(this.getLastName());
+        return sb.toString();
+    }
+
     public long getId() {
         return id;
     }

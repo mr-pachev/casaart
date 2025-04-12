@@ -8,6 +8,10 @@ public class EmailsClientsDbApplication {
     public static void main(String[] args) {
         SpringApplication.run(EmailsClientsDbApplication.class, args);
 
+        // Хард код за отваряне на локална папка от компютъра за даден проект
+        System.setProperty("java.awt.headless", "false");
+        SpringApplication.run(EmailsClientsDbApplication.class, args);
+
     }
 
 }

@@ -145,7 +145,7 @@
                 <!--            <th>Дата на първо обаждане</th>-->
                 <!--            <th>Дата на втори имейл</th>-->
                 <!--            <th>Дата на втора обаждане</th>-->
-<!--                <th>Поръчка</th>-->
+                <th>Поръчки</th>
                 <th>Действия</th>
             </tr>
             </thead>
@@ -213,15 +213,24 @@
                 <!--                    </li>-->
                 <!--                </ul>-->
                 <!--            </td>-->
-<!--                <td>-->
-<!--                    <ul th:if="${client.order != null}">-->
-<!--                        <form th:method="POST" th:action="@{/open-order-folder/{id}(id=${client.id})}">-->
-<!--                            <button type="submit" class="view-button">Отвори</button>-->
-<!--                        </form>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                    <span th:if="${client.order == null}">Няма</span>-->
-<!--                </td>-->
+                <td>
+                    <ul th:if="${client.orders != null and !client.orders.isEmpty()}">
+                        <li th:each="order : ${client.getOrders()}">
+                            <span th:text="${order.number}"></span>
+                        </li>
+                        <li>
+                            <form th:method="POST" th:action="@{/current-orders/{id}(id=${client.id})}">
+                                <button type="submit" class="view-button">Виж</button>
+                            </form>
+                        </li>
+                    </ul>
+                    <div th:unless="${client.orders != null and !client.orders.isEmpty()}">
+                        <form th:method="POST" th:action="@{/add-order-with-client-id/{id}(id=${client.id})}"
+                              style="display: inline;">
+                            <button type="submit" class="reg-button">Добави</button>
+                        </form>
+                    </div>
+                </td>
                 <td>
                     <div class="action-button">
                         <form th:method="POST" th:action="@{/client-details/{id}(id=${client.id})}">

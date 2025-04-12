@@ -15,6 +15,9 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
+    @Column(name = "folder_path")
+    private String folderPath;
+
     public String getNumber() {
         return number;
     }
@@ -37,5 +40,13 @@ public class Order extends BaseEntity {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public String getFolderPath() {
+        return folderPath;
+    }
+
+    public void setFolderPath(String folderPath) {
+        this.folderPath = folderPath;
     }
 }

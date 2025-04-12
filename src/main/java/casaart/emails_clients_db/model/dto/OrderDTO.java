@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Size;
 
 public class OrderDTO {
 
+    long id;
+
     @NotBlank
     @Size(max = 5)
     private String number;
@@ -13,8 +15,18 @@ public class OrderDTO {
     @Size(max = 4)
     private String year;
 
+    private long clientId;
+
     @NotBlank
-    private String client;
+    private String folderPath;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getNumber() {
         return number;
@@ -32,11 +44,19 @@ public class OrderDTO {
         this.year = year;
     }
 
-    public String getClient() {
-        return client;
+    public long getClientId() {
+        return clientId;
     }
 
-    public void setClient(String client) {
-        this.client = client;
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getFolderPath() {
+        return folderPath;
+    }
+
+    public void setFolderPath(String folderPath) {
+        this.folderPath = folderPath;
     }
 }
