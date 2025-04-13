@@ -2,7 +2,6 @@ package casaart.emails_clients_db.web;
 
 import casaart.emails_clients_db.model.dto.AddClientDTO;
 import casaart.emails_clients_db.model.dto.ClientDTO;
-import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.model.enums.LoyaltyLevel;
 import casaart.emails_clients_db.model.enums.Nationality;
 import casaart.emails_clients_db.model.enums.Rating;
