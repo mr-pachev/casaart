@@ -209,7 +209,7 @@
                        class="form-control"
                        th:field="*{comment}">
             </div>
-            <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'HOTEL')}">
+            <div class="form-field" th:if="${#lists.contains(clientDTO.sourceTypes, 'HOTEL') or #lists.contains(clientDTO.sourceTypes, 'RESTAURANT')}">
                 <label for="accommodationDate" class="form-label">Дата настаняване</label>
                 <input type="date" class="form-control" id="accommodationDate" name="accommodationDate"
                        th:value="${clientDTO.accommodationDate}">
