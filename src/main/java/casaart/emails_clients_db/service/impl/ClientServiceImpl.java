@@ -64,7 +64,6 @@ public class ClientServiceImpl implements ClientService {
 
         } else if ("allClientsBySecondCall".equals(type)) {
             clientList = clientRepository.findAllByOrderBySecondCallDesc();
-
         // поле за търсене в шаблона
         } else if (type.contains("@")) {
 
@@ -72,12 +71,12 @@ public class ClientServiceImpl implements ClientService {
                 clientList.add(clientRepository.findByEmail(type).get());
             }
 
-        // проверка за година
+            // проверка за година
         } else if (type.matches("20(1[6-9]|2[0-5])")) {
             int year = Integer.parseInt(type);
             clientList = clientRepository.findAllClientsByOrderYear(type);
 
-        // име на клиента
+            // име на клиента
         } else if (inputArr.length == 1) {
             clientList = clientRepository.findAllByFirstName(inputArr[0]);
 
