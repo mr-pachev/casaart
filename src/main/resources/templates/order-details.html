@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA ART - Нова поръчка</title>
+</head>
+<body>
+<div th:replace="~{fragments/navigation}"></div>
+<main>
+    <h1>Поръчка</h1>
+    <div class="add-form">
+        <form th:action="@{/order-details}"
+              th:object="${orderDTO}"
+              th:method="POST">
+
+            <div class="bg-danger text-center" th:if="${isExist}">
+                <p class="d-block">Вече съществува клиент с тази поръчка</p>
+            </div>
+
+            <!-- Скрито поле за ID на поръчката -->
+            <input type="hidden" th:field="*{id}" />
+
+            <!-- Скрито поле за clientId -->
+            <input type="hidden" th:field="*{clientId}" />
+
+            <div class="form-field">
+                <label for="number">Номер</label>
+                <input type="text"
+                       id="number"
+                       name="number"
+                       th:field="*{number}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Номера трябва да съдържа от 4 до 5 цифри.
+                </p>
+            </div>
+            <div class="form-field">
+                <label for="year">Година</label>
+                <input type="text"
+                       id="year"
+                       name="year"
+                       th:field="*{year}"
+                       th:errorclass="is-invalid">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Годината трябва да съдържа 4 цифри.
+                </p>
+            </div>
+            <div class="form-field">
+                <label for="folderPath">Път до папка</label>
+                <input type="text"
+                       id="folderPath"
+                       name="folderPath"
+                       th:field="*{folderPath}"
+                       placeholder="Пример: C:\Users\Ivan\Desktop\Order123"
+                       required>
+            </div>
+            <div class="form-field">
+                <label th:for="client">Клиент</label>
+                <input type="text" th:placeholder="${clientDTO.fullName}"
+                       id="client"
+                       name="client"
+                       readonly>
+            </div>
+            <button type="submit" class="btn btn-success">Добави</button>
+        </form>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>
