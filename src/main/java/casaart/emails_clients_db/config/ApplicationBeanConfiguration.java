@@ -1,11 +1,7 @@
 package casaart.emails_clients_db.config;
 
-import casaart.emails_clients_db.model.dto.ClientDTO;
-import casaart.emails_clients_db.model.entity.Client;
-import casaart.emails_clients_db.model.enums.Rating;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
