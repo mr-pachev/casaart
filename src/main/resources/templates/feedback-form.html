@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Мнение от гост</title>
+    <link rel="stylesheet" href="/css/styles.css"/>
+    <!--    <style>-->
+    <!--        /* styles.css */-->
+
+    <!--body {-->
+    <!--  font-family: 'Segoe UI', sans-serif;-->
+    <!--  padding: 2rem;-->
+    <!--  background-color: #f5f5f5;-->
+    <!--  color: #3b2b2b;-->
+    <!--}-->
+
+    <!--h1 {-->
+    <!--  font-size: 2rem;-->
+    <!--  text-align: center;-->
+    <!--  margin-bottom: 1rem;-->
+    <!--}-->
+
+    <!--p {-->
+    <!--  text-align: center;-->
+    <!--  max-width: 600px;-->
+    <!--  margin: 0 auto 2rem auto;-->
+    <!--}-->
+
+    <!--form {-->
+    <!--  background: white;-->
+    <!--  padding: 2rem;-->
+    <!--  border-radius: 10px;-->
+    <!--  max-width: 600px;-->
+    <!--  margin: 0 auto;-->
+    <!--  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);-->
+    <!--}-->
+
+    <!--label {-->
+    <!--  font-weight: bold;-->
+    <!--  display: block;-->
+    <!--  margin-top: 1rem;-->
+    <!--}-->
+
+    <!--input,-->
+    <!--textarea,-->
+    <!--select {-->
+    <!--  width: 100%;-->
+    <!--  max-width: 100%;-->
+    <!--  padding: 0.5rem;-->
+    <!--  margin-top: 0.3rem;-->
+    <!--  border-radius: 5px;-->
+    <!--  border: 1px solid #ccc;-->
+    <!--  font-size: 1rem;-->
+    <!--  box-sizing: border-box;-->
+    <!--}-->
+
+    <!--textarea {-->
+    <!--  resize: vertical;-->
+    <!--}-->
+
+    <!--input[type="radio"],-->
+    <!--input[type="checkbox"] {-->
+    <!--  width: auto;-->
+    <!--  margin-right: 0.5rem;-->
+    <!--}-->
+
+    <!--.checkbox-group label {-->
+    <!--  font-weight: normal;-->
+    <!--  display: flex;-->
+    <!--  align-items: center;-->
+    <!--  margin-top: 0.3rem;-->
+    <!--}-->
+
+    <!--button {-->
+    <!--  margin-top: 2rem;-->
+    <!--  padding: 0.7rem 1.5rem;-->
+    <!--  font-size: 1rem;-->
+    <!--  background-color: #f4601e;-->
+    <!--  color: white;-->
+    <!--  border: none;-->
+    <!--  border-radius: 5px;-->
+    <!--  cursor: pointer;-->
+    <!--}-->
+
+    <!--button:hover {-->
+    <!--  background-color: #d94e10;-->
+    <!--}-->
+
+    <!--.success {-->
+    <!--  color: green;-->
+    <!--  font-weight: bold;-->
+    <!--  margin-bottom: 1.5rem;-->
+    <!--  text-align: center;-->
+    <!--}-->
+
+    <!--    </style>-->
+</head>
+<body>
+<main>
+    <div class="add-form">
+        <h1>Ценим Вашето мнение!</h1>
+        <p>Спечелете две рисувани чаши Casa Art! Всеки месец теглим печеливш участник.</p>
+
+        <!-- Съобщение за успех -->
+        <p class="success" th:if="${message}" th:text="${message}"></p>
+
+        <form th:action="@{/feedback}" th:object="${feedback}" method="post">
+
+            <div class="form-field">
+                <label>Какво Ви хареса при нас?</label>
+                <textarea th:field="*{impression}" rows="3" required></textarea>
+            </div>
+            <div class="form-field">
+                <label>Как ни намерихте?</label>
+                <select th:field="*{foundUs}">
+                    <option value="приятел">Доведоха ме приятели</option>
+                    <option value="сайт">През сайта</option>
+                    <option value="агенция">Чрез агенция</option>
+                    <option value="друго">Друго</option>
+                </select>
+            </div>
+            <div class="form-field">
+                <label>Какво бихте ни препоръчали да подобрим?</label>
+                <textarea th:field="*{suggestions}" rows="2"></textarea>
+            </div>
+            <div class="form-field">
+                <label>Как бихте прекарали свободното си време при нас?</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" th:field="*{activities}" value="готвене"> Курс по готвене</label>
+                    <label><input type="checkbox" th:field="*{activities}" value="керамика"> Курс по керамика</label>
+                    <label><input type="checkbox" th:field="*{activities}" value="стъклопис"> Курс по стъклопис</label>
+                    <label><input type="checkbox" th:field="*{activities}" value="рисуване"> Рисуване за деца</label>
+                    <label><input type="checkbox" th:field="*{activities}" value="народни_танци"> Народни танци</label>
+                    <label><input type="checkbox" th:field="*{activities}" value="походи"> Походи и разходки</label>
+                    <label><input type="checkbox" th:field="*{activities}" value="йога"> Йога</label>
+                    <label><input type="checkbox" th:field="*{activities}" value="аеробика"> Аеробика</label>
+                    <label><input type="checkbox" th:field="*{activities}" value="бижута"> Ръчна изработка на
+                        бижута</label>
+                </div>
+            </div>
+            <div class="form-field">
+                <label>Друго (свободен отговор):</label>
+                <input type="text" th:field="*{customActivity}" placeholder="Друга дейност...">
+            </div>
+            <div class="form-field">
+                <label>Предложение за тематична вечер:</label>
+                <input type="text" th:field="*{themeNightSuggestion}"
+                       placeholder="напр. ориенталска вечер за млади хора">
+            </div>
+            <div class="form-field">
+                <label>Име:</label>
+                <input type="text" th:field="*{name}" required>
+            </div>
+            <div class="form-field">
+                <label>Телефон:</label>
+                <input type="text" th:field="*{phone}">
+            </div>
+            <div class="form-field">
+                <label>Email:</label>
+                <input type="email" th:field="*{email}">
+            </div>
+            <div class="form-field">
+                <label>Искате ли да Ви информираме за бъдещи събития?</label>
+                <label><input type="radio" th:field="*{newsletter}" value="true"> Да</label>
+                <label><input type="radio" th:field="*{newsletter}" value="false"> Не</label>
+            </div>
+            <div class="form-field">
+                <label>Дата:</label>
+                <input type="date" th:field="*{date}" required>
+            </div>
+            <button type="submit">Изпрати</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>
