@@ -21,8 +21,8 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     @Query("SELECT c FROM Company c WHERE c.companyType = 'ДОСТАВЧИК' ORDER BY c.id DESC")
     List<Company> findAllSuppliersOrderedByIdDesc();
 
-    List<Company> findByUnitTypes(UnitType unitType);
-    List<Company> findByUnitTypesAndIndustryTypes(UnitType unitType, IndustryType industryType);
+    List<Company> findByUnitTypesOrderByCreatedAtDesc(UnitType unitType);
+    List<Company> findByUnitTypesAndIndustryTypesOrderByCreatedAtDesc(UnitType unitType, IndustryType industryType);
 
     @Query("SELECT c FROM Company c WHERE c.companyType = 'ДОСТАВЧИК' AND c.locationType = :locationType ORDER BY c.name ASC")
     List<Company> findSuppliersByLocationType(@Param("locationType") LocationType locationType);
@@ -30,7 +30,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     @Query("SELECT c FROM Company c WHERE c.companyType = 'ПАРТНЬОР' AND c.locationType = :locationType ORDER BY c.name ASC")
     List<Company> findPartnersByLocationType(@Param("locationType") LocationType locationType);
 
-    List<Company> findByPartnerTypes(PartnerType partnerType);
+    List<Company> findByPartnerTypesOrderByCreatedAtDesc(PartnerType partnerType);
 
     @Query("SELECT c FROM Company c WHERE c.companyType = 'ПАРТНЬОР' ORDER BY c.name ASC")
     List<Company> findAllPartnersOrderedByNameAsc();

@@ -146,7 +146,7 @@ public class CompanyServiceImpl implements CompanyService {
     public List<CompanyDTO> sortedCompaniesByUnit(String unitType) {
         UnitType unit = UnitType.valueOf(unitType);
 
-        return companyRepository.findByUnitTypes(unit)
+        return companyRepository.findByUnitTypesOrderByCreatedAtDesc(unit)
                 .stream()
                 .map(this::mapCompanyToCompanyDTO) // Използване на референция към метод за по-четим код
                 .collect(Collectors.toList());
@@ -158,7 +158,7 @@ public class CompanyServiceImpl implements CompanyService {
         UnitType unit = UnitType.valueOf(unitType);
         IndustryType industry = IndustryType.valueOf(industryType);
 
-        return companyRepository.findByUnitTypesAndIndustryTypes(unit, industry)
+        return companyRepository.findByUnitTypesAndIndustryTypesOrderByCreatedAtDesc(unit, industry)
                 .stream()
                 .map(this::mapCompanyToCompanyDTO) // Използване на референция към метод за по-четим код
                 .collect(Collectors.toList());
@@ -191,7 +191,7 @@ public class CompanyServiceImpl implements CompanyService {
     public List<CompanyDTO> sortedPartnersByPartnerType(String partnerType) {
         PartnerType partner = PartnerType.valueOf(partnerType);
 
-        return companyRepository.findByPartnerTypes(partner)
+        return companyRepository.findByPartnerTypesOrderByCreatedAtDesc(partner)
                 .stream()
                 .map(this::mapCompanyToCompanyDTO) // Преобразуване в DTO директно в ламбда израза
                 .collect(Collectors.toList());
