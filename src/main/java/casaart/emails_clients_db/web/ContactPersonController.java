@@ -169,7 +169,9 @@ public class ContactPersonController {
                                      RedirectAttributes rAtt,
                                      Model model) {
 
-        String companyType = companyService.findCompanyByName(personDTO().getCompany()).getCompanyType();
+        personDTO.setCompany(personDTO.getCompany().trim().replaceAll("[,./]+", ""));
+
+        String companyType = companyService.findCompanyByName(personDTO.getCompany()).getCompanyType();
 
         boolean isPartner = companyType.equals("ПАРТНЬОР");
 
