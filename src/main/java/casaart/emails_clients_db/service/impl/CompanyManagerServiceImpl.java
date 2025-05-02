@@ -180,7 +180,7 @@ public class CompanyManagerServiceImpl implements CompanyManagerService {
         CompanyManager companyManager = new CompanyManager();
 
         // Изчистване името на фирмата от запетайки
-        personDTO.getCompany().trim().replaceAll("[,./\\s]+", " ");
+        personDTO.setCompany(personDTO.getCompany().trim().replaceAll("[,./\\s]+", ""));
 
         Company company = companyRepository.findByName(personDTO.getCompany()).get();
 
