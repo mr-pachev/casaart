@@ -33,53 +33,62 @@ public class MarketingController {
     /* ----- MANAGER ----- */
 
     // register first call for company manager
-    @GetMapping("/first-call-manager/{id}")
+    @PostMapping("/first-call-manager/{id}")
     public String registerFirstCallManager(@PathVariable("id") Long id, Model model) {
 
         marketingService.registerFirstCallManager(id);
+
         PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        CompanyDTO companyDTO = companyService.findByCompanyManagerId(id);
         model.addAttribute("personDTO", personDTO);
-        return "current-company-manager";
+        return "redirect:/current-company-manager/" + companyDTO.getId();
     }
 
     // register send email for company manager
-    @GetMapping("/send-email-manager/{id}")
+    @PostMapping("/send-email-manager/{id}")
     public String registerFirstEmailManager(@PathVariable("id") Long id, Model model) {
 
         marketingService.registerSendEmailManager(id);
         PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        CompanyDTO companyDTO = companyService.findByCompanyManagerId(id);
         model.addAttribute("personDTO", personDTO);
-        return "current-company-manager";
+        return "redirect:/current-company-manager/" + companyDTO.getId();
     }
 
     // register send letter for company manager
-    @GetMapping("/send-letter-manager/{id}")
+    @PostMapping("/send-letter-manager/{id}")
     public String registerSendLetterManager(@PathVariable("id") Long id, Model model) {
 
         marketingService.registerSendLetterManager(id);
+
         PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        CompanyDTO companyDTO = companyService.findByCompanyManagerId(id);
         model.addAttribute("personDTO", personDTO);
-        return "current-company-manager";
+        return "redirect:/current-company-manager/" + companyDTO.getId();
     }
 
     // register second call for manager
-    @GetMapping("/second-call-manager/{id}")
+    @PostMapping("/second-call-manager/{id}")
     public String registerSecondCallManager(@PathVariable("id") Long id, Model model) {
 
         marketingService.registerSecondCallManager(id);
+
         PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        CompanyDTO companyDTO = companyService.findByCompanyManagerId(id);
         model.addAttribute("personDTO", personDTO);
-        return "current-company-manager";
+        return "redirect:/current-company-manager/" + companyDTO.getId();
     }
 
     // register presence for manager
-    @GetMapping("/presence-manager/{id}")
+    @PostMapping("/presence-manager/{id}")
     public String registerPresenceManager(@PathVariable("id") Long id, Model model) {
 
         marketingService.registerPresenceManager(id);
+
         PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        CompanyDTO companyDTO = companyService.findByCompanyManagerId(id);
         model.addAttribute("personDTO", personDTO);
-        return "current-company-manager";
+        return "redirect:/current-company-manager/" + companyDTO.getId();
     }
 
     /* ----- CONTACT PERSON ----- */

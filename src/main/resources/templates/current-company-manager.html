@@ -44,7 +44,7 @@
                             <span th:text="${personDTO.firstCall}"></span>
                         </li>
                         <li>
-                            <form th:method="GET" th:action="@{/first-call-manager/{id}(id=${personDTO.id})}">
+                            <form th:method="POST" th:action="@{/first-call-manager/{id}(id=${personDTO.id})}">
                                 <button type="submit" class="reg-button">Регистрирай</button>
                             </form>
                         </li>
@@ -56,7 +56,7 @@
                             <span th:text="${personDTO.sendEmail}"></span>
                         </li>
                         <li>
-                            <form th:method="GET" th:action="@{/send-email-manager/{id}(id=${personDTO.id})}">
+                            <form th:method="POST" th:action="@{/send-email-manager/{id}(id=${personDTO.id})}">
                                 <button type="submit" class="reg-button">Регистрирай</button>
                             </form>
                         </li>
@@ -68,7 +68,7 @@
                             <span th:text="${personDTO.sendLetter}"></span>
                         </li>
                         <li>
-                            <form th:method="GET" th:action="@{/send-letter-manager/{id}(id=${personDTO.id})}">
+                            <form th:method="POST" th:action="@{/send-letter-manager/{id}(id=${personDTO.id})}">
                                 <button type="submit" class="reg-button">Регистрирай</button>
                             </form>
                         </li>
@@ -80,7 +80,7 @@
                             <span th:text="${personDTO.secondCall}"></span>
                         </li>
                         <li>
-                            <form th:method="GET" th:action="@{/second-call-manager/{id}(id=${personDTO.id})}">
+                            <form th:method="POST" th:action="@{/second-call-manager/{id}(id=${personDTO.id})}">
                                 <button type="submit" class="reg-button">Регистрирай</button>
                             </form>
                         </li>
@@ -92,7 +92,7 @@
                             <span th:text="${personDTO.presence}"></span>
                         </li>
                         <li>
-                            <form th:method="GET" th:action="@{/presence-manager/{id}(id=${personDTO.id})}">
+                            <form th:method="POST" th:action="@{/presence-manager/{id}(id=${personDTO.id})}">
                                 <button type="submit" class="reg-button">Регистрирай</button>
                             </form>
                         </li>

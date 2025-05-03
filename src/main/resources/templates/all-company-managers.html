@@ -71,7 +71,7 @@
                             <span th:text="${manager.firstCall}"></span>
                         </li>
                         <li>
-                            <form th:method="GET" th:action="@{/first-call-manager/{id}(id=${manager.id})}">
+                            <form th:method="POST" th:action="@{/first-call-manager/{id}(id=${manager.id})}">
                                 <button type="submit" class="reg-button">Регистрирай</button>
                             </form>
                         </li>
@@ -83,7 +83,7 @@
                             <span th:text="${manager.sendEmail}"></span>
                         </li>
                         <li>
-                            <form th:method="GET" th:action="@{/send-email-manager/{id}(id=${manager.id})}">
+                            <form th:method="POST" th:action="@{/send-email-manager/{id}(id=${manager.id})}">
                                 <button type="submit" class="reg-button">Регистрирай</button>
                             </form>
                         </li>
@@ -95,7 +95,7 @@
                             <span th:text="${manager.sendLetter}"></span>
                         </li>
                         <li>
-                            <form th:method="GET" th:action="@{/send-letter-manager/{id}(id=${manager.id})}">
+                            <form th:method="POST" th:action="@{/send-letter-manager/{id}(id=${manager.id})}">
                                 <button type="submit" class="reg-button">Регистрирай</button>
                             </form>
                         </li>
@@ -107,7 +107,7 @@
                             <span th:text="${manager.secondCall}"></span>
                         </li>
                         <li>
-                            <form th:method="GET" th:action="@{/second-call-manager/{id}(id=${manager.id})}">
+                            <form th:method="POST" th:action="@{/second-call-manager/{id}(id=${manager.id})}">
                                 <button type="submit" class="reg-button">Регистрирай</button>
                             </form>
                         </li>

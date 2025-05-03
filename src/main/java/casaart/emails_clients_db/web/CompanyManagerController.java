@@ -61,7 +61,7 @@ public class CompanyManagerController {
 
         boolean isPartner = companyDTO.getCompanyType().equals("ПАРТНЬОР");
 
-        model.addAttribute(personDTO);
+        model.addAttribute("personDTO", personDTO);
         model.addAttribute("isPartner", isPartner);
 
         return "current-company-manager";
