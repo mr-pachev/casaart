@@ -95,56 +95,58 @@ public class MarketingController {
 
     // register first call for contact person
     @PostMapping("/first-call-contact-person/{id}")
-    public String registerFirstCallContactPerson(@PathVariable("id") Long id) {
+    public String registerFirstCallContactPerson(@PathVariable("id") Long id, Model model) {
+
         marketingService.registerFirstCallContactPerson(id);
 
-        return "redirect:/marketing/current-contact-persons/" + id;
+        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        CompanyDTO companyDTO = companyService.findByContactPersonId(id);
+        model.addAttribute("personDTO", personDTO);
+        return "redirect:/current-contact-persons/" + companyDTO.getId();
     }
 
     // register send email for contact person
     @PostMapping("/send-email-contact-person/{id}")
-    public String registerSendEmailContactPerson(@PathVariable("id") Long id) {
+    public String registerSendEmailContactPerson(@PathVariable("id") Long id, Model model) {
         marketingService.registerSendEmailContactPerson(id);
 
-        return "redirect:/marketing/current-contact-persons/" + id;
+        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        CompanyDTO companyDTO = companyService.findByContactPersonId(id);
+        model.addAttribute("personDTO", personDTO);
+        return "redirect:/current-contact-persons/" + companyDTO.getId();
     }
 
     // register send letter for contact person
     @PostMapping("/send-letter-contact-person/{id}")
-    public String registerSendLetterContactPerson(@PathVariable("id") Long id) {
+    public String registerSendLetterContactPerson(@PathVariable("id") Long id, Model model) {
         marketingService.registerSendLetterContactPerson(id);
 
-        return "redirect:/marketing/current-contact-persons/" + id;
+        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        CompanyDTO companyDTO = companyService.findByContactPersonId(id);
+        model.addAttribute("personDTO", personDTO);
+        return "redirect:/current-contact-persons/" + companyDTO.getId();
     }
 
     // register second call for contact person
     @PostMapping("/second-call-contact-person/{id}")
-    public String registerSecondCallContactPerson(@PathVariable("id") Long id) {
+    public String registerSecondCallContactPerson(@PathVariable("id") Long id, Model model) {
         marketingService.registerSecondCallContactPerson(id);
 
-        return "redirect:/marketing/current-contact-persons/" + id;
+        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        CompanyDTO companyDTO = companyService.findByContactPersonId(id);
+        model.addAttribute("personDTO", personDTO);
+        return "redirect:/current-contact-persons/" + companyDTO.getId();
     }
 
     // register presence for contact presence
     @PostMapping("/presence-contact-person/{id}")
-    public String registerPresenceContactPerson(@PathVariable("id") Long id) {
+    public String registerPresenceContactPerson(@PathVariable("id") Long id, Model model) {
         marketingService.registerPresenceContactPerson(id);
 
-        return "redirect:/marketing/current-contact-persons/" + id;
-    }
-
-    // view current contact persons after register marketing event
-    @GetMapping("/marketing/current-contact-persons/{id}")
-    public String showCurrentContactPerson(@PathVariable("id") Long id, Model model) {
-        PersonDTO personDTO = contactPersonService.getContactPersonById(id);
-
-        CompanyDTO companyDTO = companyService.findCompanyByName(personDTO.getCompany());
-        List<PersonDTO> contactPersons = contactPersonService.currentContactPersonsByCompanyId(companyDTO.getId());
-
-        model.addAttribute("contactPersons", contactPersons);
-        model.addAttribute("companyDTO", companyDTO);
-
-        return "current-contact-persons";
+        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        CompanyDTO companyDTO = companyService.findByContactPersonId(id);
+        model.addAttribute("personDTO", personDTO);
+        return "redirect:/current-contact-persons/" + companyDTO.getId();
     }
 
     /* ----- CLIENT ----- */

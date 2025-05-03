@@ -219,6 +219,14 @@ public class CompanyServiceImpl implements CompanyService {
         return mapCompanyToCompanyDTO(company);
     }
 
+    // find company by contact person id
+    @Override
+    public CompanyDTO findByContactPersonId(long id) {
+        Company company = companyRepository.findByContactPersons_Id(id).get();
+
+        return  mapCompanyToCompanyDTO(company);
+    }
+
     // find company by name
     @Override
     public CompanyDTO findCompanyByName(String name) {

@@ -15,6 +15,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
     Optional<Company> findByName(String name);
     Optional<Company> findByCompanyManagerId(long id);
+    Optional<Company> findByContactPersons_Id(long contactPersonId);
 
     @Query("SELECT c FROM Company c WHERE c.companyType = 'ПАРТНЬОР' ORDER BY c.id DESC")
     List<Company> findAllPartnersOrderedByIdDesc();
