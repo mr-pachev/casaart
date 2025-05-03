@@ -19,23 +19,39 @@ import java.util.Set;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
     Optional<Client> findByEmail(String email);
+
     Optional<Client> findByFirstNameAndLastNameAndEmail(String firstName, String lastName, String email);
+
     Client findById(long id);
 
     List<Client> findAllByOrderByIdDesc();
+
     List<Client> findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();
+
     List<Client> findAllByOrderByFirstEmailDesc();
+
     List<Client> findAllByOrderByFirstCallDesc();
+
     List<Client> findAllByOrderBySecondEmailDesc();
+
     List<Client> findAllByOrderBySecondCallDesc();
+
     List<Client> findAllByFirstName(String firstName);
+
     List<Client> findAllByFirstNameAndLastName(String firstName, String lastName);
+
     List<Client> findAllBySourceTypes(SourceType sourceType);
+
     List<Client> findAllByLoyaltyLevel(LoyaltyLevel loyaltyLevel);
+
     List<Client> findAllByNationality(Nationality nationality);
+
     List<Client> findAllByRatingFood(Rating ratingFood);
+
     List<Client> findAllByRatingQualityPrice(Rating ratingQualityPrice);
+
     List<Client> findAllByRatingPoliteness(Rating ratingPoliteness);
+
     List<Client> findAllByRatingCleanTidy(Rating ratingCleanTidy);
 
     @Query("SELECT c FROM Client c " +
@@ -44,11 +60,12 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
             "ORDER BY MAX(o.year) DESC")
     List<Client> findAllClientsOrderByLatestOrderYearDesc();
 
-    @Query("SELECT DISTINCT c FROM Client c " +
+    @Query("SELECT c FROM Client c " +
             "JOIN c.orders o " +
-            "WHERE o.year = :year")
+            "WHERE o.year = :year " +
+            "GROUP BY c.id " +
+            "ORDER BY MAX(o.id) ASC")
     List<Client> findAllClientsByOrderYear(@Param("year") String year);
-
 
 
     @Query("SELECT c.email FROM Client c")
