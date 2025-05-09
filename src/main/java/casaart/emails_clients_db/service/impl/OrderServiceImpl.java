@@ -56,7 +56,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void addOrder(OrderDTO orderDTO, long clientId) {
         Client client = clientRepository.findById(clientId);
-        Order order = mapper.map(orderDTO, Order.class);
+        Order order = new Order();
+        order.setNumber(orderDTO.getNumber());
+        order.setYear(orderDTO.getYear());
+        order.setClient(client);
+        order.setFolderPath(orderDTO.getFolderPath());
 
         order.setClient(client);
 
