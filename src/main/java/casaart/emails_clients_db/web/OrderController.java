@@ -98,9 +98,6 @@ public class OrderController {
         return "redirect:/current-orders/" + id;
     }
 
-
-
-
     // edit order
     @PostMapping("/order-details/{id}")
     public String referenceToEditOrderForm(@PathVariable("id") Long id) {

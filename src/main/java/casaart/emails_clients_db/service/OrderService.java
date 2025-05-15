@@ -12,6 +12,9 @@ public interface OrderService {
     // get order by id
     OrderDTO getOrderById(long orderId);
 
+    // get order by number
+    OrderDTO getOrderByNumber(String numberOrder);
+
     // check is exist order
     boolean isExistOrder(OrderDTO orderDTO);
 

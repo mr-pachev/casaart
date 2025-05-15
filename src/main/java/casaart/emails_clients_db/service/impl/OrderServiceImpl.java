@@ -46,6 +46,20 @@ public class OrderServiceImpl implements OrderService {
         return orderDTO;
     }
 
+    // get order by number
+    @Override
+    public OrderDTO getOrderByNumber(String numberOrder) {
+
+        if(orderRepository.findByNumber(numberOrder).isEmpty()){
+            return null;
+        }
+
+        Order order = orderRepository.findByNumber(numberOrder).get();
+        OrderDTO orderDTO = mapper.map(order, OrderDTO.class);
+
+        return orderDTO;
+    }
+
     // check is exist order
     @Override
     public boolean isExistOrder(OrderDTO orderDTO) {

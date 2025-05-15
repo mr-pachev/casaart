@@ -9,6 +9,7 @@ import casaart.emails_clients_db.model.entity.User;
 import casaart.emails_clients_db.model.enums.*;
 import casaart.emails_clients_db.repository.ClientRepository;
 import casaart.emails_clients_db.service.ClientService;
+import casaart.emails_clients_db.service.OrderService;
 import casaart.emails_clients_db.service.UserHelperService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,13 @@ import java.util.stream.Collectors;
 @Service
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
+    private final OrderService orderService;
     private final UserHelperService userHelperService;
     private final ModelMapper mapper;
 
-    public ClientServiceImpl(ClientRepository clientRepository, UserHelperService userHelperService, ModelMapper mapper) {
+    public ClientServiceImpl(ClientRepository clientRepository, OrderService orderService, UserHelperService userHelperService, ModelMapper mapper) {
         this.clientRepository = clientRepository;
+        this.orderService = orderService;
         this.userHelperService = userHelperService;
         this.mapper = mapper;
     }
@@ -56,7 +59,7 @@ public class ClientServiceImpl implements ClientService {
         } else if ("allClientsByFirstEmail".equals(type)) {
             clientList = clientRepository.findAllByOrderByFirstEmailDesc();
 
-        }else if ("allClientsByFirstCall".equals(type)) {
+        } else if ("allClientsByFirstCall".equals(type)) {
             clientList = clientRepository.findAllByOrderByFirstCallDesc();
 
         } else if ("allClientsBySecondEmail".equals(type)) {
@@ -64,7 +67,7 @@ public class ClientServiceImpl implements ClientService {
 
         } else if ("allClientsBySecondCall".equals(type)) {
             clientList = clientRepository.findAllByOrderBySecondCallDesc();
-        // поле за търсене в шаблона
+            // поле за търсене в шаблона
         } else if (type.contains("@")) {
 
             if (clientRepository.findByEmail(type).isPresent()) {
@@ -75,6 +78,15 @@ public class ClientServiceImpl implements ClientService {
         } else if (type.matches("20(1[6-9]|2[0-5])")) {
             int year = Integer.parseInt(type);
             clientList = clientRepository.findAllClientsByOrderYear(type);
+
+            // номер на поръчка (низ от 4 до 5 символа)
+        } else if (type.matches("[A-Za-z0-9]{4,5}")) {
+
+            OrderDTO orderDTO = orderService.getOrderByNumber(type);
+
+            if (orderDTO != null && orderDTO.getClientId() != 0) {
+                clientList.add(clientRepository.findById(orderDTO.getClientId()));
+            }
 
             // име на клиента
         } else if (inputArr.length == 1) {
