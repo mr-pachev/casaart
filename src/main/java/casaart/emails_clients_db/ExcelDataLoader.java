@@ -22,28 +22,28 @@ public class ExcelDataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
         // добавяне на текущата дата към filePathExportClients
-        String basePath = "C:\\Users\\user\\Documents\\IP\\BACKUP_CLIENTS";
+        String basePath = "D:\\BACKUP_CLIENTS";
         String formattedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyy"));
 
         // добавяне на текущата дата към filePathExportCompanyManager
-        String basePathCompanyManager = "C:\\Users\\user\\Documents\\IP\\BACKUP_COMPANY_MANAGERS";
+        String basePathCompanyManager = "D:\\BACKUP_COMPANY_MANAGERS";
         String formattedDateCompanyManager = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyy"));
 
         // добавяне на текущата дата към filePathExportContactPerson
-        String basePathContactPersons = "C:\\Users\\user\\Documents\\IP\\BACKUP_CONTACT_PERSONS.xlsx";
+        String basePathContactPersons = "D:\\BACKUP_CONTACT_PERSONS.xlsx";
         String formattedDateContactPersons = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyy"));
 
         // добавяне на текущата дата към filePathExportCompanies
-        String basePathCompanies = "C:\\Users\\user\\Documents\\IP\\BACKUP_COMPANIES.xlsx";
+        String basePathCompanies = "D:\\BACKUP_COMPANIES.xlsx";
         String formattedDateCompanies = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyy"));
 
-        String filePathImportClients = "C:\\Users\\user\\Documents\\IP\\demo.xlsx"; // Път до локалния Excel файл demo
-        String filePathImportEmailsFromMailChimp = "C:\\Users\\user\\Documents\\IP\\IMPORT_EMAILS_FROM_MAILCHIMP.xlsx"; // Път до локалния Excel IMPORT_EMAILS_FROM_MAILCHIMP
+        String filePathImportClients = "D:\\IMPORT_CLIENTS_TEMPLATE.xlsx"; // Път до локалния Excel файл demo
+        String filePathImportEmailsFromMailChimp = "D:\\IMPORT_EMAILS_FROM_MAILCHIMP.xlsx"; // Път до локалния Excel IMPORT_EMAILS_FROM_MAILCHIMP
         String filePathExportClients = basePath + "_" + formattedDate + ".xlsx"; // Път до локалния Excel файл BACKUP_CLIENTS
         String filePathExportCompanies = basePathCompanies + "_" + formattedDateCompanies + ".xlsx"; // Път до локалния Excel файл BACKUP_COMPANIES
         String filePathExportCompanyManager = basePathCompanyManager + "_" + formattedDateCompanyManager + ".xlsx"; // Път до локалния Excel файл BACKUP_COMPANY_MANAGERS
         String filePathExportContactPerson = basePathContactPersons + "_" + formattedDateContactPersons + ".xlsx"; // Път до локалния Excel файл BACKUP_CONTACT_PERSONS
-        String filePathExportNoMatchedEmails = "C:\\Users\\user\\Documents\\IP\\NEW_EMAILS.xlsx"; // Път до локалния Excel файл NEW_EMAILS
+        String filePathExportNoMatchedEmails = "D:\\NEW_EMAILS.xlsx"; // Път до локалния Excel файл NEW_EMAILS
 
 //        EDIT CLIENTS
 //        editDataBaseService.removeDuplicateClients();
