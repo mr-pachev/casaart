@@ -99,7 +99,7 @@ public class MarketingController {
 
         marketingService.registerFirstCallContactPerson(id);
 
-        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        PersonDTO personDTO = contactPersonService.getContactPersonById(id);
         CompanyDTO companyDTO = companyService.findByContactPersonId(id);
         model.addAttribute("personDTO", personDTO);
         return "redirect:/current-contact-persons/" + companyDTO.getId();
@@ -110,7 +110,7 @@ public class MarketingController {
     public String registerSendEmailContactPerson(@PathVariable("id") Long id, Model model) {
         marketingService.registerSendEmailContactPerson(id);
 
-        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        PersonDTO personDTO = contactPersonService.getContactPersonById(id);
         CompanyDTO companyDTO = companyService.findByContactPersonId(id);
         model.addAttribute("personDTO", personDTO);
         return "redirect:/current-contact-persons/" + companyDTO.getId();
@@ -121,7 +121,7 @@ public class MarketingController {
     public String registerSendLetterContactPerson(@PathVariable("id") Long id, Model model) {
         marketingService.registerSendLetterContactPerson(id);
 
-        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        PersonDTO personDTO = contactPersonService.getContactPersonById(id);
         CompanyDTO companyDTO = companyService.findByContactPersonId(id);
         model.addAttribute("personDTO", personDTO);
         return "redirect:/current-contact-persons/" + companyDTO.getId();
@@ -132,7 +132,7 @@ public class MarketingController {
     public String registerSecondCallContactPerson(@PathVariable("id") Long id, Model model) {
         marketingService.registerSecondCallContactPerson(id);
 
-        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        PersonDTO personDTO = contactPersonService.getContactPersonById(id);
         CompanyDTO companyDTO = companyService.findByContactPersonId(id);
         model.addAttribute("personDTO", personDTO);
         return "redirect:/current-contact-persons/" + companyDTO.getId();
@@ -143,7 +143,7 @@ public class MarketingController {
     public String registerPresenceContactPerson(@PathVariable("id") Long id, Model model) {
         marketingService.registerPresenceContactPerson(id);
 
-        PersonDTO personDTO = companyManagerService.findCompanyManagerById(id);
+        PersonDTO personDTO = contactPersonService.getContactPersonById(id);
         CompanyDTO companyDTO = companyService.findByContactPersonId(id);
         model.addAttribute("personDTO", personDTO);
         return "redirect:/current-contact-persons/" + companyDTO.getId();
