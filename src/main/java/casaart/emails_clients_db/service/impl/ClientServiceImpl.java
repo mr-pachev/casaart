@@ -259,6 +259,11 @@ public class ClientServiceImpl implements ClientService {
             editedClient.setLoyaltyLevel(null);
         }
 
+        // когато променяме ръчно броя на престой
+        if(existClient.getCounterStay() != clientDTO.getCounterStay()){
+            editedClient.setCounterStay(clientDTO.getCounterStay());
+        }
+
         editedClient.setUser(user);
         editedClient.setModifyFrom(userHelperService.getUser().getUsername());
 

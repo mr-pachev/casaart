@@ -214,6 +214,14 @@
                 <input type="date" class="form-control" id="accommodationDate" name="accommodationDate"
                        th:value="${clientDTO.accommodationDate}">
             </div>
+            <div class="form-field">
+                <label for="counterStay">Брояч престой</label>
+                <input type="text" th:placeholder="${clientDTO.counterStay}"
+                       id="counterStay"
+                       name="counterStay"
+                       class="form-control"
+                       th:field="*{counterStay}">
+            </div>
             <!--                <div class="form-field">-->
             <!--                    <label for="firstEmail" class="form-label">Дата на първи имейл</label>-->
             <!--                    <input type="date" class="form-control" id="firstEmail" name="firstEmail" th:value="${clientDTO.firstEmail}">-->
