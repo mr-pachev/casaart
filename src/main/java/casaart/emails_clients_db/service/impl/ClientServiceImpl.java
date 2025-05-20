@@ -252,7 +252,7 @@ public class ClientServiceImpl implements ClientService {
             editedClient.setCounterStay(existClient.getCounterStay());
 
         } else if (clientDTO.getAccommodationDate() == null && clientDTO.getLoyaltyLevel() == null) { // Няма въведена дата настаняване и няма въвведено ниво лоялност
-            editedClient.setCounterStay(null);
+            editedClient.setCounterStay(0);
             editedClient.setAccommodationDate(null);
 
         } else { // Няма въведена дата настаняване но има въведено ниво лоялност
@@ -260,7 +260,7 @@ public class ClientServiceImpl implements ClientService {
         }
 
         // когато променяме ръчно броя на престой
-        if(existClient.getCounterStay() != clientDTO.getCounterStay()){
+        if(existClient.getCounterStay() != clientDTO.getCounterStay() && clientDTO.getCounterStay() != 0){
             editedClient.setCounterStay(clientDTO.getCounterStay());
         }
 

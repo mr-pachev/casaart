@@ -28,7 +28,7 @@ public class ClientDTO {
     @Size(max = 10)
     private String phoneNumber;
 
-    int counterStay;
+    Integer counterStay;
 
     private List<String> sourceTypes;
 
@@ -125,11 +125,11 @@ public class ClientDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getCounterStay() {
+    public Integer getCounterStay() {
         return counterStay;
     }
 
-    public void setCounterStay(int counterStay) {
+    public void setCounterStay(Integer counterStay) {
         this.counterStay = counterStay;
     }
 

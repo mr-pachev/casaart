@@ -81,7 +81,7 @@ public class ExelServiceImpl implements ExelService {
                 row.createCell(4).setCellValue(client.getEmail() != null ? client.getEmail() : "");
                 row.createCell(5).setCellValue(client.getSourceTypes() != null ? client.getSourceTypes().stream().map(SourceType::toString).collect(Collectors.joining(", ")) : "");
                 row.createCell(6).setCellValue(client.getLoyaltyLevel() != null ? client.getLoyaltyLevel().toString() : "");
-                row.createCell(7).setCellValue(client.getCounterStay() != null ? client.getCounterStay().toString() : "");
+                row.createCell(7).setCellValue(client.getCounterStay() != 0 ? client.getCounterStay().toString() : "");
                 row.createCell(8).setCellValue(client.getModifyFrom() != null ? client.getModifyFrom() : "");
                 row.createCell(9).setCellValue(client.getAccommodationDate() != null ? client.getAccommodationDate().toString() : "");
                 row.createCell(10).setCellValue(client.getNationality() != null ? client.getNationality().toString() : "");
