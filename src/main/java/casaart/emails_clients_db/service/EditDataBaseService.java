@@ -17,6 +17,9 @@ public interface EditDataBaseService {
     // edit all emails in lower case for company
     void normalizeEmailsForCompanies();
 
+    // fill empty counterStay
+    void initializeCounterStayIfNull();
+
     // update all client names
     void updateAllClientNames();
 }

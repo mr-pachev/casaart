@@ -48,7 +48,7 @@ public class ExelServiceImpl implements ExelService {
         this.userHelperService = userHelperService;
     }
 
-    // export clients to exel
+    // export clients to exel to HDD
     @Override
     public void exportClientsToExcel(String filePath) {
         List<Client> clients = clientRepository.findAll();
@@ -114,7 +114,74 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
-    // export companies to exel
+    // export clients to exel to browser
+    @Override
+    public void populateWorkbookWithClients(Workbook workbook) {
+        List<Client> clients = clientRepository.findAll();
+        Sheet sheet = workbook.createSheet("Clients");
+
+        // Заглавен ред
+        Row headerRow = sheet.createRow(0);
+        String[] headers = {
+                "First Name", "Middle Name", "Last Name", "Phone Number", "Email", "Source Type",
+                "Loyalty Level", "Counter stay", "Modify From", "Acc Date", "Nat",
+                "First Call", "First Email", "Second Call", "Second Email",
+                "Rating Food", "Rating Quality Price", "Rating Politeness", "Rating Clean Tidy",
+                "User", "Comment"
+        };
+
+        CellStyle headerStyle = workbook.createCellStyle();
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerStyle.setFont(headerFont);
+
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+            cell.setCellStyle(headerStyle);
+        }
+
+        // Данни
+        int rowNum = 1;
+        for (Client client : clients) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(client.getFirstName() != null ? client.getFirstName() : "");
+            row.createCell(1).setCellValue(client.getMiddleName() != null ? client.getMiddleName() : "");
+            row.createCell(2).setCellValue(client.getLastName() != null ? client.getLastName() : "");
+            row.createCell(3).setCellValue(client.getPhoneNumber() != null ? client.getPhoneNumber() : "");
+            row.createCell(4).setCellValue(client.getEmail() != null ? client.getEmail() : "");
+            row.createCell(5).setCellValue(client.getSourceTypes() != null
+                    ? client.getSourceTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
+                    : "");
+            row.createCell(6).setCellValue(client.getLoyaltyLevel() != null ? client.getLoyaltyLevel().toString() : "");
+            row.createCell(7).setCellValue(client.getCounterStay() != null ? client.getCounterStay().toString() : "");
+            row.createCell(8).setCellValue(client.getModifyFrom() != null ? client.getModifyFrom() : "");
+            row.createCell(9).setCellValue(client.getAccommodationDate() != null ? client.getAccommodationDate().toString() : "");
+            row.createCell(10).setCellValue(client.getNationality() != null ? client.getNationality().toString() : "");
+            row.createCell(11).setCellValue(client.getFirstCall() != null ? client.getFirstCall().toString() : "");
+            row.createCell(12).setCellValue(client.getFirstEmail() != null ? client.getFirstEmail().toString() : "");
+            row.createCell(13).setCellValue(client.getSecondCall() != null ? client.getSecondCall().toString() : "");
+            row.createCell(14).setCellValue(client.getSecondEmail() != null ? client.getSecondEmail().toString() : "");
+            row.createCell(15).setCellValue(client.getRatingFood() != null ? client.getRatingFood().toString() : "");
+            row.createCell(16).setCellValue(client.getRatingQualityPrice() != null ? client.getRatingQualityPrice().toString() : "");
+            row.createCell(17).setCellValue(client.getRatingPoliteness() != null ? client.getRatingPoliteness().toString() : "");
+            row.createCell(18).setCellValue(client.getRatingCleanTidy() != null ? client.getRatingCleanTidy().toString() : "");
+            row.createCell(19).setCellValue(client.getUser() != null ? client.getUser().getUsername() : "");
+            row.createCell(20).setCellValue(client.getComment() != null ? client.getComment() : "");
+        }
+
+        // Автоматично нагласяне на ширината на колоните
+        for (int i = 0; i < headers.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+    }
+
+    // Хелпер метод за null-safe текст
+    private String getOrEmpty(String value) {
+        return value != null ? value : "";
+    }
+
+    // export companies to exel to HDD
     @Override
     public void exportCompaniesToExcel(String filePath) {
         List<Company> companies = companyRepository.findAll();
@@ -169,6 +236,180 @@ public class ExelServiceImpl implements ExelService {
         } catch (IOException e) {
             System.err.println("ERROR WRITING Excel file: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    // export companies to exel to browser
+    @Override
+    public void populateWorkbookWithCompanies(Workbook workbook) {
+        List<Company> companies = companyRepository.findAll();
+        Sheet sheet = workbook.createSheet("Companies");
+
+        // Заглавен ред
+        Row headerRow = sheet.createRow(0);
+        String[] headers = {
+                "Name", "Address", "Phone Number", "Email", "URL", "Location Type", "Company Type",
+                "Industry Types", "Unit Types", "Partner Types", "Company Manager", "Contact Persons"
+        };
+
+        CellStyle headerStyle = workbook.createCellStyle();
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerStyle.setFont(headerFont);
+
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+            cell.setCellStyle(headerStyle);
+        }
+
+        // Данни
+        int rowNum = 1;
+        for (Company company : companies) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(company.getName() != null ? company.getName() : "");
+            row.createCell(1).setCellValue(company.getAddress() != null ? company.getAddress() : "");
+            row.createCell(2).setCellValue(company.getPhoneNumber() != null ? company.getPhoneNumber() : "");
+            row.createCell(3).setCellValue(company.getEmail() != null ? company.getEmail() : "");
+            row.createCell(4).setCellValue(company.getUrl() != null ? company.getUrl() : "");
+            row.createCell(5).setCellValue(company.getLocationType() != null ? company.getLocationType().toString() : "");
+            row.createCell(6).setCellValue(company.getCompanyType() != null ? company.getCompanyType().toString() : "");
+            row.createCell(7).setCellValue(company.getIndustryTypes() != null
+                    ? company.getIndustryTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
+                    : "");
+            row.createCell(8).setCellValue(company.getUnitTypes() != null
+                    ? company.getUnitTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
+                    : "");
+            row.createCell(9).setCellValue(company.getPartnerTypes() != null
+                    ? company.getPartnerTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
+                    : "");
+            row.createCell(10).setCellValue(company.getCompanyManager() != null
+                    ? company.getCompanyManager().getFullName()
+                    : "");
+            row.createCell(11).setCellValue(company.getContactPersons() != null
+                    ? company.getContactPersons().stream().map(ContactPerson::getFullName).collect(Collectors.joining(", "))
+                    : "");
+        }
+
+        // Автоматично нагласяне на ширината на колоните
+        for (int i = 0; i < headers.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+    }
+
+    // export all suppliers to exel to browser
+    @Override
+    public void populateWorkbookWithSuppliers(Workbook workbook) {
+        List<Company> companies = companyRepository.findAllSuppliersOrderedByIdDesc();
+        Sheet sheet = workbook.createSheet("Companies");
+
+        // Заглавен ред
+        Row headerRow = sheet.createRow(0);
+        String[] headers = {
+                "Name", "Address", "Phone Number", "Email", "URL", "Location Type", "Company Type",
+                "Industry Types", "Unit Types", "Partner Types", "Company Manager", "Contact Persons"
+        };
+
+        CellStyle headerStyle = workbook.createCellStyle();
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerStyle.setFont(headerFont);
+
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+            cell.setCellStyle(headerStyle);
+        }
+
+        // Данни
+        int rowNum = 1;
+        for (Company company : companies) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(company.getName() != null ? company.getName() : "");
+            row.createCell(1).setCellValue(company.getAddress() != null ? company.getAddress() : "");
+            row.createCell(2).setCellValue(company.getPhoneNumber() != null ? company.getPhoneNumber() : "");
+            row.createCell(3).setCellValue(company.getEmail() != null ? company.getEmail() : "");
+            row.createCell(4).setCellValue(company.getUrl() != null ? company.getUrl() : "");
+            row.createCell(5).setCellValue(company.getLocationType() != null ? company.getLocationType().toString() : "");
+            row.createCell(6).setCellValue(company.getCompanyType() != null ? company.getCompanyType().toString() : "");
+            row.createCell(7).setCellValue(company.getIndustryTypes() != null
+                    ? company.getIndustryTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
+                    : "");
+            row.createCell(8).setCellValue(company.getUnitTypes() != null
+                    ? company.getUnitTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
+                    : "");
+            row.createCell(9).setCellValue(company.getPartnerTypes() != null
+                    ? company.getPartnerTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
+                    : "");
+            row.createCell(10).setCellValue(company.getCompanyManager() != null
+                    ? company.getCompanyManager().getFullName()
+                    : "");
+            row.createCell(11).setCellValue(company.getContactPersons() != null
+                    ? company.getContactPersons().stream().map(ContactPerson::getFullName).collect(Collectors.joining(", "))
+                    : "");
+        }
+
+        // Автоматично нагласяне на ширината на колоните
+        for (int i = 0; i < headers.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+    }
+
+    // export all partners to exel to browser
+    @Override
+    public void populateWorkbookWithPartners(Workbook workbook) {
+        List<Company> companies = companyRepository.findAllPartnersOrderedByIdDesc();
+        Sheet sheet = workbook.createSheet("Companies");
+
+        // Заглавен ред
+        Row headerRow = sheet.createRow(0);
+        String[] headers = {
+                "Name", "Address", "Phone Number", "Email", "URL", "Location Type", "Company Type",
+                "Industry Types", "Unit Types", "Partner Types", "Company Manager", "Contact Persons"
+        };
+
+        CellStyle headerStyle = workbook.createCellStyle();
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerStyle.setFont(headerFont);
+
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+            cell.setCellStyle(headerStyle);
+        }
+
+        // Данни
+        int rowNum = 1;
+        for (Company company : companies) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(company.getName() != null ? company.getName() : "");
+            row.createCell(1).setCellValue(company.getAddress() != null ? company.getAddress() : "");
+            row.createCell(2).setCellValue(company.getPhoneNumber() != null ? company.getPhoneNumber() : "");
+            row.createCell(3).setCellValue(company.getEmail() != null ? company.getEmail() : "");
+            row.createCell(4).setCellValue(company.getUrl() != null ? company.getUrl() : "");
+            row.createCell(5).setCellValue(company.getLocationType() != null ? company.getLocationType().toString() : "");
+            row.createCell(6).setCellValue(company.getCompanyType() != null ? company.getCompanyType().toString() : "");
+            row.createCell(7).setCellValue(company.getIndustryTypes() != null
+                    ? company.getIndustryTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
+                    : "");
+            row.createCell(8).setCellValue(company.getUnitTypes() != null
+                    ? company.getUnitTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
+                    : "");
+            row.createCell(9).setCellValue(company.getPartnerTypes() != null
+                    ? company.getPartnerTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
+                    : "");
+            row.createCell(10).setCellValue(company.getCompanyManager() != null
+                    ? company.getCompanyManager().getFullName()
+                    : "");
+            row.createCell(11).setCellValue(company.getContactPersons() != null
+                    ? company.getContactPersons().stream().map(ContactPerson::getFullName).collect(Collectors.joining(", "))
+                    : "");
+        }
+
+        // Автоматично нагласяне на ширината на колоните
+        for (int i = 0; i < headers.length; i++) {
+            sheet.autoSizeColumn(i);
         }
     }
 
@@ -230,7 +471,56 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
-    // export contactPersons to exel
+    // export companyManagers to exel to browser
+    @Override
+    public void populateWorkbookWithCompanyManagers(Workbook workbook) {
+        List<CompanyManager> managers = companyManagerRepository.findAllCompanyManagersForPartnersOrderedByIdDesc();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        Sheet sheet = workbook.createSheet("Company Managers");
+
+        // Заглавен ред
+        String[] headers = {
+                "First Name", "Middle Name", "Last Name", "Email", "Phone Number",
+                "Company", "First Call", "Send Email", "Send Letter", "Second Call", "Presence"
+        };
+
+        Row headerRow = sheet.createRow(0);
+        CellStyle headerStyle = workbook.createCellStyle();
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerStyle.setFont(headerFont);
+
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+            cell.setCellStyle(headerStyle);
+        }
+
+        // Данни
+        int rowNum = 1;
+        for (CompanyManager manager : managers) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(manager.getFirstName() != null ? manager.getFirstName() : "");
+            row.createCell(1).setCellValue(manager.getMiddleName() != null ? manager.getMiddleName() : "");
+            row.createCell(2).setCellValue(manager.getLastName() != null ? manager.getLastName() : "");
+            row.createCell(3).setCellValue(manager.getEmail() != null ? manager.getEmail() : "");
+            row.createCell(4).setCellValue(manager.getPhoneNumber() != null ? manager.getPhoneNumber() : "");
+            row.createCell(5).setCellValue(manager.getCompany() != null ? manager.getCompany().getName() : "");
+            row.createCell(6).setCellValue(manager.getFirstCall() != null ? manager.getFirstCall().format(formatter) : "");
+            row.createCell(7).setCellValue(manager.getSendEmail() != null ? manager.getSendEmail().format(formatter) : "");
+            row.createCell(8).setCellValue(manager.getSendLetter() != null ? manager.getSendLetter().format(formatter) : "");
+            row.createCell(9).setCellValue(manager.getSecondCall() != null ? manager.getSecondCall().format(formatter) : "");
+            row.createCell(10).setCellValue(manager.getPresence() != null ? manager.getPresence().format(formatter) : "");
+        }
+
+        // Автоматично нагласяне на ширината
+        for (int i = 0; i < headers.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+    }
+
+    // export contactPersons to exel HDD
     @Override
     public void exportContactPersonsToExcel(String filePath) {
         List<ContactPerson> contactPersons = contactPersonRepository.findAll();
@@ -285,6 +575,55 @@ public class ExelServiceImpl implements ExelService {
         } catch (IOException e) {
             System.err.println("ERROR WRITING Excel file: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    // export contactPersons to exel to browser
+    @Override
+    public void populateWorkbookWithContactPersons(Workbook workbook) {
+        List<ContactPerson> contactPersons = contactPersonRepository.findAllPartnersContactPersonsOrderByFirstNameAscMiddleNameAscLastNameAsc();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        Sheet sheet = workbook.createSheet("Company Managers");
+
+        // Заглавен ред
+        String[] headers = {
+                "First Name", "Middle Name", "Last Name", "Email", "Phone Number",
+                "Company", "First Call", "Send Email", "Send Letter", "Second Call", "Presence"
+        };
+
+        Row headerRow = sheet.createRow(0);
+        CellStyle headerStyle = workbook.createCellStyle();
+        Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerStyle.setFont(headerFont);
+
+        for (int i = 0; i < headers.length; i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(headers[i]);
+            cell.setCellStyle(headerStyle);
+        }
+
+        // Попълване на данните
+        int rowNum = 1;
+        for (ContactPerson person : contactPersons) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(person.getFirstName() != null ? person.getFirstName() : "");
+            row.createCell(1).setCellValue(person.getMiddleName() != null ? person.getMiddleName() : "");
+            row.createCell(2).setCellValue(person.getLastName() != null ? person.getLastName() : "");
+            row.createCell(3).setCellValue(person.getEmail() != null ? person.getEmail() : "");
+            row.createCell(4).setCellValue(person.getPhoneNumber() != null ? person.getPhoneNumber() : "");
+            row.createCell(5).setCellValue(person.getCompany() != null ? person.getCompany().getName() : "");
+            row.createCell(6).setCellValue(person.getFirstCall() != null ? person.getFirstCall().format(formatter) : "");
+            row.createCell(7).setCellValue(person.getSendEmail() != null ? person.getSendEmail().format(formatter) : "");
+            row.createCell(8).setCellValue(person.getSendLetter() != null ? person.getSendLetter().format(formatter) : "");
+            row.createCell(9).setCellValue(person.getSecondCall() != null ? person.getSecondCall().format(formatter) : "");
+            row.createCell(10).setCellValue(person.getPresence() != null ? person.getPresence().format(formatter) : "");
+        }
+
+        // Автоматично нагласяне на ширината
+        for (int i = 0; i < headers.length; i++) {
+            sheet.autoSizeColumn(i);
         }
     }
 

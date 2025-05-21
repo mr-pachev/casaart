@@ -1,21 +1,40 @@
 package casaart.emails_clients_db.service;
 
-import java.util.List;
+import org.apache.poi.ss.usermodel.Workbook;
+
 import java.util.Set;
 
 public interface ExelService {
 
-    // export clients to exel
+    // export clients to exel to HDD
     void exportClientsToExcel(String filePath);
 
-    // export companies to exel
+    // export clients to exel to browser
+    void populateWorkbookWithClients(Workbook workbook);
+
+    // export all companies to exel to HDD
     void exportCompaniesToExcel(String filePath);
 
-    // export companyManagers to exel
+    // export all companies to exel to browser
+    void populateWorkbookWithCompanies(Workbook workbook);
+
+    // export all suppliers to exel to browser
+    void populateWorkbookWithSuppliers(Workbook workbook);
+
+    // export all partners to exel to browser
+    void populateWorkbookWithPartners(Workbook workbook);
+
+    // export companyManagers to exel to HDD
     void exportCompanyManagersToExcel(String filePath);
 
-    // export contactPersons to exel
+    // export companyManagers to exel to browser
+    void populateWorkbookWithCompanyManagers(Workbook workbook);
+
+    // export contactPersons to exel to HDD
     void exportContactPersonsToExcel(String filePath);
+
+    // export contactPersons to exel to browser
+    void populateWorkbookWithContactPersons(Workbook workbook);
 
     // update or add loyaltyLevel on clients
     void updateOrAddLoyaltyLevel(String filePath);

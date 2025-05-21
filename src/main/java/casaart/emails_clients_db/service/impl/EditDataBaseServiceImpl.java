@@ -84,6 +84,18 @@ public class EditDataBaseServiceImpl implements EditDataBaseService {
         companyRepository.saveAll(companies);
     }
 
+    // fill empty counterStay
+    @Override
+    public void initializeCounterStayIfNull() {
+        List<Client> clients = clientRepository.findAll();
+        for (Client client : clients) {
+            if (client.getCounterStay() == null) {
+                client.setCounterStay(1);
+            }
+        }
+        clientRepository.saveAll(clients);
+    }
+
     // update all client names
     @Override
     public void updateAllClientNames() {

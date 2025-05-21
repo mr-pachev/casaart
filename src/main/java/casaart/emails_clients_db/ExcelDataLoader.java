@@ -79,5 +79,7 @@ public class ExcelDataLoader implements CommandLineRunner {
 //        System.out.println("EXPORT is FINISHED!");
 
 //        exelService.findDuplicatedEmailsFromExcel(filePathImportEmailsFromMailChimp, filePathExportNoMatchedEmails);
+
+//        editDataBaseService.initializeCounterStayIfNull();
     }
 }
