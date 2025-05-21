@@ -6,9 +6,6 @@ import java.util.Set;
 
 public interface ExelService {
 
-    // export clients to exel to HDD
-    void exportClientsToExcel(String filePath);
-
     // export clients to exel to browser
     void populateWorkbookWithClients(Workbook workbook);
 
@@ -24,14 +21,8 @@ public interface ExelService {
     // export all partners to exel to browser
     void populateWorkbookWithPartners(Workbook workbook);
 
-    // export companyManagers to exel to HDD
-    void exportCompanyManagersToExcel(String filePath);
-
     // export companyManagers to exel to browser
     void populateWorkbookWithCompanyManagers(Workbook workbook);
-
-    // export contactPersons to exel to HDD
-    void exportContactPersonsToExcel(String filePath);
 
     // export contactPersons to exel to browser
     void populateWorkbookWithContactPersons(Workbook workbook);
