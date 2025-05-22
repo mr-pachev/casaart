@@ -62,6 +62,7 @@ public class ExelServiceImpl implements ExelService {
                 .map(clientMap::get)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+
         Sheet sheet = workbook.createSheet("Clients");
 
         // Заглавен ред
@@ -245,6 +246,16 @@ public class ExelServiceImpl implements ExelService {
     @Override
     public void exportSuppliersToExel(Workbook workbook, List<Long> suppliersIds) {
         List<Company> companies = companyRepository.findAllById(suppliersIds);
+
+        // Ръчна подредба
+        Map<Long, Company> companyMap = companies.stream()
+                .collect(Collectors.toMap(Company::getId, Function.identity()));
+
+        List<Company> sortedCompanies = suppliersIds.stream()
+                .map(companyMap::get)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
         Sheet sheet = workbook.createSheet("Companies");
 
         // Заглавен ред
@@ -267,7 +278,7 @@ public class ExelServiceImpl implements ExelService {
 
         // Данни
         int rowNum = 1;
-        for (Company company : companies) {
+        for (Company company : sortedCompanies) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(company.getName() != null ? company.getName() : "");
             row.createCell(1).setCellValue(company.getAddress() != null ? company.getAddress() : "");
@@ -303,6 +314,16 @@ public class ExelServiceImpl implements ExelService {
     @Override
     public void exportPartnersToExel(Workbook workbook, List<Long> partnersIds) {
         List<Company> companies = companyRepository.findAllById(partnersIds);
+
+        // Ръчна подредба
+        Map<Long, Company> companyMap = companies.stream()
+                .collect(Collectors.toMap(Company::getId, Function.identity()));
+
+        List<Company> sortedCompanies = partnersIds.stream()
+                .map(companyMap::get)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
         Sheet sheet = workbook.createSheet("Companies");
 
         // Заглавен ред
@@ -325,7 +346,7 @@ public class ExelServiceImpl implements ExelService {
 
         // Данни
         int rowNum = 1;
-        for (Company company : companies) {
+        for (Company company : sortedCompanies) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(company.getName() != null ? company.getName() : "");
             row.createCell(1).setCellValue(company.getAddress() != null ? company.getAddress() : "");
