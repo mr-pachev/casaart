@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,6 +53,15 @@ public class ExelServiceImpl implements ExelService {
     @Override
     public void exportClientsToExel(Workbook workbook, List<Long> clientIds) {
         List<Client> clients = clientRepository.findAllById(clientIds);
+
+        // Ръчна подредба
+        Map<Long, Client> clientMap = clients.stream()
+                .collect(Collectors.toMap(Client::getId, Function.identity()));
+
+        List<Client> sortedClients = clientIds.stream()
+                .map(clientMap::get)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
         Sheet sheet = workbook.createSheet("Clients");
 
         // Заглавен ред
@@ -77,7 +87,7 @@ public class ExelServiceImpl implements ExelService {
 
         // Данни
         int rowNum = 1;
-        for (Client client : clients) {
+        for (Client client : sortedClients) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(client.getFirstName() != null ? client.getFirstName() : "");
             row.createCell(1).setCellValue(client.getMiddleName() != null ? client.getMiddleName() : "");
