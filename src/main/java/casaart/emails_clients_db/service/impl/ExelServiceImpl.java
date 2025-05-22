@@ -384,6 +384,15 @@ public class ExelServiceImpl implements ExelService {
         List<CompanyManager> managers = companyManagerRepository.findAllById(companyManagerIds);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+        // Ръчна подредба
+        Map<Long, CompanyManager> companyManagersMap = managers.stream()
+                .collect(Collectors.toMap(CompanyManager::getId, Function.identity()));
+
+        List<CompanyManager> sortedCompanyManagers = companyManagerIds.stream()
+                .map(companyManagersMap::get)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
         Sheet sheet = workbook.createSheet("Company Managers");
 
         // Заглавен ред
@@ -406,7 +415,7 @@ public class ExelServiceImpl implements ExelService {
 
         // Данни
         int rowNum = 1;
-        for (CompanyManager manager : managers) {
+        for (CompanyManager manager : sortedCompanyManagers) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(manager.getFirstName() != null ? manager.getFirstName() : "");
             row.createCell(1).setCellValue(manager.getMiddleName() != null ? manager.getMiddleName() : "");
@@ -433,6 +442,15 @@ public class ExelServiceImpl implements ExelService {
         List<ContactPerson> contactPersons = contactPersonRepository.findAllById(contactPersonIds);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+        // Ръчна подредба
+        Map<Long, ContactPerson> contactPersonsMap = contactPersons.stream()
+                .collect(Collectors.toMap(ContactPerson::getId, Function.identity()));
+
+        List<ContactPerson> sortedContactPersonsMap = contactPersonIds.stream()
+                .map(contactPersonsMap::get)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
         Sheet sheet = workbook.createSheet("Company Managers");
 
         // Заглавен ред
@@ -455,7 +473,7 @@ public class ExelServiceImpl implements ExelService {
 
         // Попълване на данните
         int rowNum = 1;
-        for (ContactPerson person : contactPersons) {
+        for (ContactPerson person : sortedContactPersonsMap) {
             Row row = sheet.createRow(rowNum++);
             row.createCell(0).setCellValue(person.getFirstName() != null ? person.getFirstName() : "");
             row.createCell(1).setCellValue(person.getMiddleName() != null ? person.getMiddleName() : "");
