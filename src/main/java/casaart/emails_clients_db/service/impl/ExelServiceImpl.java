@@ -48,7 +48,7 @@ public class ExelServiceImpl implements ExelService {
         this.userHelperService = userHelperService;
     }
 
-    // export clients to exel to browser
+    // export clients to exel
     @Override
     public void exportClientsToExel(Workbook workbook, List<Long> clientIds) {
         List<Client> clients = clientRepository.findAllById(clientIds);
@@ -231,64 +231,7 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
-    // export all suppliers to exel to browser
-    @Override
-    public void populateWorkbookWithSuppliers(Workbook workbook) {
-        List<Company> companies = companyRepository.findAllSuppliersOrderedByIdDesc();
-        Sheet sheet = workbook.createSheet("Companies");
-
-        // Заглавен ред
-        Row headerRow = sheet.createRow(0);
-        String[] headers = {
-                "Name", "Address", "Phone Number", "Email", "URL", "Location Type", "Company Type",
-                "Industry Types", "Unit Types", "Partner Types", "Company Manager", "Contact Persons"
-        };
-
-        CellStyle headerStyle = workbook.createCellStyle();
-        Font headerFont = workbook.createFont();
-        headerFont.setBold(true);
-        headerStyle.setFont(headerFont);
-
-        for (int i = 0; i < headers.length; i++) {
-            Cell cell = headerRow.createCell(i);
-            cell.setCellValue(headers[i]);
-            cell.setCellStyle(headerStyle);
-        }
-
-        // Данни
-        int rowNum = 1;
-        for (Company company : companies) {
-            Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(company.getName() != null ? company.getName() : "");
-            row.createCell(1).setCellValue(company.getAddress() != null ? company.getAddress() : "");
-            row.createCell(2).setCellValue(company.getPhoneNumber() != null ? company.getPhoneNumber() : "");
-            row.createCell(3).setCellValue(company.getEmail() != null ? company.getEmail() : "");
-            row.createCell(4).setCellValue(company.getUrl() != null ? company.getUrl() : "");
-            row.createCell(5).setCellValue(company.getLocationType() != null ? company.getLocationType().toString() : "");
-            row.createCell(6).setCellValue(company.getCompanyType() != null ? company.getCompanyType().toString() : "");
-            row.createCell(7).setCellValue(company.getIndustryTypes() != null
-                    ? company.getIndustryTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
-                    : "");
-            row.createCell(8).setCellValue(company.getUnitTypes() != null
-                    ? company.getUnitTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
-                    : "");
-            row.createCell(9).setCellValue(company.getPartnerTypes() != null
-                    ? company.getPartnerTypes().stream().map(Object::toString).collect(Collectors.joining(", "))
-                    : "");
-            row.createCell(10).setCellValue(company.getCompanyManager() != null
-                    ? company.getCompanyManager().getFullName()
-                    : "");
-            row.createCell(11).setCellValue(company.getContactPersons() != null
-                    ? company.getContactPersons().stream().map(ContactPerson::getFullName).collect(Collectors.joining(", "))
-                    : "");
-        }
-
-        // Автоматично нагласяне на ширината на колоните
-        for (int i = 0; i < headers.length; i++) {
-            sheet.autoSizeColumn(i);
-        }
-    }
-
+    // export suppliers to exel
     @Override
     public void exportSuppliersToExel(Workbook workbook, List<Long> suppliersIds) {
         List<Company> companies = companyRepository.findAllById(suppliersIds);
@@ -346,10 +289,10 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
-    // export all partners to exel to browser
+    // export partners to exel
     @Override
-    public void populateWorkbookWithPartners(Workbook workbook) {
-        List<Company> companies = companyRepository.findAllPartnersOrderedByIdDesc();
+    public void exportPartnersToExel(Workbook workbook, List<Long> partnersIds) {
+        List<Company> companies = companyRepository.findAllById(partnersIds);
         Sheet sheet = workbook.createSheet("Companies");
 
         // Заглавен ред
@@ -404,10 +347,10 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
-    // export companyManagers to exel to browser
+    // export companyManagers to exel
     @Override
-    public void populateWorkbookWithCompanyManagers(Workbook workbook) {
-        List<CompanyManager> managers = companyManagerRepository.findAllCompanyManagersForPartnersOrderedByIdDesc();
+    public void exportCompanyManagersToExel(Workbook workbook, List<Long> companyManagerIds) {
+        List<CompanyManager> managers = companyManagerRepository.findAllById(companyManagerIds);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         Sheet sheet = workbook.createSheet("Company Managers");
@@ -453,10 +396,10 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
-    // export contactPersons to exel to browser
+    // export contactPersons to exel
     @Override
-    public void populateWorkbookWithContactPersons(Workbook workbook) {
-        List<ContactPerson> contactPersons = contactPersonRepository.findAllPartnersContactPersonsOrderByFirstNameAscMiddleNameAscLastNameAsc();
+    public void exportContactPersonsToExel(Workbook workbook, List<Long> contactPersonIds) {
+        List<ContactPerson> contactPersons = contactPersonRepository.findAllById(contactPersonIds);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         Sheet sheet = workbook.createSheet("Company Managers");

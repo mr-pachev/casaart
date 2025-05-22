@@ -18,9 +18,6 @@
     </form>
 </div>
 <div class="search-container">
-<!--    <form th:action="@{/export-suppliers}" method="get">-->
-<!--        <button type="submit" class="view-button">Export ALL</button>-->
-<!--    </form>-->
     <form th:action="@{/export-suppliers}" method="post">
         <input type="hidden" th:each="company :${allSuppliers}"
                th:name="suppliersIds"

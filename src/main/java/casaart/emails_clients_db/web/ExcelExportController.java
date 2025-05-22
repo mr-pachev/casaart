@@ -51,20 +51,6 @@ public class ExcelExportController {
         }
     }
 
-    @GetMapping("/export-suppliers")
-    public void exportSuppliers(HttpServletResponse response) throws IOException {
-        // Подготовка на отговора за Excel файл
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        String fileName = "SUPPLIERS_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".xlsx";
-        response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
-
-        // Извикване на метода ти, който пише директно в OutputStream
-        try (Workbook workbook = new XSSFWorkbook()) {
-            exelService.populateWorkbookWithSuppliers(workbook);// нов метод, който НЕ пише на диск
-            workbook.write(response.getOutputStream());
-        }
-    }
-
     @PostMapping("/export-suppliers")
     public void exportFilteredSuppliers(@RequestParam("suppliersIds") List<Long> suppliersIds,
                                       HttpServletResponse response) throws IOException {
@@ -78,44 +64,41 @@ public class ExcelExportController {
         }
     }
 
-    @GetMapping("/export-partners")
-    public void exportPartners(HttpServletResponse response) throws IOException {
-        // Подготовка на отговора за Excel файл
+    @PostMapping("/export-partners")
+    public void exportFilteredPartners(@RequestParam("partnersIds") List<Long> partnersIds,
+                                        HttpServletResponse response) throws IOException {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         String fileName = "PARTNERS_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".xlsx";
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 
-        // Извикване на метода ти, който пише директно в OutputStream
         try (Workbook workbook = new XSSFWorkbook()) {
-            exelService.populateWorkbookWithPartners(workbook);// нов метод, който НЕ пише на диск
+            exelService.exportPartnersToExel(workbook, partnersIds);
             workbook.write(response.getOutputStream());
         }
     }
 
-    @GetMapping("/export-company-managers")
-    public void exportCompanyManagers(HttpServletResponse response) throws IOException {
-        // Подготовка на отговора за Excel файл
+    @PostMapping("/export-company-managers")
+    public void exportFilteredCompanyManagers(@RequestParam("companyManagerIds") List<Long> companyManagerIds,
+                                       HttpServletResponse response) throws IOException {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         String fileName = "COMPANY_MANAGERS_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".xlsx";
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 
-        // Извикване на метода ти, който пише директно в OutputStream
         try (Workbook workbook = new XSSFWorkbook()) {
-            exelService.populateWorkbookWithCompanyManagers(workbook); // нов метод, който НЕ пише на диск
+            exelService.exportCompanyManagersToExel(workbook, companyManagerIds);
             workbook.write(response.getOutputStream());
         }
     }
 
-    @GetMapping("/export-contact-persons")
-    public void exportContactPersons(HttpServletResponse response) throws IOException {
-        // Подготовка на отговора за Excel файл
+    @PostMapping("/export-contact-persons")
+    public void exportFilteredContactPersons(@RequestParam("contactPersonIds") List<Long> contactPersonIds,
+                                              HttpServletResponse response) throws IOException {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            String fileName = "CONTACT_PERSONS_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".xlsx";
+        String fileName = "CONTACT_PERSONS_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".xlsx";
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 
-        // Извикване на метода ти, който пише директно в OutputStream
         try (Workbook workbook = new XSSFWorkbook()) {
-            exelService.populateWorkbookWithCompanyManagers(workbook); // нов метод, който НЕ пише на диск
+            exelService.exportContactPersonsToExel(workbook, contactPersonIds);
             workbook.write(response.getOutputStream());
         }
     }

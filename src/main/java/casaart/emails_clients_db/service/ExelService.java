@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface ExelService {
 
-    // export clients to exel to browser
+    // export clients to exel
    void exportClientsToExel(Workbook workbook, List<Long> clientIds);
 
     // export all companies to exel to HDD
@@ -17,19 +17,17 @@ public interface ExelService {
     // export all companies to exel to browser
     void populateWorkbookWithCompanies(Workbook workbook);
 
-    // export all suppliers to exel to browser
-    void populateWorkbookWithSuppliers(Workbook workbook);
-
+    // export suppliers to exel
     void exportSuppliersToExel(Workbook workbook, List<Long> suppliersIds);
 
-    // export all partners to exel to browser
-    void populateWorkbookWithPartners(Workbook workbook);
+    // export partners to exel
+    void exportPartnersToExel(Workbook workbook, List<Long> partnersIds);
 
-    // export companyManagers to exel to browser
-    void populateWorkbookWithCompanyManagers(Workbook workbook);
+    // export companyManagers to exel
+    void exportCompanyManagersToExel(Workbook workbook, List<Long> companyManagerIds);
 
-    // export contactPersons to exel to browser
-    void populateWorkbookWithContactPersons(Workbook workbook);
+    // export contactPersons to exel
+    void exportContactPersonsToExel(Workbook workbook, List<Long> contactPersonIds);
 
     // update or add loyaltyLevel on clients
     void updateOrAddLoyaltyLevel(String filePath);

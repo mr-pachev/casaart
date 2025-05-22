@@ -18,8 +18,11 @@
     </form>
 </div>
 <div class="search-container">
-    <form th:action="@{/export-contact-persons}" method="get">
-        <button type="submit" class="view-button">Export ALL</button>
+    <form th:action="@{/export-contact-persons}" method="post">
+        <input type="hidden" th:each="person : ${allContactPersons}"
+               th:name="contactPersonIds"
+               th:value="${person.id}" />
+        <button type="submit" class="view-button">Export &#x2B06;</button>
     </form>
 </div>
 <main>
