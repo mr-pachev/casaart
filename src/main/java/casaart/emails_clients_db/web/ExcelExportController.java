@@ -1,15 +1,19 @@
 package casaart.emails_clients_db.web;
 
+import casaart.emails_clients_db.model.entity.Client;
 import casaart.emails_clients_db.service.ExelService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 public class ExcelExportController {
@@ -19,16 +23,15 @@ public class ExcelExportController {
         this.exelService = exelService;
     }
 
-    @GetMapping("/export-clients")
-    public void exportClients(HttpServletResponse response) throws IOException {
-        // Подготовка на отговора за Excel файл
+    @PostMapping("/export-clients")
+    public void exportFilteredClients(@RequestParam("clientIds") List<Long> clientIds,
+                                      HttpServletResponse response) throws IOException {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         String fileName = "CLIENTS_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".xlsx";
         response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 
-        // Извикване на метода ти, който пише директно в OutputStream
         try (Workbook workbook = new XSSFWorkbook()) {
-            exelService.populateWorkbookWithClients(workbook); // нов метод, който НЕ пише на диск
+            exelService.exportClientsToExel(workbook, clientIds);
             workbook.write(response.getOutputStream());
         }
     }
@@ -58,6 +61,19 @@ public class ExcelExportController {
         // Извикване на метода ти, който пише директно в OutputStream
         try (Workbook workbook = new XSSFWorkbook()) {
             exelService.populateWorkbookWithSuppliers(workbook);// нов метод, който НЕ пише на диск
+            workbook.write(response.getOutputStream());
+        }
+    }
+
+    @PostMapping("/export-suppliers")
+    public void exportFilteredSuppliers(@RequestParam("suppliersIds") List<Long> suppliersIds,
+                                      HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        String fileName = "SUPPLIERS_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + ".xlsx";
+        response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+
+        try (Workbook workbook = new XSSFWorkbook()) {
+            exelService.exportSuppliersToExel(workbook, suppliersIds);
             workbook.write(response.getOutputStream());
         }
     }
