@@ -65,7 +65,7 @@
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(() => {
-                alert("Пътят е копиран успешно!");
+                alert("Натисни Ctrl + V в браузъра");
             }).catch(err => {
                 console.error("Clipboard API не успя:", err);
                 fallbackCopy(text);
