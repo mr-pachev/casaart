@@ -19,7 +19,6 @@ public class AddPersonDTO {
     @Email
     private String email;
 
-    @Size(max = 10)
     private String phoneNumber;
 
     @NotBlank

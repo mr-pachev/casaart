@@ -22,7 +22,6 @@ public class AddClientDTO {
     @Email
     private String email;
 
-    @Size(max = 10)
     private String phoneNumber;
 
     @NotEmpty

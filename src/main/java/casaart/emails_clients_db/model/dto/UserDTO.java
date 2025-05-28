@@ -16,7 +16,6 @@ public class UserDTO {
     @Size(min = 2, max = 30)
     private String firstName;
 
-    @Size(min = 2, max = 30)
     private String middleName;
 
     @Size(min = 2, max = 30)

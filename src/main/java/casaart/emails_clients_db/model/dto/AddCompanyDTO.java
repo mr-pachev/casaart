@@ -19,7 +19,6 @@ public class AddCompanyDTO {
     private String address;
 
     @NotBlank
-    @Size(min=10, max = 10)
     private String phoneNumber;
 
     @Email
