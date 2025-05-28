@@ -33,14 +33,11 @@
             <tr th:each="order :${orderDTOS}">
                 <td th:text="${order.number}">Номер</td>
                 <td th:text="${order.year}">Година</td>
-                <td>
-                    <ul th:if="${clientDTO.orders != null}">
-                        <li>
-                            <form th:method="GET" th:action="@{/open-order-folder/{id}(id=${order.id})}">
-                                <button type="submit" class="view-button">Отвори</button>
-                            </form>
-                        </li>
-                    </ul>
+                <td style="text-align: right;">
+                    <div th:if="${order.folderPath != null}">
+                        <span th:text="${order.folderPath}" th:id="'path-' + ${order.id}"></span>
+                        <button type="button" class="view-button" th:onclick="'copyPath(' + ${order.id} + ')'">Копирай пътя</button>
+                    </div>
                 </td>
                 <td>
                     <div class="action-button">
@@ -61,5 +58,40 @@
     </div>
 </main>
 <footer th:replace="~{fragments/footer}"></footer>
+<script>
+    function copyPath(orderId) {
+        const pathElement = document.getElementById('path-' + orderId);
+        const text = pathElement.textContent;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Пътят е копиран успешно!");
+            }).catch(err => {
+                console.error("Clipboard API не успя:", err);
+                fallbackCopy(text);
+            });
+        } else {
+            fallbackCopy(text);
+        }
+    }
+
+    function fallbackCopy(text) {
+        const tempInput = document.createElement("input");
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); // За мобилни
+
+        try {
+            document.execCommand("copy");
+            alert("Натисни Ctrl + V в браузъра");
+        } catch (err) {
+            alert("Неуспешно копиране.");
+            console.error(err);
+        }
+
+        document.body.removeChild(tempInput);
+    }
+</script>
 </body>
 </html>
