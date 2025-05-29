@@ -24,6 +24,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     Client findById(long id);
 
+    // Сортира
     List<Client> findAllByOrderByIdDesc();
 
     List<Client> findAllByOrderByFirstNameAscMiddleNameAscLastNameAsc();

@@ -8,7 +8,7 @@ public class OrderDTO {
     long id;
 
     @NotBlank
-    @Size(min = 4, max = 5)
+    @Size(min = 4, max = 6)
     private String number;
 
     @NotBlank
