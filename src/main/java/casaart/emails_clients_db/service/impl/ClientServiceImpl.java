@@ -112,7 +112,7 @@ public class ClientServiceImpl implements ClientService {
     public List<ClientDTO> sortedClientsBySourceType(String type) {
         SourceType sourceType = SourceType.valueOf(type);
 
-        return clientRepository.findAllBySourceTypes(sourceType)
+        return clientRepository.findBySourceTypeSorted(sourceType)
                 .stream()
                 .map(this::mapToClientDTO) // Преобразуваме в DTO
                 .collect(Collectors.toList());

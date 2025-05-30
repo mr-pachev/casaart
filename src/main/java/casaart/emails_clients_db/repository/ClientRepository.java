@@ -43,7 +43,8 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     List<Client> findAllByFirstNameAndLastName(String firstName, String lastName);
 
-    List<Client> findAllBySourceTypes(SourceType sourceType);
+    @Query("SELECT c FROM Client c WHERE :sourceType MEMBER OF c.sourceTypes ORDER BY c.createdAt DESC")
+    List<Client> findBySourceTypeSorted(@Param("sourceType") SourceType sourceType);
 
     List<Client> findAllByLoyaltyLevel(LoyaltyLevel loyaltyLevel);
 
