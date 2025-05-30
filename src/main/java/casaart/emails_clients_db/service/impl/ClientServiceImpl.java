@@ -92,6 +92,11 @@ public class ClientServiceImpl implements ClientService {
         } else if (inputArr.length == 1) {
             clientList = clientRepository.findAllByFirstName(inputArr[0]);
 
+            // проверка дали се търси по фамилия
+            if (clientList.isEmpty()) {
+                clientList = clientRepository.findAllByLastName(inputArr[0]);
+            }
+
         } else if (inputArr.length == 2) {
             clientList = clientRepository.findAllByFirstNameAndLastName(inputArr[0], inputArr[1]);
 
@@ -260,7 +265,7 @@ public class ClientServiceImpl implements ClientService {
         }
 
         // когато променяме ръчно броя на престой
-        if(existClient.getCounterStay() != clientDTO.getCounterStay() && clientDTO.getCounterStay() != 0){
+        if (existClient.getCounterStay() != clientDTO.getCounterStay() && clientDTO.getCounterStay() != 0) {
             editedClient.setCounterStay(clientDTO.getCounterStay());
         }
 
