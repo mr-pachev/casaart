@@ -15,11 +15,9 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -494,14 +492,14 @@ public class ExelServiceImpl implements ExelService {
         }
     }
 
-    // update or add loyaltyLevel on clients
+    // import clients
     @Override
-    public void updateOrAddLoyaltyLevel(String filePath) {
+    public void updateOrAddLoyaltyLevel(MultipartFile file) {
         List<Client> newClients = new ArrayList<>();
         int counterUpdated = 0;
 
-        try (FileInputStream fis = new FileInputStream(new File(filePath));
-             Workbook workbook = new XSSFWorkbook(fis)) {
+        try (InputStream inputStream = file.getInputStream();
+             Workbook workbook = new XSSFWorkbook(inputStream)) {
 
             Sheet sheet = workbook.getSheetAt(0);
             for (Row row : sheet) {
@@ -569,6 +567,16 @@ public class ExelServiceImpl implements ExelService {
                 Client existingClient = clientRepository
                         .findByFirstNameAndLastNameAndEmail(firstName, lastName, email)
                         .orElse(null);
+
+
+                // Нормализиране на съкратени стойности
+                if (loyaltyLevel.equals("L1")) {
+                    loyaltyLevel = "LEVEL_1";
+                } else if (loyaltyLevel.equals("L2")) {
+                    loyaltyLevel = "LEVEL_2";
+                } else if (loyaltyLevel.equals("L3")) {
+                    loyaltyLevel = "LEVEL_3";
+                }
 
                 // Проверка дали ще се обновява съществуващ клиент или ще се създава нов
                 if (existingClient != null) {
@@ -678,59 +686,6 @@ public class ExelServiceImpl implements ExelService {
             System.out.println("SUCCESSFULLY UPDATED --< " + counterUpdated + " >-- clients from the database.");
         } catch (IOException e) {
             System.err.println("ERROR READING EXEL FILE: " + e.getMessage());
-        }
-    }
-
-    /* matching emails from mailchimp - 1/2 */
-    // export duplicated emails to Excel
-    @Override
-    public void exportDuplicatedEmailsToExcel(Set<String> duplicatedEmails, String outputFilePath) {
-        try (Workbook workbook = new XSSFWorkbook(); FileOutputStream fos = new FileOutputStream(outputFilePath)) {
-            Sheet sheet = workbook.createSheet("Duplicated Emails");
-
-            int rowNum = 0;
-            for (String email : duplicatedEmails) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(email);
-            }
-
-            workbook.write(fos);
-            System.out.println("SUCCESSFULLY EXPORTED ---< " + duplicatedEmails.size() + " >-- DUPLICATED EMAILS.");
-        } catch (IOException e) {
-            System.err.println("Error writing Excel file: " + e.getMessage());
-        }
-    }
-
-    /* matching emails from mailchimp - 2/2 */
-    // find duplicated emails from Excel
-    @Override
-    public void findDuplicatedEmailsFromExcel(String inputFilePath, String outputFilePath) {
-        Map<String, Integer> emailCountMap = new HashMap<>();
-
-        try (FileInputStream fis = new FileInputStream(new File(inputFilePath));
-             Workbook workbook = new XSSFWorkbook(fis)) {
-
-            Sheet sheet = workbook.getSheetAt(0);
-            for (Row row : sheet) {
-                if (row.getRowNum() == 0) continue; // Пропускаме заглавния ред
-
-                Cell emailCell = row.getCell(0, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-                String email = emailCell.toString().trim();
-
-                if (!email.isEmpty()) {
-                    emailCountMap.put(email, emailCountMap.getOrDefault(email, 0) + 1);
-                }
-            }
-
-            // Филтрираме само имейлите, които се повтарят поне два пъти
-            Set<String> duplicatedEmails = emailCountMap.entrySet().stream()
-                    .filter(entry -> entry.getValue() >= 2)
-                    .map(Map.Entry::getKey)
-                    .collect(Collectors.toSet());
-
-            exportDuplicatedEmailsToExcel(duplicatedEmails, outputFilePath);
-        } catch (IOException e) {
-            System.err.println("ERROR READING EXCEL FILE: " + e.getMessage());
         }
     }
 

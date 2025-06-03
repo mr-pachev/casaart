@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -23,6 +25,7 @@ public class ExcelExportController {
         this.exelService = exelService;
     }
 
+    // export clients to exel
     @PostMapping("/export-clients")
     public void exportFilteredClients(@RequestParam("clientIds") List<Long> clientIds,
                                       HttpServletResponse response) throws IOException {
@@ -51,6 +54,7 @@ public class ExcelExportController {
         }
     }
 
+    // export suppliers
     @PostMapping("/export-suppliers")
     public void exportFilteredSuppliers(@RequestParam("suppliersIds") List<Long> suppliersIds,
                                       HttpServletResponse response) throws IOException {
@@ -63,7 +67,7 @@ public class ExcelExportController {
             workbook.write(response.getOutputStream());
         }
     }
-
+    // export partners
     @PostMapping("/export-partners")
     public void exportFilteredPartners(@RequestParam("partnersIds") List<Long> partnersIds,
                                         HttpServletResponse response) throws IOException {
@@ -76,7 +80,7 @@ public class ExcelExportController {
             workbook.write(response.getOutputStream());
         }
     }
-
+    // export companyManagers
     @PostMapping("/export-company-managers")
     public void exportFilteredCompanyManagers(@RequestParam("companyManagerIds") List<Long> companyManagerIds,
                                        HttpServletResponse response) throws IOException {
@@ -89,7 +93,7 @@ public class ExcelExportController {
             workbook.write(response.getOutputStream());
         }
     }
-
+    // export contactPersons
     @PostMapping("/export-contact-persons")
     public void exportFilteredContactPersons(@RequestParam("contactPersonIds") List<Long> contactPersonIds,
                                               HttpServletResponse response) throws IOException {
@@ -102,4 +106,16 @@ public class ExcelExportController {
             workbook.write(response.getOutputStream());
         }
     }
+    // import clients
+    @PostMapping("/import-clients")
+    public String importPartnersFromExcel(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+        try {
+            exelService.updateOrAddLoyaltyLevel(file);
+            redirectAttributes.addFlashAttribute("successMessage", "Успешен импорт на партньори!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Грешка при импортиране: " + e.getMessage());
+        }
+        return "redirect:/clients";
+    }
+
 }

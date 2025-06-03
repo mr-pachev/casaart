@@ -26,10 +26,7 @@ public class ExcelDataLoader implements CommandLineRunner {
         String basePathCompanies = "D:\\BACKUP_COMPANIES.xlsx";
         String formattedDateCompanies = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyy"));
 
-        String filePathImportClients = "D:\\IMPORT_CLIENTS_TEMPLATE.xlsx"; // Път до локалния Excel файл demo
-        String filePathImportEmailsFromMailChimp = "D:\\IMPORT_EMAILS_FROM_MAILCHIMP.xlsx"; // Път до локалния Excel IMPORT_EMAILS_FROM_MAILCHIMP
         String filePathExportCompanies = basePathCompanies + "_" + formattedDateCompanies + ".xlsx"; // Път до локалния Excel файл BACKUP_COMPANIES
-        String filePathExportNoMatchedEmails = "D:\\NEW_EMAILS.xlsx"; // Път до локалния Excel файл NEW_EMAILS
 
 //        EDIT CLIENTS
 //        editDataBaseService.removeDuplicateClients();
@@ -39,17 +36,10 @@ public class ExcelDataLoader implements CommandLineRunner {
 //        editDataBaseService.normalizeEmailsForCompanies();
 //        editDataBaseService.updateAllClientNames();
 
-//        IMPORT CLIENTS
-//        System.out.println("START UPDATING/IMPORT clients FROM " + filePathImportClients);
-//        exelService.updateOrAddLoyaltyLevel(filePathImportClients);
-//        System.out.println("UPDATING/IMPORT IS FINISHED!");
-
 //        EXPORT COMPANIES
 //        System.out.println("EXPORT OF companies TO " + filePathExportCompanies);
 //        exelService.exportCompaniesToExcel(filePathExportCompanies);
 //        System.out.println("EXPORT is FINISHED!");
-
-//        exelService.findDuplicatedEmailsFromExcel(filePathImportEmailsFromMailChimp, filePathExportNoMatchedEmails);
 
 //        editDataBaseService.initializeCounterStayIfNull();
     }

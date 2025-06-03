@@ -23,6 +23,22 @@
                th:value="${client.id}" />
         <button type="submit" class="view-button">Export &#x2B06;</button>
     </form>
+
+    <form th:action="@{/import-clients}" method="post" enctype="multipart/form-data">
+        <!-- Скрито поле за файл -->
+        <input type="file" id="fileInput" name="file" accept=".xlsx" required style="display: none;" />
+
+        <!-- Персонализиран бутон -->
+        <button type="button" class="reg-button" onclick="document.getElementById('fileInput').click();">
+            Избери файл
+        </button>
+
+        <!-- Показване на избраното име на файла -->
+        <span id="fileName" style="font-style: italic; color: #555;">Няма избран файл</span>
+
+        <!-- Бутон за изпращане -->
+        <button type="submit" class="view-button">Импортирай &#x2B07;</button>
+    </form>
 </div>
 
 <main>
@@ -201,6 +217,12 @@
         </table>
     </div>
 </main>
+<script>
+    document.getElementById('fileInput').addEventListener('change', function () {
+        const fileName = this.files.length > 0 ? this.files[0].name : 'Няма избран файл';
+        document.getElementById('fileName').textContent = fileName;
+    });
+</script>
 <footer th:replace="~{fragments/footer}"></footer>
 </body>
 </html>
